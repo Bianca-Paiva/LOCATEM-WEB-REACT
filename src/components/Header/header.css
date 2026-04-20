@@ -56,6 +56,13 @@ body {
     width: 100%;
 }
 
+.header-top-chat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 /* ============================= */
 /* LOGO */
 /* ============================= */

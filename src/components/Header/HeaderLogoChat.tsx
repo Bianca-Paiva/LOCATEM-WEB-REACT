@@ -4,7 +4,7 @@ import Logo from "./Logo";
 function HeaderLogoChat() {
     return (
         <HeaderContainer>
-            <div className="header-top">
+            <div className="header-top header-top-chat">
                 <Logo />
 
                 <button className="chat">

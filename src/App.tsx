@@ -1,13 +1,11 @@
 import './App.css'
-import HeaderCompleto from './components/Header/HeaderCompleto'
+import PagamentoPix from './pages/PagamentoPix/PagamentoPix'
 
 function App() {
 
   return (
     <>
-      <div className="app">
-      <HeaderCompleto />
-    </div>
+      <PagamentoPix />
     </>
   )
 }
