@@ -1,4 +1,4 @@
-import HeaderLogoChat from "../../components/Header/HeaderLogoChat";
+import HeaderLogoChat from "../../components/HeaderDesktop/HeaderLogoChat";
 import "./pagamentoPix.css";
 
 export default function PagamentoPix() {

@@ -1,11 +1,13 @@
 import './App.css'
-import PagamentoPix from './pages/PagamentoPix/PagamentoPix'
+import Carrinho from './pages/Carrinho/Carrinho'
+// import PagamentoPix from './pages/PagamentoPix/PagamentoPix'
 
 function App() {
 
   return (
     <>
-      <PagamentoPix />
+      <Carrinho />
+      {/* <PagamentoPix /> */}
     </>
   )
 }
