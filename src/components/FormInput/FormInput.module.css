@@ -1,0 +1,43 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input {
+    width: 100%;
+    height: 50px;
+    padding: 0 16px;
+    border-radius: 14px;
+    border: 1px solid #dcdcdc;
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    background-color: var(--color-bg-card);
+    transition: border 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border: 1px solid #ffcc0060;
+}
+
+.input.erro {
+    border: 1px solid #ff4d4d;
+}
+
+.input.sucesso {
+    border: 1px solid #2ecc71;
+}
+
+.error {
+    font-size: 13px;
+    color: #ff4d4d;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    display: block;
+}

@@ -1,0 +1,80 @@
+/* ============================= */
+/* RESET */
+/* ============================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+input,
+button {
+    font-family: inherit;
+}
+
+/* ============================= */
+/* VARIÁVEIS GLOBAIS */
+/* ============================= */
+:root {
+    --color-primary: #FFCA00;
+    --color-primary-hover: #f2cb00;
+    --color-primary-light: #ffe97a;
+    --color-primary-soft: #fff6c7;
+    --color-secondary: #f0c000c0;
+
+    --color-bg-main: #F9FAFB;
+    --color-bg-card: #ffffff;
+    --color-bg-input: #f8f8f8;
+    --color-bg-chat-hover: rgba(0, 0, 0, 0.13);
+
+    --color-text-dark: #0A0A0A;
+    --color-text-muted: #6B7280;
+
+    --radius-pill: 999px;
+
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    --transition-fast: 0.18s ease;
+
+    --shadow-search: 0 1px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* ============================= */
+/* BASE */
+/* ============================= */
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+body {
+    background-color: var(--color-bg-main);
+    color: var(--color-text-dark);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+}

@@ -1,0 +1,93 @@
+import React, { useState } from 'react'
+import FormInput from '../../components/FormInput/FormInput'
+import PasswordField from '../../components/PasswordField/PasswordField'
+import { loginUsuario } from '../../services/authService'
+import type { Route } from '../../router/useRouter'
+import logoIcon from '../../assets/LogoIcon.png'
+import styles from './Login.module.css'
+
+interface LoginProps {
+    navigate: (route: Route) => void
+}
+
+export default function Login({ navigate }: LoginProps) {
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+    const [submitting, setSubmitting] = useState(false)
+    const [error, setError] = useState('')
+
+    const btnDisabled = !email || !senha || submitting
+
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault()
+        if (btnDisabled) return
+        setSubmitting(true)
+        setError('')
+        try {
+            await loginUsuario({ email, senha })
+            navigate('home')
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'E-mail ou senha inválidos')
+        } finally {
+            setSubmitting(false)
+        }
+    }
+
+    return (
+        <div className={styles.app}>
+            <header className={styles.headerDesktop}>
+                <div className={styles.linhaTopo}>
+                    <a href="#" className={styles.logo} onClick={e => { e.preventDefault(); navigate('home') }}>
+                        <img src={logoIcon} alt="Logo LOCATEM" />
+                        LOCATEM
+                    </a>
+                </div>
+            </header>
+
+            <main>
+                <div className={styles.topo}>
+                    <h1 className={styles.titulo}>Bem-vindo de volta</h1>
+                    <p className={styles.paragrafo}>Entre na sua conta para continuar</p>
+                </div>
+
+                <div className={styles.card}>
+                    <form onSubmit={handleSubmit}>
+                        <FormInput
+                            id="email"
+                            label="E-mail"
+                            type="email"
+                            placeholder="seu@email.com"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            required
+                        />
+
+                        <PasswordField
+                            id="senha"
+                            label="Senha"
+                            placeholder="Digite sua senha"
+                            value={senha}
+                            onChange={e => setSenha(e.target.value)}
+                            required
+                        />
+
+                        {error && <p className={styles.errorMsg}>{error}</p>}
+
+                        <a href="#" className={styles.esqueceuSenha}>
+                            Esqueceu sua senha?
+                        </a>
+
+                        <button type="submit" className={styles.btnEntrar} disabled={btnDisabled}>
+                            {submitting ? 'Entrando...' : 'Entrar'}
+                        </button>
+                    </form>
+
+                    <div className={styles.semConta}>
+                        <p>Não tem uma conta?</p>
+                        <a href="#" onClick={e => { e.preventDefault(); navigate('cadastro') }}>Criar conta</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    )
+}

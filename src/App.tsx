@@ -1,15 +1,14 @@
-import './App.css'
-import Carrinho from './pages/Carrinho/Carrinho'
-// import PagamentoPix from './pages/PagamentoPix/PagamentoPix'
+import { useState } from 'react'
+import Login from './pages/Login/Login'
+import Cadastro from './pages/Cadastro/Cadastro'
 
-function App() {
+export default function App() {
+  const [route, setRoute] = useState('login')
+  const navigate = (nextRoute: string) => setRoute(nextRoute)
 
-  return (
-    <>
-      <Carrinho />
-      {/* <PagamentoPix /> */}
-    </>
-  )
+  // Login and Cadastro have their own minimal header (logo only)
+  if (route === 'login') return <Login navigate={navigate} />
+  if (route === 'cadastro') return <Cadastro navigate={navigate} />
+
+  return null
 }
-
-export default App

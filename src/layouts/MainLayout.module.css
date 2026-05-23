@@ -1,0 +1,29 @@
+.app {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(to bottom,
+            var(--color-primary) 0%,
+            var(--color-primary-light) 10.5%,
+            var(--color-primary-soft) 15.5%,
+            var(--color-bg-main) 19%);
+}
+
+@media (min-width: 768px) {
+    .app {
+        background: linear-gradient(to bottom,
+                var(--color-primary) 0%,
+                var(--color-primary-light) 12.5%,
+                var(--color-primary-soft) 18.5%,
+                var(--color-bg-main) 25%);
+    }
+}
+
+@media (min-width: 1024px) {
+    .app {
+        background: linear-gradient(to bottom,
+                var(--color-primary) 0%,
+                var(--color-primary-light) 11.5%,
+                var(--color-primary-soft) 17%,
+                var(--color-bg-main) 22%);
+    }
+}

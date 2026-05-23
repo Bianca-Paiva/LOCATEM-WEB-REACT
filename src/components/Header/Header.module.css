@@ -1,0 +1,428 @@
+/* ============================= */
+/* MOBILE HEADER */
+/* ============================= */
+.headerMobile {
+    width: 100%;
+    padding: 18px 16px 38px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.linhaTopo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ladoEsquerdo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: clamp(16px, 4.5vw, 20px);
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    color: var(--color-text-dark);
+    text-decoration: none;
+}
+
+.logo img {
+    height: 28px;
+    object-fit: contain;
+}
+
+.menuBtn,
+.carrinhoBtn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.menuBtn img,
+.carrinhoBtn img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.carrinhoBtn {
+    position: relative;
+    text-decoration: none;
+}
+
+.quantidadeCarrinho {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-secondary);
+    color: var(--color-text-dark);
+    font-size: 11px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.barraPesquisaMobile {
+    width: 100%;
+    height: 43px;
+    background-color: var(--color-bg-card);
+    box-shadow: var(--shadow-search);
+    border-radius: var(--radius-pill);
+    padding: 0 var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.barraPesquisaMobile img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.55;
+    flex-shrink: 0;
+}
+
+.barraPesquisaMobile input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: clamp(13px, 3.5vw, 15px);
+    font-family: inherit;
+}
+
+/* ============================= */
+/* OVERLAY */
+/* ============================= */
+.menuLateralOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+}
+
+.menuLateralOverlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ============================= */
+/* DRAWER */
+/* ============================= */
+.menuLateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(82vw, 310px);
+    height: 100dvh;
+    background: #fff;
+    z-index: 201;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menuLateral.active {
+    transform: translateX(0);
+}
+
+.menuLateralCabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 16px;
+    border-bottom: 1px solid #f1f1f1;
+    flex-shrink: 0;
+}
+
+.menuLateralLogo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #0A0A0A;
+}
+
+.menuLateralLogo img {
+    height: 26px;
+    object-fit: contain;
+}
+
+.menuLateralBtnFechar {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    color: #6B7280;
+    transition: background 0.18s ease;
+}
+
+.menuLateralBtnFechar:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.menuLateralConteudo {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.menuLateralNav {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+}
+
+.menuLateralNav a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0A0A0A;
+    transition: background 0.15s ease;
+}
+
+.menuLateralNav a:hover {
+    background: #f7f7f7;
+}
+
+.menuLateralNav a.ativo {
+    background: #fff8dc;
+    font-weight: 700;
+}
+
+.menuLateralNav a img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    opacity: 0.75;
+    flex-shrink: 0;
+}
+
+/* ============================= */
+/* DESKTOP HEADER (hidden mobile) */
+/* ============================= */
+.headerDesktop,
+.menuNavDesktop {
+    display: none;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+@media (min-width: 320px) {
+    .headerMobile {
+        padding: 16px 14px 24px;
+        gap: 15px;
+    }
+
+    .barraPesquisaMobile {
+        height: 35px;
+    }
+
+    .barraPesquisaMobile img {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+    .headerMobile {
+        padding: 20px 24px 30px;
+        gap: 20px;
+    }
+
+    .barraPesquisaMobile {
+        height: 45px;
+        padding: 0 18px;
+    }
+
+    .barraPesquisaMobile img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .barraPesquisaMobile input {
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .headerMobile {
+        display: none;
+    }
+
+    .menuLateral,
+    .menuLateralOverlay {
+        display: none !important;
+    }
+
+    /* Desktop header */
+    .headerDesktop {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 20px 0 0;
+    }
+
+    .linhaTopo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 1360px;
+        margin: 0 auto;
+        padding: 0 var(--spacing-xl);
+    }
+
+    .logo {
+        font-size: clamp(20px, 1.5vw, 26px);
+        font-weight: 800;
+        flex-shrink: 0;
+    }
+
+    .logo img {
+        height: 32px;
+    }
+
+    .barraPesquisa {
+        flex: 1;
+        max-width: 900px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--color-bg-card);
+        border-radius: var(--radius-pill);
+        padding: 0 var(--spacing-md);
+        margin: 0 var(--spacing-lg);
+        box-shadow: var(--shadow-search);
+        transition: box-shadow var(--transition-fast);
+    }
+
+    .lupaBtn {
+        border: none;
+        background: none;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .barraPesquisa img {
+        width: 18px;
+        height: 18px;
+        opacity: 0.5;
+    }
+
+    .barraPesquisa input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: clamp(14px, 1vw, 16px);
+        color: var(--color-text-dark);
+        font-family: inherit;
+    }
+
+    .barraPesquisa input::placeholder {
+        color: var(--color-text-muted);
+    }
+
+    .chatBtn {
+        width: clamp(38px, 3vw, 46px);
+        height: clamp(38px, 3vw, 46px);
+        border-radius: 50%;
+        border: none;
+        background: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background var(--transition-fast);
+        text-decoration: none;
+    }
+
+    .chatBtn:hover {
+        background: var(--color-bg-chat-hover);
+    }
+
+    .chatBtn img {
+        width: 55%;
+        height: 55%;
+        object-fit: contain;
+    }
+
+    /* Desktop Nav */
+    .menuNavDesktop {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: clamp(14px, 2vw, 40px);
+        padding: 16px var(--spacing-xl) 4px;
+        width: 100%;
+        max-width: 1360px;
+        margin: 0 auto;
+    }
+
+    .menuNavDesktop a {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: clamp(13px, 0.95vw, 16px);
+        font-weight: 600;
+        color: var(--color-text-dark);
+        text-decoration: none;
+        padding: 4px 2px;
+        border-bottom: 2px solid transparent;
+        transition: border-color var(--transition-fast);
+    }
+
+    .menuNavDesktop a.ativo {
+        border-bottom: 2px solid var(--color-primary);
+    }
+
+    .menuNavDesktop img {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+        opacity: 0.8;
+    }
+}
