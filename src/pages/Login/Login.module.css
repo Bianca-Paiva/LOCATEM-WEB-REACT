@@ -43,7 +43,6 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px 20px 40px;
 }
 
 .topo {
@@ -64,8 +63,8 @@ main {
 
 .card {
     width: 100%;
-    max-width: 480px;
-    padding: 40px 30px;
+    max-width: 560px;
+    padding: 40px 40px;
     border-radius: 20px;
     background-color: var(--color-bg-card);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
