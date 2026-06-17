@@ -1,0 +1,48 @@
+.categories-wrapper {
+  max-width: 1200px;
+  margin: var(--spacing-lg) auto 0;
+  padding: 0 var(--spacing-md);
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: var(--spacing-md);
+}
+
+.categories-container {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none; /* Esconde no Firefox */
+  padding-bottom: 4px;
+}
+
+.categories-container::-webkit-scrollbar {
+  display: none; /* Esconde no Chrome/Safari */
+}
+
+.category-pill {
+  background-color: var(--color-bg-card);
+  color: var(--color-text-dark);
+  border: 1px solid #E5E7EB;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.category-pill:hover {
+  background-color: var(--color-bg-input);
+}
+
+.category-pill.active {
+  background-color: var(--color-bg-card);
+  border-color: var(--color-text-dark); /* Borda escura destaca o ativo no design */
+  font-weight: 600;
+}
