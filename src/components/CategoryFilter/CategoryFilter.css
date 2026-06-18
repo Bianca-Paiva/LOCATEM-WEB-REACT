@@ -1,5 +1,6 @@
 .categories-wrapper {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1428px;
   margin: var(--spacing-lg) auto 0;
   padding: 0 var(--spacing-md);
 }

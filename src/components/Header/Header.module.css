@@ -297,42 +297,47 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: 20px 0 0;
+        padding: 30px 0 0; 
+        max-width: 1700px;
+        margin: 0 auto;
     }
 
     .linhaTopo {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        /* ISSO RESOLVE TUDO: 
+           1fr = logo (esquerda) 
+           minmax(300px, 900px) = barra pesquisa (meio, ocupa até 900px garantindo tamanho)
+           1fr = chat (direita) */
+        grid-template-columns: 1fr minmax(300px, 900px) 1fr; 
         align-items: center;
         width: 100%;
-        max-width: 1360px;
-        margin: 0 auto;
         padding: 0 var(--spacing-xl);
+        gap: 35px;
     }
 
     .logo {
         font-size: clamp(20px, 1.5vw, 26px);
         font-weight: 800;
-        flex-shrink: 0;
+        justify-self: start; /* Prende a Logo na extrema esquerda */
     }
 
     .logo img {
         height: 32px;
     }
 
+    /* CLASSE UNIFICADA (Sem repetições) */
     .barraPesquisa {
-        flex: 1;
-        max-width: 900px;
-        height: 35px;
+        width: 100%; /* Força a barra a preencher a coluna do meio */
+        height: 45px; /* Ajustado para 45px (estava 35px, menor que no tablet) */
         display: flex;
         align-items: center;
         gap: 10px;
         background: var(--color-bg-card);
         border-radius: var(--radius-pill);
         padding: 0 var(--spacing-md);
-        margin: 0 var(--spacing-lg);
         box-shadow: var(--shadow-search);
         transition: box-shadow var(--transition-fast);
+        justify-self: center; /* Centraliza a barra perfeitamente no Grid */
     }
 
     .lupaBtn {
@@ -374,19 +379,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
         transition: background var(--transition-fast);
         text-decoration: none;
+        
+        justify-self: end; /* Prende o Chat na extrema direita */
     }
-
-    .chatBtn:hover {
-        background: var(--color-bg-chat-hover);
-    }
-
+    
     .chatBtn img {
         width: 55%;
         height: 55%;
         object-fit: contain;
+    }
+
+    .chatBtn:hover {
+        background: var(--color-bg-chat-hover);
     }
 
     /* Desktop Nav */
@@ -395,11 +401,11 @@
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        gap: clamp(14px, 2vw, 40px);
-        padding: 16px var(--spacing-xl) 4px;
+        gap: 70px;
+        padding: 24px var(--spacing-xl) 0px; 
         width: 100%;
-        max-width: 1360px;
-        margin: 0 auto;
+        max-width: 2000px;
+        margin: 0 auto 60px; /* Altere o '20px' para o espaço que você quiser deixar do banner (ex: 10px, 15px, 0px) */
     }
 
     .menuNavDesktop a {

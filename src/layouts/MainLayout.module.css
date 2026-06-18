@@ -18,7 +18,7 @@
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1624px) {
     .app {
         background: linear-gradient(to bottom,
                 var(--color-primary) 0%,
