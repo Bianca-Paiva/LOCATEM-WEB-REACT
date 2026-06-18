@@ -13,7 +13,7 @@ import {
 } from '../../hooks/useMasks'
 import { criarUsuario } from '../../services/authService'
 import type { Route } from '../../router/useRouter'
-import logoIcon from '../../assets/LogoIcon.png'
+import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
 import styles from './Cadastro.module.css'
 
 interface CadastroProps {
@@ -130,15 +130,8 @@ export default function Cadastro({ navigate }: CadastroProps) {
     }
 
     return (
-        <div className={styles.app}>
-            <header className={styles.headerDesktop}>
-                <div className={styles.linhaTopo}>
-                    <a href="#" className={styles.logo} onClick={e => { e.preventDefault(); navigate('home') }}>
-                        <img src={logoIcon} alt="Logo LOCATEM" />
-                        LOCATEM
-                    </a>
-                </div>
-            </header>
+        <div>
+            <AuthHeader navigate={navigate} />
 
             <main>
                 <div className={styles.topo}>

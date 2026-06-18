@@ -1,14 +1,20 @@
-import { useState } from 'react'
 import Login from './pages/Login/Login'
 import Cadastro from './pages/Cadastro/Cadastro'
+import RecuperarSenha from './pages/RecuperarSenha/RecuperarSenha'
+
+import { useRouter } from './router/useRouter'
 
 export default function App() {
-  const [route, setRoute] = useState('login')
-  const navigate = (nextRoute: string) => setRoute(nextRoute)
+    const { route, navigate } = useRouter()
 
-  // Login and Cadastro have their own minimal header (logo only)
-  if (route === 'login') return <Login navigate={navigate} />
-  if (route === 'cadastro') return <Cadastro navigate={navigate} />
+    if (route === 'login')
+        return <Login navigate={navigate} />
 
-  return null
+    if (route === 'cadastro')
+        return <Cadastro navigate={navigate} />
+
+    if (route === 'recuperarSenha')
+        return <RecuperarSenha navigate={navigate} />
+
+    return null
 }

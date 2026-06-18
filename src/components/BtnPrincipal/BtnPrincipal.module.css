@@ -1,0 +1,36 @@
+.customButton {
+    width: 100%;
+    background-color: #FFCC00; /* Amarelo idêntico ao da imagem */
+    color: #000000;            /* Texto preto */
+    font-size: 16px;
+    font-weight: 600;          /* Texto em negrito semi-bold */
+    
+    border: none;
+    border-radius: 12px;       /* Cantos bastante arredondados */
+    padding: 14px 24px;        /* Altura interna do botão */
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Efeito ao passar o mouse */
+.customButton:hover {
+    background-color: #E5B800; /* Um amarelo levemente mais escuro */
+}
+
+/* Efeito de clique físico */
+.customButton:active {
+    transform: scale(0.99);    /* Dá um efeito leve de clique diminuindo 1% */
+}
+
+/* Estilo para quando o botão estiver desativado (opcional) */
+.customButton:disabled {
+    background-color: #F5F5F5;
+    color: #A0A0A0;
+    cursor: not-allowed;
+    transform: none;
+}

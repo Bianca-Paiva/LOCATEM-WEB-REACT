@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
+import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
 import FormInput from '../../components/FormInput/FormInput'
 import PasswordField from '../../components/PasswordField/PasswordField'
 import { loginUsuario } from '../../services/authService'
 import type { Route } from '../../router/useRouter'
-import logoIcon from '../../assets/LogoIcon.png'
 import styles from './Login.module.css'
 
 interface LoginProps {
@@ -34,15 +34,8 @@ export default function Login({ navigate }: LoginProps) {
     }
 
     return (
-        <div className={styles.app}>
-            <header className={styles.headerDesktop}>
-                <div className={styles.linhaTopo}>
-                    <a href="#" className={styles.logo} onClick={e => { e.preventDefault(); navigate('home') }}>
-                        <img src={logoIcon} alt="Logo LOCATEM" />
-                        LOCATEM
-                    </a>
-                </div>
-            </header>
+        <div>
+            <AuthHeader navigate={navigate} />
 
             <main>
                 <div className={styles.topo}>
@@ -73,9 +66,12 @@ export default function Login({ navigate }: LoginProps) {
 
                         {error && <p className={styles.errorMsg}>{error}</p>}
 
-                        <a href="#" className={styles.esqueceuSenha}>
+                        <button
+                            className={styles.esqueceuSenha}
+                            onClick={e => { e.preventDefault(); navigate('recuperarSenha') }}
+                        >
                             Esqueceu sua senha?
-                        </a>
+                        </button>
 
                         <button type="submit" className={styles.btnEntrar} disabled={btnDisabled}>
                             {submitting ? 'Entrando...' : 'Entrar'}
@@ -84,7 +80,11 @@ export default function Login({ navigate }: LoginProps) {
 
                     <div className={styles.semConta}>
                         <p>Não tem uma conta?</p>
-                        <a href="#" onClick={e => { e.preventDefault(); navigate('cadastro') }}>Criar conta</a>
+                        <button
+                            onClick={e => { e.preventDefault(); navigate('cadastro') }}
+                        >
+                            Criar conta
+                        </button>
                     </div>
                 </div>
             </main>
