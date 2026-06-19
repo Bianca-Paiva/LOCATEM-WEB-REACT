@@ -5,6 +5,8 @@ import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
 import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
 import PasswordField from '../../../components/PasswordField/PasswordField'
 import BtnPrincipal from "../../../components/BtnPrincipal/BtnPrincipal";
+import PasswordRequirements from '../../../components/RecuperarSenha/PasswordRequirements/PasswordRequirements'
+import PasswordStrengthMeter from '../../../components/PasswordStrengthMeter/PasswordStrengthMeter'
 import { checkPasswordStrength } from '../../../hooks/usePasswordStrength'
 import type { Route } from "../../../router/useRouter";
 
@@ -44,34 +46,55 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                     subtitle=""
                 />
 
-                <PasswordField
-                    id="senha"
-                    label="Senha"
-                    placeholder="Crie uma senha segura"
-                    value={senha}
-                    onChange={e => setSenha(e.target.value)}
-                    required
-                    strengthResult={strengthResult}
-                    showRequirements
-                />
+                {/* FORM CONTAINER: Alinha todo o bloco centralizado */}
+                <form className={styles.formulario} onSubmit={(e) => e.preventDefault()}>
 
-                <PasswordField
-                    id="confirmarSenha"
-                    label="Confirmar senha"
-                    placeholder="Digite a senha novamente"
-                    value={confirmarSenha}
-                    onChange={e => setConfirmarSenha(e.target.value)}
-                    required
-                    status={confirmStatus()}
-                    error={confirmError()}
-                />
+                    {/* CONTAINER DUAS COLUNAS (Lado a Lado no Desktop) */}
+                    <div className={styles.layoutColunas}>
 
-                <BtnPrincipal
-                    text="Alterar senha"
-                    type="button"
-                />
+                        {/* COLUNA DA ESQUERDA: Inputs e Medidor de Força */}
+                        <div className={styles.colunaEsquerda}>
+                            <PasswordField
+                                id="senha"
+                                label="Digite sua nova senha"
+                                placeholder="Crie uma senha segura"
+                                value={senha}
+                                onChange={e => setSenha(e.target.value)}
+                                required
+                                strengthResult={strengthResult}
+                            />
 
+                            <PasswordStrengthMeter
+                                strength={strengthResult.strength}
+                                visible={senha.length > 2}
+                            />
 
+                            <PasswordField
+                                id="confirmarSenha"
+                                label="Confirme sua nova senha"
+                                placeholder="Digite a senha novamente"
+                                value={confirmarSenha}
+                                onChange={e => setConfirmarSenha(e.target.value)}
+                                required
+                                status={confirmStatus()}
+                                error={confirmError()}
+                            />
+                        </div>
+
+                        {/* COLUNA DA DIREITA: Dicas de Segurança de Senha */}
+                        <div className={styles.colunaDireita}>
+                            <PasswordRequirements
+                                requirements={strengthResult.requirements}
+                                value={senha}
+                            />
+                        </div>
+                    </div>
+
+                    <BtnPrincipal
+                        text="Alterar senha"
+                        type="submit"
+                    />
+                </form>
             </main>
         </>
     );

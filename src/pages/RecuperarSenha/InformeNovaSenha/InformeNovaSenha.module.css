@@ -1,0 +1,54 @@
+.main {
+  min-height: calc(100vh - 90px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 40px;
+}
+
+.formulario {
+  width: 100%;
+  max-width: 1000px; 
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 25px;
+}
+
+/* Container flexível das duas colunas */
+.layoutColunas {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.colunaEsquerda {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.colunaDireita {
+  width: 300px;
+  flex-shrink: 0;
+  margin-top: 30px; 
+}
+
+
+/* Quebra de layout para Celular/Tablet */
+@media (max-width: 768px) {
+  .layoutColunas {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .colunaDireita {
+    width: 100%;
+    margin-top: 0;
+  }
+  
+  .formulario {
+    max-width: 440px; /* Limita o tamanho máximo no mobile */
+  }
+}
