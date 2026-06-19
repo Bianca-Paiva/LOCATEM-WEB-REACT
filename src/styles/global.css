@@ -62,14 +62,16 @@ button {
 /* BASE */
 /* ============================= */
 html,
+
+
 body {
     width: 100%;
     min-height: 100vh;
-}
-
-body {
-    background-color: var(--color-bg-main);
-    color: var(--color-text-dark);
+    background: linear-gradient(to bottom,
+        var(--color-primary) 0%,
+        var(--color-primary-light) 9.5%,
+        var(--color-primary-soft) 18.5%,
+        var(--color-bg-main) 26%);
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
 }

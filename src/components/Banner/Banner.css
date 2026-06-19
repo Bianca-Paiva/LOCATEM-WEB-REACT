@@ -1,0 +1,95 @@
+/* Container principal do Banner */
+/* Container principal do Banner */
+.banner-container {
+  width: 100%;
+  max-width: 1428px;
+  max-height: 500px;
+  height: 100%;
+  
+  /* Ajustes para subir o banner: */
+  margin: 0 auto;               /* Centraliza horizontalmente e zera as margens superior/inferior */
+  padding: 0 var(--spacing-md); /* Mudado de 10 para 0 no topo/base para eliminar o espaço */
+}
+
+/* O Swiper agora assume o tamanho exato do seu HTML antigo */
+.banner-swiper {
+  width: 100%;
+  max-width: 1428px;
+  max-height: 500px;
+  height: 100%;/* Tamanho idêntico ao HTML! */
+  border-radius: 20px;    /* Herdando o raio do HTML */
+  overflow: hidden;
+  box-shadow: var(--shadow-card);     /* Herdando a sombra do HTML */
+  position: relative;
+}
+
+/* largura 1428 Altura 369
+
+/* Estilização do slide individual */
+.banner-slide {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-banner-bg); /* Herdando o fundo do HTML */
+}
+
+/* Garante que a imagem se ajuste ao tamanho fixo/clamp */
+.banner-image {
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+}
+
+/* ==========================================
+   TRADUÇÃO DOS INDICADORES (PAGINATION)
+   ========================================== */
+
+/* Posicionamento do container de bolinhas igual ao seu .indicadores */
+/* Posiciona o container das bolinhas bem embaixo e centralizado */
+
+/* ==========================================
+   TRADUÇÃO DAS SETAS (NAVIGATION)
+   ========================================== */
+
+/* ==========================================
+   CUSTOMIZAÇÃO DOS COMPONENTES DO SWIPER (FORA)
+   ========================================== */
+
+/* Ajusta o container das bolinhas fora do banner */
+.banner-custom-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 16px; /* Empurra a linha das bolinhas para baixo do banner */
+}
+
+.banner-custom-pagination .swiper-pagination-bullet {
+  margin: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-indicator, #9CA3AF);
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.banner-custom-pagination .swiper-pagination-bullet-active {
+  background: var(--color-primary, #FFCA00);
+  opacity: 1;
+  width: 20px;
+  border-radius: var(--radius-pill);
+}
+
+/* Customizando as setas (apenas um ajuste para continuarem visíveis nas pontas) */
+.banner-swiper .swiper-button-next,
+.banner-swiper .swiper-button-prev {
+  color: var(--color-arrow, #ffffff) !important;
+}
+.banner-swiper .swiper-button-next::after,
+.banner-swiper .swiper-button-prev::after {
+  font-size: 14px !important; 
+}
