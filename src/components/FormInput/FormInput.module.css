@@ -1,6 +1,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .label {
@@ -18,16 +19,12 @@
     margin-top: 10px;
     margin-bottom: 30px;
     background-color: var(--color-bg-card);
-    transition: border 0.2s;
-}
-
-.input:focus {
-    outline: none;
-    border: 1px solid #ffcc0060;
+    transition: border 0.2s, box-shadow 0.2s;
 }
 
 .input.erro {
     border: 1px solid #ff4d4d;
+    box-shadow: 0px 4px 4px 0px rgba(255, 77, 77, 0.25);
 }
 
 .input.sucesso {
@@ -40,4 +37,28 @@
     margin-top: -20px;
     margin-bottom: 20px;
     display: block;
+    font-weight: 500;
+}
+
+/* Chacoalhar sutil */
+.shake {
+    animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-4px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(4px);
+    }
 }

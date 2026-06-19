@@ -206,8 +206,8 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             placeholder="Digite seu endereço completo" value={endereco}
                             onChange={e => setEndereco(e.target.value)} required />
 
-                        <button type="submit" className={styles.btnCriarConta} disabled={btnDisabled}>
-                            {submitting ? 'Criando conta...' : 'Criar conta'}
+                        <button type="submit" className={styles.btnCriarConta}>
+                            Criar conta
                         </button>
                     </form>
 

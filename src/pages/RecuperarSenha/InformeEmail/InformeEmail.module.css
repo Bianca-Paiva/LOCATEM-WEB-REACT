@@ -1,0 +1,83 @@
+.main {
+  min-height: calc(100vh - 90px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 40px;
+}
+
+/* Container que envolve toda a área de links do rodapé */
+.footerLinksContainer {
+  width: 100%;
+  margin-top: 2rem;
+}
+
+/* =========================================
+   LINHA DIVISÓRIA (ou)
+========================================= */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #8a8a8a;
+  font-size: 14px;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+/* Cria as linhas finas nas laterais do "ou" */
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.divider::before {
+  margin-right: 1.5rem;
+}
+
+.divider::after {
+  margin-left: 1.5rem;
+}
+
+/* =========================================
+   LINKS INFERIORES LADO A LADO
+========================================= */
+.bottomLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Sobrescreve o comportamento padrão do FooterLink para não quebrar linha */
+.bottomLinks>div {
+  width: auto !important;
+  margin-top: 0 !important;
+}
+
+/* Estilo do ponto central separador */
+.bullet {
+  color: #000000;
+  font-size: 16px;
+  user-select: none;
+}
+
+/* =========================================
+   RESPONSIVIDADE (MOBILE)
+========================================= */
+@media (max-width: 650px) {
+
+  /* No celular, os links voltam a se empilhar perfeitamente (como na sua imagem 2) */
+  .bottomLinks {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Esconde o ponto preto no celular já que os itens estarão um embaixo do outro */
+  .bullet {
+    display: none;
+  }
+}

@@ -1,17 +1,17 @@
-import styles from './Button.module.css'
+import styles from './BtnPrincipal.module.css'
 
 interface ButtonProps {
     text: string                // Texto que vai aparecer no botão (Ex: "Enviar")
     onClick?: () => void        // Função de clique (opcional)
-    type?: 'button' | 'submit'  // Tipo do botão (padrão é 'button')
+    type?: 'button' | 'submit'  
     disabled?: boolean          // Se o botão está desativado ou não
 }
 
 export default function Button({
     text,
     onClick = () => {},         // Se não for passado, não faz nada por padrão
-    type = 'button',
-    disabled = false
+    type = 'submit',
+    disabled
 }: ButtonProps) {
     return (
         <button
