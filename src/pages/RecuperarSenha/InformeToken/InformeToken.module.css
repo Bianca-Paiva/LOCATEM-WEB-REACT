@@ -1,0 +1,29 @@
+.main {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 40px;
+}
+
+.tokenSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    /* (5 inputs × 100px)+(4 espaços × 17px)=568px. */
+    max-width: 568px;
+    margin-bottom: 60px;
+}
+
+.reenviar {
+    display: block;
+    margin-left: auto;
+    color: #F2AF0D;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+}

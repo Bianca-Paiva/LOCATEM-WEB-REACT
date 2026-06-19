@@ -1,49 +1,8 @@
-.app {
-    width: 100%;
-    min-height: 100vh;
-    background: linear-gradient(to bottom,
-            var(--color-primary) 0%,
-            var(--color-primary-light) 4.5%,
-            var(--color-primary-soft) 9.5%,
-            var(--color-bg-main) 13%);
-}
-
-.headerDesktop {
-    width: 100%;
-    padding: 15px 20px 24px;
-    display: flex;
-    align-items: center;
-}
-
-.linhaTopo {
-    display: flex;
-    width: 100%;
-    max-width: 2000px;
-    margin: 0 auto;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: clamp(16px, 4.5vw, 20px);
-    font-weight: 800;
-    letter-spacing: -0.4px;
-    color: var(--color-text-dark);
-    text-decoration: none;
-}
-
-.logo img {
-    height: 28px;
-    object-fit: contain;
-}
-
 main {
     min-height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px 20px 40px;
 }
 
 .topo {
@@ -64,8 +23,8 @@ main {
 
 .card {
     width: 100%;
-    max-width: 480px;
-    padding: 40px 30px;
+    max-width: 560px;
+    padding: 40px 40px;
     border-radius: 20px;
     background-color: var(--color-bg-card);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
@@ -73,24 +32,16 @@ main {
     flex-direction: column;
 }
 
-.errorMsg {
-    font-size: 13px;
-    color: #ff4d4d;
-    margin-top: -10px;
-    margin-bottom: 16px;
-}
-
 .esqueceuSenha {
     display: block;
-    font-size: 13px;
-    color: #555;
-    text-align: right;
-    margin-top: -15px;
+    margin-left: auto;
+    color: #0a0a0a;
+    background-color: transparent;
+    border: none;
     margin-bottom: 24px;
-    text-decoration: none;
 }
 
-.esqueceuSenha:hover {
+.esqueceuSenha:hover{
     text-decoration: underline;
 }
 
@@ -122,18 +73,16 @@ main {
     gap: 6px;
     margin-top: 20px;
     font-size: 14px;
-}
-
-.semConta p {
     color: #333333d7;
 }
 
-.semConta a {
-    text-decoration: none;
-    color: #000;
+.semConta button {
+    border: none;
+    background-color: transparent;
+    color: #0a0a0a;
     font-weight: 500;
 }
 
-.semConta a:hover {
+.semConta button:hover {
     text-decoration: underline;
 }

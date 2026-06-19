@@ -1,26 +1,43 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
-export type Route = 'home' | 'login' | 'cadastro'
+export type Route =
+  | "home"
+  | "login"
+  | "cadastro"
+  | "recuperarSenha"
+  | "informeToken"
+  | "informeNovaSenha";
 
 function getRouteFromHash(): Route {
-    const hash = window.location.hash.replace('#', '')
-    if (hash === 'login') return 'login'
-    if (hash === 'cadastro') return 'cadastro'
-    return 'home'
+  const hash = window.location.hash.replace("#", "").split("?")[0];
+
+  if (hash === "login") return "login";
+  if (hash === "cadastro") return "cadastro";
+  if (hash === "recuperarSenha") return "recuperarSenha";
+  if (hash === "informeToken") return "informeToken";
+  if (hash === "informeNovaSenha") return "informeNovaSenha";
+
+  return "login";
 }
 
 export function useRouter() {
-    const [route, setRoute] = useState<Route>(getRouteFromHash)
+  const [route, setRoute] = useState<Route>(getRouteFromHash);
 
-    useEffect(() => {
-        const onHashChange = () => setRoute(getRouteFromHash())
-        window.addEventListener('hashchange', onHashChange)
-        return () => window.removeEventListener('hashchange', onHashChange)
-    }, [])
+  useEffect(() => {
+    const onHashChange = () => {
+      setRoute(getRouteFromHash());
+    };
 
-    const navigate = (to: Route) => {
-        window.location.hash = to === 'home' ? '' : to
-    }
+    window.addEventListener("hashchange", onHashChange);
 
-    return { route, navigate }
+    return () => {
+      window.removeEventListener("hashchange", onHashChange);
+    };
+  }, []);
+
+  const navigate = (to: Route) => {
+    window.location.hash = to;
+  };
+
+  return { route, navigate };
 }

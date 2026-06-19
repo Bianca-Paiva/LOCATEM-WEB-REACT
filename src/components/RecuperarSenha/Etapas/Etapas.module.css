@@ -1,0 +1,130 @@
+/* =========================================
+   CONTAINER PRINCIPAL
+========================================= */
+
+.stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 50px;
+    padding: 0 60px;
+}
+
+/* =========================================
+   BLOCO DE CADA ETAPA
+========================================= */
+
+.stepContainer {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+/* Remove o flex: 1 do último item para a linha não empurrar a última etapa */
+.stepContainer:last-child {
+    flex: 0;
+}
+
+.stepContent {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* =========================================
+   TEXTO E IMAGEM DE CHECK
+========================================= */
+
+.labelContainer {
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Espaço entre a palavra e a imagem */
+}
+
+.label {
+    font-size: 14px;
+    color: #8A8A8A;
+    white-space: nowrap; /* Evita que a palavra quebre no meio */
+}
+
+.activeLabel {
+    color: #222;
+    font-weight: 500;
+}
+
+.checkImage {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+/* =========================================
+   CÍRCULO / QUADRADO DA ETAPA
+========================================= */
+
+.step {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0; /* Evita que o círculo amasse */
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #D9D9D9;
+    border-radius: 6px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    color: #8A8A8A;
+    background: #FFFFFF;
+
+    transition: 0.2s;
+}
+
+.current {
+    border-color: #222;
+    color: #222;
+}
+
+
+/* =========================================
+   LINHA ENTRE ETAPAS
+========================================= */
+
+.line {
+    flex: 1;
+    height: 1px;
+    margin: 0 1rem;
+    background-color: #D9D9D9;
+}
+
+/* =========================================
+   RESPONSIVIDADE (MOBILE)
+========================================= */
+
+@media (max-width: 600px) {
+    /* Muda a orientação para vertical */
+    .stepper {
+        flex-direction: column;
+        align-items: flex-start;
+        width: fit-content;
+        margin: 2rem auto;
+    }
+
+    .stepContainer {
+        flex-direction: column;
+        align-items: flex-start;
+        flex: none;
+        width: 100%;
+    }
+
+    /* Transforma a linha horizontal em vertical */
+    .line {
+        width: 1px;
+        height: 24px;
+        margin: 0.25rem 0 0.25rem 13px; /* Centraliza a linha exatamente embaixo do círculo */
+    }
+}

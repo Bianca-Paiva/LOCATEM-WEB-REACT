@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
+import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
 import FormInput from '../../components/FormInput/FormInput'
 import PasswordField from '../../components/PasswordField/PasswordField'
 import { loginUsuario } from '../../services/authService'
 import type { Route } from '../../router/useRouter'
-import logoIcon from '../../assets/LogoIcon.png'
 import styles from './Login.module.css'
 
 interface LoginProps {
@@ -16,13 +16,31 @@ export default function Login({ navigate }: LoginProps) {
     const [submitting, setSubmitting] = useState(false)
     const [error, setError] = useState('')
 
-    const btnDisabled = !email || !senha || submitting
+    const [emailErrState, setEmailErrState] = useState({ active: false, shake: false })
+    const [senhaErrState, setSenhaErrState] = useState({ active: false, shake: false })
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault()
-        if (btnDisabled) return
+
+        let possuiErro = false
+
+        if (!email) {
+            setEmailErrState({ active: true, shake: false })
+            setTimeout(() => setEmailErrState({ active: true, shake: true }), 10)
+            possuiErro = true
+        }
+        if (!senha) {
+            setSenhaErrState({ active: true, shake: false })
+            setTimeout(() => setSenhaErrState({ active: true, shake: true }), 10)
+            possuiErro = true
+        }
+
+        if (possuiErro) return
+        if (submitting) return
+
         setSubmitting(true)
         setError('')
+
         try {
             await loginUsuario({ email, senha })
             navigate('home')
@@ -34,15 +52,8 @@ export default function Login({ navigate }: LoginProps) {
     }
 
     return (
-        <div className={styles.app}>
-            <header className={styles.headerDesktop}>
-                <div className={styles.linhaTopo}>
-                    <a href="#" className={styles.logo} onClick={e => { e.preventDefault(); navigate('home') }}>
-                        <img src={logoIcon} alt="Logo LOCATEM" />
-                        LOCATEM
-                    </a>
-                </div>
-            </header>
+        <div>
+            <AuthHeader navigate={navigate} />
 
             <main>
                 <div className={styles.topo}>
@@ -58,8 +69,13 @@ export default function Login({ navigate }: LoginProps) {
                             type="email"
                             placeholder="seu@email.com"
                             value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            required
+                            onChange={e => {
+                                setEmail(e.target.value)
+                                if (emailErrState.active) setEmailErrState({ active: false, shake: false })
+                            }}
+                            status={emailErrState.active ? 'erro' : ''}
+                            error={emailErrState.active ? 'Preencha de forma correta para continuar' : ''}
+                            shake={emailErrState.shake}
                         />
 
                         <PasswordField
@@ -67,24 +83,36 @@ export default function Login({ navigate }: LoginProps) {
                             label="Senha"
                             placeholder="Digite sua senha"
                             value={senha}
-                            onChange={e => setSenha(e.target.value)}
-                            required
+                            onChange={e => {
+                                setSenha(e.target.value)
+                                if (senhaErrState.active) setSenhaErrState({ active: false, shake: false })
+                            }}
+                            status={senhaErrState.active ? 'erro' : ''}
+                            error={senhaErrState.active ? 'Preencha de forma correta para continuar' : ''}
+                            shake={senhaErrState.shake}
                         />
 
                         {error && <p className={styles.errorMsg}>{error}</p>}
 
-                        <a href="#" className={styles.esqueceuSenha}>
+                        <button
+                            className={styles.esqueceuSenha}
+                            onClick={e => { e.preventDefault(); navigate('recuperarSenha') }}
+                        >
                             Esqueceu sua senha?
-                        </a>
+                        </button>
 
-                        <button type="submit" className={styles.btnEntrar} disabled={btnDisabled}>
-                            {submitting ? 'Entrando...' : 'Entrar'}
+                        <button type="submit" className={styles.btnEntrar}>
+                            Entrar
                         </button>
                     </form>
 
                     <div className={styles.semConta}>
                         <p>Não tem uma conta?</p>
-                        <a href="#" onClick={e => { e.preventDefault(); navigate('cadastro') }}>Criar conta</a>
+                        <button
+                            onClick={e => { e.preventDefault(); navigate('cadastro') }}
+                        >
+                            Criar conta
+                        </button>
                     </div>
                 </div>
             </main>

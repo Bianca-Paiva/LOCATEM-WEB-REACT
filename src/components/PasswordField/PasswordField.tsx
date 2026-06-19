@@ -11,6 +11,7 @@ interface PasswordFieldProps extends InputHTMLAttributes<HTMLInputElement> {
     status?: 'erro' | 'sucesso' | ''
     strengthResult?: PasswordStrengthResult
     showRequirements?: boolean
+    shake?: boolean
 }
 
 export default function PasswordField({
@@ -19,6 +20,7 @@ export default function PasswordField({
     status = '',
     strengthResult,
     showRequirements = false,
+    shake = false,
     ...props
 }: PasswordFieldProps) {
     const [visible, setVisible] = useState(false)
@@ -27,7 +29,7 @@ export default function PasswordField({
     const reqVisible = showRequirements && (focused || (props.value as string)?.length > 0)
 
     return (
-        <div className={styles.campoSenha}>
+        <div className={`${styles.campoSenha} ${shake ? styles.shake : ''}`}>
             <label htmlFor={props.id} className={styles.label}>
                 {label}
             </label>

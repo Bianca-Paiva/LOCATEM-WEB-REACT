@@ -1,0 +1,27 @@
+.customButton {
+    width: 100%;
+    height: 55px;
+    border: none;
+    border-radius: 16px;
+    background-color: #FFCA00;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+/* Efeito de clique físico */
+.customButton:active {
+    transform: scale(0.99);    /* Dá um efeito leve de clique diminuindo 1% */
+}
+
+/* Estilo para quando o botão estiver desativado (opcional) */
+.customButton:hover:not(:disabled) {
+    background-color: #e6b800;
+}
+
+.customButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

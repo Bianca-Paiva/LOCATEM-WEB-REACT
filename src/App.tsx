@@ -1,35 +1,28 @@
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import Login from './pages/Login/Login';
-import Cadastro from './pages/Cadastro/Cadastro';
-import { Home } from './pages/Home/Home';
-import './styles/global.css';
+import Login from './pages/Login/Login'
+import Cadastro from './pages/Cadastro/Cadastro'
+import RecuperarSenha from './pages/RecuperarSenha/InformeEmail/InformeEmail'
+import InformeToken from './pages/RecuperarSenha/InformeToken/InformeToken'
+import InformeNovaSenha from './pages/RecuperarSenha/InformeNovaSenha/InformeNovaSenha'
 
-// Criamos um mini wrapper para injetar o navigate que suas telas antigas esperam
-const LoginWrapper = () => {
-  const navigate = useNavigate();
-  // Transforma o fluxo de rota em string como seu código antigo lia
-  const handleNavigate = (route: string) => navigate(`/${route}`);
-  return <Login navigate={handleNavigate} />;
-};
-
-const CadastroWrapper = () => {
-  const navigate = useNavigate();
-  const handleNavigate = (route: string) => navigate(`/${route}`);
-  return <Cadastro navigate={handleNavigate} />;
-};
+import { useRouter } from './router/useRouter'
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
-        
-        {/* Usamos os wrappers temporários para aceitar seu código atual sem erros */}
-        <Route path="/login" element={<LoginWrapper />} />
-        <Route path="/cadastro" element={<CadastroWrapper />} />
-        
-        <Route path="/home" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    const { route, navigate } = useRouter()
+
+    if (route === 'login')
+        return <Login navigate={navigate} />
+
+    if (route === 'cadastro')
+        return <Cadastro navigate={navigate} />
+
+    if (route === 'recuperarSenha')
+        return <RecuperarSenha navigate={navigate} />
+
+    if (route === 'informeToken')
+        return <InformeToken navigate={navigate} />
+
+    if (route === 'informeNovaSenha')
+        return <InformeNovaSenha navigate={navigate} />
+
+    return null
 }

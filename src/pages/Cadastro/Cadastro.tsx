@@ -13,7 +13,7 @@ import {
 } from '../../hooks/useMasks'
 import { criarUsuario } from '../../services/authService'
 import type { Route } from '../../router/useRouter'
-import logoIcon from '../../assets/LogoIcon.png'
+import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
 import styles from './Cadastro.module.css'
 
 interface CadastroProps {
@@ -130,15 +130,8 @@ export default function Cadastro({ navigate }: CadastroProps) {
     }
 
     return (
-        <div className={styles.app}>
-            <header className={styles.headerDesktop}>
-                <div className={styles.linhaTopo}>
-                    <a href="#" className={styles.logo} onClick={e => { e.preventDefault(); navigate('home') }}>
-                        <img src={logoIcon} alt="Logo LOCATEM" />
-                        LOCATEM
-                    </a>
-                </div>
-            </header>
+        <div>
+            <AuthHeader navigate={navigate} />
 
             <main>
                 <div className={styles.topo}>
@@ -178,43 +171,90 @@ export default function Cadastro({ navigate }: CadastroProps) {
                     </div>
 
                     <form onSubmit={handleSubmit}>
-                        <FormInput id="nome" label="Nome completo" type="text"
-                            placeholder="Digite seu nome completo" value={nome}
-                            onChange={e => setNome(e.target.value)} onBlur={handleNomeBlur} required
+                        <FormInput
+                            id="nome"
+                            label="Nome completo"
+                            type="text"
+                            placeholder="Digite seu nome completo"
+                            value={nome}
+                            onChange={e => setNome(e.target.value)}
+                            onBlur={handleNomeBlur}
+                            required
                             status={touched.nome ? (errors.nome ? 'erro' : nome ? 'sucesso' : '') : ''}
-                            error={errors.nome} />
+                            error={errors.nome}
+                        />
 
-                        <FormInput id="email" label="E-mail" type="email"
-                            placeholder="seu@email.com" value={email}
-                            onChange={e => setEmail(e.target.value)} required />
+                        <FormInput
+                            id="email"
+                            label="E-mail"
+                            type="email"
+                            placeholder="seu@email.com"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            required
+                        />
 
-                        <FormInput id="telefone" label="Telefone" type="tel" inputMode="numeric"
-                            placeholder="(11) 91234-5678" value={telefone}
-                            onChange={handleTelefoneChange} onBlur={handleTelefoneBlur} required
+                        <FormInput
+                            id="telefone"
+                            label="Telefone"
+                            type="tel"
+                            inputMode="numeric"
+                            placeholder="(11) 91234-5678"
+                            value={telefone}
+                            onChange={handleTelefoneChange}
+                            onBlur={handleTelefoneBlur}
+                            required
                             status={touched.telefone ? (errors.telefone ? 'erro' : telefone ? 'sucesso' : '') : ''}
-                            error={errors.telefone} />
+                            error={errors.telefone}
+                        />
 
-                        <PasswordField id="senha" label="Senha" placeholder="Crie uma senha segura"
-                            value={senha} onChange={e => setSenha(e.target.value)} required
-                            strengthResult={strengthResult} showRequirements />
+                        <PasswordField
+                            id="senha"
+                            label="Senha"
+                            placeholder="Crie uma senha segura"
+                            value={senha}
+                            onChange={e => setSenha(e.target.value)}
+                            required
+                            strengthResult={strengthResult}
+                            showRequirements
+                        />
 
-                        <PasswordField id="confirmarSenha" label="Confirmar senha"
-                            placeholder="Digite a senha novamente" value={confirmarSenha}
-                            onChange={e => setConfirmarSenha(e.target.value)} required
-                            status={confirmStatus()} error={confirmError()} />
+                        <PasswordField
+                            id="confirmarSenha"
+                            label="Confirmar senha"
+                            placeholder="Digite a senha novamente"
+                            value={confirmarSenha}
+                            onChange={e => setConfirmarSenha(e.target.value)}
+                            required
+                            status={confirmStatus()}
+                            error={confirmError()}
+                        />
 
-                        <FormInput id="documento" label={isCNPJ ? 'CNPJ' : 'CPF'} type="text" inputMode="numeric"
-                            placeholder={isCNPJ ? '00.000.000/0000-00' : '000.000.000-00'} value={documento}
-                            onChange={handleDocumentoChange} onBlur={handleDocumentoBlur} required
+                        <FormInput
+                            id="documento"
+                            label={isCNPJ ? 'CNPJ' : 'CPF'}
+                            type="text" inputMode="numeric"
+                            placeholder={isCNPJ ? '00.000.000/0000-00' : '000.000.000-00'}
+                            value={documento}
+                            onChange={handleDocumentoChange}
+                            onBlur={handleDocumentoBlur}
+                            required
                             status={touched.documento ? (errors.documento ? 'erro' : documento ? 'sucesso' : '') : ''}
-                            error={errors.documento} />
+                            error={errors.documento}
+                        />
 
-                        <FormInput id="endereco" label="Endereço" type="text"
-                            placeholder="Digite seu endereço completo" value={endereco}
-                            onChange={e => setEndereco(e.target.value)} required />
+                        <FormInput
+                            id="endereco"
+                            label="Endereço"
+                            type="text"
+                            placeholder="Digite seu endereço completo"
+                            value={endereco}
+                            onChange={e => setEndereco(e.target.value)}
+                            required
+                        />
 
-                        <button type="submit" className={styles.btnCriarConta} disabled={btnDisabled}>
-                            {submitting ? 'Criando conta...' : 'Criar conta'}
+                        <button type="submit" className={styles.btnCriarConta}>
+                            Criar conta
                         </button>
                     </form>
 
