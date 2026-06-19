@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
-import menuHamburguer from '../../assets/home.png'
+import menuHamburguer from '../../assets/menuHamburguer.png'
 import carrinho from '../../assets/carrinho.png'
 import lupa from '../../assets/lupa.png'
 import chat from '../../assets/chat.png'
