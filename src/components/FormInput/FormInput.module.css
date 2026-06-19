@@ -23,8 +23,8 @@
 }
 
 .input.erro {
-    border: 1px solid #ff4d4d;
-    box-shadow: 0px 4px 4px 0px rgba(255, 77, 77, 0.25);
+    border: 1px solid #E11D48;
+    box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
 }
 
 .input.sucesso {
@@ -33,7 +33,7 @@
 
 .error {
     font-size: 13px;
-    color: #ff4d4d;
+    color: #E11D48;
     margin-top: -20px;
     margin-bottom: 20px;
     display: block;

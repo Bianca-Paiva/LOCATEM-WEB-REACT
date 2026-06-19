@@ -5,7 +5,8 @@ export type Route =
   | "login"
   | "cadastro"
   | "recuperarSenha"
-  | "informeToken";
+  | "informeToken"
+  | "informeNovaSenha";
 
 function getRouteFromHash(): Route {
   const hash = window.location.hash.replace("#", "").split("?")[0];
@@ -14,6 +15,7 @@ function getRouteFromHash(): Route {
   if (hash === "cadastro") return "cadastro";
   if (hash === "recuperarSenha") return "recuperarSenha";
   if (hash === "informeToken") return "informeToken";
+  if (hash === "informeNovaSenha") return "informeNovaSenha";
 
   return "login";
 }

@@ -32,14 +32,6 @@ main {
     flex-direction: column;
 }
 
-.errorMsg {
-    font-size: 13px;
-    color: #ff4d4d;
-    margin-top: -10px;
-    margin-bottom: 16px;
-}
-
-
 .esqueceuSenha {
     display: block;
     margin-left: auto;

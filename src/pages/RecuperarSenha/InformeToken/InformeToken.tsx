@@ -41,7 +41,9 @@ export default function InformeToken({ navigate }: InformeTokenProps) {
 
         setHasError(false);
         console.log("Token enviado para validação:", token);
+        
         // Lógica para avançar para a rota de criar nova senha
+        navigate('informeNovaSenha');
     };
 
     // Função disparada ao clicar para reenviar
