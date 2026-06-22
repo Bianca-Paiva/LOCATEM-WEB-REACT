@@ -5,7 +5,7 @@
 }
 
 .label {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .error {
-    font-size: 13px;
+    font-size: 14px;
     color: #E11D48;
     margin-top: -20px;
     margin-bottom: 20px;

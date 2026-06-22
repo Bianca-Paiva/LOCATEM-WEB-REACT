@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     flex: 1;
+    max-width: 900px;
 }
 
 /* Remove o flex: 1 do último item para a linha não empurrar a última etapa */
