@@ -2,7 +2,7 @@ import { useState } from 'react'
 import type { InputHTMLAttributes } from 'react'
 import olhoAberto from '../../assets/olhoAberto.svg'
 import olhoFechado from '../../assets/olhoFechado.svg'
-import styles from './PasswordField.module.css'
+import styles from './PasswordInput.module.css'
 import type { PasswordStrengthResult } from '../../hooks/usePasswordStrength'
 
 interface PasswordFieldProps extends InputHTMLAttributes<HTMLInputElement> {

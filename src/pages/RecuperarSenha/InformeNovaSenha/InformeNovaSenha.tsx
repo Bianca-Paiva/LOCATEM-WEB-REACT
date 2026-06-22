@@ -3,10 +3,10 @@ import styles from "./InformeNovaSenha.module.css"
 import AuthHeader from "../../../components/Header/AuthHeader/AuthHeader";
 import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
 import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
-import PasswordField from '../../../components/PasswordField/PasswordField'
+import PasswordField from '../../../components/PasswordInput/PasswordInput'
 import BtnPrincipal from "../../../components/BtnPrincipal/BtnPrincipal";
-import PasswordRequirements from '../../../components/RecuperarSenha/PasswordRequirements/PasswordRequirements'
-import PasswordStrengthMeter from '../../../components/PasswordStrengthMeter/PasswordStrengthMeter'
+import PasswordValidationList from '../../../components/RecuperarSenha/PasswordValidationList/PasswordValidationList'
+import PasswordStrengthMeter from '../../../components/PasswordMedidor/PasswordStrengthMeter'
 import { checkPasswordStrength } from '../../../hooks/usePasswordStrength'
 import type { Route } from "../../../router/useRouter";
 
@@ -83,9 +83,15 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
 
                         {/* COLUNA DA DIREITA: Dicas de Segurança de Senha */}
                         <div className={styles.colunaDireita}>
-                            <PasswordRequirements
-                                requirements={strengthResult.requirements}
-                                value={senha}
+                            <PasswordValidationList
+                                title="Dicas de segurança"
+                                items={[
+                                    { label: 'Pelo menos 8 caracteres', valid: false },
+                                    { label: 'Pelo menos uma letra maiúscula', valid: false },
+                                    { label: 'Pelo menos uma letra minúscula', valid: false },
+                                    { label: 'Pelo menos um número', valid: true },
+                                    { label: 'Pelo menos um caractere especial', valid: false },
+                                ]}
                             />
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import type { ChangeEvent } from 'react'
 import FormInput from '../../components/FormInput/FormInput'
-import PasswordField from '../../components/PasswordField/PasswordField'
+import PasswordField from '../../components/PasswordInput/PasswordInput'
 import { checkPasswordStrength } from '../../hooks/usePasswordStrength'
 import {
     maskCPF,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
 import FormInput from '../../components/FormInput/FormInput'
-import PasswordField from '../../components/PasswordField/PasswordField'
+import PasswordField from '../../components/PasswordInput/PasswordInput'
 import { loginUsuario } from '../../services/authService'
 import type { Route } from '../../router/useRouter'
 import styles from './Login.module.css'
