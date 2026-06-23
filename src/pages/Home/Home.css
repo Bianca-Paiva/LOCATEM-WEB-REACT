@@ -1,0 +1,20 @@
+/* Home.css */
+
+.home-container {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.home-main {
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.products-grid {
+  max-width: 1428px;
+  margin: 24px auto 0;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}

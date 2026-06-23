@@ -1,12 +1,11 @@
-
 import Header from '../../components/Header/Header'; 
 import { Banner } from '../../components/Banner/Banner';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import type { Route } from '../../router/useRouter'
+import type { Route } from '../../router/useRouter';
+import './Home.css'; // Importando o novo arquivo CSS
 
-
-// Dados dos produtos iguais ao do seu print de referência
+// Dados dos produtos
 const MOCK_PRODUCTS = [
   {
     id: 1,
@@ -14,10 +13,10 @@ const MOCK_PRODUCTS = [
     brand: 'MS Ferramentas',
     price: '15,00',
     image: 'src/assets/Furadeira1.webp',
-   imageVerificado:'src/assets/verificado.png',// Substitua pelas suas imagens reais da pasta assets dps
-   imageNota:'src/assets/StarFull.png',
-   rating: 4.5,
-   reviewCount: 124
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.5,
+    reviewCount: 124
   },
   {
     id: 2,
@@ -25,10 +24,10 @@ const MOCK_PRODUCTS = [
     brand: 'WZ Ferramentas',
     price: '30,00',
     image: 'src/assets/pistolaPintura.png',
-   imageVerificado:'src/assets/verificado.png',// Substitua pelas suas imagens reais da pasta assets dps
-   imageNota:'src/assets/StarFull.png',
-   rating: 4.2,
-   reviewCount: 87
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.2,
+    reviewCount: 87
   },
   {
     id: 3,
@@ -36,10 +35,10 @@ const MOCK_PRODUCTS = [
     brand: 'João Ferramentas',
     price: '28,00',
     image: 'src/assets/Furadeira3.webp',
-   imageVerificado:'src/assets/verificado.png',// Substitua pelas suas imagens reais da pasta assets dps
-   imageNota:'src/assets/StarFull.png',
-   rating: 4.7,
-   reviewCount: 201
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.7,
+    reviewCount: 201
   },
   {
     id: 4,
@@ -47,87 +46,74 @@ const MOCK_PRODUCTS = [
     brand: 'JB Ferramentas',
     price: '18,00',
     image: 'src/assets/aparadorGrama.webp',
-    imageVerificado:'src/assets/verificado.png',// Substitua pelas suas imagens reais da pasta assets dps
-   imageNota:'src/assets/StarFull.png',
-   rating: 4.1,
-   reviewCount: 45
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.1,
+    reviewCount: 45
   },
-
-   {
+  {
     id: 5,
     title: 'Parafusadeira e Furadeira WAP 12V',
     brand: 'JB Ferramentas',
     price: '18,00',
     image: 'src/assets/Furadeira4.webp',
-    imageVerificado:'src/assets/verificado.png',// Substitua pelas suas imagens reais da pasta assets dps
-   imageNota:'src/assets/StarFull.png',
-   rating: 4.3,
-   reviewCount: 62
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.3,
+    reviewCount: 62
   },
-
-   {
+  {
     id: 6,
     title: 'Parafusadeira e Furadeira WAP BPF 12V',
     brand: 'JB Ferramentas',
     price: '18,00',
     image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado:'src/assets/verificado.png',// Substitua pelas suas imagens reais da pasta assets dps
-   imageNota:'src/assets/StarFull.png',
-   rating: 4.0,
-   reviewCount: 38
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.0,
+    reviewCount: 38
   },
-
-   {
+  {
     id: 7,
     title: 'Serra circular profissional DESOON 24 Dentes',
     brand: 'JB Ferramentas',
     price: '18,00',
-    image: 'src/assets/aparadorGrama.webp',
-    imageVerificado:'src/assets/verificado.png',// Substitua pelas suas imagens reais da pasta assets dps
-   imageNota:'src/assets/StarFull.png',
-   rating: 4.6,
-   reviewCount: 153
+    image: 'src/assets/aparadorGrama.webp', // Nota: mesma imagem do id 4, ajustar caso necessário
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.6,
+    reviewCount: 153
   },
-
-   {
+  {
     id: 8,
     title: 'Parafusadeira e furadeira WAP 12V Cinza',
     brand: 'JB Ferramentas',
     price: '18,00',
     image: 'src/assets/parafusadeira-wap.png',
-    imageVerificado:'src/assets/verificado.png',// Substitua pelas suas imagens reais da pasta assets dps
-   imageNota:'src/assets/StarFull.png',
-   rating: 3.9,
-   reviewCount: 27
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 3.9,
+    reviewCount: 27
   }
 ];
 
-  interface HomeProps {
-      navigate: (route: Route) => void
-  }
-  
-  export default function home({ navigate }: HomeProps)
-{
+interface HomeProps {
+  navigate: (route: Route) => void;
+}
 
+export default function Home({ navigate }: HomeProps) {
   return (
-    <div style={{ minHeight: '100vh', width: '100%' }}>
+    <div className="home-container">
       <Header navigate={navigate} currentRoute="home" />
       
-    <main style={{ paddingTop: 0, marginTop: 0 }}>
+      <main className="home-main">
         <Banner />
         
         {/* Renderiza o título "Ferramentas" e as pílulas de filtro */}
         <CategoryFilter />
         
         {/* Grid de Produtos alinhado com o container principal */}
-        <div style={{
-          maxWidth: '1428px',
-          margin: '24px auto 0',
-          padding: '0 16px',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-          gap: '20px'
-        }}>
+        <div className="products-grid">
           {MOCK_PRODUCTS.map((product) => (
             <ProductCard
               key={product.id}
@@ -139,12 +125,10 @@ const MOCK_PRODUCTS = [
               imageNota={product.imageNota}
               rating={product.rating}
               reviewCount={product.reviewCount}
-
             />
           ))}
         </div>
       </main>
     </div>
   );
-
-};
+}

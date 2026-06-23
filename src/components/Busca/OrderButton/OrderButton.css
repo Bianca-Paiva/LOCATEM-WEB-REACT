@@ -1,0 +1,32 @@
+/* Atualizado para bater com className="button-order-container" */
+.button-order-container {
+  display: flex;
+ justify-content: flex-start;
+  font-family: Arial, sans-serif;
+}
+
+/* Mantido igual, já que bate com className="sort-label" */
+.sort-label {
+  font-weight: bold;
+  font-size: 21px;
+  align-self: start;
+  margin-right: 6px;
+   justify-content: flex-start;
+}
+
+/* Atualizado para bater com className="button-order-box" */
+.button-order-box {
+   justify-content: flex-start;
+  color: #3f3f3f;
+  padding: 2px 6px;
+  font-size: 15px;
+  background-color:  var(--color-bg-card);
+  border: 2px solid #c2c2c2;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.button-order-box:focus {
+   justify-content: flex-start;
+  border-color: var(--color-primary);;
+}

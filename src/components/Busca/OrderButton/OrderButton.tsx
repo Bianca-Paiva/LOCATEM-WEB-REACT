@@ -1,24 +1,24 @@
-// import './OrderButton.module.css'; // Importando o arquivo de estilos
+import './OrderButton.css';
 
-// export function SortSelect({ value, onChange, options }) {
-//   return (
-//     <div className="sort-container">
-//       <label htmlFor="sort-select" className="sort-label">
-//         Ordenar por
-//       </label>
+ export function ButtonOrder({ value, onChange, options }) {
+   return (
+     <div className="button-order-container">
+       <label htmlFor="button-order-select" className="sort-label">
+         Ordenar por
+       </label>
       
-//       <select 
-//         id="sort-select"
-//         className="sort-select-box"
-//         value={value} 
-//         onChange={(e) => onChange(e.target.value)}
-//       >
-//         {options.map((option) => (
-//           <option key={option.value} value={option.value}>
-//             {option.label}
-//           </option>
-//         ))}
-//       </select>
-//     </div>
-//   );
-// }
+       <select 
+         id="button-order"
+         className="button-order-box"
+         value={value} 
+         onChange={(e) => onChange(e.target.value)}
+       >
+         {options.map((option) => (
+           <option key={option.value} value={option.value}>
+             {option.label}
+           </option>
+         ))}
+       </select>
+     </div>
+   );
+}
