@@ -4,6 +4,8 @@ import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
+import type { Route } from '../../router/useRouter'
+
 
 // Dados dos produtos iguais ao do seu print de referência
 const MOCK_PRODUCTS = [
@@ -101,13 +103,16 @@ const MOCK_PRODUCTS = [
   }
 ];
 
-export const Home: React.FC = () => {
-  const navigate = useNavigate();
-  const handleNavigate = (route: string) => navigate(`/${route}`);
+  interface HomeProps {
+      navigate: (route: Route) => void
+  }
+  
+  export default function home({ navigate }: HomeProps)
+{
 
   return (
     <div style={{ minHeight: '100vh', width: '100%' }}>
-      <Header navigate={handleNavigate} currentRoute="home" />
+      <Header navigate={navigate} currentRoute="home" />
       
     <main style={{ paddingTop: 0, marginTop: 0 }}>
         <Banner />
@@ -142,4 +147,5 @@ export const Home: React.FC = () => {
       </main>
     </div>
   );
+
 };

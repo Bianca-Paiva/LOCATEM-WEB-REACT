@@ -3,11 +3,16 @@ import Cadastro from './pages/Cadastro/Cadastro'
 import RecuperarSenha from './pages/RecuperarSenha/InformeEmail/InformeEmail'
 import InformeToken from './pages/RecuperarSenha/InformeToken/InformeToken'
 import InformeNovaSenha from './pages/RecuperarSenha/InformeNovaSenha/InformeNovaSenha'
+import  Home  from './pages/Home/Home'
+
 
 import { useRouter } from './router/useRouter'
 
 export default function App() {
     const { route, navigate } = useRouter()
+
+       if (route === 'home')
+        return <Home navigate={navigate} />
 
     if (route === 'login')
         return <Login navigate={navigate} />

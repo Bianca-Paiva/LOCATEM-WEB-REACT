@@ -7,6 +7,13 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    background: linear-gradient(
+        to bottom,
+        var(--color-primary) 0%,
+        var(--color-primary-light) 35%,
+        var(--color-primary-soft) 70%,
+        transparent 100%
+    );
 }
 
 .linhaTopo {
@@ -298,8 +305,15 @@
         flex-direction: column;
         width: 100%;
         padding: 30px 0 0; 
-        max-width: 1700px;
+        max-width: 2000px;
         margin: 0 auto;
+        background: linear-gradient(
+        to bottom,
+        var(--color-primary) 0%,
+        var(--color-primary-light) 35%,
+        var(--color-primary-soft) 70%,
+        transparent 100%
+    );
     }
 
     .linhaTopo {
