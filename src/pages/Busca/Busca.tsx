@@ -102,16 +102,16 @@ const MOCK_PRODUCTS = [
   }
 ];
 
-  interface HomeProps {
+  interface BuscaProps {
       navigate: (route: Route) => void
   }
   
-  export default function home({ navigate }: HomeProps)
+  export default function busca({ navigate }: BuscaProps)
 {
 
   return (
     <div style={{ minHeight: '100vh', width: '100%' }}>
-      <Header navigate={navigate} currentRoute="home" />
+      <Header navigate={navigate} currentRoute="busca" />
       
     <main style={{ paddingTop: 0, marginTop: 0 }}>
         <Banner />
