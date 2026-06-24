@@ -304,8 +304,8 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: 30px 0 0; 
-        max-width: 5000px;
+        padding: 24px 24px 0; 
+        max-width: 100%;
         margin: 0 auto;
         background: linear-gradient(
         to bottom,
@@ -322,11 +322,11 @@
            1fr = logo (esquerda) 
            minmax(300px, 900px) = barra pesquisa (meio, ocupa até 900px garantindo tamanho)
            1fr = chat (direita) */
-        grid-template-columns: 1fr minmax(300px, 900px) 1fr; 
+        grid-template-columns: 1fr minmax(250px, 700px) 1fr; 
         align-items: center;
         width: 100%;
-        padding: 0 var(--spacing-xl);
-        gap: 35px;
+        padding: 0 24px;
+        gap: 20px;
     }
 
     .logo {
@@ -415,11 +415,11 @@
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        gap: 70px;
-        padding: 24px var(--spacing-xl) 0px; 
+        gap: 50px;
+        padding: 18px 24px 0px; 
         width: 100%;
-        max-width: 2000px;
-        margin: 0 auto 60px; /* Altere o '20px' para o espaço que você quiser deixar do banner (ex: 10px, 15px, 0px) */
+        max-width: 100%;
+        margin: 0 auto 40px; /* Altere o '20px' para o espaço que você quiser deixar do banner (ex: 10px, 15px, 0px) */
     }
 
     .menuNavDesktop a {

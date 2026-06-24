@@ -1,3 +1,19 @@
+/* --- CSS Corrigido e Otimizado para Componente de Card --- */
+
+/* 1. Definição Global de Box-Sizing (Crucial para contenção) */
+*, *::before, *::after {
+  box-sizing: border-box; /* Previne que padding/border aumentem o tamanho do elemento e quebrem o layout */
+}
+
+/* Variáveis para consistência (use as mesmas do seu projeto) */
+:root {
+  --color-bg-card: #FFFFFF;
+  --spacing-md: 16px;
+  --transition-fast: 0.15s;
+  --color-text-dark: #333;
+  --color-text-muted: #666;
+}
+
 .product-card {
   background: var(--color-bg-card);
   border-radius: 12px;
@@ -8,6 +24,10 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   border: 1px solid #F3F4F6;
   transition: transform var(--transition-fast);
+  
+  /* CORREÇÃO CHAVE: Impede que qualquer elemento saia do card */
+  overflow: hidden; 
+  min-width: 0; /* Permite que o card encolha corretamente em flex-grids */
 }
 
 .product-card:hover {
@@ -32,14 +52,15 @@
 .product-title {
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-text-dark, #333);
+  color: var(--color-text-dark);
   line-height: 1.4;
-  height: 40px;
+  height: 40px; /* Limita a altura total */
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; /* Garante no máximo 2 linhas de texto */
   line-clamp: 2;
-  overflow: hidden;
+  overflow: hidden; /* Trunca o texto se passar */
+  max-width: 100%; /* Garante contenção horizontal */
 }
 
 .product-brand-row {
@@ -50,7 +71,7 @@
 
 .product-brand {
   font-size: 11.8px;
-  color: #0a0a0a;
+  color: #000000;
   font-weight: 600;
 }
 
@@ -67,11 +88,13 @@
   font-weight: bold;
 }
 
-/* --- NOVO: Footer que divide o Preço e a Avaliação --- */
+/* --- NOVO E CORRIGIDO: Footer que divide o Preço e a Avaliação --- */
+
+/* Padrão: Lado a lado (row) em telas maiores */
 .product-footer {
   display: flex;
-  justify-content: space-between; /* Empurra preço pra esquerda e avaliação pra direita */
-  align-items: center; /* Centraliza verticalmente o bloco */
+  justify-content: space-between; /* Empurra preço pra esquerda e nota pra direita */
+  align-items: center; /* Centraliza verticalmente o bloco se tiver tamanhos diferentes */
   margin-top: 4px;
 }
 
@@ -84,18 +107,18 @@
 .price-prefix {
   font-size: 14px;
   font-weight: 700;
-  color: var(--color-text-dark, #333);
+  color: var(--color-text-dark);
 }
 
 .price-value {
   font-size: 20px;
   font-weight: 800;
-  color: var(--color-text-dark, #333);
+  color: var(--color-text-dark);
 }
 
 .price-suffix {
   font-size: 12px;
-  color: var(--color-text-muted, #666);
+  color: var(--color-text-muted);
   margin-left: 2px;
 }
 
@@ -108,18 +131,51 @@
 .product-rating {
   display: flex;
   align-items: center; 
-  gap: 4px;         
+  gap: 4px;          
 }
 
 .rating-value {
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-text-dark, #333);
+  color: var(--color-text-dark);
 }
 
 .rating-count {
   font-size: 10px;
-  color: var(--color-text-muted, #888);
-  
+  color: #888;
 }
 
+/* --- Media Mobile: Abaixo de 768px --- */
+@media (max-width: 767px) {
+  
+  /* CORREÇÃO CHAVE: Preço e Avaliação EMPILHAM (column) em telas estreitas */
+  .product-footer {
+    flex-direction: column;
+    align-items: flex-start; /* Alinha ambos à esquerda no mobile */
+    gap: 6px; /* Espaço vertical entre preço e nota */
+  }
+
+  /* Garante que os blocos internos ocupem toda a largura */
+  .product-price-row,
+  .product-rating {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Ajustes de tamanho mantidos e refinados */
+  .rating-count {
+    display: none; /* Esconde a contagem no mobile */
+  }
+
+  .estrela-avaliação {
+    width: 14px; /* Estrela ligeiramente menor */
+  }
+
+  .rating-value {
+    font-size: 12px;
+  }
+
+  .price-value {
+    font-size: 16px; /* Preço menor para caber melhor, mas ainda legível */
+  }
+}

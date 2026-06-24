@@ -1,0 +1,82 @@
+/* --- src/components/Pagination/Paginacao.css --- */
+
+/* CORREÇÃO: O nome da classe agora bate com o arquivo .tsx */
+.paginacao-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Isso garante que fique no centro! */
+  gap: 12px;
+  margin: 48px 0;
+  width: 100%;
+  flex-wrap: wrap; 
+}
+
+/* Estilo Base dos Botões - Design Moderno */
+.page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  background-color: #f3f4f6;
+  border-radius: 20px; /* Formato de pílula para Anterior/Próxima */
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Transição suave */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra bem leve */
+}
+
+/* Estilo específico apenas para os números (Círculos) */
+.page-btn.page-number-btn {
+  padding: 0;
+  width: 40px;
+  border-radius: 50%; /* Faz os números ficarem em círculos perfeitos */
+}
+
+/* Hover (quando passa o mouse) */
+.page-btn:hover:not(:disabled) {
+  background-color: #e5e7eb;
+  transform: translateY(-2px); /* Efeito de flutuar levemente */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Botão Ativo (Página Atual) */
+.page-btn.active {
+  background-color: #ffcc00; /* Cor da sua marca */
+  color: #000;
+  box-shadow: 0 4px 12px rgba(255, 204, 0, 0.4); /* Sombra brilhante */
+  pointer-events: none; 
+}
+
+/* Botão Desativado */
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  box-shadow: none;
+  transform: none;
+}
+
+.page-info-mobile {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0 8px;
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+  .page-number-btn {
+    display: none; 
+  }
+}
+
+@media (min-width: 481px) {
+  .page-info-mobile {
+    display: none;
+  }
+}

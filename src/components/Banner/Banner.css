@@ -2,13 +2,13 @@
 /* Container principal do Banner */
 .banner-container {
   width: 100%;
-  max-width: 1428px;
+  max-width: 100%;
   max-height: 500px;
   height: 100%;
   
   /* Ajustes para subir o banner: */
   margin: 0 auto;               /* Centraliza horizontalmente e zera as margens superior/inferior */
-  padding: 0 var(--spacing-md); /* Mudado de 10 para 0 no topo/base para eliminar o espaço */
+  padding: 0; /* Removido padding para aproveitar melhor o espaço */
 }
 
 /* O Swiper agora assume o tamanho exato do seu HTML antigo */
