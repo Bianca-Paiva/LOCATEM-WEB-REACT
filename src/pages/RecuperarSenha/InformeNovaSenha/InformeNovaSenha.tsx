@@ -1,13 +1,33 @@
-import { useState } from 'react'
-import styles from "./InformeNovaSenha.module.css"
+// CSS DA PÁGINA
+import styles from "./InformeNovaSenha.module.css";
+
+// COMPONENTES 
 import AuthHeader from "../../../components/Header/AuthHeader/AuthHeader";
 import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
 import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
-import PasswordField from '../../../components/PasswordInput/PasswordInput'
+import PasswordField from "../../../components/PasswordInput/PasswordInput";
 import BtnPrincipal from "../../../components/BtnPrincipal/BtnPrincipal";
-import PasswordValidationList from '../../../components/RecuperarSenha/PasswordValidationList/PasswordValidationList'
-import PasswordStrengthMeter from '../../../components/PasswordMedidor/PasswordStrengthMeter'
-import { checkPasswordStrength } from '../../../hooks/usePasswordStrength'
+import PasswordValidationList from "../../../components/RecuperarSenha/PasswordValidationList/PasswordValidationList";
+import PasswordStrengthMeter from "../../../components/PasswordMedidor/PasswordStrengthMeter";
+import Alerta from "../../../components/RecuperarSenha/Alerta/Alerta";
+
+
+// HOOKS / REGRAS DE NEGÓCIO / VALIDAÇÕES
+import { useState } from "react";
+
+import { checkPasswordStrength } from "../../../hooks/usePasswordStrength";
+
+import {
+    getConfirmPasswordError,
+    getConfirmPasswordStatus,
+    getPasswordValidations,
+    validatePasswordForm,
+} from "../../../hooks/passwordValidation";
+
+import { PASSWORD_MESSAGES } from "../../../hooks/passwordMessages";
+
+
+// ROTAS 
 import type { Route } from "../../../router/useRouter";
 
 interface InformeNovaSenhaProps {
@@ -18,64 +38,80 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
     const [senha, setSenha] = useState('')
     const [confirmarSenha, setConfirmarSenha] = useState('')
 
+    // Estado para controlar se o alerta deve aparecer
+    const [alerta, setAlerta] = useState<{ titulo: string, mensagem: string } | null>(null)
+
+    const [senhaErrState, setSenhaErrState] = useState({ active: false, shake: false })
+    const [confirmErrState, setConfirmErrState] = useState({ active: false, shake: false })
+
     const strengthResult = checkPasswordStrength(senha)
-    const senhasIguais = senha === confirmarSenha
-
-    const confirmError = (): string => {
-        if (!confirmarSenha) return ''
-
-        // Prioridade: se não for igual, avisa. Se for igual mas fraca, avisa.
-        if (!senhasIguais) return 'As senhas não coincidem'
-        if (!strengthResult.isStrong) return 'A senha precisa ser mais forte'
-
-        return ''
-    }
-
-    const confirmStatus = (): 'erro' | 'sucesso' | '' => {
-        if (!confirmarSenha) return ''
-        // Retorna erro se não forem iguais OU se a senha for fraca
-        return (senhasIguais && strengthResult.isStrong) ? 'sucesso' : 'erro'
-    }
-
-    const getValidations = () => {
-        return [
-            { label: 'Pelo menos 8 caracteres', valid: senha.length >= 8 },
-            { label: 'Pelo menos uma letra maiúscula', valid: /[A-Z]/.test(senha) },
-            { label: 'Pelo menos uma letra minúscula', valid: /[a-z]/.test(senha) },
-            { label: 'Pelo menos um número', valid: /\d/.test(senha) },
-            { label: 'Pelo menos um caractere especial', valid: /[!@#$%^&*(),.?":{}|<>]/.test(senha) },
-        ];
-    };
 
     const handleSubmit = () => {
-        // 1. Verifica se a senha é forte
-        if (!strengthResult.isStrong) {
-            alert("A senha precisa ser mais forte. Verifique os critérios de segurança.");
-            return;
-        }
+        setSenhaErrState({ active: false, shake: false })
+        setConfirmErrState({ active: false, shake: false })
 
-        // 2. Verifica se as senhas coincidem
-        if (!senhasIguais) {
-            alert("As senhas não coincidem.");
-            return;
-        }
+        const result = validatePasswordForm(
+            senha,
+            confirmarSenha,
+            strengthResult
+        )
 
-        // 3. Se passou nas validações, prossegue
-        console.log("Senha alterada com sucesso!");
-        // navigate('/proxima-tela'); 
-    };
+        switch (result.type) {
+            case 'required':
+                if (!senha) {
+                    setSenhaErrState({ active: true, shake: true })
+                }
+
+                if (!confirmarSenha) {
+                    setConfirmErrState({ active: true, shake: true })
+                }
+
+                setAlerta(PASSWORD_MESSAGES.REQUIRED)
+                return
+
+            case 'mismatch':
+                setConfirmErrState({ active: true, shake: true })
+                setAlerta(PASSWORD_MESSAGES.MISMATCH)
+                return
+
+            case 'fraca':
+                setSenhaErrState({ active: true, shake: true })
+                setAlerta(PASSWORD_MESSAGES.WEAK)
+                return
+
+            case 'media':
+                setSenhaErrState({ active: true, shake: true })
+                setAlerta(PASSWORD_MESSAGES.MEDIUM)
+                return
+
+            case 'success':
+                console.log('Senha alterada com sucesso!')
+                return
+        }
+    }
+
 
     return (
         <>
             <AuthHeader navigate={navigate} />
 
             <main className={styles.main}>
+
+
                 <Etapas currentStep={3} />
 
                 <PageHeader
                     title="Informe sua nova senha"
                     subtitle=""
                 />
+
+                {alerta && (
+                    <Alerta
+                        titulo={alerta.titulo}
+                        mensagem={alerta.mensagem}
+                        onClose={() => setAlerta(null)}
+                    />
+                )}
 
                 {/* FORM CONTAINER: Alinha todo o bloco centralizado */}
                 <form className={styles.formulario} onSubmit={(e) => e.preventDefault()}>
@@ -90,8 +126,13 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                                 label="Digite sua nova senha"
                                 placeholder="Crie uma senha segura"
                                 value={senha}
-                                onChange={e => setSenha(e.target.value)}
-                                required
+                                onChange={e => {
+                                    setSenha(e.target.value);
+                                    if (senhaErrState.active) setSenhaErrState({ active: false, shake: false });
+                                }}
+                                status={senhaErrState.active ? 'erro' : ''}
+                                error=""
+                                shake={senhaErrState.shake}
                             />
 
                             <PasswordStrengthMeter
@@ -104,10 +145,22 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                                 label="Confirme sua nova senha"
                                 placeholder="Digite a senha novamente"
                                 value={confirmarSenha}
-                                onChange={e => setConfirmarSenha(e.target.value)}
-                                required
-                                status={confirmStatus()}
-                                error={confirmError()}
+                                onChange={e => {
+                                    setConfirmarSenha(e.target.value);
+                                    if (confirmErrState.active) setConfirmErrState({ active: false, shake: false });
+                                }}
+                                status={
+                                    confirmErrState.active
+                                        ? 'erro'
+                                        : getConfirmPasswordStatus(senha, confirmarSenha)
+                                }
+
+                                error={
+                                    confirmErrState.active
+                                        ? ''
+                                        : getConfirmPasswordError(senha, confirmarSenha)
+                                }
+                                shake={confirmErrState.shake}
                             />
                         </div>
 
@@ -115,7 +168,7 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                         <div className={styles.colunaDireita}>
                             <PasswordValidationList
                                 title="Dicas de segurança"
-                                items={getValidations()}
+                                items={getPasswordValidations(senha)}
                             />
                         </div>
                     </div>

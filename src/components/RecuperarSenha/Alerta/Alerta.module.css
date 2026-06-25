@@ -1,0 +1,59 @@
+.alertContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    background-color: #fff1f2; 
+    border: 1px solid #fecaca; 
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(225, 29, 71, 0.05); 
+    position: relative;
+    max-width: 100%;
+}
+
+.alertIcon {
+    background-color: #fecaca; 
+    color: #e11d48; 
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.alertContent {
+    flex: 1;
+}
+
+.alertContent h4 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    color: #9f1239; 
+}
+
+.alertContent p {
+    margin: 0;
+    font-size: 14px;
+    color: #881337; 
+    line-height: 1.4;
+}
+
+.closeBtn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #e11d48; 
+    padding: 0;
+    line-height: 1;
+    margin-top: -4px;
+    opacity: 0.7;
+}
+
+.closeBtn:hover {
+    opacity: 1;
+}
