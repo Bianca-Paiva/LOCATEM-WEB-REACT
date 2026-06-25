@@ -36,7 +36,7 @@
 
 
 /* Quebra de layout para Celular/Tablet */
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .layoutColunas {
     flex-direction: column;
     gap: 20px;
@@ -47,19 +47,22 @@
     margin-top: 0;
   }
 
+  .colunaEsquerda {
+    width: 100%;
+  }
+
   .formulario {
-    max-width: 440px;
-    /* Limita o tamanho máximo no mobile */
+    max-width: 640px;
   }
 }
 
 @media (max-width: 475px) {
-    .main {
-        padding: 0 25px 30px;
-    }
+  .main {
+    padding: 0 25px 30px;
+  }
 
-    .colunaEsquerda, 
-    .colunaDireita {
-        width: 100%;
-    }
+  .colunaEsquerda,
+  .colunaDireita {
+    width: 100%;
+  }
 }
