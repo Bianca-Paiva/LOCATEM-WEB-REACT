@@ -3,12 +3,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 20px 40px;
+  padding: 0 40px 40px;
 }
 
 .formulario {
   width: 100%;
-  max-width: 1000px; 
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -32,7 +32,6 @@
 .colunaDireita {
   width: 300px;
   flex-shrink: 0;
-  margin-top: 30px; 
 }
 
 
@@ -42,13 +41,25 @@
     flex-direction: column;
     gap: 20px;
   }
-  
+
   .colunaDireita {
     width: 100%;
     margin-top: 0;
   }
-  
+
   .formulario {
-    max-width: 440px; /* Limita o tamanho máximo no mobile */
+    max-width: 440px;
+    /* Limita o tamanho máximo no mobile */
   }
+}
+
+@media (max-width: 475px) {
+    .main {
+        padding: 0 25px 30px;
+    }
+
+    .colunaEsquerda, 
+    .colunaDireita {
+        width: 100%;
+    }
 }

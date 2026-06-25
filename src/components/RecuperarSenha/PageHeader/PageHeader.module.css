@@ -2,7 +2,7 @@
     text-align: center;
     width: 100%;
     max-width: 900px;
-    margin: 5rem auto 1.5rem auto;
+    margin: 3rem auto 1.5rem auto;
 }
 
 .title {
@@ -10,6 +10,7 @@
     font-weight: 700;
     color: #000000;
     margin-bottom: 0.5rem;
+    white-space: nowrap;
 }
 
 .subtitle {

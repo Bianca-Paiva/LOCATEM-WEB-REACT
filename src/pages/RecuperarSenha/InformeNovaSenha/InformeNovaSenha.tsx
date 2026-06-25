@@ -20,19 +20,50 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
 
     const strengthResult = checkPasswordStrength(senha)
     const senhasIguais = senha === confirmarSenha
-    const senhaForte = strengthResult.isStrong
-
-    const confirmStatus = (): 'erro' | 'sucesso' | '' => {
-        if (!confirmarSenha) return ''
-        return senhasIguais && senhaForte ? 'sucesso' : 'erro'
-    }
 
     const confirmError = (): string => {
         if (!confirmarSenha) return ''
+
+        // Prioridade: se não for igual, avisa. Se for igual mas fraca, avisa.
         if (!senhasIguais) return 'As senhas não coincidem'
-        if (!senhaForte) return 'A senha precisa ser mais forte'
+        if (!strengthResult.isStrong) return 'A senha precisa ser mais forte'
+
         return ''
     }
+
+    const confirmStatus = (): 'erro' | 'sucesso' | '' => {
+        if (!confirmarSenha) return ''
+        // Retorna erro se não forem iguais OU se a senha for fraca
+        return (senhasIguais && strengthResult.isStrong) ? 'sucesso' : 'erro'
+    }
+
+    const getValidations = () => {
+        return [
+            { label: 'Pelo menos 8 caracteres', valid: senha.length >= 8 },
+            { label: 'Pelo menos uma letra maiúscula', valid: /[A-Z]/.test(senha) },
+            { label: 'Pelo menos uma letra minúscula', valid: /[a-z]/.test(senha) },
+            { label: 'Pelo menos um número', valid: /\d/.test(senha) },
+            { label: 'Pelo menos um caractere especial', valid: /[!@#$%^&*(),.?":{}|<>]/.test(senha) },
+        ];
+    };
+
+    const handleSubmit = () => {
+        // 1. Verifica se a senha é forte
+        if (!strengthResult.isStrong) {
+            alert("A senha precisa ser mais forte. Verifique os critérios de segurança.");
+            return;
+        }
+
+        // 2. Verifica se as senhas coincidem
+        if (!senhasIguais) {
+            alert("As senhas não coincidem.");
+            return;
+        }
+
+        // 3. Se passou nas validações, prossegue
+        console.log("Senha alterada com sucesso!");
+        // navigate('/proxima-tela'); 
+    };
 
     return (
         <>
@@ -61,12 +92,11 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                                 value={senha}
                                 onChange={e => setSenha(e.target.value)}
                                 required
-                                strengthResult={strengthResult}
                             />
 
                             <PasswordStrengthMeter
                                 strength={strengthResult.strength}
-                                visible={senha.length > 2}
+                                visible={senha.length > 0}
                             />
 
                             <PasswordField
@@ -85,20 +115,15 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                         <div className={styles.colunaDireita}>
                             <PasswordValidationList
                                 title="Dicas de segurança"
-                                items={[
-                                    { label: 'Pelo menos 8 caracteres', valid: false },
-                                    { label: 'Pelo menos uma letra maiúscula', valid: false },
-                                    { label: 'Pelo menos uma letra minúscula', valid: false },
-                                    { label: 'Pelo menos um número', valid: true },
-                                    { label: 'Pelo menos um caractere especial', valid: false },
-                                ]}
+                                items={getValidations()}
                             />
                         </div>
                     </div>
 
                     <BtnPrincipal
                         text="Alterar senha"
-                        type="submit"
+                        type="button"
+                        onClick={handleSubmit}
                     />
                 </form>
             </main>

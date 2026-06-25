@@ -3,7 +3,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 40px 0;
+  padding: 0 40px 40px;
+}
+
+.btnInput {
+  display: flex;
+  flex-direction: column;
+  width: 100%; 
+  max-width: 1000px; 
 }
 
 /* Container que envolve toda a área de links do rodapé */
@@ -20,7 +27,7 @@
   text-align: center;
   color: #8a8a8a;
   font-size: 14px;
-  margin: 70px 10px;
+  margin: 40px 10px;
   width: 100%;
 }
 
@@ -41,7 +48,7 @@
 }
 
 /* =========================================
-   LINKS INFERIORES LADO A LADO
+    LINKS INFERIORES LADO A LADO
 ========================================= */
 .bottomLinks {
   display: flex;
@@ -57,26 +64,41 @@
   margin-top: 0 !important;
 }
 
-/* Estilo do ponto central separador */
+/* Ponto central separador */
 .bullet {
   color: #000000;
   font-size: 16px;
   user-select: none;
 }
 
-/* =========================================
-   RESPONSIVIDADE (MOBILE)
-========================================= */
-@media (max-width: 650px) {
 
-  /* No celular, os links voltam a se empilhar perfeitamente (como na sua imagem 2) */
-  .bottomLinks {
-    flex-direction: column;
-    gap: 1rem;
+@media (min-width: 768px) {
+  .main {
+    padding: 0 80px 80px; 
   }
 
-  /* Esconde o ponto preto no celular já que os itens estarão um embaixo do outro */
-  .bullet {
-    display: none;
+  .btnInput {
+    max-width: 500px; 
+  }
+
+  .footerLinksContainer {
+    max-width: 500px; 
+  }
+
+  .divider {
+    font-size: 16px; 
+  }
+
+  .divider::before {
+    margin-right: 1.5rem; 
+  }
+
+  .divider::after {
+    margin-left: 1.5rem;
+  }
+
+  .bottomLinks {
+    gap: 3rem; 
   }
 }
+

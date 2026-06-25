@@ -10,24 +10,27 @@ export default function PasswordStrengthMeter({ strength, visible }: PasswordStr
     if (!visible) return null
 
     const getStrengthLabel = () => {
-        switch (strength) {
-            case 'media': return 'Média'
-            case 'forte': return 'Forte'
-            default: return 'Fraca'
-        }
+        if (strength === 'media') return 'Média'
+        if (strength === 'forte') return 'Forte'
+        return 'Fraca'
     }
 
+    // Define quais barras devem estar acesas
+    const isBarra1Ativa = strength === 'fraca' || strength === 'media' || strength === 'forte'
+    const isBarra2Ativa = strength === 'media' || strength === 'forte'
+    const isBarra3Ativa = strength === 'forte'
+
     return (
-        <div className={styles.forcaContainer}>
+        <div className={`${styles.forcaContainer} ${styles[strength] || styles.fraca}`}>
             <div className={styles.barras}>
-                <div className={`${styles.barra} ${strength ? styles.ativaFraca : ''}`} />
-                <div className={`${styles.barra} ${(strength === 'media' || strength === 'forte') ? styles.ativaMedia : ''}`} />
-                <div className={`${styles.barra} ${strength === 'forte' ? styles.ativaForte : ''}`} />
+                <div className={`${styles.barra} ${isBarra1Ativa ? styles.barraAtiva : ''}`} />
+                <div className={`${styles.barra} ${isBarra2Ativa ? styles.barraAtiva : ''}`} />
+                <div className={`${styles.barra} ${isBarra3Ativa ? styles.barraAtiva : ''}`} />
             </div>
             
             <span className={`${styles.forcaTexto} ${styles[strength] || styles.fraca}`}>
                 Segurança: <strong>{getStrengthLabel()}</strong>
             </span>
         </div>
-    )
+    );
 }

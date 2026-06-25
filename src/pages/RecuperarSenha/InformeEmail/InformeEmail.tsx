@@ -44,32 +44,34 @@ export default function RecuperarSenha({ navigate }: RecuperarSenhaProps) {
                 <Etapas currentStep={1} />
 
                 <PageHeader
-                    title="Informe seu E-mail"
+                    title="Informe seu e-mail"
                     subtitle="Digite o e-mail associado à sua conta. Enviaremos um token para recuperação da senha."
                 />
 
-                <FormInput
-                    id="email"
-                    label="E-mail"
-                    type="email"
-                    placeholder="seu@email.com"
-                    value={email}
-                    onChange={(e) => {
-                        setEmail(e.target.value);
-                        if (showError) setShowError(false); // Limpa o erro ao digitar
-                    }}
-                    required
-                    status={showError ? "erro" : ""} // Fica vermelho se houver erro
-                    error={
-                        showError ? "Preencha de forma correta para continuar" : undefined
-                    } // Mostra o texto do erro
-                />
+                <div className={styles.btnInput}>
+                    <FormInput
+                        id="email"
+                        label="E-mail"
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (showError) setShowError(false); // Limpa o erro ao digitar
+                        }}
+                        required
+                        status={showError ? "erro" : ""} // Fica vermelho se houver erro
+                        error={
+                            showError ? "Preencha de forma correta para continuar" : undefined
+                        } // Mostra o texto do erro
+                    />
 
-                <BtnPrincipal
-                    text="Enviar e-mail"
-                    onClick={handleSendEmail}
-                    type="button"
-                />
+                    <BtnPrincipal
+                        text="Enviar e-mail"
+                        onClick={handleSendEmail}
+                        type="button"
+                    />
+                </div>
 
                 {/* CONTAINER DO RODAPÉ */}
                 <div className={styles.footerLinksContainer}>
