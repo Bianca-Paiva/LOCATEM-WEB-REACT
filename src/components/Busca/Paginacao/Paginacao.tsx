@@ -41,9 +41,66 @@ const Paginacao: React.FC<PaginacaoProps> = ({
   // Gera um array com o número das páginas para os botões [1] [2] [3]
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
+  const renderPageNumbers = () => {
+  const pages = [];
+
+  pages.push(1);
+
+  if (currentPage > 4) {
+    pages.push('...');
+  }
+
+  for (
+    let i = Math.max(2, currentPage - 1);
+    i <= Math.min(totalPages - 1, currentPage + 1);
+    i++
+  ) {
+    pages.push(i);
+  }
+
+  if (currentPage < totalPages - 3) {
+    pages.push('...');
+  }
+
+  if (totalPages > 1) {
+    pages.push(totalPages);
+  }
+
+  return pages.map((item, index) =>
+    item === '...' ? (
+      <span key={`dots-${index}`} className="page-dots">
+        ...
+      </span>
+    ) : (
+      <button
+        key={item}
+        className={`page-btn page-number-btn ${
+          currentPage === item ? 'active' : ''
+        }`}
+        onClick={() => {
+          onPageChange(Number(item));
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }}
+      >
+        {item}
+      </button>
+    )
+  );
+};
+
   return (
     <div className="paginacao-wrapper">
       {/* Botão Anterior */}
+
+            <button
+        className="page-btn"
+        onClick={() => onPageChange(Math.max(1, currentPage - 5))}
+      >
+        &laquo;&laquo;
+      </button>
       <button 
         className="page-btn" 
         onClick={handlePrev} 
@@ -57,19 +114,7 @@ const Paginacao: React.FC<PaginacaoProps> = ({
         Página {currentPage} de {totalPages}
       </span>
 
-      {/* Visão Desktop/Tablet: Mostra os números [1] [2] [3] */}
-      {pageNumbers.map((number) => (
-        <button
-          key={number}
-          className={`page-btn page-number-btn ${currentPage === number ? 'active' : ''}`}
-          onClick={() => {
-            onPageChange(number);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        >
-          {number}
-        </button>
-      ))}
+{renderPageNumbers()}
 
       {/* Botão Próximo */}
       <button 
@@ -79,6 +124,15 @@ const Paginacao: React.FC<PaginacaoProps> = ({
       >
         Próxima &raquo;
       </button>
+
+      <button
+  className="page-btn"
+  onClick={() =>
+    onPageChange(Math.min(totalPages, currentPage + 5))
+  }
+>
+  &raquo;&raquo;
+</button>
     </div>
   );
 };

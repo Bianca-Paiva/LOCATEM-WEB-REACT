@@ -40,7 +40,7 @@ export const Banner: React.FC = () => {
   return (
     <div className="banner-container">
       <Swiper
-        // ATUALIZADO: Vincula a paginação do Swiper à nossa div externa
+        
         pagination={{ 
           el: '.banner-custom-pagination', 
           clickable: true 

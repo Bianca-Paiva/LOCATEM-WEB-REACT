@@ -578,7 +578,7 @@ export default function Busca({ navigate }: BuscaProps) {
   
   // NOVO: Estado para controlar a página atual
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 24; // Fixado em 24 produtos por página
+  const itemsPerPage =20;
   
   const [activeFilters, setActiveFilters] = useState<FilterState>({
     categories: [],

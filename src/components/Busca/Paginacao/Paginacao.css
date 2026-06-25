@@ -4,7 +4,7 @@
 .paginacao-wrapper {
   display: flex;
   align-items: center;
-  justify-content: center; /* Isso garante que fique no centro! */
+  justify-content: center; 
   gap: 12px;
   margin: 48px 0;
   width: 100%;
@@ -21,7 +21,7 @@
   padding: 0 16px;
   border: none;
   background-color: #f3f4f6;
-  border-radius: 20px; /* Formato de pílula para Anterior/Próxima */
+  border-radius: 20px; 
   font-size: 14px;
   font-weight: 600;
   color: #4b5563;
@@ -34,7 +34,8 @@
 .page-btn.page-number-btn {
   padding: 0;
   width: 40px;
-  border-radius: 50%; /* Faz os números ficarem em círculos perfeitos */
+  border-radius: 15px; 
+ border-color: #ffcc00;
 }
 
 /* Hover (quando passa o mouse) */
@@ -59,6 +60,7 @@
   background-color: #f5f5f5;
   box-shadow: none;
   transform: none;
+  border-color: #ffcc00;
 }
 
 .page-info-mobile {
