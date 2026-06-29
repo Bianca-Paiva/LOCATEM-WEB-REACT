@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import type { ChangeEvent } from 'react'
 
-//css da página
+// CSS da página
 import styles from './Cadastro.module.css'
 
-// hooks
+// Hooks e funções de validação
 import { checkPasswordStrength } from '../../hooks/passwordStrength'
 import {
     getConfirmPasswordError,
@@ -25,13 +25,15 @@ import {
     getNomeError,
     getTelefoneError,
     getDocumentoError,
-} from '../../hooks/cadastroValidations'
+    getEmailError,
+} from '../../hooks/formValidations'
 import { CADASTRO_MESSAGES } from '../../hooks/cadastroMessages'
 
+// Serviço responsável pelo cadastro do usuário
 import { criarUsuario } from '../../services/authService'
 import type { Route } from '../../router/useRouter'
 
-// components
+// Componentes reutilizáveis
 import FormInput from '../../components/FormInput/FormInput'
 import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
@@ -43,31 +45,63 @@ import PasswordValidationList from '../../components/RecuperarSenha/PasswordVali
 import Alerta from "../../components/RecuperarSenha/Alerta/Alerta";
 import SuccessModal from "../../components/SuccessModal/SucessesModal";
 
-// imagens/icones
+// Ícones
 import IconLocatario from '../../assets/IconLocatario.svg'
 import IconLocador from '../../assets/IconLocador.svg'
 
 
+// Propriedades recebidas pelo componente
 interface CadastroProps {
     navigate: (route: Route) => void
 }
 
-type TipoConta = 'locador' | 'locatario'
+// Tipos de conta disponíveis durante o cadastro
+type TipoConta = 'locatario' | 'locador'
 
+// Armazena as mensagens de erro das validações dos campos
 interface FormErrors {
     nome?: string
+    email?: string
     telefone?: string
     documento?: string
 }
 
+// Controla quais campos já perderam o foco (onBlur),
+// evitando exibir erros antes da primeira interação do usuário.
 interface TouchedFields {
     nome: boolean
+    email: boolean
     telefone: boolean
     documento: boolean
 }
 
+// Estado padrão utilizado para controlar
+// a borda vermelha e a animação de erro dos campos.
+interface ErrorState {
+    active: boolean
+    shake: boolean
+}
+
+// Estado padrão (sem erro)
+const INITIAL_ERROR_STATE: ErrorState = {
+    active: false,
+    shake: false,
+}
+
+// Estado utilizado para ativar
+// a borda vermelha e a animação de erro.
+const ACTIVE_ERROR_STATE: ErrorState = {
+    active: true,
+    shake: true,
+}
+
 export default function Cadastro({ navigate }: CadastroProps) {
-    const [tipo, setTipo] = useState<TipoConta>('locador')
+
+    // ==============================================
+    // ↓ DADOS DO FORMULÁRIO ↓
+    // Armazena os valores digitados pelo usuário.
+    // ==============================================
+    const [tipo, setTipo] = useState<TipoConta>('locatario')
     const [nome, setNome] = useState('')
     const [email, setEmail] = useState('')
     const [telefone, setTelefone] = useState('')
@@ -75,30 +109,54 @@ export default function Cadastro({ navigate }: CadastroProps) {
     const [confirmarSenha, setConfirmarSenha] = useState('')
     const [documento, setDocumento] = useState('')
     const [endereco, setEndereco] = useState('')
-    const [errors, setErrors] = useState<FormErrors>({})
-    const [touched, setTouched] = useState<TouchedFields>({ nome: false, telefone: false, documento: false })
 
+
+    // ===================================================
+    // ↓ VALIDAÇÕES ↓
+    // Controla regras de validação e estados auxiliares.
+    // ===================================================
+    const [errors, setErrors] = useState<FormErrors>({})
+    const [touched, setTouched] = useState<TouchedFields>({
+        nome: false,
+        email: false,
+        telefone: false,
+        documento: false,
+    })
+
+    // Calcula, em tempo real, a força da senha digitada.
     const strengthResult = checkPasswordStrength(senha)
+
+    // Define se o documento esperado deve ser CNPJ ou CPF.
     const isCNPJ = tipo === 'locador'
 
-    // Estado para controlar se o alerta deve aparecer
+
+    // ==========================================
+    // ↓ ESTADOS VISUAIS ↓
+    // Controla elementos exibidos na interface.
+    // ==========================================
     const [alerta, setAlerta] = useState<{ titulo: string, mensagem: string } | null>(null)
 
-    // faz os inputs de senha chacoalharem e ficar com as bordas vermelhas caso o usuario tente criar a conta com esses campos vazios
-    const [senhaErroState, setSenhaErroState] = useState({ active: false, shake: false })
-    const [confirmErroState, setConfirmErroState] = useState({ active: false, shake: false })
+    const [senhaErroState, setSenhaErroState] =
+        useState(INITIAL_ERROR_STATE)
+    const [confirmErroState, setConfirmErroState] =
+        useState(INITIAL_ERROR_STATE)
 
     const [fieldErrorState, setFieldErrorState] = useState({
-        nome: { active: false, shake: false },
-        email: { active: false, shake: false },
-        telefone: { active: false, shake: false },
-        documento: { active: false, shake: false },
-        endereco: { active: false, shake: false },
+        nome: INITIAL_ERROR_STATE,
+        email: INITIAL_ERROR_STATE,
+        telefone: INITIAL_ERROR_STATE,
+        documento: INITIAL_ERROR_STATE,
+        endereco: INITIAL_ERROR_STATE,
     })
 
     const [successModalOpen, setSuccessModalOpen] = useState(false);
 
 
+    // ============================
+    // ↓ MANIPULAÇÃO DOS CAMPOS ↓
+    // ============================
+
+    // Atualiza o tipo da conta e reinicia o campo de documento, pois o formato muda entre CPF e CNPJ.
     function handleTipoChange(value: TipoConta) {
         setTipo(value)
         setDocumento('')
@@ -106,6 +164,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
         setTouched(prev => ({ ...prev, documento: false }))
     }
 
+    // Marca o campo como visitado (touched) e executa sua validação.
     function handleNomeBlur() {
         setTouched(prev => ({ ...prev, nome: true }))
         setErrors(prev => ({
@@ -114,6 +173,19 @@ export default function Cadastro({ navigate }: CadastroProps) {
         }))
     }
 
+    function handleEmailBlur() {
+        setTouched(prev => ({
+            ...prev,
+            email: true,
+        }))
+
+        setErrors(prev => ({
+            ...prev,
+            email: getEmailError(email),
+        }))
+    }
+
+    // Aplica automaticamente a máscara enquanto o usuário digita.
     function handleTelefoneChange(e: ChangeEvent<HTMLInputElement>) {
         setTelefone(maskPhone(e.target.value))
     }
@@ -126,6 +198,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
         }))
     }
 
+    // Aplica automaticamente a máscara enquanto o usuário digita.
     function handleDocumentoChange(e: ChangeEvent<HTMLInputElement>) {
         setDocumento(isCNPJ ? maskCNPJ(e.target.value) : maskCPF(e.target.value))
     }
@@ -138,6 +211,27 @@ export default function Cadastro({ navigate }: CadastroProps) {
         }))
     }
 
+    // ===============================
+    // ↓ CONTROLE DE ERROS VISUAIS ↓
+    // ===============================
+
+    // Remove o estado visual de erro de um campo específico assim que o usuário voltar a digitá-lo.
+    function clearFieldError(field: keyof typeof fieldErrorState) {
+        setFieldErrorState(prev => ({
+            ...prev,
+            [field]: INITIAL_ERROR_STATE
+        }))
+    }
+
+    // Remove o estado visual de erro dos campos de senha.
+    function clearError(
+        setState: React.Dispatch<React.SetStateAction<ErrorState>>
+    ) {
+        setState(INITIAL_ERROR_STATE)
+    }
+
+    // Ativa a borda vermelha e a animação de "shake" para um campo obrigatório.
+    // Após alguns milissegundos, apenas a animação é removida, mantendo a borda.
     function triggerFieldError(field: keyof typeof fieldErrorState) {
         setFieldErrorState(prev => ({
             ...prev,
@@ -152,15 +246,33 @@ export default function Cadastro({ navigate }: CadastroProps) {
         }, 400)
     }
 
+    // Ativa a borda vermelha e a animação de "shake" para um campo obrigatório.
+    // Após alguns milissegundos, apenas a animação é removida, mantendo a borda.
+    function triggerPasswordError(
+        setState: React.Dispatch<React.SetStateAction<ErrorState>>
+    ) {
+        setState(ACTIVE_ERROR_STATE)
+
+        setTimeout(() => {
+            setState(prev => ({
+                ...prev,
+                shake: false
+            }))
+        }, 400)
+    }
+
+    // =========================
+    // ↓ ENVIO DO FORMULÁRIO ↓
+    // =========================
+
+    // Executa todas as validações antes de enviar os dados para a API.
     async function handleSubmit() {
-        // Limpa os estados visuais
-        setSenhaErroState({ active: false, shake: false })
-        setConfirmErroState({ active: false, shake: false })
 
-        // -------------------------
-        // CAMPOS OBRIGATÓRIOS
-        // -------------------------
+        // =========================
+        // ↓ CAMPOS OBRIGATÓRIOS ↓
+        // =========================
 
+        // Indica se algum campo obrigatório foi encontrado vazio durante a validação.
         let hasEmptyFields = false
 
         if (!nome.trim()) {
@@ -188,13 +300,18 @@ export default function Cadastro({ navigate }: CadastroProps) {
             hasEmptyFields = true
         }
 
+        if (getEmailError(email)) {
+            setAlerta(CADASTRO_MESSAGES.INVALID_EMAIL)
+            return
+        }
+
         if (!senha) {
-            setSenhaErroState({ active: true, shake: true })
+            triggerPasswordError(setSenhaErroState)
             hasEmptyFields = true
         }
 
         if (!confirmarSenha) {
-            setConfirmErroState({ active: true, shake: true })
+            triggerPasswordError(setConfirmErroState)
             hasEmptyFields = true
         }
 
@@ -203,9 +320,9 @@ export default function Cadastro({ navigate }: CadastroProps) {
             return
         }
 
-        // -------------------------
-        // CAMPOS INVÁLIDOS
-        // -------------------------
+        // =========================
+        // VALIDAÇÕES
+        // =========================
 
         if (getNomeError(nome)) {
             setAlerta(CADASTRO_MESSAGES.INVALID_NAME)
@@ -226,9 +343,9 @@ export default function Cadastro({ navigate }: CadastroProps) {
             return
         }
 
-        // -------------------------
+        // =========================
         // SENHA
-        // -------------------------
+        // =========================
 
         const result = validatePasswordForm(
             senha,
@@ -238,25 +355,27 @@ export default function Cadastro({ navigate }: CadastroProps) {
 
         switch (result.type) {
             case 'mismatch':
-                setConfirmErroState({ active: true, shake: true })
+                triggerPasswordError(setConfirmErroState)
                 setAlerta(PASSWORD_MESSAGES.MISMATCH)
                 return
 
             case 'fraca':
-                setSenhaErroState({ active: true, shake: true })
+                triggerPasswordError(setSenhaErroState)
                 setAlerta(PASSWORD_MESSAGES.WEAK)
                 return
 
             case 'media':
-                setSenhaErroState({ active: true, shake: true })
+                triggerPasswordError(setSenhaErroState)
                 setAlerta(PASSWORD_MESSAGES.MEDIUM)
                 return
         }
 
-        // -------------------------
-        // API
-        // -------------------------
+        // =========================
+        // CRIAÇÃO DO USUÁRIO (API)
+        // =========================
 
+        // Envia os dados para a API.
+        // Máscaras são removidas antes do envio.
         try {
             await criarUsuario({
                 nome,
@@ -287,6 +406,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                 <div className={styles.card}>
                     <div className={styles.tipoConta}>
 
+                        {/* Seleção do tipo de conta */}
                         <CardOpcaoConta
                             id="locatario"
                             name="tipo"
@@ -314,7 +434,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                         />
                     </div>
 
-
+                    {/* Alerta exibido quando ocorre alguma validação ou erro */}
                     {alerta && (
                         <Alerta
                             titulo={alerta.titulo}
@@ -323,6 +443,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                         />
                     )}
 
+                    {/* Modal exibido após o cadastro ser realizado com sucesso */}
                     <SuccessModal
                         open={successModalOpen}
                         title="Conta criada!"
@@ -334,7 +455,9 @@ export default function Cadastro({ navigate }: CadastroProps) {
                         }}
                     />
 
+                    {/* Formulário de cadastro */}
                     <form onSubmit={(e) => e.preventDefault()}>
+
                         <FormInput
                             id="nome"
                             label="Nome completo"
@@ -347,10 +470,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                 setNome(e.target.value)
 
                                 if (fieldErrorState.nome.active) {
-                                    setFieldErrorState(prev => ({
-                                        ...prev,
-                                        nome: { active: false, shake: false }
-                                    }))
+                                    clearFieldError('nome')
                                 }
                             }}
                             status={
@@ -360,7 +480,11 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                         ? (errors.nome ? 'erro' : nome ? 'sucesso' : '')
                                         : ''
                             }
+
+                            // Quando o erro é apenas "campo obrigatório", exibimos apenas a borda vermelha.
+                            // Mensagens textuais ficam reservadas para validações específicas.
                             error={fieldErrorState.nome.active ? '' : errors.nome}
+
                             shake={fieldErrorState.nome.shake}
                         />
 
@@ -370,19 +494,28 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             type="email"
                             placeholder="seu@email.com"
                             value={email}
+                            onBlur={handleEmailBlur}
                             onChange={e => {
                                 setEmail(e.target.value)
 
                                 if (fieldErrorState.email.active) {
-                                    setFieldErrorState(prev => ({
-                                        ...prev,
-                                        email: { active: false, shake: false }
-                                    }))
+                                    clearFieldError('email')
                                 }
                             }}
                             required
-                            status={fieldErrorState.email.active ? 'erro' : ''}
-                            error=""
+                            status={
+                                fieldErrorState.email.active
+                                    ? 'erro'
+                                    : touched.email
+                                        ? (errors.email ? 'erro' : email ? 'sucesso' : '')
+                                        : ''
+                            }
+
+                            error={
+                                fieldErrorState.email.active
+                                    ? ''
+                                    : errors.email
+                            }
                             shake={fieldErrorState.email.shake}
                         />
 
@@ -397,10 +530,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                 handleTelefoneChange(e)
 
                                 if (fieldErrorState.telefone.active) {
-                                    setFieldErrorState(prev => ({
-                                        ...prev,
-                                        telefone: { active: false, shake: false }
-                                    }))
+                                    clearFieldError('telefone')
                                 }
                             }}
                             onBlur={handleTelefoneBlur}
@@ -423,13 +553,17 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             value={senha}
                             onChange={e => {
                                 setSenha(e.target.value);
-                                if (senhaErroState.active) setSenhaErroState({ active: false, shake: false });
+                                if (senhaErroState.active) {
+                                    clearError(setSenhaErroState)
+                                }
                             }}
                             status={senhaErroState.active ? 'erro' : ''}
+                            error=""
                             shake={senhaErroState.shake}
                             required
                         />
 
+                        {/* Indicador visual da força da senha */}
                         <PasswordStrengthMeter
                             strength={strengthResult.strength}
                             visible={senha.length > 0}
@@ -442,6 +576,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             />
                         )}
 
+                        {/* Lista de requisitos da senha atualizada em tempo real */}
                         <PasswordInput
                             id="confirmarSenha"
                             label="Confirmar senha"
@@ -449,7 +584,9 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             value={confirmarSenha}
                             onChange={e => {
                                 setConfirmarSenha(e.target.value);
-                                if (confirmErroState.active) setConfirmErroState({ active: false, shake: false });
+                                if (confirmErroState.active) {
+                                    clearError(setConfirmErroState)
+                                }
                             }}
                             status={
                                 confirmErroState.active
@@ -477,10 +614,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                 handleDocumentoChange(e)
 
                                 if (fieldErrorState.documento.active) {
-                                    setFieldErrorState(prev => ({
-                                        ...prev,
-                                        documento: { active: false, shake: false }
-                                    }))
+                                    clearFieldError('documento')
                                 }
                             }}
                             onBlur={handleDocumentoBlur}
@@ -506,10 +640,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                 setEndereco(e.target.value)
 
                                 if (fieldErrorState.endereco.active) {
-                                    setFieldErrorState(prev => ({
-                                        ...prev,
-                                        endereco: { active: false, shake: false }
-                                    }))
+                                    clearFieldError('endereco')
                                 }
                             }}
                             required
@@ -518,6 +649,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             shake={fieldErrorState.endereco.shake}
                         />
 
+                        {/* Botão responsável por iniciar todas as validações */}
                         <BtnPricipal
                             text="Criar conta"
                             type="button"
@@ -526,6 +658,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                     </form>
                 </div>
 
+                {/* Link para a tela de login */}
                 <FooterLink
                     text='Já tem uma conta?'
                     linkText='Entrar'

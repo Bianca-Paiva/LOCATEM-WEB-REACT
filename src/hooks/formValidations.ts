@@ -10,6 +10,18 @@ export function getNomeError(nome: string) {
         : 'Por favor, digite seu nome completo'
 }
 
+export function getEmailError(email: string): string {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!email.trim()) return ''
+
+    if (!emailRegex.test(email)) {
+        return 'Digite um e-mail válido.'
+    }
+
+    return ''
+}
+
 export function getTelefoneError(telefone: string) {
     return validatePhone(telefone)
         ? undefined
