@@ -1,20 +1,52 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import type { ChangeEvent } from 'react'
-import FormInput from '../../components/FormInput/FormInput'
-import PasswordField from '../../components/PasswordInput/PasswordInput'
-import { checkPasswordStrength } from '../../hooks/usePasswordStrength'
+
+//css da página
+import styles from './Cadastro.module.css'
+
+// hooks
+import { checkPasswordStrength } from '../../hooks/passwordStrength'
+import {
+    getConfirmPasswordError,
+    getConfirmPasswordStatus,
+    getPasswordValidations,
+    validatePasswordForm,
+} from '../../hooks/passwordValidation'
+import { PASSWORD_MESSAGES } from '../../hooks/passwordMessages'
+import PasswordStrengthMeter from '../../components/PasswordMedidor/PasswordStrengthMeter'
+
 import {
     maskCPF,
     maskCNPJ,
     maskPhone,
-    validateFullName,
-    validatePhone,
-    validateDocument,
-} from '../../hooks/useMasks'
+} from '../../hooks/masks'
+
+import {
+    getNomeError,
+    getTelefoneError,
+    getDocumentoError,
+} from '../../hooks/cadastroValidations'
+import { CADASTRO_MESSAGES } from '../../hooks/cadastroMessages'
+
 import { criarUsuario } from '../../services/authService'
 import type { Route } from '../../router/useRouter'
+
+// components
+import FormInput from '../../components/FormInput/FormInput'
+import PasswordInput from '../../components/PasswordInput/PasswordInput'
 import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
-import styles from './Cadastro.module.css'
+import PageHeader from '../../components/RecuperarSenha/PageHeader/PageHeader'
+import CardOpcaoConta from '../../components/CardOpcaoConta/CardOpcaoConta'
+import BtnPricipal from '../../components/BtnPrincipal/BtnPrincipal'
+import FooterLink from '../../components/RecuperarSenha/FooterLink/FooterLink'
+import PasswordValidationList from '../../components/RecuperarSenha/PasswordValidationList/PasswordValidationList'
+import Alerta from "../../components/RecuperarSenha/Alerta/Alerta";
+import SuccessModal from "../../components/SuccessModal/SucessesModal";
+
+// imagens/icones
+import IconLocatario from '../../assets/IconLocatario.svg'
+import IconLocador from '../../assets/IconLocador.svg'
+
 
 interface CadastroProps {
     navigate: (route: Route) => void
@@ -45,28 +77,27 @@ export default function Cadastro({ navigate }: CadastroProps) {
     const [endereco, setEndereco] = useState('')
     const [errors, setErrors] = useState<FormErrors>({})
     const [touched, setTouched] = useState<TouchedFields>({ nome: false, telefone: false, documento: false })
-    const [submitting, setSubmitting] = useState(false)
 
     const strengthResult = checkPasswordStrength(senha)
     const isCNPJ = tipo === 'locador'
-    const senhasIguais = senha === confirmarSenha
-    const senhaForte = strengthResult.isStrong
 
-    const confirmStatus = (): 'erro' | 'sucesso' | '' => {
-        if (!confirmarSenha) return ''
-        return senhasIguais && senhaForte ? 'sucesso' : 'erro'
-    }
+    // Estado para controlar se o alerta deve aparecer
+    const [alerta, setAlerta] = useState<{ titulo: string, mensagem: string } | null>(null)
 
-    const confirmError = (): string => {
-        if (!confirmarSenha) return ''
-        if (!senhasIguais) return 'As senhas não coincidem'
-        if (!senhaForte) return 'A senha precisa ser mais forte'
-        return ''
-    }
+    // faz os inputs de senha chacoalharem e ficar com as bordas vermelhas caso o usuario tente criar a conta com esses campos vazios
+    const [senhaErroState, setSenhaErroState] = useState({ active: false, shake: false })
+    const [confirmErroState, setConfirmErroState] = useState({ active: false, shake: false })
 
-    const btnDisabled =
-        !nome || !email || !telefone || !senha || !confirmarSenha || !documento || !endereco ||
-        !senhasIguais || !senhaForte || submitting
+    const [fieldErrorState, setFieldErrorState] = useState({
+        nome: { active: false, shake: false },
+        email: { active: false, shake: false },
+        telefone: { active: false, shake: false },
+        documento: { active: false, shake: false },
+        endereco: { active: false, shake: false },
+    })
+
+    const [successModalOpen, setSuccessModalOpen] = useState(false);
+
 
     function handleTipoChange(value: TipoConta) {
         setTipo(value)
@@ -79,7 +110,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
         setTouched(prev => ({ ...prev, nome: true }))
         setErrors(prev => ({
             ...prev,
-            nome: validateFullName(nome) ? undefined : 'Por favor, digite seu nome completo',
+            nome: getNomeError(nome),
         }))
     }
 
@@ -91,7 +122,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
         setTouched(prev => ({ ...prev, telefone: true }))
         setErrors(prev => ({
             ...prev,
-            telefone: validatePhone(telefone) ? undefined : 'Digite um telefone válido com DDD',
+            telefone: getTelefoneError(telefone),
         }))
     }
 
@@ -103,29 +134,143 @@ export default function Cadastro({ navigate }: CadastroProps) {
         setTouched(prev => ({ ...prev, documento: true }))
         setErrors(prev => ({
             ...prev,
-            documento: validateDocument(documento, isCNPJ)
-                ? undefined
-                : isCNPJ ? 'Digite seu CNPJ completo' : 'Digite seu CPF completo',
+            documento: getDocumentoError(documento, isCNPJ),
         }))
     }
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault()
-        if (btnDisabled) return
-        setSubmitting(true)
+    function triggerFieldError(field: keyof typeof fieldErrorState) {
+        setFieldErrorState(prev => ({
+            ...prev,
+            [field]: { active: true, shake: true }
+        }))
+
+        setTimeout(() => {
+            setFieldErrorState(prev => ({
+                ...prev,
+                [field]: { ...prev[field], shake: false }
+            }))
+        }, 400)
+    }
+
+    async function handleSubmit() {
+        // Limpa os estados visuais
+        setSenhaErroState({ active: false, shake: false })
+        setConfirmErroState({ active: false, shake: false })
+
+        // -------------------------
+        // CAMPOS OBRIGATÓRIOS
+        // -------------------------
+
+        let hasEmptyFields = false
+
+        if (!nome.trim()) {
+            triggerFieldError('nome')
+            hasEmptyFields = true
+        }
+
+        if (!email.trim()) {
+            triggerFieldError('email')
+            hasEmptyFields = true
+        }
+
+        if (!telefone.trim()) {
+            triggerFieldError('telefone')
+            hasEmptyFields = true
+        }
+
+        if (!documento.trim()) {
+            triggerFieldError('documento')
+            hasEmptyFields = true
+        }
+
+        if (!endereco.trim()) {
+            triggerFieldError('endereco')
+            hasEmptyFields = true
+        }
+
+        if (!senha) {
+            setSenhaErroState({ active: true, shake: true })
+            hasEmptyFields = true
+        }
+
+        if (!confirmarSenha) {
+            setConfirmErroState({ active: true, shake: true })
+            hasEmptyFields = true
+        }
+
+        if (hasEmptyFields) {
+            setAlerta(CADASTRO_MESSAGES.REQUIRED)
+            return
+        }
+
+        // -------------------------
+        // CAMPOS INVÁLIDOS
+        // -------------------------
+
+        if (getNomeError(nome)) {
+            setAlerta(CADASTRO_MESSAGES.INVALID_NAME)
+            return
+        }
+
+        if (getTelefoneError(telefone)) {
+            setAlerta(CADASTRO_MESSAGES.INVALID_PHONE)
+            return
+        }
+
+        if (getDocumentoError(documento, isCNPJ)) {
+            setAlerta(
+                isCNPJ
+                    ? CADASTRO_MESSAGES.INVALID_CNPJ
+                    : CADASTRO_MESSAGES.INVALID_CPF
+            )
+            return
+        }
+
+        // -------------------------
+        // SENHA
+        // -------------------------
+
+        const result = validatePasswordForm(
+            senha,
+            confirmarSenha,
+            strengthResult
+        )
+
+        switch (result.type) {
+            case 'mismatch':
+                setConfirmErroState({ active: true, shake: true })
+                setAlerta(PASSWORD_MESSAGES.MISMATCH)
+                return
+
+            case 'fraca':
+                setSenhaErroState({ active: true, shake: true })
+                setAlerta(PASSWORD_MESSAGES.WEAK)
+                return
+
+            case 'media':
+                setSenhaErroState({ active: true, shake: true })
+                setAlerta(PASSWORD_MESSAGES.MEDIUM)
+                return
+        }
+
+        // -------------------------
+        // API
+        // -------------------------
+
         try {
             await criarUsuario({
-                nome, email, senha, confirmarSenha,
+                nome,
+                email,
+                senha,
+                confirmarSenha,
                 telefone: telefone.replace(/\D/g, ''),
                 documento: documento.replace(/\D/g, ''),
                 tipoUsuario: tipo === 'locador' ? 2 : 1,
             })
-            alert('Conta criada com sucesso!')
-            navigate('login')
-        } catch (err) {
-            alert(err instanceof Error ? err.message : 'Erro ao conectar com a API')
-        } finally {
-            setSubmitting(false)
+
+            setSuccessModalOpen(true)
+        } catch {
+            setAlerta(CADASTRO_MESSAGES.API_ERROR)
         }
     }
 
@@ -134,54 +279,89 @@ export default function Cadastro({ navigate }: CadastroProps) {
             <AuthHeader navigate={navigate} />
 
             <main>
-                <div className={styles.topo}>
-                    <h1 className={styles.titulo}>Crie sua conta</h1>
-                    <p className={styles.paragrafo}>Escolha como você deseja usar o site</p>
-                </div>
+                <PageHeader
+                    title="Crie sua conta"
+                    subtitle="Escolha como você deseja usar o site"
+                />
 
                 <div className={styles.card}>
                     <div className={styles.tipoConta}>
-                        <input type="radio" id="locador" name="tipo" value="locador"
-                            checked={tipo === 'locador'} onChange={() => handleTipoChange('locador')}
-                            className={styles.radioHidden} />
-                        <label htmlFor="locador"
-                            className={`${styles.cardTipo} ${tipo === 'locador' ? styles.cardTipoSelected : ''}`}>
-                            <div className={`${styles.icone} ${tipo === 'locador' ? styles.iconeSelected : ''}`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3q0-.405-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814zm9.646 10.646a.5.5 0 0 1 .708 0l2.914 2.915a.5.5 0 0 1-.707.707l-2.915-2.914a.5.5 0 0 1 0-.708M3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z" />
-                                </svg>
-                            </div>
-                            <h3>Locador</h3>
-                            <p>Quero anunciar ferramentas</p>
-                        </label>
 
-                        <input type="radio" id="locatario" name="tipo" value="locatario"
-                            checked={tipo === 'locatario'} onChange={() => handleTipoChange('locatario')}
-                            className={styles.radioHidden} />
-                        <label htmlFor="locatario"
-                            className={`${styles.cardTipo} ${tipo === 'locatario' ? styles.cardTipoSelected : ''}`}>
-                            <div className={`${styles.icone} ${tipo === 'locatario' ? styles.iconeSelected : ''}`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                                </svg>
-                            </div>
-                            <h3>Locatário</h3>
-                            <p>Quero alugar ferramentas</p>
-                        </label>
+                        <CardOpcaoConta
+                            id="locatario"
+                            name="tipo"
+                            value="locatario"
+                            selected={tipo === "locatario"}
+                            title="Locatário"
+                            description="Quero alugar ferramentas"
+                            onChange={handleTipoChange}
+                            icon={
+                                <img src={IconLocatario} alt="Icone Locatário" />
+                            }
+                        />
+
+                        <CardOpcaoConta
+                            id="locador"
+                            name="tipo"
+                            value="locador"
+                            selected={tipo === "locador"}
+                            title="Locador"
+                            description="Quero anunciar ferramentas"
+                            onChange={handleTipoChange}
+                            icon={
+                                <img src={IconLocador} alt="Icone Locador" />
+                            }
+                        />
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+
+                    {alerta && (
+                        <Alerta
+                            titulo={alerta.titulo}
+                            mensagem={alerta.mensagem}
+                            onClose={() => setAlerta(null)}
+                        />
+                    )}
+
+                    <SuccessModal
+                        open={successModalOpen}
+                        title="Conta criada!"
+                        message="Sua conta foi criada com sucesso. Entre para continuar."
+                        buttonText="Entrar"
+                        onConfirm={() => {
+                            setSuccessModalOpen(false);
+                            navigate("login");
+                        }}
+                    />
+
+                    <form onSubmit={(e) => e.preventDefault()}>
                         <FormInput
                             id="nome"
                             label="Nome completo"
                             type="text"
                             placeholder="Digite seu nome completo"
                             value={nome}
-                            onChange={e => setNome(e.target.value)}
                             onBlur={handleNomeBlur}
                             required
-                            status={touched.nome ? (errors.nome ? 'erro' : nome ? 'sucesso' : '') : ''}
-                            error={errors.nome}
+                            onChange={e => {
+                                setNome(e.target.value)
+
+                                if (fieldErrorState.nome.active) {
+                                    setFieldErrorState(prev => ({
+                                        ...prev,
+                                        nome: { active: false, shake: false }
+                                    }))
+                                }
+                            }}
+                            status={
+                                fieldErrorState.nome.active
+                                    ? 'erro'
+                                    : touched.nome
+                                        ? (errors.nome ? 'erro' : nome ? 'sucesso' : '')
+                                        : ''
+                            }
+                            error={fieldErrorState.nome.active ? '' : errors.nome}
+                            shake={fieldErrorState.nome.shake}
                         />
 
                         <FormInput
@@ -190,8 +370,20 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             type="email"
                             placeholder="seu@email.com"
                             value={email}
-                            onChange={e => setEmail(e.target.value)}
+                            onChange={e => {
+                                setEmail(e.target.value)
+
+                                if (fieldErrorState.email.active) {
+                                    setFieldErrorState(prev => ({
+                                        ...prev,
+                                        email: { active: false, shake: false }
+                                    }))
+                                }
+                            }}
                             required
+                            status={fieldErrorState.email.active ? 'erro' : ''}
+                            error=""
+                            shake={fieldErrorState.email.shake}
                         />
 
                         <FormInput
@@ -201,46 +393,107 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             inputMode="numeric"
                             placeholder="(11) 91234-5678"
                             value={telefone}
-                            onChange={handleTelefoneChange}
+                            onChange={e => {
+                                handleTelefoneChange(e)
+
+                                if (fieldErrorState.telefone.active) {
+                                    setFieldErrorState(prev => ({
+                                        ...prev,
+                                        telefone: { active: false, shake: false }
+                                    }))
+                                }
+                            }}
                             onBlur={handleTelefoneBlur}
                             required
-                            status={touched.telefone ? (errors.telefone ? 'erro' : telefone ? 'sucesso' : '') : ''}
-                            error={errors.telefone}
+                            status={
+                                fieldErrorState.telefone.active
+                                    ? 'erro'
+                                    : touched.telefone
+                                        ? (errors.telefone ? 'erro' : telefone ? 'sucesso' : '')
+                                        : ''
+                            }
+                            error={fieldErrorState.telefone.active ? '' : errors.telefone}
+                            shake={fieldErrorState.telefone.shake}
                         />
 
-                        <PasswordField
+                        <PasswordInput
                             id="senha"
                             label="Senha"
                             placeholder="Crie uma senha segura"
                             value={senha}
-                            onChange={e => setSenha(e.target.value)}
+                            onChange={e => {
+                                setSenha(e.target.value);
+                                if (senhaErroState.active) setSenhaErroState({ active: false, shake: false });
+                            }}
+                            status={senhaErroState.active ? 'erro' : ''}
+                            shake={senhaErroState.shake}
                             required
-                            strengthResult={strengthResult}
-                            showRequirements
                         />
 
-                        <PasswordField
+                        <PasswordStrengthMeter
+                            strength={strengthResult.strength}
+                            visible={senha.length > 0}
+                        />
+
+                        {senha.length > 0 && (
+                            <PasswordValidationList
+                                title="Dicas de segurança"
+                                items={getPasswordValidations(senha)}
+                            />
+                        )}
+
+                        <PasswordInput
                             id="confirmarSenha"
                             label="Confirmar senha"
                             placeholder="Digite a senha novamente"
                             value={confirmarSenha}
-                            onChange={e => setConfirmarSenha(e.target.value)}
+                            onChange={e => {
+                                setConfirmarSenha(e.target.value);
+                                if (confirmErroState.active) setConfirmErroState({ active: false, shake: false });
+                            }}
+                            status={
+                                confirmErroState.active
+                                    ? 'erro'
+                                    : getConfirmPasswordStatus(senha, confirmarSenha)
+                            }
+
+                            error={
+                                confirmErroState.active
+                                    ? ''
+                                    : getConfirmPasswordError(senha, confirmarSenha)
+                            }
+                            shake={confirmErroState.shake}
                             required
-                            status={confirmStatus()}
-                            error={confirmError()}
                         />
 
                         <FormInput
                             id="documento"
                             label={isCNPJ ? 'CNPJ' : 'CPF'}
-                            type="text" inputMode="numeric"
+                            type="text"
+                            inputMode="numeric"
                             placeholder={isCNPJ ? '00.000.000/0000-00' : '000.000.000-00'}
                             value={documento}
-                            onChange={handleDocumentoChange}
+                            onChange={e => {
+                                handleDocumentoChange(e)
+
+                                if (fieldErrorState.documento.active) {
+                                    setFieldErrorState(prev => ({
+                                        ...prev,
+                                        documento: { active: false, shake: false }
+                                    }))
+                                }
+                            }}
                             onBlur={handleDocumentoBlur}
                             required
-                            status={touched.documento ? (errors.documento ? 'erro' : documento ? 'sucesso' : '') : ''}
-                            error={errors.documento}
+                            status={
+                                fieldErrorState.documento.active
+                                    ? 'erro'
+                                    : touched.documento
+                                        ? (errors.documento ? 'erro' : documento ? 'sucesso' : '')
+                                        : ''
+                            }
+                            error={fieldErrorState.documento.active ? '' : errors.documento}
+                            shake={fieldErrorState.documento.shake}
                         />
 
                         <FormInput
@@ -249,21 +502,39 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             type="text"
                             placeholder="Digite seu endereço completo"
                             value={endereco}
-                            onChange={e => setEndereco(e.target.value)}
+                            onChange={e => {
+                                setEndereco(e.target.value)
+
+                                if (fieldErrorState.endereco.active) {
+                                    setFieldErrorState(prev => ({
+                                        ...prev,
+                                        endereco: { active: false, shake: false }
+                                    }))
+                                }
+                            }}
                             required
+                            status={fieldErrorState.endereco.active ? 'erro' : ''}
+                            error=""
+                            shake={fieldErrorState.endereco.shake}
                         />
 
-                        <button type="submit" className={styles.btnCriarConta}>
-                            Criar conta
-                        </button>
+                        <BtnPricipal
+                            text="Criar conta"
+                            type="button"
+                            onClick={handleSubmit}
+                        />
                     </form>
-
-                    <div className={styles.contaExistente}>
-                        <p>Já tem uma conta?</p>
-                        <a href="#" onClick={e => { e.preventDefault(); navigate('login') }}>Entrar</a>
-                    </div>
                 </div>
+
+                <FooterLink
+                    text='Já tem uma conta?'
+                    linkText='Entrar'
+                    onClick={e => {
+                        e.preventDefault()
+                        navigate('login')
+                    }}
+                />
             </main>
         </div>
-    )
+    );
 }

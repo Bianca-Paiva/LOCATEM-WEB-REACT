@@ -1,6 +1,6 @@
 // FUNÇÕES AUXILIARES PARA VALIDAÇÃO DE SENHAS
 
-import type { PasswordStrengthResult } from './usePasswordStrength'
+import type { PasswordStrengthResult } from './passwordStrength'
 
 interface PasswordValidationItem {
     label: string

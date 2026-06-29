@@ -1,4 +1,3 @@
-import { forwardRef } from 'react'
 import type { InputHTMLAttributes } from 'react'
 import styles from './FormInput.module.css'
 
@@ -9,23 +8,25 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
     shake?: boolean
 }
 
-const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-    ({ label, error, status = '', shake = false, ...props }, ref) => {
-        return (
+export default function FormInput({
+    label,
+    error,
+    status = '',
+    shake = false,
+    ...props
+}: FormInputProps) {
+    return (
             <div className={`${styles.wrapper} ${shake ? styles.shake : ''}`}>
                 <label htmlFor={props.id} className={styles.label}>
                     {label}
+                    {props.required && <span className={styles.required}> *</span>}
+                    
                 </label>
                 <input
-                    ref={ref}
                     {...props}
                     className={`${styles.input} ${status ? styles[status] : ''}`}
                 />
                 {error && <small className={styles.error}>{error}</small>}
             </div>
-        )
-    }
-)
-
-FormInput.displayName = 'FormInput'
-export default FormInput
+        );
+}

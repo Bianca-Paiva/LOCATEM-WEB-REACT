@@ -3,9 +3,10 @@ import type { InputHTMLAttributes } from 'react'
 import olhoAberto from '../../assets/olhoAberto.svg'
 import olhoFechado from '../../assets/olhoFechado.svg'
 import styles from './PasswordInput.module.css'
-import type { PasswordStrengthResult } from '../../hooks/usePasswordStrength'
+import type { PasswordStrengthResult } from '../../hooks/passwordStrength'
+import { useEffect } from 'react'
 
-interface PasswordFieldProps extends InputHTMLAttributes<HTMLInputElement> {
+interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string
     error?: string
     status?: 'erro' | 'sucesso' | ''
@@ -14,19 +15,25 @@ interface PasswordFieldProps extends InputHTMLAttributes<HTMLInputElement> {
     shake?: boolean
 }
 
-export default function PasswordField({
+export default function PasswordInput({
     label,
     error,
     status = '',
     shake = false,
     ...props
-}: PasswordFieldProps) {
+}: PasswordInputProps) {
     const [visible, setVisible] = useState(false)
+
+    console.log('render', shake)
+    useEffect(() => {
+        console.log('shake mudou:', shake)
+    }, [shake])
 
     return (
         <div className={`${styles.campoSenha} ${shake ? styles.shake : ''}`}>
             <label htmlFor={props.id} className={styles.label}>
                 {label}
+                {props.required && <span className={styles.required}> *</span>}
             </label>
 
             <div className={styles.inputWrapper}>

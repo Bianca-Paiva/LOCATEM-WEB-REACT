@@ -76,6 +76,7 @@ export default function Login({ navigate }: LoginProps) {
                             status={emailErrState.active ? 'erro' : ''}
                             error={emailErrState.active ? 'Preencha de forma correta para continuar' : ''}
                             shake={emailErrState.shake}
+                            required
                         />
 
                         <PasswordField
@@ -90,6 +91,7 @@ export default function Login({ navigate }: LoginProps) {
                             status={senhaErrState.active ? 'erro' : ''}
                             error={senhaErrState.active ? 'Preencha de forma correta para continuar' : ''}
                             shake={senhaErrState.shake}
+                            required
                         />
 
                         {error && <p className={styles.errorMsg}>{error}</p>}

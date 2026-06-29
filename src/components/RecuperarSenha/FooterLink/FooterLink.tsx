@@ -3,7 +3,7 @@ import styles from './FooterLink.module.css'
 interface FooterLinkProps {
     text: string        
     linkText: string    
-    onClick: () => void // Função que executa a navegação
+    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export default function FooterLink({ text, linkText, onClick }: FooterLinkProps) {

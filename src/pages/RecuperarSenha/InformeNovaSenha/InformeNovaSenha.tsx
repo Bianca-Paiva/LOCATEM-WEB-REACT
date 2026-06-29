@@ -10,12 +10,13 @@ import BtnPrincipal from "../../../components/BtnPrincipal/BtnPrincipal";
 import PasswordValidationList from "../../../components/RecuperarSenha/PasswordValidationList/PasswordValidationList";
 import PasswordStrengthMeter from "../../../components/PasswordMedidor/PasswordStrengthMeter";
 import Alerta from "../../../components/RecuperarSenha/Alerta/Alerta";
+import SuccessModal from "../../../components/SuccessModal/SucessesModal";
 
 
 // HOOKS / REGRAS DE NEGÓCIO / VALIDAÇÕES
 import { useState } from "react";
 
-import { checkPasswordStrength } from "../../../hooks/usePasswordStrength";
+import { checkPasswordStrength } from "../../../hooks/passwordStrength";
 
 import {
     getConfirmPasswordError,
@@ -41,14 +42,16 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
     // Estado para controlar se o alerta deve aparecer
     const [alerta, setAlerta] = useState<{ titulo: string, mensagem: string } | null>(null)
 
-    const [senhaErrState, setSenhaErrState] = useState({ active: false, shake: false })
-    const [confirmErrState, setConfirmErrState] = useState({ active: false, shake: false })
+    const [senhaErroState, setSenhaErroState] = useState({ active: false, shake: false })
+    const [confirmErroState, setConfirmErroState] = useState({ active: false, shake: false })
+
+    const [successModalOpen, setSuccessModalOpen] = useState(false);
 
     const strengthResult = checkPasswordStrength(senha)
 
     const handleSubmit = () => {
-        setSenhaErrState({ active: false, shake: false })
-        setConfirmErrState({ active: false, shake: false })
+        setSenhaErroState({ active: false, shake: false })
+        setConfirmErroState({ active: false, shake: false })
 
         const result = validatePasswordForm(
             senha,
@@ -59,34 +62,34 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
         switch (result.type) {
             case 'required':
                 if (!senha) {
-                    setSenhaErrState({ active: true, shake: true })
+                    setSenhaErroState({ active: true, shake: true })
                 }
 
                 if (!confirmarSenha) {
-                    setConfirmErrState({ active: true, shake: true })
+                    setConfirmErroState({ active: true, shake: true })
                 }
 
                 setAlerta(PASSWORD_MESSAGES.REQUIRED)
                 return
 
             case 'mismatch':
-                setConfirmErrState({ active: true, shake: true })
+                setConfirmErroState({ active: true, shake: true })
                 setAlerta(PASSWORD_MESSAGES.MISMATCH)
                 return
 
             case 'fraca':
-                setSenhaErrState({ active: true, shake: true })
+                setSenhaErroState({ active: true, shake: true })
                 setAlerta(PASSWORD_MESSAGES.WEAK)
                 return
 
             case 'media':
-                setSenhaErrState({ active: true, shake: true })
+                setSenhaErroState({ active: true, shake: true })
                 setAlerta(PASSWORD_MESSAGES.MEDIUM)
                 return
 
             case 'success':
-                console.log('Senha alterada com sucesso!')
-                return
+                setSuccessModalOpen(true);
+                return;
         }
     }
 
@@ -96,7 +99,6 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
             <AuthHeader navigate={navigate} />
 
             <main className={styles.main}>
-
 
                 <Etapas currentStep={3} />
 
@@ -113,6 +115,17 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                     />
                 )}
 
+                <SuccessModal
+                    open={successModalOpen}
+                    title="Senha alterada!"
+                    message="Sua senha foi alterada com sucesso. Entre na sua conta para continuar."
+                    buttonText="Continuar"
+                    onConfirm={() => {
+                        setSuccessModalOpen(false);
+                        navigate("login");
+                    }}
+                />
+
                 {/* FORM CONTAINER: Alinha todo o bloco centralizado */}
                 <form className={styles.formulario} onSubmit={(e) => e.preventDefault()}>
 
@@ -128,11 +141,12 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                                 value={senha}
                                 onChange={e => {
                                     setSenha(e.target.value);
-                                    if (senhaErrState.active) setSenhaErrState({ active: false, shake: false });
+                                    if (senhaErroState.active) setSenhaErroState({ active: false, shake: false });
                                 }}
-                                status={senhaErrState.active ? 'erro' : ''}
+                                status={senhaErroState.active ? 'erro' : ''}
                                 error=""
-                                shake={senhaErrState.shake}
+                                shake={senhaErroState.shake}
+                                required
                             />
 
                             <PasswordStrengthMeter
@@ -147,20 +161,21 @@ export default function InformeNovaSenha({ navigate }: InformeNovaSenhaProps) {
                                 value={confirmarSenha}
                                 onChange={e => {
                                     setConfirmarSenha(e.target.value);
-                                    if (confirmErrState.active) setConfirmErrState({ active: false, shake: false });
+                                    if (confirmErroState.active) setConfirmErroState({ active: false, shake: false });
                                 }}
                                 status={
-                                    confirmErrState.active
+                                    confirmErroState.active
                                         ? 'erro'
                                         : getConfirmPasswordStatus(senha, confirmarSenha)
                                 }
 
                                 error={
-                                    confirmErrState.active
+                                    confirmErroState.active
                                         ? ''
                                         : getConfirmPasswordError(senha, confirmarSenha)
                                 }
-                                shake={confirmErrState.shake}
+                                shake={confirmErroState.shake}
+                                required
                             />
                         </div>
 
