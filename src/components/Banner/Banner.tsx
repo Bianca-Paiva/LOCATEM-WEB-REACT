@@ -50,7 +50,7 @@ export const Banner: React.FC = () => {
         slidesPerView={1}       // Mostra apenas 1 banner por vez
         navigation={false}      // Desativa as setas laterais
         autoplay={{ delay: 4000, disableOnInteraction: false }} // Passa sozinho a cada 4 segundos
-        loop={true}             // Quando chegar no último, volta para o primeiro infinitamente
+                     // Quando chegar no último, volta para o primeiro infinitamente
         className="banner-swiper"
       >
         {BANNERS_MOCK.map((banner) => (

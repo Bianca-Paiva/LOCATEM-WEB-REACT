@@ -1,0 +1,51 @@
+.wrapper {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #f3f4f6;
+}
+
+.titulo {
+  font-size: clamp(14px, 1.8vw, 17px);
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0 0 14px;
+}
+
+.tabela {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #f3f4f6;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  gap: 16px;
+}
+
+.linhaClara {
+  background: #fff;
+}
+
+.linhaEscura {
+  background: #f9fafb;
+}
+
+.label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 400;
+  min-width: 120px;
+}
+
+.valor {
+  font-size: 13px;
+  color: #0a0a0a;
+  font-weight: 500;
+  text-align: right;
+}

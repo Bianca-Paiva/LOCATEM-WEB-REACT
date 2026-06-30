@@ -1,0 +1,219 @@
+/* ===================================================
+   ProdutoDetalhe.css — Layout responsivo da tela de produto
+   =================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.produto-detalhe-container {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.produto-detalhe-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 40px;
+}
+
+/* ─── LAYOUT GERAL: conteúdo + banner lateral ────── */
+.produto-layout-desktop {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.produto-col-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Banner lateral alto: oculto no mobile, visível no desktop */
+.produto-col-banner {
+  display: none;
+}
+
+/* Banner mobile: visível abaixo do conteúdo em mobile */
+.produto-col-banner-mobile {
+  width: 100%;
+  padding: 0 16px;
+}
+
+/* ─── SEÇÃO HERO ─────────────────────────────────── */
+.produto-hero-section {
+  background: #fff;
+  border-bottom: 1px solid #f3f4f6;
+  padding: 16px;
+}
+
+.produto-hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.produto-col-imagem {
+  width: 100%;
+}
+
+.produto-col-info {
+  width: 100%;
+}
+
+/* ─── SEÇÃO PRODUTOS SEMELHANTES ─────────────────── */
+.produto-section-padded {
+  padding: 0 16px;
+  width: 100%;
+}
+
+/* ─── GRID INFERIOR ──────────────────────────────── */
+.produto-grid-inferior {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 16px;
+  width: 100%;
+}
+
+/* ─── DESC + VENDEDOR ROW ────────────────────────── */
+.produto-desc-vendedor-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.produto-desc-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.produto-vendedor-col {
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* TABLET: 768px+                                      */
+/* ─────────────────────────────────────────────────── */
+@media (min-width: 768px) {
+  .produto-hero-section {
+    padding: 24px;
+  }
+
+  .produto-hero-inner {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .produto-col-imagem {
+    flex: 0 0 340px;
+    max-width: 340px;
+  }
+
+  .produto-col-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .produto-section-padded {
+    padding: 0 24px;
+  }
+
+  .produto-grid-inferior {
+    padding: 0 24px;
+  }
+
+  .produto-desc-vendedor-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .produto-vendedor-col {
+    flex: 0 0 260px;
+    max-width: 260px;
+  }
+}
+
+/* ─────────────────────────────────────────────────── */
+/* DESKTOP: 1024px+                                    */
+/* ─────────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+
+  /* Wrapper geral vira row: conteúdo (esquerda) + banner alto (direita) */
+  .produto-layout-desktop {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .produto-col-conteudo {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Seções internas perdem padding/max-width próprios — 
+     o wrapper externo já cuida do espaçamento horizontal */
+  .produto-hero-section {
+    padding: 28px 0 0;
+    border-bottom: none;
+  }
+
+  .produto-hero-inner {
+    gap: 32px;
+  }
+
+  .produto-col-imagem {
+    flex: 0 0 380px;
+    max-width: 380px;
+  }
+
+  .produto-col-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .produto-section-padded {
+    padding: 0;
+  }
+
+  .produto-grid-inferior {
+    padding: 0;
+  }
+
+  /* Banner lateral alto: ocupa a altura inteira da coluna de conteúdo */
+  .produto-col-banner {
+    display: block;
+    flex: 0 0 280px;
+    max-width: 280px;
+    align-self: stretch;
+  }
+
+  /* Esconde o banner inline mobile */
+  .produto-col-banner-mobile {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────── */
+/* WIDESCREEN: 1280px+                                 */
+/* ─────────────────────────────────────────────────── */
+@media (min-width: 1280px) {
+  .produto-col-imagem {
+    flex: 0 0 420px;
+    max-width: 420px;
+  }
+
+  .produto-col-banner {
+    flex: 0 0 300px;
+    max-width: 300px;
+  }
+}

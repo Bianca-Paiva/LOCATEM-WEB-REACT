@@ -1,11 +1,9 @@
 /* --- CSS Corrigido e Otimizado para Componente de Card --- */
 
-/* 1. Definição Global de Box-Sizing (Crucial para contenção) */
 *, *::before, *::after {
-  box-sizing: border-box; /* Previne que padding/border aumentem o tamanho do elemento e quebrem o layout */
+  box-sizing: border-box;
 }
 
-/* Variáveis para consistência (use as mesmas do seu projeto) */
 :root {
   --color-bg-card: #FFFFFF;
   --spacing-md: 16px;
@@ -23,14 +21,31 @@
   gap: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   border: 1px solid #F3F4F6;
-  transition: transform var(--transition-fast);
-  
-  /* CORREÇÃO CHAVE: Impede que qualquer elemento saia do card */
-  overflow: hidden; 
-  min-width: 0; /* Permite que o card encolha corretamente em flex-grids */
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  overflow: hidden;
+  min-width: 0;
+  /* reset quando usado como <button> */
+  text-align: left;
+  cursor: default;
+  font-family: inherit;
+  width: 100%;
 }
 
-.product-card:hover {
+/* Variante clicável — aplicada quando onNavigate é passado */
+.product-card--clickable {
+  cursor: pointer;
+}
+
+.product-card--clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+}
+
+.product-card--clickable:active {
+  transform: translateY(-1px);
+}
+
+.product-card:not(.product-card--clickable):hover {
   transform: translateY(-2px);
 }
 
@@ -54,13 +69,14 @@
   font-weight: 500;
   color: var(--color-text-dark);
   line-height: 1.4;
-  height: 40px; /* Limita a altura total */
+  height: 40px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Garante no máximo 2 linhas de texto */
+  -webkit-line-clamp: 2;
   line-clamp: 2;
-  overflow: hidden; /* Trunca o texto se passar */
-  max-width: 100%; /* Garante contenção horizontal */
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0;
 }
 
 .product-brand-row {
@@ -75,26 +91,16 @@
   font-weight: 600;
 }
 
-.verified-badge {
-  background-color: #2089FF;
-  color: white;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 9px;
-  font-weight: bold;
+.logo-Verificado {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
 }
 
-/* --- NOVO E CORRIGIDO: Footer que divide o Preço e a Avaliação --- */
-
-/* Padrão: Lado a lado (row) em telas maiores */
 .product-footer {
   display: flex;
-  justify-content: space-between; /* Empurra preço pra esquerda e nota pra direita */
-  align-items: center; /* Centraliza verticalmente o bloco se tiver tamanhos diferentes */
+  justify-content: space-between;
+  align-items: center;
   margin-top: 4px;
 }
 
@@ -123,15 +129,15 @@
 }
 
 .estrela-avaliação {
-  width: 17px;          
+  width: 17px;
   object-fit: contain;
-  vertical-align: middle; 
+  vertical-align: middle;
 }
 
 .product-rating {
   display: flex;
-  align-items: center; 
-  gap: 4px;          
+  align-items: center;
+  gap: 4px;
 }
 
 .rating-value {
@@ -147,28 +153,24 @@
 
 /* --- Media Mobile: Abaixo de 768px --- */
 @media (max-width: 767px) {
-  
-  /* CORREÇÃO CHAVE: Preço e Avaliação EMPILHAM (column) em telas estreitas */
   .product-footer {
     flex-direction: column;
-    align-items: flex-start; /* Alinha ambos à esquerda no mobile */
-    gap: 6px; /* Espaço vertical entre preço e nota */
+    align-items: flex-start;
+    gap: 6px;
   }
 
-  /* Garante que os blocos internos ocupem toda a largura */
   .product-price-row,
   .product-rating {
     width: 100%;
     margin: 0;
   }
 
-  /* Ajustes de tamanho mantidos e refinados */
   .rating-count {
-    display: none; /* Esconde a contagem no mobile */
+    display: none;
   }
 
   .estrela-avaliação {
-    width: 14px; /* Estrela ligeiramente menor */
+    width: 14px;
   }
 
   .rating-value {
@@ -176,6 +178,6 @@
   }
 
   .price-value {
-    font-size: 16px; /* Preço menor para caber melhor, mas ainda legível */
+    font-size: 16px;
   }
 }

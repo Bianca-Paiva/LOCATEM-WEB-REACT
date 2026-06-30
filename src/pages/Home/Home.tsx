@@ -1,11 +1,11 @@
-import Header from '../../components/Header/Header'; 
+import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
+import { useProdutoStore } from '../../store/produtoStore';
 import type { Route } from '../../router/useRouter';
-import './Home.css'; // Importando o novo arquivo CSS
+import './Home.css';
 
-// Dados dos produtos
 const MOCK_PRODUCTS = [
   {
     id: 1,
@@ -16,7 +16,7 @@ const MOCK_PRODUCTS = [
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 4.5,
-    reviewCount: 124
+    reviewCount: 124,
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const MOCK_PRODUCTS = [
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 4.2,
-    reviewCount: 87
+    reviewCount: 87,
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const MOCK_PRODUCTS = [
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 4.7,
-    reviewCount: 201
+    reviewCount: 201,
   },
   {
     id: 4,
@@ -49,7 +49,7 @@ const MOCK_PRODUCTS = [
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 4.1,
-    reviewCount: 45
+    reviewCount: 45,
   },
   {
     id: 5,
@@ -60,7 +60,7 @@ const MOCK_PRODUCTS = [
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 4.3,
-    reviewCount: 62
+    reviewCount: 62,
   },
   {
     id: 6,
@@ -71,18 +71,18 @@ const MOCK_PRODUCTS = [
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 4.0,
-    reviewCount: 38
+    reviewCount: 38,
   },
   {
     id: 7,
     title: 'Serra circular profissional DESOON 24 Dentes',
     brand: 'JB Ferramentas',
     price: '18,00',
-    image: 'src/assets/aparadorGrama.webp', // Nota: mesma imagem do id 4, ajustar caso necessário
+    image: 'src/assets/aparadorGrama.webp',
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 4.6,
-    reviewCount: 153
+    reviewCount: 153,
   },
   {
     id: 8,
@@ -93,8 +93,8 @@ const MOCK_PRODUCTS = [
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 3.9,
-    reviewCount: 27
-  }
+    reviewCount: 27,
+  },
 ];
 
 interface HomeProps {
@@ -102,17 +102,31 @@ interface HomeProps {
 }
 
 export default function Home({ navigate }: HomeProps) {
+  const { setProdutoSelecionado } = useProdutoStore();
+
+  const handleCardClick = (product: typeof MOCK_PRODUCTS[0]) => {
+    setProdutoSelecionado({
+      id: product.id,
+      title: product.title,
+      brand: product.brand,
+      price: product.price,
+      image: product.image,
+      imageVerificado: product.imageVerificado,
+      imageNota: product.imageNota,
+      rating: product.rating,
+      reviewCount: product.reviewCount,
+    });
+    navigate('produtoDetalhe');
+  };
+
   return (
     <div className="home-container">
       <Header navigate={navigate} currentRoute="home" />
-      
+
       <main className="home-main">
         <Banner />
-        
-        {/* Renderiza o título "Ferramentas" e as pílulas de filtro */}
         <CategoryFilter />
-        
-        {/* Grid de Produtos alinhado com o container principal */}
+
         <div className="products-grid">
           {MOCK_PRODUCTS.map((product) => (
             <ProductCard
@@ -125,6 +139,7 @@ export default function Home({ navigate }: HomeProps) {
               imageNota={product.imageNota}
               rating={product.rating}
               reviewCount={product.reviewCount}
+              onNavigate={() => handleCardClick(product)}
             />
           ))}
         </div>

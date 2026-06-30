@@ -1,0 +1,121 @@
+.vendedorCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.labelLoja {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.vendedorHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarInitials {
+  font-size: 16px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.vendedorInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.vendedorNome {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0 0 4px;
+}
+
+.ratingRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 3px;
+}
+
+.starIcon {
+  width: 13px;
+  height: 13px;
+  object-fit: contain;
+}
+
+.ratingValor {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a0a0a;
+}
+
+.ratingCount {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.locacoes {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.verificadoBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.verificadoIcon {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.btnVerPerfil {
+  width: 100%;
+
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnVerPerfil:hover {
+  background: #f9fafb;
+}

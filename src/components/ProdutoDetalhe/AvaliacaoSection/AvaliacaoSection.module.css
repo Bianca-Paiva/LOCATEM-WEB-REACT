@@ -1,0 +1,209 @@
+.wrapper {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #f3f4f6;
+}
+
+.titulo {
+  font-size: clamp(14px, 1.8vw, 17px);
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0 0 16px;
+}
+
+.resumoContainer {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f3f4f6;
+  flex-wrap: wrap;
+}
+
+.mediaBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 90px;
+}
+
+.mediaNumero {
+  font-size: 40px;
+  font-weight: 800;
+  color: #0a0a0a;
+  line-height: 1;
+}
+
+.mediaEstrelasRow {
+  display: flex;
+}
+
+.totalText {
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.distribuicaoContainer {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.barraLinha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.barraLabel {
+  font-size: 12px;
+  color: #6b7280;
+  width: 10px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.barraTrack {
+  flex: 1;
+  height: 7px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barraFill {
+  height: 100%;
+  background: #F9C01A;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.barraPercent {
+  font-size: 11px;
+  color: #9ca3af;
+  width: 28px;
+  flex-shrink: 0;
+}
+
+/* Lista de avaliações */
+.listaAvaliacoes {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.avaliacaoItem {
+  padding: 16px 0;
+  border-bottom: 1px solid #f9fafb;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.avaliacaoItem:last-child {
+  border-bottom: none;
+}
+
+.avaliacaoHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatarCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F9C01A, #f59e0b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0a0a0a;
+  flex-shrink: 0;
+}
+
+.avaliacaoMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.avaliacaoNome {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a0a0a;
+}
+
+.avaliacaoTempo {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.estrelasRow {
+  display: flex;
+}
+
+.avaliacaoTexto {
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.fotosRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.fotoThumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #f3f4f6;
+}
+
+.avaliacaoFooter {
+  margin-top: 4px;
+}
+
+.btnUtil {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.btnUtil:hover {
+  color: #374151;
+}
+
+.btnVerMais {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.15s;
+}
+
+.btnVerMais:hover {
+  background: #f9fafb;
+}

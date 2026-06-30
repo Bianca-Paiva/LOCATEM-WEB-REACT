@@ -1,0 +1,87 @@
+.sectionWrapper {
+  width: 100%;
+}
+
+.titulo {
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0 0 14px;
+}
+
+.carrosselContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  z-index: 5;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.navBtn:hover {
+  background: #fff;
+}
+
+.navBtnLeft {
+  left: -14px;
+}
+
+.navBtnRight {
+  right: -14px;
+}
+
+.carrosselTrack {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 4px 2px 8px;
+  width: 100%;
+}
+
+.carrosselTrack::-webkit-scrollbar {
+  display: none;
+}
+
+.cardWrapper {
+  flex: 0 0 calc(50% - 6px);
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+@media (min-width: 480px) {
+  .cardWrapper {
+    flex: 0 0 calc(33.333% - 8px);
+  }
+}
+
+@media (min-width: 768px) {
+  .cardWrapper {
+    flex: 0 0 calc(25% - 9px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cardWrapper {
+    flex: 0 0 calc(16.666% - 10px);
+  }
+}

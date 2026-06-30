@@ -1,15 +1,15 @@
-import Header from '../../components/Header/Header'; 
+import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
+import { useProdutoStore } from '../../store/produtoStore';
 import type { Route } from '../../router/useRouter';
 import { useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';
 import { SideBarBusca } from '../../components/Busca/SideBarBusca/SideBarBusca';
-import  Paginacao  from '../../components/Busca/Paginacao/Paginacao'; // Com chaves se não for default// IMPORTANTE: Ajuste o caminho se necessário
-import './Busca.css'; 
+import Paginacao from '../../components/Busca/Paginacao/Paginacao';
+import './Busca.css';
 
 const MOCK_PRODUCTS = [
-  // ... seus mocks continuam aqui (encolhi para facilitar a leitura)
   {
     id: 1,
     title: 'Furadeira Parafusadeira Impacto 1/2',
@@ -22,541 +22,135 @@ const MOCK_PRODUCTS = [
     rating: 4.5,
     reviewCount: 124,
     paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
+    available: true,
   },
-
   {
-
     id: 2,
-
     title: 'Pistola de Pintura Profissional',
-
     brand: 'Black & Decker',
-
     category: 'Ferramentas Elétricas',
-
     price: '30,00',
-
     image: 'src/assets/pistolaPintura.png',
-
     imageVerificado: 'src/assets/verificado.png',
-
     imageNota: 'src/assets/StarFull.png',
-
     rating: 4.2,
-
     reviewCount: 87,
-
     paymentMethods: ['Cartão de Crédito', 'Boleto Bancário', 'Pix'],
-
-    available: true
-
+    available: true,
   },
-
   {
-
     id: 3,
-
     title: 'Chave de Fenda Hidráulica Manual',
-
     brand: 'Makita',
-
     category: 'Ferramentas Manuais',
-
     price: '15,00',
-
     image: 'src/assets/Furadeira3.webp',
-
     imageVerificado: 'src/assets/verificado.png',
-
     imageNota: 'src/assets/StarFull.png',
-
     rating: 3.7,
-
     reviewCount: 201,
-
     paymentMethods: ['Pix', 'Transferência Bancária'],
-
-    available: false
-
+    available: false,
   },
-
   {
-
     id: 4,
-
     title: 'Aparador De Grama Bipartido',
-
     brand: 'DeWalt',
-
     category: 'Equipamentos de Jardinagem',
-
     price: '85,00',
-
     image: 'src/assets/aparadorGrama.webp',
-
     imageVerificado: 'src/assets/verificado.png',
-
     imageNota: 'src/assets/StarFull.png',
-
     rating: 4.1,
-
     reviewCount: 45,
-
     paymentMethods: ['Cartão de Crédito'],
-
-    available: true
-
+    available: true,
   },
   {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-  
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-
-  {
-    id: 14,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificado.png',
-    imageNota: 'src/assets/StarFull.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true
-  },
-  
-  
-  {
-
     id: 5,
-
-    title: 'Compactador de Solo Pesado',
-
-    brand: 'Makita',
-
-    category: 'Máquinas Pesadas',
-
-    price: '250,00',
-
-    image: 'src/assets/Furadeira4.webp',
-
-    imageVerificado: 'src/assets/verificado.png',
-
-    imageNota: 'src/assets/StarFull.png',
-
-    rating: 4.8,
-
-    reviewCount: 62,
-
-    paymentMethods: ['Boleto Bancário', 'Transferência Bancária'],
-
-    available: true
-
-  },
-
-  {
-
-    id: 6,
-
-    title: 'Serra Circular Elétrica',
-
+    title: 'Serra Tico-Tico de Bancada',
     brand: 'Bosch',
-
     category: 'Ferramentas Elétricas',
-
-    price: '60,00',
-
+    price: '50,00',
     image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-
     imageVerificado: 'src/assets/verificado.png',
-
     imageNota: 'src/assets/StarFull.png',
-
-    rating: 4.0,
-
-    reviewCount: 38,
-
-    paymentMethods: ['Pix'],
-
-    available: true
-
-  },
-
-  {
-
-    id: 7,
-
-    title: 'Kit Chaves Combinadas Premium',
-
-    brand: 'DeWalt',
-
-    category: 'Ferramentas Manuais',
-
-    price: '25,00',
-
-    image: 'src/assets/aparadorGrama.webp',
-
-    imageVerificado: 'src/assets/verificado.png',
-
-    imageNota: 'src/assets/StarFull.png',
-
-    rating: 4.6,
-
-    reviewCount: 153,
-
+    rating: 4.4,
+    reviewCount: 76,
     paymentMethods: ['Cartão de Crédito', 'Pix'],
-
-    available: false
-
+    available: true,
   },
-
-
   {
-
-    id: 7,
-
+    id: 6,
     title: 'Kit Chaves Combinadas Premium',
-
     brand: 'DeWalt',
-
     category: 'Ferramentas Manuais',
-
     price: '25,00',
-
     image: 'src/assets/aparadorGrama.webp',
-
     imageVerificado: 'src/assets/verificado.png',
-
     imageNota: 'src/assets/StarFull.png',
-
     rating: 4.6,
-
     reviewCount: 153,
-
     paymentMethods: ['Cartão de Crédito', 'Pix'],
-
-    available: false
-
+    available: false,
   },
-
   {
-
     id: 7,
-
-    title: 'Kit Chaves Combinadas Premium',
-
-    brand: 'DeWalt',
-
-    category: 'Ferramentas Manuais',
-
-    price: '25,00',
-
-    image: 'src/assets/aparadorGrama.webp',
-
-    imageVerificado: 'src/assets/verificado.png',
-
-    imageNota: 'src/assets/StarFull.png',
-
-    rating: 4.6,
-
-    reviewCount: 153,
-
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-
-    available: false
-
-  },
-
-  {
-
-    id: 7,
-
-    title: 'Kit Chaves Combinadas Premium',
-
-    brand: 'DeWalt',
-
-    category: 'Ferramentas Manuais',
-
-    price: '25,00',
-
-    image: 'src/assets/aparadorGrama.webp',
-
-    imageVerificado: 'src/assets/verificado.png',
-
-    imageNota: 'src/assets/StarFull.png',
-
-    rating: 4.6,
-
-    reviewCount: 153,
-
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-
-    available: false
-
-  },
-
-  {
-
-    id: 8,
-
     title: 'Cortador de Grama Dirigível',
-
     brand: 'Black & Decker',
-
     category: 'Equipamentos de Jardinagem',
-
     price: '210,00',
-
     image: 'src/assets/parafusadeira-wap.png',
-
     imageVerificado: 'src/assets/verificado.png',
-
     imageNota: 'src/assets/StarFull.png',
-
     rating: 2.9,
-
     reviewCount: 27,
-
     paymentMethods: ['Cartão de Crédito', 'Boleto Bancário'],
-
-    available: true
-
-  }
-
+    available: true,
+  },
+  {
+    id: 8,
+    title: 'Parafusadeira Furadeira de Impacto Hanabi',
+    brand: 'Makita',
+    category: 'Ferramentas Elétricas',
+    price: '28,00',
+    image: 'src/assets/Furadeira3.webp',
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.7,
+    reviewCount: 201,
+    paymentMethods: ['Pix'],
+    available: true,
+  },
+  {
+    id: 9,
+    title: 'Parafusadeira e Furadeira WAP 12V',
+    brand: 'WAP',
+    category: 'Ferramentas Elétricas',
+    price: '18,00',
+    image: 'src/assets/Furadeira4.webp',
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.3,
+    reviewCount: 62,
+    paymentMethods: ['Cartão de Crédito', 'Pix'],
+    available: true,
+  },
+  {
+    id: 10,
+    title: 'Parafusadeira e Furadeira WAP BPF 12V',
+    brand: 'WAP',
+    category: 'Ferramentas Elétricas',
+    price: '18,00',
+    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
+    imageVerificado: 'src/assets/verificado.png',
+    imageNota: 'src/assets/StarFull.png',
+    rating: 4.0,
+    reviewCount: 38,
+    paymentMethods: ['Cartão de Crédito'],
+    available: true,
+  },
 ];
-
 
 interface BuscaProps {
   navigate: (route: Route) => void;
@@ -573,13 +167,13 @@ export interface FilterState {
 }
 
 export default function Busca({ navigate }: BuscaProps) {
+  const { setProdutoSelecionado } = useProdutoStore();
+
   const [sortOrder, setSortOrder] = useState('menor-preco');
   const [isFilterMobileOpen, setIsFilterMobileOpen] = useState(false);
-  
-  // NOVO: Estado para controlar a página atual
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage =20;
-  
+  const itemsPerPage = 18;
+
   const [activeFilters, setActiveFilters] = useState<FilterState>({
     categories: [],
     brands: [],
@@ -595,8 +189,23 @@ export default function Busca({ navigate }: BuscaProps) {
     { value: 'maior-preco', label: 'Preço: Maior preço' },
     { value: 'menor-preco', label: 'Preço: Menor preço' },
     { value: 'melhores-avaliacoes', label: 'Melhores avaliações' },
-    { value: 'novidades', label: 'Novidades' }
+    { value: 'novidades', label: 'Novidades' },
   ];
+
+  const handleCardClick = (product: typeof MOCK_PRODUCTS[0]) => {
+    setProdutoSelecionado({
+      id: product.id,
+      title: product.title,
+      brand: product.brand,
+      price: product.price,
+      image: product.image,
+      imageVerificado: product.imageVerificado,
+      imageNota: product.imageNota,
+      rating: product.rating,
+      reviewCount: product.reviewCount,
+    });
+    navigate('produtoDetalhe');
+  };
 
   const filteredProducts = MOCK_PRODUCTS.filter((product) => {
     const productPrice = parseFloat(product.price.replace(',', '.'));
@@ -640,36 +249,34 @@ export default function Busca({ navigate }: BuscaProps) {
     return 0;
   });
 
-  // NOVO: Lógica de fatiamento (slice) para a paginação
   const totalItems = sortedProducts.length;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // currentProducts é a lista que realmente vai ser renderizada na tela
   const currentProducts = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <div className="busca-container">
       <Header navigate={navigate} currentRoute="busca" />
-      
+
       <main className="busca-main">
         <div className="busca-layout">
-          
+
           <div className="busca-content-main">
             <Banner />
-            
+
             <div className="busca-controls-container">
               <div className="order-button-container">
-                <ButtonOrder 
+                <ButtonOrder
                   value={sortOrder}
                   onChange={(val) => {
                     setSortOrder(val);
-                    setCurrentPage(1); // Volta para a pág 1 ao reordenar
+                    setCurrentPage(1);
                   }}
                   options={sortOptions}
                 />
               </div>
 
-              <button 
+              <button
                 className="mobile-filter-trigger-btn"
                 onClick={() => setIsFilterMobileOpen(true)}
               >
@@ -678,7 +285,6 @@ export default function Busca({ navigate }: BuscaProps) {
             </div>
 
             <div className="products-grid">
-              {/* NOVO: Trocado de sortedProducts.map para currentProducts.map */}
               {currentProducts.length > 0 ? (
                 currentProducts.map((product) => (
                   <ProductCard
@@ -691,6 +297,7 @@ export default function Busca({ navigate }: BuscaProps) {
                     imageNota={product.imageNota}
                     rating={product.rating}
                     reviewCount={product.reviewCount}
+                    onNavigate={() => handleCardClick(product)}
                   />
                 ))
               ) : (
@@ -698,24 +305,22 @@ export default function Busca({ navigate }: BuscaProps) {
               )}
             </div>
 
-        
-            <Paginacao 
-              totalItems={totalItems} 
-              itemsPerPage={itemsPerPage} 
-              currentPage={currentPage} 
-              onPageChange={setCurrentPage} 
+            <Paginacao
+              totalItems={totalItems}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
             />
-
           </div>
 
-          <SideBarBusca 
+          <SideBarBusca
             isOpen={isFilterMobileOpen}
             onClose={() => setIsFilterMobileOpen(false)}
             onApplyFilters={(filters) => {
               setActiveFilters(filters);
-              setCurrentPage(1); // Volta para a pág 1 ao aplicar novo filtro
-              setIsFilterMobileOpen(false); 
-            }} 
+              setCurrentPage(1);
+              setIsFilterMobileOpen(false);
+            }}
           />
 
         </div>
@@ -723,4 +328,3 @@ export default function Busca({ navigate }: BuscaProps) {
     </div>
   );
 }
-
