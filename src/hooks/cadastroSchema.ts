@@ -33,7 +33,7 @@ export const cadastroSchema = z.object({
             const hasNumero = /[0-9]/.test(val)
             const hasEspecial = /[^A-Za-z0-9]/.test(val)
             return hasTamanho && hasMinuscula && hasMaiuscula && hasNumero && hasEspecial
-        }, 'Sua senha não atende aos requisitos de segurança necessários'),
+        }, ''), // <-- Texto longo substituído por string vazia
         
     confirmarSenha: z.string().min(1, 'A confirmação de senha é obrigatória')
 })

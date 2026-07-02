@@ -1,18 +1,17 @@
-// src/hooks/implementacaoBibliotecas/useCadastroForm.ts
 import { useState } from 'react'
-import { useForm, useWatch } from 'react-hook-form' // <-- Adicionado useWatch aqui
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cadastroSchema, type CadastroFormData } from './cadastroSchema'
-import { CADASTRO_MESSAGES } from '../cadastroMessages'
-import { PASSWORD_MESSAGES } from '../passwordMessages'
-import { checkPasswordStrength } from '../passwordStrength'
-import { criarUsuario } from '../../services/authService'
+import { CADASTRO_MESSAGES } from './cadastroMessages'
+import { PASSWORD_MESSAGES } from './passwordMessages'
+import { checkPasswordStrength } from './passwordStrength'
+import { criarUsuario } from '../services/authService'
 
 interface ErrorState { active: boolean; shake: boolean }
 const INITIAL_ERROR = { active: false, shake: false }
 
 export function useCadastroForm() {
-    const [alerta, setAlerta] = useState<{ titulo: string, mensagem?: string } | null>(null) // Ajuste fino no tipo do estado se necessário pelos seus arquivos de mensagem
+    const [alerta, setAlerta] = useState<{ titulo: string, mensagem?: string } | null>(null)
     const [successModalOpen, setSuccessModalOpen] = useState(false)
 
     const [shakes, setShakes] = useState<Record<string, ErrorState>>({
@@ -25,7 +24,6 @@ export function useCadastroForm() {
         defaultValues: { tipo: 'locatario', nome: '', email: '', telefone: '', documento: '', endereco: '', senha: '', confirmarSenha: '' }
     })
 
-    // Substituído o watch estrutural pelo hook useWatch compatível com o React Compiler
     const tipo = useWatch({ control, name: 'tipo' })
     const senha = useWatch({ control, name: 'senha' })
     const confirmarSenha = useWatch({ control, name: 'confirmarSenha' })
@@ -34,15 +32,12 @@ export function useCadastroForm() {
     const strengthResult = checkPasswordStrength(senha || '')
 
     const triggerShake = (field: string) => {
-        // 1. Primeiro garante que desativa o shake para resetar o elemento
         setShakes(prev => ({ ...prev, [field]: { ...prev[field], shake: false } }))
 
-        // 2. Usa um micro-timeout para forçar o React a renderizar o estado como false antes de aplicar o true
         setTimeout(() => {
             setShakes(prev => ({ ...prev, [field]: { active: true, shake: true } }))
         }, 10)
 
-        // 3. Remove a animação após ela acabar (400ms) para que possa ser engatada novamente no próximo clique
         setTimeout(() => {
             setShakes(prev => ({ ...prev, [field]: { ...prev[field], shake: false } }))
         }, 410)
@@ -83,9 +78,15 @@ export function useCadastroForm() {
         const fields = ['nome', 'email', 'telefone', 'documento', 'endereco', 'senha', 'confirmarSenha'] as const
         fields.forEach(field => {
             const val = getValues(field)
-            if (!val || !val.trim()) {
+            
+            // Aciona o shake se o campo estiver vazio
+            if (!val || (typeof val === 'string' && !val.trim())) {
                 triggerShake(field)
                 hasEmptyFields = true
+            } 
+            // Aciona o shake se o campo estiver preenchido, mas com erro de validação
+            else if (formErrors[field]) {
+                triggerShake(field)
             }
         })
 
@@ -100,12 +101,12 @@ export function useCadastroForm() {
         if (formErrors.documento) return setAlerta(isCNPJ ? CADASTRO_MESSAGES.INVALID_CNPJ : CADASTRO_MESSAGES.INVALID_CPF)
 
         if (formErrors.confirmarSenha?.message === 'As senhas não coincidem') {
-            triggerShake('confirmarSenha')
+            // O triggerShake('confirmarSenha') foi removido daqui pois já é acionado no loop acima
             return setAlerta(PASSWORD_MESSAGES.MISMATCH)
         }
 
         if (formErrors.senha) {
-            triggerShake('senha')
+            // O triggerShake('senha') foi removido daqui pois já é acionado no loop acima
             return setAlerta(strengthResult.strength === 'media' ? PASSWORD_MESSAGES.MEDIUM : PASSWORD_MESSAGES.WEAK)
         }
     }

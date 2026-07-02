@@ -3,7 +3,7 @@ import styles from './Cadastro.module.css'
 
 import { maskCPF, maskCNPJ, maskPhone } from '../../hooks/masks'
 import { getPasswordValidations, getConfirmPasswordStatus } from '../../hooks/passwordValidation'
-import { useCadastroForm } from '../../hooks/implementaçãoBibliotecas/useCadastroForm'
+import { useCadastroForm } from '../../hooks/useCadastroForm'
 import type { Route } from '../../router/useRouter'
 
 import FormInput from '../../components/FormInput/FormInput'
@@ -70,7 +70,6 @@ export default function Cadastro({ navigate }: CadastroProps) {
                         }}
                     />
 
-                    {/* O noValidate impede que o balão nativo do navegador bloqueie suas animações */}
                     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} noValidate>
 
                         {/* CAMPO NOME */}
@@ -78,7 +77,8 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             control={control} name="nome"
                             render={({ field: { onChange, value } }) => (
                                 <FormInput
-                                    key={`nome-shake-${shakes.nome.shake}`} // <-- Força re-render da animação do CSS
+                                    // Usando o objeto inteiro na key para forçar o React a reiniciar a animação do zero a cada clique
+                                    key={`nome-shake-${JSON.stringify(shakes.nome)}`}
                                     id="nome"
                                     label="Nome completo"
                                     type="text"
@@ -88,8 +88,10 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                     shake={shakes.nome.shake}
                                     onBlur={() => trigger('nome')}
                                     onChange={(e) => { onChange(e.target.value); clearShake('nome'); }}
-                                    status={shakes.nome.active ? 'erro' : touchedFields.nome ? (errors.nome ? 'erro' : 'sucesso') : ''}
-                                    error={shakes.nome.active ? '' : errors.nome?.message}
+                                    // Fica vermelho fixo se houver erro ou se o shake estiver ativo
+                                    status={errors.nome || shakes.nome.active ? 'erro' : touchedFields.nome ? 'sucesso' : ''}
+                                    // Exibe a mensagem de erro direto do hook-form sem sumir textualmente
+                                    error={errors.nome?.message || ''}
                                 />
                             )}
                         />
@@ -100,7 +102,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             name="email"
                             render={({ field: { onChange, value } }) => (
                                 <FormInput
-                                    key={`email-shake-${shakes.email.shake}`} // <-- Força re-render da animação do CSS
+                                    key={`email-shake-${JSON.stringify(shakes.email)}`}
                                     id="email"
                                     label="E-mail"
                                     type="email"
@@ -108,13 +110,10 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                     value={value}
                                     required
                                     shake={shakes.email.shake}
-                                    onChange={(e) => {
-                                        onChange(e.target.value);
-                                        clearShake('email');
-                                    }}
+                                    onChange={(e) => { onChange(e.target.value); clearShake('email'); }}
                                     onBlur={() => trigger('email')}
-                                    status={shakes.email.active ? 'erro' : touchedFields.email ? (errors.email ? 'erro' : 'sucesso') : ''}
-                                    error={shakes.email.active ? '' : errors.email?.message}
+                                    status={errors.email || shakes.email.active ? 'erro' : touchedFields.email ? 'sucesso' : ''}
+                                    error={errors.email?.message || ''}
                                 />
                             )}
                         />
@@ -124,7 +123,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             control={control} name="telefone"
                             render={({ field: { onChange, value } }) => (
                                 <FormInput
-                                    key={`tel-shake-${shakes.telefone.shake}`} // <-- Força re-render da animação do CSS
+                                    key={`tel-shake-${JSON.stringify(shakes.telefone)}`}
                                     id="telefone"
                                     label="Telefone"
                                     type="tel"
@@ -135,8 +134,8 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                     shake={shakes.telefone.shake}
                                     onBlur={() => trigger('telefone')}
                                     onChange={(e) => { onChange(maskPhone(e.target.value)); clearShake('telefone'); }}
-                                    status={shakes.telefone.active ? 'erro' : touchedFields.telefone ? (errors.telefone ? 'erro' : 'sucesso') : ''}
-                                    error={shakes.telefone.active ? '' : errors.telefone?.message}
+                                    status={errors.telefone || shakes.telefone.active ? 'erro' : touchedFields.telefone ? 'sucesso' : ''}
+                                    error={errors.telefone?.message || ''}
                                 />
                             )}
                         />
@@ -146,11 +145,12 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             control={control} name="senha"
                             render={({ field: { onChange, value } }) => (
                                 <PasswordInput
-                                    key={`senha-shake-${shakes.senha.shake}`} // <-- Força re-render da animação do CSS
+                                    key={`senha-shake-${JSON.stringify(shakes.senha)}`}
                                     id="senha" label="Senha" placeholder="Crie uma senha segura"
                                     value={value} required shake={shakes.senha.shake}
                                     onChange={(e) => { onChange(e.target.value); clearShake('senha'); }}
-                                    status={shakes.senha.active ? 'erro' : ''} error=""
+                                    status={errors.senha || shakes.senha.active ? 'erro' : ''} 
+                                    error={errors.senha?.message || ''}
                                 />
                             )}
                         />
@@ -166,12 +166,12 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             control={control} name="confirmarSenha"
                             render={({ field: { onChange, value } }) => (
                                 <PasswordInput
-                                    key={`confirmar-shake-${shakes.confirmarSenha.shake}`} // <-- Força re-render da animação do CSS
+                                    key={`confirmar-shake-${JSON.stringify(shakes.confirmarSenha)}`}
                                     id="confirmarSenha" label="Confirmar senha" placeholder="Digite a senha novamente"
                                     value={value} required shake={shakes.confirmarSenha.shake}
                                     onChange={(e) => { onChange(e.target.value); clearShake('confirmarSenha'); }}
-                                    status={shakes.confirmarSenha.active ? 'erro' : getConfirmPasswordStatus(senha, confirmarSenha)}
-                                    error={shakes.confirmarSenha.active ? '' : errors.confirmarSenha?.message}
+                                    status={errors.confirmarSenha || shakes.confirmarSenha.active ? 'erro' : getConfirmPasswordStatus(senha, confirmarSenha)}
+                                    error={errors.confirmarSenha?.message || ''}
                                 />
                             )}
                         />
@@ -181,14 +181,14 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             control={control} name="documento"
                             render={({ field: { onChange, value } }) => (
                                 <FormInput
-                                    key={`doc-shake-${shakes.documento.shake}`} // <-- Força re-render da animação do CSS
+                                    key={`doc-shake-${JSON.stringify(shakes.documento)}`}
                                     id="documento" label={isCNPJ ? 'CNPJ' : 'CPF'} type="text" inputMode="numeric"
                                     placeholder={isCNPJ ? '00.000.000/0000-00' : '000.000.000-00'}
                                     value={value} required shake={shakes.documento.shake}
                                     onBlur={() => trigger('documento')}
                                     onChange={(e) => { onChange(isCNPJ ? maskCNPJ(e.target.value) : maskCPF(e.target.value)); clearShake('documento'); }}
-                                    status={shakes.documento.active ? 'erro' : touchedFields.documento ? (errors.documento ? 'erro' : 'sucesso') : ''}
-                                    error={shakes.documento.active ? '' : errors.documento?.message}
+                                    status={errors.documento || shakes.documento.active ? 'erro' : touchedFields.documento ? 'sucesso' : ''}
+                                    error={errors.documento?.message || ''}
                                 />
                             )}
                         />
@@ -198,11 +198,12 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             control={control} name="endereco"
                             render={({ field: { onChange, value } }) => (
                                 <FormInput
-                                    key={`endereco-shake-${shakes.endereco.shake}`} // <-- Força re-render da animação do CSS
+                                    key={`endereco-shake-${JSON.stringify(shakes.endereco)}`}
                                     id="endereco" label="Endereço" type="text" placeholder="Digite seu endereço completo"
                                     value={value} required shake={shakes.endereco.shake}
                                     onChange={(e) => { onChange(e.target.value); clearShake('endereco'); }}
-                                    status={shakes.endereco.active ? 'erro' : ''} error=""
+                                    status={errors.endereco || shakes.endereco.active ? 'erro' : ''} 
+                                    error={errors.endereco?.message || ''}
                                 />
                             )}
                         />

@@ -30,7 +30,7 @@ export function maskCNPJ(value: string): string {
 }
 
 /**
- * Aplica a máscara de Telefone fixo ou celular: (99) 9999-9999 ou (99) 99999-9999.
+ * Aplica a máscara de Telefone fixo ou celular: (99) 99999-9999.
  * value String bruta contendo o texto digitado pelo usuário.
  */
 export function maskPhone(value: string): string {
