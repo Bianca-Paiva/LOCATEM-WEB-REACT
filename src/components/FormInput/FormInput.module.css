@@ -5,6 +5,9 @@
 }
 
 .label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     font-size: 14px;
     font-weight: 500;
 }
@@ -22,17 +25,24 @@
     transition: border 0.2s, box-shadow 0.2s;
 }
 
+.input:focus {
+    outline: none;
+    border: 1px solid #ffcc0060; 
+}
+
 .input.erro {
     border: 1px solid #E11D48;
     box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
 }
 
-.input.sucesso {
-    border: 1px solid #2ecc71;
+.required {
+    color: #E11D48;
+    font-size: 16px;
+    line-height: 1;
 }
 
 .error {
-    font-size: 13px;
+    font-size: 14px;
     color: #E11D48;
     margin-top: -20px;
     margin-bottom: 20px;

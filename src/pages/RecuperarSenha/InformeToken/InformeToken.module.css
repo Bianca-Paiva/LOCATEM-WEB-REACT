@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 20px 40px;
+    padding: 0 40px 40px;
 }
 
 .tokenSection {
@@ -13,7 +13,7 @@
 
     /* (5 inputs × 100px)+(4 espaços × 17px)=568px. */
     max-width: 568px;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .reenviar {
@@ -26,4 +26,11 @@
     font-weight: 500;
     cursor: pointer;
     padding: 0;
+}
+
+@media (max-width: 800px) {
+    .reenviar {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

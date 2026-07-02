@@ -1,0 +1,103 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    z-index: 9999;
+
+    animation: fade .25s ease;
+}
+
+.modal {
+
+    width: 430px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 42px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.18);
+
+    text-align: center;
+
+    animation: pop .25s ease;
+}
+
+.icon{
+
+    width:72px;
+    height:72px;
+
+    margin:0 auto 28px;
+
+    border-radius:50%;
+
+    background:#2ECC71;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:
+        0 10px 24px rgba(46,204,113,.35);
+
+}
+
+.title{
+
+    font-size:26px;
+
+    margin-bottom:16px;
+
+    color:#222;
+
+}
+
+.message{
+
+    color:#666;
+
+    line-height:1.6;
+
+    margin-bottom:32px;
+
+    font-size:15px;
+
+}
+
+@keyframes fade{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+@keyframes pop{
+
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}

@@ -1,8 +1,5 @@
-import styles from './Etapas.module.css'
-import checkIcon from '../../../assets/checkIcon.png'
-
-// Caso tenha a imagem localmente, você pode importar assim:
-// import checkIcon from './assets/seu-check.png'
+import styles from './Etapas.module.css';
+import checkIcon from '../../../assets/checkIcon.png';
 
 interface RecoveryStepperProps {
     currentStep: 1 | 2 | 3
