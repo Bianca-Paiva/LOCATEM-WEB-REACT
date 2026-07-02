@@ -1,7 +1,7 @@
 .vendedorCard {
   background: #fff;
   border-radius: 12px;
-  padding: 16px;
+  padding: 19px;
   border: 1px solid #f3f4f6;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
 
 .labelLoja {
   font-size: 11px;
-  color: #9ca3af;
+  color: #000000;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;

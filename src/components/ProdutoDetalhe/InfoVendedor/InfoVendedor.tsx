@@ -24,7 +24,7 @@ export function InfoVendedor({
 
   return (
     <div className={styles.vendedorCard}>
-      <p className={styles.labelLoja}>Produto da loja</p>
+
 
       <div className={styles.vendedorHeader}>
         <div className={styles.avatar}>
@@ -39,7 +39,7 @@ export function InfoVendedor({
           <div className={styles.ratingRow}>
             <img src={imageNota} alt="estrela" className={styles.starIcon} />
             <span className={styles.ratingValor}>{rating.toFixed(1)}</span>
-            <span className={styles.ratingCount}>Verificado · Multimarcas</span>
+            <span className={styles.ratingCount}></span>
           </div>
           <p className={styles.locacoes}>+{locacoes} locações</p>
         </div>

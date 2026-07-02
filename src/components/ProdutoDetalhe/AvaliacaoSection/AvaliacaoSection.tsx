@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './AvaliacaoSection.module.css';
+import IconLike from '../../../assets/IconLike.png';
 
 interface Avaliacao {
   nome: string;
@@ -105,8 +106,14 @@ export function AvaliacaoSection({
 
             <div className={styles.avaliacaoFooter}>
               <button className={styles.btnUtil}>
-                👍 Foi útil · {av.utilCount} pessoas acharam útil
-              </button>
+                 <img
+                  src={IconLike}
+                  alt="Like"
+                  className={styles.likeIcon}
+                />Foi útil 
+              </button> <p className={styles.utilCount}>· {av.utilCount} pessoas acharam útil</p>
+              
+             
             </div>
           </div>
         ))}
