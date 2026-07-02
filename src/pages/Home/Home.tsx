@@ -1,5 +1,3 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
@@ -112,7 +110,7 @@ const MOCK_PRODUCTS = [
 
   return (
     <div style={{ minHeight: '100vh', width: '100%' }}>
-      <Header navigate={handleNavigate} currentRoute="home" />
+      <Header navigate={navigate} currentRoute="home" />
 
       <main style={{ paddingTop: 0, marginTop: 0 }}>
         <Banner />
