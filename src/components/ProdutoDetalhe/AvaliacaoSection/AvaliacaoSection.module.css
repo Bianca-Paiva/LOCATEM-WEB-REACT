@@ -188,6 +188,17 @@
   width: 75px;
   padding: 0;
   font-family: inherit;
+  align-items: center;
+  display: flex;
+}
+
+.likeIcon {
+  width: 13px;
+  height: 13px;
+  margin-left: 5px;
+  margin-right: 3px;
+  margin-bottom: 2px;
+  gap: 6px;
 }
 
 .utilCount {

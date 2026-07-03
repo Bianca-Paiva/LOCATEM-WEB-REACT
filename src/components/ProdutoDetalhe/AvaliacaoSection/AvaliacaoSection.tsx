@@ -110,7 +110,7 @@ export function AvaliacaoSection({
                   src={IconLike}
                   alt="Like"
                   className={styles.likeIcon}
-                />Foi útil 
+                /> Foi útil 
               </button> <p className={styles.utilCount}>· {av.utilCount} pessoas acharam útil</p>
               
              
