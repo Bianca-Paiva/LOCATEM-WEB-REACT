@@ -5,6 +5,7 @@
     gap: 0.5rem;
     width: 100%;
     margin-top: 1.5rem;
+    white-space: nowrap;
 }
 
 .text {
@@ -26,4 +27,12 @@
 
 .linkButton:hover {
     color: #000000;
+}
+
+@media (max-width: 600px) {
+    .linkContainer {
+        flex-direction: column; /* Empilha os itens: texto em cima, link embaixo */
+        gap: 4px; 
+        white-space: normal; /* Remove a trava que impedia a quebra de linha */
+    }
 }

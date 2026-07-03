@@ -1,3 +1,5 @@
+// CALCULA A FORÇA DA SENHA
+
 export interface PasswordRequirements {
     tamanho: boolean
     minuscula: boolean
