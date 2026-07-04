@@ -3,7 +3,7 @@ import styles from './Alerta.module.css';
 
 interface AlertaProps {
     titulo: string
-    mensagem: string
+    mensagem?: string
     onClose: () => void
 }
 

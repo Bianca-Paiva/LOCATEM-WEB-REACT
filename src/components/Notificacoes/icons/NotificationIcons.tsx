@@ -1,9 +1,8 @@
 import type { SVGProps } from 'react';
 
 /**
- * Conjunto de ícones SVG usados na tela de Notificações.
- * Mantidos como componentes simples (sem dependência externa)
- * para não exigir a instalação de nenhuma lib de ícones.
+ * Ícones SVG usados na tela de Notificações e no modal de detalhes.
+ * Componentes simples (sem lib externa) para evitar dependências extras.
  */
 
 export const CheckIcon = (props: SVGProps<SVGSVGElement>) => (
@@ -153,5 +152,32 @@ export const BellOffIcon = (props: SVGProps<SVGSVGElement>) => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+  </svg>
+);
+
+// Usado no botão de fechar do modal de detalhes
+export const CloseIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" {...props}>
+    <path
+      d="M18 6L6 18M6 6L18 18"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+// Usado no botão "Pagar agora" do modal de detalhes
+export const WalletIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" {...props}>
+    <path
+      d="M3 7A2 2 0 0 1 5 5H17A2 2 0 0 1 19 7V8H21V17A2 2 0 0 1 19 19H5A2 2 0 0 1 3 17V7Z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path d="M15 13H17.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );

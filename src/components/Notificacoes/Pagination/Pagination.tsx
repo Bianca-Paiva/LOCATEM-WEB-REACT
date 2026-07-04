@@ -16,6 +16,7 @@ export default function Pagination({
   onPrev,
   onNext,
 }: PaginationProps) {
+  // Com 1 página ou menos não há o que paginar
   if (totalPages <= 1) return null;
 
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);

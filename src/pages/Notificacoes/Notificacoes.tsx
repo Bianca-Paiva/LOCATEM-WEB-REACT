@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import NotificationCard from '../../components/Notificacoes/NotificationCard/NotificationCard';
 import FilterDropdown from '../../components/Notificacoes/FilterDropdown/FilterDropdown';
 import Pagination from '../../components/Notificacoes/Pagination/Pagination';
+import NotificationDetailsModal from '../../components/Notificacoes/NotificationModal/NotificationDetailsModal';
 import { BellOffIcon, TrashIcon } from '../../components/Notificacoes/icons/NotificationIcons';
 import { useNotifications } from '../../hooks/useNotifications';
 import styles from './Notificacoes.module.css';
 import Header from '../../components/Header/Header';
 
-import type { Route } from '../../router/useRouter'
+import type { Route } from '../../router/useRouter';
+import type { NotificationData } from './Notificacoes.types';
 
 interface NotificacoesProps {
   navigate: (route: Route) => void;
@@ -27,15 +30,24 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
     renovar,
   } = useNotifications();
 
+  // Notificação atualmente aberta no modal; null = modal fechado
+  const [selectedNotification, setSelectedNotification] = useState<NotificationData | null>(null);
+
   const handleVerDetalhes = (id: string) => {
-    // Integre aqui com a navegação/rota de detalhes da notificação.
-    console.log('Ver detalhes da notificação', id);
+    const notification = pageItems.find((item) => item.id === id) ?? null;
+    setSelectedNotification(notification);
+  };
+
+  const handleCloseModal = () => setSelectedNotification(null);
+
+  const handlePagar = (id: string) => {
+    // Integre aqui com o fluxo de pagamento/checkout.
+    console.log('Pagar notificação', id);
   };
 
   return (
-
     <>
-      <Header navigate={navigate} currentRoute='notificacoes' />
+      <Header navigate={navigate} currentRoute="notificacoes" />
 
       <main className={styles.page}>
         <div className={styles.headerRow}>
@@ -87,6 +99,13 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
           </>
         )}
       </main>
+
+      <NotificationDetailsModal
+        notification={selectedNotification}
+        onClose={handleCloseModal}
+        onRenovar={renovar}
+        onPagar={handlePagar}
+      />
     </>
   );
 }

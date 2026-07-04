@@ -3,7 +3,7 @@ import { ChevronDownIcon } from '../icons/NotificationIcons';
 import type { FilterOption } from '../../../pages/Notificacoes/Notificacoes.types';
 import styles from './FilterDropdown.module.css';
 
-const OPTIONS: FilterOption[] = ['Hoje', 'Ontem', 'Esta semana', 'Este mês'];
+const OPTIONS: FilterOption[] = ['Todas', 'Hoje', 'Ontem', 'Esta semana', 'Este mês'];
 
 interface FilterDropdownProps {
   value: FilterOption;
@@ -14,6 +14,7 @@ export default function FilterDropdown({ value, onChange }: FilterDropdownProps)
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Fecha o menu ao clicar fora do dropdown
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -26,7 +27,7 @@ export default function FilterDropdown({ value, onChange }: FilterDropdownProps)
 
   const handleSelect = (option: FilterOption) => {
     onChange(option);
-    setIsOpen(false);
+    setIsOpen(false); // seleciona e já fecha o menu
   };
 
   return (

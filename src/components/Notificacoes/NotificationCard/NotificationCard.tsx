@@ -15,6 +15,7 @@ interface NotificationCardProps {
   onVerDetalhes?: (id: string) => void;
 }
 
+// Mapeia o "type" (estilo visual) ao ícone correspondente
 const ICON_BY_TYPE = {
   success: CheckIcon,
   warning: WarningIcon,
@@ -40,6 +41,7 @@ export default function NotificationCard({
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.description}>{description}</p>
 
+          {/* Linha extra usada apenas pelo card de entrega */}
           {extraInfo && (
             <p className={styles.extraInfo}>
               <span className={styles.dot} aria-hidden="true" />
@@ -50,6 +52,7 @@ export default function NotificationCard({
       </div>
 
       <div className={styles.footer}>
+        {/* timestamp vazio (ex: notificação de entrega) não renderiza o relógio */}
         {timestamp ? (
           <span className={styles.timestamp}>
             <ClockIcon />
