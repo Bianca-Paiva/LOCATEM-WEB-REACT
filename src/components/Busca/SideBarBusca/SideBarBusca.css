@@ -1,0 +1,487 @@
+/* ==========================================================================
+
+   ESTILOS BASE / MOBILE: Comportamento de Gaveta (Drawer)
+
+   ========================================================================== */
+
+
+/* Cortina Escura de Fundo */
+
+.sidebar-overlay-backdrop {
+
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  z-index: 999;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition: opacity 0.28s ease;
+
+}
+
+
+.sidebar-overlay-backdrop.visible-active {
+
+  opacity: 1;
+
+  pointer-events: all;
+
+}
+
+
+/* Container transformado em Drawer Lateral Direita */
+
+.sidebar-container {
+
+  position: fixed;
+
+  top: 0;
+
+  right: 0;
+
+  width: min(85vw, 320px);
+
+  height: 100dvh;
+
+  background-color: #ffffff;
+
+  padding: 16px;
+
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.08);
+
+  font-family: Arial, sans-serif;
+
+  border-left: 1px solid #eaeaea;
+
+  z-index: 1000;
+
+  
+
+  /* Escondido por padrão na direita */
+
+  transform: translateX(100%);
+
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+  
+
+  /* Habilita rolagem caso os filtros passem do tamanho vertical da tela mobile */
+
+  overflow-y: auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+}
+
+
+/* Classe ativada via gatilho do React */
+
+.sidebar-container.drawer-open {
+
+  transform: translateX(0);
+
+}
+
+
+.sidebar-header {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  width: 100%;
+
+}
+
+
+.sidebar-header h2 {
+
+  font-size: 16px;
+
+  font-weight: bold;
+
+  color: #333;
+
+  margin: 4px 0;
+
+}
+
+
+/* Botão Fechar X no Mobile */
+
+.sidebar-close-drawer-btn {
+
+  width: 34px;
+
+  height: 34px;
+
+  border: none;
+
+  background: transparent;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 24px;
+
+  color: #6B7280;
+
+  transition: background 0.18s ease;
+
+}
+
+
+.sidebar-close-drawer-btn:hover {
+
+  background: rgba(0, 0, 0, 0.06);
+
+}
+
+
+.sidebar-divider {
+
+  border: 0;
+
+  border-top: 1px solid #e1e1e1;
+
+  margin: 12px 0;
+
+  flex-shrink: 0;
+
+}
+
+
+.filter-section {
+
+  margin-bottom: 14px;
+
+}
+
+
+.filter-title {
+
+  font-size: 40px;
+
+  font-weight: bold;
+
+  color: #000000;
+  
+
+  margin-bottom: 8px;
+
+}
+
+
+.pills-container {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  color: #e5b800;
+
+  font-size: 20px;
+
+  gap: 6px;
+
+}
+
+
+.filter-pill {
+
+  background-color: #ffffff;
+
+  border: 1px solid #d0d0d0;
+
+  border-radius: 20px;
+
+  padding: 6px 12px;
+
+  font-size: 14px;
+
+  color: #8f8f8f;
+
+  cursor: pointer;
+
+  transition: all 0.15s ease;
+
+  white-space: nowrap;
+
+}
+
+
+.filter-pill:hover {
+
+  background-color: #f5f5f5;
+
+  border-color: #b0b0b0;
+
+}
+
+
+.filter-pill.active {
+
+  background-color: #fff9e6;
+
+  border-color: #ffcc00;
+
+  color: #111;
+
+  font-weight: 600;
+
+}
+
+
+.brand-search-wrapper {
+
+  position: relative;
+
+  margin-bottom: 10px;
+
+  display: flex;
+
+  align-items: center;
+
+}
+
+
+.brand-search-input {
+
+  width: 100%;
+
+  padding: 8px 32px 8px 12px;
+
+  border: 1px solid #d0d0d0;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  outline: none;
+
+  background-color: #ffffff;
+
+}
+
+
+.brand-search-input:focus {
+
+  border-color: #ffcc00;
+
+}
+
+
+.search-icon {
+
+  position: absolute;
+
+  right: 12px;
+
+  font-size: 11px;
+
+  color: #888;
+
+  pointer-events: none;
+
+}
+
+
+.sidebar-actions {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-top: auto; /* Força os botões ficarem fixados no rodapé do drawer mobile */
+
+  padding-top: 16px;
+
+}
+
+
+.sidebar-btn-primary,
+
+.sidebar-btn-secondary {
+
+  width: 100%;
+
+  padding: 10px;
+
+  background-color: #ffcc00;
+
+  border: none;
+
+  color: #000;
+
+  font-weight: bold;
+
+  font-size: 13px;
+
+  border-radius: 20px;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+
+  text-align: center;
+
+}
+
+
+.sidebar-btn-primary:hover,
+
+.sidebar-btn-secondary:hover {
+
+  background-color: #e5b800;
+
+}
+
+
+/* ==========================================================================
+
+   RESPONSIVE: TABLET (A partir de 768px)
+
+   ========================================================================== */
+
+
+@media (min-width: 768px) {
+
+  .sidebar-container {
+
+    width: 340px;
+
+    padding: 20px;
+
+  }
+
+
+  .sidebar-header h2 {
+
+    font-size: 18px;
+
+  }
+
+
+  .filter-title {
+
+    font-size: 14px;
+
+    margin-bottom: 10px;
+
+  }
+
+
+  .filter-pill {
+
+    padding: 6px 14px;
+
+    font-size: 12px;
+
+  }
+
+
+  .brand-search-input {
+
+    font-size: 13px;
+
+  }
+
+
+  .sidebar-btn-primary,
+
+  .sidebar-btn-secondary {
+
+    font-size: 14px;
+
+  }
+
+}
+
+
+/* ==========================================================================
+
+   RESPONSIVE: DESKTOP (A partir de 1024px)
+
+   ========================================================================== */
+
+
+@media (min-width: 1024px) {
+
+  /* Remove o efeito cortina/overlay em telas grandes */
+
+  .sidebar-overlay-backdrop {
+
+    display: none !important;
+
+  }
+
+
+  /* Reseta a Sidebar para se comportar de forma fixa e integrada no grid lateral */
+
+  .sidebar-container {
+
+    position: static;
+
+    width: 280px;
+
+    height: auto;
+
+    transform: none !important;
+
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04);
+
+    border: 1px solid #eaeaea;
+
+    border-radius: 8px;
+
+    background-color: #fcfcfc;
+
+    overflow-y: visible;
+
+    padding: 16px;
+
+  }
+
+
+  /* Esconde o X de fechar, já que ela fica sempre visível inline */
+
+  .sidebar-close-drawer-btn {
+
+    display: none !important;
+
+  }
+
+
+  .sidebar-header {
+
+    justify-content: center;
+
+  }
+
+
+  .sidebar-actions {
+
+    margin-top: 16px;
+
+  }
+
+}

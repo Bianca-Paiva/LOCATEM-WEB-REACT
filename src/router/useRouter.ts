@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 
 export type Route =
   | "home"
+  | "busca"
+  | "produtoDetalhe"
   | "login"
   | "cadastro"
   | "recuperarSenha"

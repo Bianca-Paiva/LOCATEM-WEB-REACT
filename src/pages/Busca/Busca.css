@@ -1,0 +1,169 @@
+/* ==========================================================================
+   ESTILOS BASE / MOBILE (Até 767px)
+   ========================================================================== */
+
+.busca-layout {
+  width: 100%;
+  max-width: 100%; 
+  margin: 16px auto;
+  padding: 0 8px; /* CORREÇÃO: Reduzido de 16px para 8px. Dá muito mais espaço lateral aos cards */
+  display: flex;
+  flex-direction: column; 
+  gap: 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.busca-content-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.busca-controls-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px; /* Espaço garantido entre a ordenação e o filtro */
+  margin: 14px 0;
+  box-sizing: border-box;
+}
+
+.order-button-container {
+  display: flex;
+  align-items: center;
+  
+  flex: 1; 
+  min-width: 0; 
+}
+
+.order-button-container > * {
+  width: 100%;
+  max-width: 100%;
+  
+}
+
+/* BOTÃO FILTRAR */
+.mobile-filter-trigger-btn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: #ffcc00; 
+  border: none;
+  border-radius: 20px;
+  padding: 0 14px;
+  height: 38px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* O SEGREDO DO GRID */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); 
+  gap: 8px; /* CORREÇÃO: Reduzido de 12px para 8px no mobile, os cards ficam mais largos */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.products-grid > * {
+  width: 100% !important;
+  min-width: 0 !important; 
+  box-sizing: border-box;
+}
+
+.no-products-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  padding: 30px 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE: TABLET (A partir de 768px)
+   ========================================================================== */
+
+@media (min-width: 768px) {
+  .busca-layout {
+    padding: 0 16px; /* Ajustado de 24px para manter cards largos no tablet */
+    margin: 20px auto;
+    gap: 24px;
+  }
+
+  .busca-controls-container {
+    margin-top: 18px;
+    margin-bottom: 18px;
+    gap: 16px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px; /* Ajustado de 16px */
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE: DESKTOP (A partir de 1024px)
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+  .busca-layout {
+    /* Mudei de 100% para um valor fixo máximo. Assim, ao diminuir o zoom,
+       a sidebar e o conteúdo continuam juntos e centralizados. */
+    max-width: 1440px; 
+    margin: 24px auto 40px;
+    padding: 0 24px; 
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 32px; /* Um pouco mais de respiro entre a sidebar e os cards */
+    overflow-x: hidden;
+  }
+
+  .busca-content-main {
+    flex-grow: 1;
+    width: auto;
+    /* Garante que o conteúdo principal não passe do espaço disponível */
+    min-width: 0; 
+  }
+
+  .mobile-filter-trigger-btn {
+    display: none !important;
+  }
+
+  .busca-controls-container {
+    justify-content: flex-start;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .order-button-container {
+    flex: none;
+    max-width: none;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Cards um pouco maiores */
+    gap: 20px; 
+  }
+
+  .products-grid > * {
+    width: auto !important;
+  }
+
+  /* CORREÇÃO: O transform: translateX(50px) foi removido daqui para alinhar corretamente */
+  .order-button-container > * {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+
+  
