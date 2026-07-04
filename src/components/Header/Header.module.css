@@ -7,13 +7,11 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    background: linear-gradient(
-        to bottom,
-        var(--color-primary) 0%,
-        var(--color-primary-light) 35%,
-        var(--color-primary-soft) 70%,
-        transparent 100%
-    );
+    background: linear-gradient(to bottom,
+            var(--color-primary) 0%,
+            var(--color-primary-light) 35%,
+            var(--color-primary-soft) 70%,
+            transparent 100%);
 }
 
 .linhaTopo {
@@ -304,35 +302,31 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: 24px 24px 0px ; 
-        max-width: 100%;
+        padding-top: 30px;
+        max-width: 2000px;
         margin: 0 auto;
-        background: linear-gradient(
-        to bottom,
-        var(--color-primary) 0%,
-        var(--color-primary-light) 35%,
-        var(--color-primary-soft) 70%,
-        transparent 100%
-    );
+
+        background: linear-gradient(to bottom,
+                var(--color-primary) 0%,
+                var(--color-primary-light) 35%,
+                var(--color-primary-soft) 70%,
+                transparent 100%);
     }
 
     .linhaTopo {
         display: grid;
-        /* ISSO RESOLVE TUDO: 
-           1fr = logo (esquerda) 
-           minmax(300px, 900px) = barra pesquisa (meio, ocupa até 900px garantindo tamanho)
-           1fr = chat (direita) */
-        grid-template-columns: 1fr minmax(250px, 700px) 1fr; 
+        grid-template-columns: 1fr minmax(300px, 900px) 1fr;
         align-items: center;
         width: 100%;
-        padding: 0 24px;
-        gap: 20px;
+        padding: 0 32px;
+        gap: 35px;
     }
 
     .logo {
         font-size: clamp(20px, 1.5vw, 26px);
         font-weight: 800;
-        justify-self: start; /* Prende a Logo na extrema esquerda */
+        justify-self: start;
+        /* Prende a Logo na extrema esquerda */
     }
 
     .logo img {
@@ -341,17 +335,19 @@
 
     /* CLASSE UNIFICADA (Sem repetições) */
     .barraPesquisa {
-        width: 100%; /* Força a barra a preencher a coluna do meio */
-        height: 45px; /* Ajustado para 45px (estava 35px, menor que no tablet) */
+        width: 100%;
+        /* Força a barra a preencher a coluna do meio */
+        height: 45px;
         display: flex;
         align-items: center;
         gap: 10px;
         background: var(--color-bg-card);
         border-radius: var(--radius-pill);
-        padding: 0 var(--spacing-md);
+        padding: 0 16px;
         box-shadow: var(--shadow-search);
         transition: box-shadow var(--transition-fast);
-        justify-self: center; /* Centraliza a barra perfeitamente no Grid */
+        justify-self: center;
+        /* Centraliza a barra perfeitamente no Grid */
     }
 
     .lupaBtn {
@@ -395,10 +391,9 @@
         justify-content: center;
         transition: background var(--transition-fast);
         text-decoration: none;
-        
-        justify-self: end; /* Prende o Chat na extrema direita */
+        justify-self: end;
     }
-    
+
     .chatBtn img {
         width: 55%;
         height: 55%;
@@ -412,14 +407,14 @@
     /* Desktop Nav */
     .menuNavDesktop {
         display: flex;
-        flex-wrap: wrap;
+        flex-wrap: nowrap; /* Evita que os itens quebrem para a linha de baixo */
         justify-content: center;
         align-items: center;
-        gap: 50px;
-        padding: 18px 24px 0px; 
+        gap: clamp(15px, 3vw, 45px);
+        padding: 30px var(--spacing-xl) 40px;
         width: 100%;
-        max-width: 100%;
-        margin: 0 auto 40px; /* Altere o '20px' para o espaço que você quiser deixar do banner (ex: 10px, 15px, 0px) */
+        max-width: 2000px;
+        margin: 0 auto;
     }
 
     .menuNavDesktop a {

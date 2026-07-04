@@ -1,0 +1,126 @@
+.page {
+  width: 100%;
+  max-width: 2000px;   
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;      
+  flex-direction: column; 
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1a1a1a;
+}
+
+.controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.clearButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  padding: 4px;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.clearButton:hover:not(:disabled) {
+  color: #d64545;
+}
+
+.clearButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.clearButton:focus-visible {
+  outline: 2px solid #f6c945;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 64px 24px;
+  border: 1.5px dashed #e5e5e5;
+  border-radius: 16px;
+  color: #6b7280;
+}
+
+.emptyIcon {
+  color: #d0d0d0;
+  margin-bottom: 12px;
+}
+
+.emptyTitle {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.emptyDescription {
+  margin: 0;
+  font-size: 14px;
+  max-width: 320px;
+}
+
+/* Tablet e acima: mais respiro nas laterais e título maior */
+@media (min-width: 640px) {
+  .page {
+    padding: 28px 24px 56px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+}
+
+/* Desktop: layout como no mockup de tela cheia */
+@media (min-width: 1024px) {
+  .page {
+    padding: 32px 32px 64px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+}

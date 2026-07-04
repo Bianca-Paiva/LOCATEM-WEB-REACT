@@ -40,7 +40,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         { label: 'Carrinho', icon: carrinho },
         { label: 'Histórico', icon: relogio },
         { label: 'Agendamento', icon: calendario },
-        { label: 'Notificações', icon: notificacoes },
+        { label: 'Notificações', icon: notificacoes, route: 'notificacoes' },
         { label: 'Avaliações', icon: star },
         { label: 'Suporte', icon: suporte },
         { label: 'Entrar', icon: usuario, route: 'login' },
@@ -152,25 +152,25 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         <img src={chat} alt="Chat" />
                     </a>
                 </div>
-            </header>
 
-            {/* ── DESKTOP NAV ── */}
-            <nav className={styles.menuNavDesktop}>
-                {navItems.map(item => (
-                    <a
-                        key={item.label}
-                        href="#"
-                        className={item.route === currentRoute ? styles.ativo : ''}
-                        onClick={e => {
-                            e.preventDefault()
-                            if (item.route) navigate(item.route)
-                        }}
-                    >
-                        <img src={item.icon} alt="" />
-                        {item.label}
-                    </a>
-                ))}
-            </nav>
+                {/* ── DESKTOP NAV MOVIDO PARA DENTRO DO HEADER ── */}
+                <nav className={styles.menuNavDesktop}>
+                    {navItems.map(item => (
+                        <a
+                            key={item.label}
+                            href="#"
+                            className={item.route === currentRoute ? styles.ativo : ''}
+                            onClick={e => {
+                                e.preventDefault()
+                                if (item.route) navigate(item.route)
+                            }}
+                        >
+                            <img src={item.icon} alt="" />
+                            {item.label}
+                        </a>
+                    ))}
+                </nav>
+            </header>
         </>
-    )
+    );
 }
