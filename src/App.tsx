@@ -5,6 +5,7 @@ import InformeToken from "./pages/RecuperarSenha/InformeToken/InformeToken";
 import InformeNovaSenha from "./pages/RecuperarSenha/InformeNovaSenha/InformeNovaSenha";
 import Home from "./pages/Home/Home";
 import Busca from "./pages/Busca/Busca";
+import Notificacoes from "./pages/Notificacoes/Notificacoes";
 import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
 import { useRouter } from "./router/useRouter";
 import { ProdutoProvider } from "./store/produtoStore";
@@ -15,12 +16,21 @@ export default function App() {
   return (
     <ProdutoProvider>
       {route === "home" && <Home navigate={navigate} />}
+
       {route === "busca" && <Busca navigate={navigate} />}
+
       {route === "login" && <Login navigate={navigate} />}
+
       {route === "cadastro" && <Cadastro navigate={navigate} />}
+
       {route === "recuperarSenha" && <RecuperarSenha navigate={navigate} />}
+
       {route === "informeToken" && <InformeToken navigate={navigate} />}
+
       {route === "informeNovaSenha" && <InformeNovaSenha navigate={navigate} />}
+      
+      {route === "notificacoes" && <Notificacoes navigate={navigate} />}
+
       {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
     </ProdutoProvider>
   );

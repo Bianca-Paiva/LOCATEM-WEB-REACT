@@ -123,4 +123,8 @@
   .title {
     font-size: 28px;
   }
+
+  .emptyState {
+    width: 70%;
+  }
 }

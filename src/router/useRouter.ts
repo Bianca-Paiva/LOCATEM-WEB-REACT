@@ -21,6 +21,7 @@ function getRouteFromHash(): Route {
   if (hash === "informeToken") return "informeToken";
   if (hash === "informeNovaSenha") return "informeNovaSenha";
   if (hash === "notificacoes") return "notificacoes";
+  if (hash === "busca") return "busca";
 
   return "home";
 }
