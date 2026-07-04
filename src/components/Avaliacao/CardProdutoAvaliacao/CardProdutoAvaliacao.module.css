@@ -1,0 +1,59 @@
+.grupo {
+    margin-bottom: 8px;
+}
+
+.card {
+    background: var(--white, #ffffff);
+    border: 1px solid var(--border, #e0ddd6);
+    border-radius: var(--radius, 12px);
+    padding: 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg, 0 8px 32px rgba(0, 0, 0, 0.12));
+    transform: translateY(-2px);
+}
+
+.conteudo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.imagem {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: var(--bg, #f9fafb);
+    flex-shrink: 0;
+    padding: 3px;
+}
+
+.info {
+    flex: 1;
+    min-width: 0;
+}
+
+.nome {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary, #1a1814);
+    line-height: 1.3;
+    margin-bottom: 4px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.data {
+    font-size: 0.75rem;
+    color: var(--text-muted, #a09e99);
+    margin-bottom: 12px;
+}

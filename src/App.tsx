@@ -7,6 +7,9 @@ import Home from "./pages/Home/Home";
 import Busca from "./pages/Busca/Busca";
 import Notificacoes from "./pages/Notificacoes/Notificacoes";
 import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
+import Avaliacao from "./pages/Avaliacao/Avaliacao";
+
+
 import { useRouter } from "./router/useRouter";
 import { ProdutoProvider } from "./store/produtoStore";
 
@@ -30,6 +33,8 @@ export default function App() {
       {route === "informeNovaSenha" && <InformeNovaSenha navigate={navigate} />}
       
       {route === "notificacoes" && <Notificacoes navigate={navigate} />}
+
+      {route === "avaliacao" && <Avaliacao navigate={navigate} />}
 
       {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
     </ProdutoProvider>

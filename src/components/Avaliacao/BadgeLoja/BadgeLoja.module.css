@@ -1,0 +1,46 @@
+.badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.logoContainer {
+    width: clamp(30px, 7vw, 48px);
+    height: clamp(18px, 4vw, 26px);
+    border-radius: 4px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.logoContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 2px;
+}
+
+.link {
+    color: var(--accent, #1554f0);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.verificado {
+    display: flex;
+    align-items: center;
+}
+
+.verificado img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+}

@@ -1,0 +1,38 @@
+.fileira {
+    display: flex;
+    gap: 6px;
+}
+
+.estrela {
+    color: var(--star-inactive, #dddbd5);
+    cursor: default;
+    line-height: 1;
+    user-select: none;
+    transition: color 0.15s, transform 0.15s;
+}
+
+.estrela.ativa {
+    color: var(--star-active, #1554f0);
+}
+
+.fileira:hover .estrela[role='button'] {
+    cursor: pointer;
+}
+
+.estrela[role='button']:hover {
+    transform: scale(1.2);
+}
+
+/* Tamanhos por variante de uso */
+.lista .estrela {
+    font-size: 1.4rem;
+}
+
+.modal .estrela {
+    font-size: 1.05rem;
+    gap: 3px;
+}
+
+.carrossel .estrela {
+    font-size: 0.75rem;
+}

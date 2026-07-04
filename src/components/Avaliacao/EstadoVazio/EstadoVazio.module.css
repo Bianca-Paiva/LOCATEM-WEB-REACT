@@ -1,0 +1,16 @@
+.container {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted, #a09e99);
+}
+
+.titulo {
+    color: var(--text-primary, #1a1814);
+    opacity: 0.8;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+.container p {
+    font-size: 0.8125rem;
+}
