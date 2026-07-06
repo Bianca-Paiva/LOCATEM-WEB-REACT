@@ -28,7 +28,7 @@
     height: 90px;
     object-fit: contain;
     border-radius: 8px;
-    background: var(--bg, #f9fafb);
+    background: #ffffff;
     flex-shrink: 0;
     padding: 3px;
 }

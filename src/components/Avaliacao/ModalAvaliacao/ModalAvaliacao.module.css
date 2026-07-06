@@ -74,13 +74,14 @@
     display: flex;
     align-items: flex-start;
     gap: 14px;
+    
 }
 
 .produtoTopo>img {
     width: 90px;
     height: 90px;
     object-fit: contain;
-    background: var(--bg, #f9fafb);
+    background: var(--bg, #ffffff);
     border-radius: 10px;
     padding: 3px;
     flex-shrink: 0;
@@ -193,10 +194,6 @@
     transition: color 0.15s;
 }
 
-.obsToggle:hover {
-    color: var(--text-primary, #1a1814);
-}
-
 .chevron {
     display: inline-block;
     transition: transform 0.2s;
@@ -214,15 +211,10 @@
     font-size: 0.85rem;
     color: var(--text-primary, #1a1814);
     background: var(--bg, #f9fafb);
-    resize: vertical;
     min-height: 90px;
     outline: none;
+    resize: none; /*remove o redimensionamento do textarea */
     transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.obsTextarea:focus {
-    border-color: var(--accent, #1554f0);
-    box-shadow: 0 0 0 3px var(--accent-light, #eef1fd);
 }
 
 /* Rodapé */
@@ -233,22 +225,22 @@
 }
 
 .btnEnviar {
-    background: var(--accent, #1554f0);
-    color: var(--white, #ffffff);
+    background: var(--accent, #FFCA00);
+    color: #0a0a0a;
     border: none;
     border-radius: 10px;
     padding: 13px 36px;
     font-size: 0.9rem;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     letter-spacing: 0.01em;
     transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
 
 .btnEnviar:hover {
-    background: var(--accent-dark, #0e3fcc);
+    background: var(--accent-dark, #ffcc00e2);
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px var(--accent-shadow, rgba(21, 84, 240, 0.35));
+    box-shadow: 0 4px 16px var(--accent-shadow, rgba(240, 229, 21, 0.35));
 }
 
 .btnEnviar:active {

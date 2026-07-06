@@ -12,7 +12,7 @@ const MOCK_PRODUCTS = [
     title: 'Furadeira Parafusadeira The Black Tools',
     brand: 'MS Ferramentas',
     price: '15,00',
-    image: 'src/assets/Furadeira1.webp',
+    image: 'src/assets/FuradeiraTheBlackTools.webp',
     imageVerificado: 'src/assets/verificado.png',
     imageNota: 'src/assets/StarFull.png',
     rating: 4.5,

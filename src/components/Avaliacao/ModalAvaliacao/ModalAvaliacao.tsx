@@ -8,7 +8,7 @@ import { EstrelasAvaliacao } from '../EstrelaAvaliacao/EstrelaAvaliacao';
 import { CarrosselAvaliacoesPendentes } from '../CarroselAvaliacoesPendentes/CarroselAvaliacoesPendentes';
 import styles from './ModalAvaliacao.module.css';
 
-const ICONE_CAMINHAO = '/src/assets/images/caminhao.png';
+import IconCaminhao from '../../../assets/caminhao.png';
 
 interface ModalAvaliacaoProps {
   produto: ProdutoAvaliacao | null;
@@ -24,10 +24,7 @@ interface ModalAvaliacaoProps {
 }
 
 /**
- * Modal completo de avaliação: produto + 3 sub-notas obrigatórias,
- * observação opcional (retrátil) e carrossel de outros pendentes.
- *
- * Nota: se seu projeto já tem um hook `useToggle`, ele pode substituir
+ * Modal completo de avaliação: produto + 3 sub-notas obrigatórias
  * o useState local do painel de observações (obsExpandida abaixo).
  */
 export function ModalAvaliacao({
@@ -70,7 +67,7 @@ export function ModalAvaliacao({
 
   const iconesPorSub: Record<ChaveSubAvaliacao, string> = {
     locador: produto.loja.logo,
-    entrega: ICONE_CAMINHAO,
+    entrega: IconCaminhao,
     produto: produto.imagem,
   };
 
@@ -117,14 +114,17 @@ export function ModalAvaliacao({
               {(Object.keys(produto.subAvaliacoes) as ChaveSubAvaliacao[]).map((chave) => (
                 <div
                   key={chave}
-                  className={`${styles.subRating} ${
-                    camposComErro.includes(chave) ? styles.subRatingErro : ''
-                  }`}
+                  className={`${styles.subRating} ${camposComErro.includes(chave) ? styles.subRatingErro : ''
+                    }`}
                 >
                   <span className={styles.subRatingLabel}>{LABEL_SUB_AVALIACAO[chave]}</span>
 
                   <div className={styles.subRatingIcone}>
-                    <img src={iconesPorSub[chave]} alt={chave} />
+                    <img
+                      src={iconesPorSub[chave]}
+                      alt={chave}
+                      loading="eager"
+                    />
                   </div>
 
                   <EstrelasAvaliacao
@@ -175,7 +175,7 @@ export function ModalAvaliacao({
 
         <div className={styles.footer}>
           <button className={styles.btnEnviar} onClick={aoEnviar}>
-            Enviar
+            {produto.status === 'realizada' ? 'Editar' : 'Enviar'}
           </button>
         </div>
 

@@ -13,14 +13,16 @@ export function BadgeLoja({ loja }: BadgeLojaProps) {
                 <img src={loja.logo} alt={loja.nome} />
             </span>
 
-            Loja oficial{' '}
-            <a href="#" className={styles.link}>
-                {loja.nome}
-            </a>
+            <div className={styles.container}>
+                Loja oficial{' '}
+                <a href="#" className={styles.link}>
+                    {loja.nome}
+                </a>
 
-            <span className={styles.verificado}>
-                <img src="/src/assets/images/verificado.png" alt="Verificado" />
-            </span>
+                <span className={styles.verificado}>
+                    <img src="/src/assets/verificado.png" alt="Verificado" />
+                </span>
+            </div>
         </div>
     );
 }

@@ -8,8 +8,8 @@
 }
 
 .logoContainer {
-    width: clamp(30px, 7vw, 48px);
-    height: clamp(18px, 4vw, 26px);
+    width: 28px;
+    height: 28px;
     border-radius: 4px;
     display: grid;
     place-items: center;
@@ -21,13 +21,20 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 2px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
 
 .link {
     color: var(--accent, #1554f0);
     text-decoration: none;
     font-weight: 700;
+    padding: 0 4px 0 6px;
 }
 
 .link:hover {

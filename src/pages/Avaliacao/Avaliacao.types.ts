@@ -1,7 +1,6 @@
 /**
- * Tipos do fluxo de Avaliações.
- * Centralizados aqui para serem reaproveitados pela página,
- * pelos componentes e pelos hooks relacionados.
+    * Tipos do fluxo de Avaliações.
+    * Centralizados aqui para serem reaproveitados pela página, pelos componentes e pelos hooks relacionados.
  */
 
 export type StatusAvaliacao = 'pendente' | 'realizada';
