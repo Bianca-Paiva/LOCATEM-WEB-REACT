@@ -41,7 +41,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         { label: 'Histórico', icon: relogio },
         { label: 'Agendamento', icon: calendario },
         { label: 'Notificações', icon: notificacoes, route: 'notificacoes' },
-        { label: 'Avaliações', icon: star },
+        { label: 'Avaliações', icon: star, route: 'avaliacao' },
         { label: 'Suporte', icon: suporte },
         { label: 'Entrar', icon: usuario, route: 'login' },
     ]

@@ -9,7 +9,8 @@ export type Route =
   | "recuperarSenha"
   | "informeToken"
   | "informeNovaSenha"
-  | "notificacoes";
+  | "notificacoes"
+  | "avaliacao";
 
 function getRouteFromHash(): Route {
   const hash = window.location.hash.replace("#", "").split("?")[0];
@@ -22,6 +23,8 @@ function getRouteFromHash(): Route {
   if (hash === "informeNovaSenha") return "informeNovaSenha";
   if (hash === "notificacoes") return "notificacoes";
   if (hash === "busca") return "busca";
+  if (hash === "avaliacao") return "avaliacao";
+
 
   return "home";
 }
