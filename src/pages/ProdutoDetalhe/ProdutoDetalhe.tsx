@@ -7,8 +7,8 @@ import { EspecificacoesTecnicas } from '../../components/ProdutoDetalhe/Especifi
 import { InfoVendedor } from '../../components/ProdutoDetalhe/InfoVendedor/InfoVendedor';
 import { AvaliacaoSection } from '../../components/ProdutoDetalhe/AvaliacaoSection/AvaliacaoSection';
 import { BannerLateral } from '../../components/ProdutoDetalhe/BannerLateral/BannerLateral';
-import { useProdutoStore } from '../../store/produtoStore';
-import type { ProdutoSelecionado } from '../../store/produtoStore';
+import { useProdutoStore } from '../../hooks/useProdutoStore';
+import type { ProdutoSelecionado } from '../../context/ProdutoContext';
 import type { Route } from '../../router/useRouter';
 import './ProdutoDetalhe.css';
 

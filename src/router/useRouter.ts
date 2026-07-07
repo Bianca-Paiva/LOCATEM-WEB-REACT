@@ -23,8 +23,8 @@ function getRouteFromHash(): Route {
   if (hash === "informeNovaSenha") return "informeNovaSenha";
   if (hash === "notificacoes") return "notificacoes";
   if (hash === "busca") return "busca";
+  if (hash === "produtoDetalhe") return "produtoDetalhe";
   if (hash === "avaliacao") return "avaliacao";
-
 
   return "home";
 }

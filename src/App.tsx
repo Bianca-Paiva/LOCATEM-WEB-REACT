@@ -11,7 +11,7 @@ import Avaliacao from "./pages/Avaliacao/Avaliacao";
 
 
 import { useRouter } from "./router/useRouter";
-import { ProdutoProvider } from "./store/produtoStore";
+import { ProdutoProvider } from "../src/context/ProdutoContext";
 
 export default function App() {
   const { route, navigate } = useRouter();

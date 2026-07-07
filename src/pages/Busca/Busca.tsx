@@ -1,7 +1,7 @@
 import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { useProdutoStore } from '../../store/produtoStore';
+import { useProdutoStore } from '../../hooks/useProdutoStore';
 import type { Route } from '../../router/useRouter';
 import { useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';

@@ -2,7 +2,7 @@ import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { useProdutoStore } from '../../store/produtoStore';
+import { useProdutoStore } from "../../hooks/useProdutoStore";
 import type { Route } from '../../router/useRouter';
 import './Home.css';
 
@@ -116,6 +116,7 @@ export default function Home({ navigate }: HomeProps) {
       rating: product.rating,
       reviewCount: product.reviewCount,
     });
+    
     navigate('produtoDetalhe');
   };
 
