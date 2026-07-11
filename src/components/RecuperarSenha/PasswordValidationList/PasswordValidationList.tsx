@@ -1,5 +1,5 @@
-import checkIconSenha from '../../../assets/checkIconSenha.png'
-import closeIconSenha from '../../../assets/closeIconSenha.png'
+import checkIconSenha from '../../../assets/IconsSenha/checkIconSenha.png'
+import closeIconSenha from '../../../assets/IconsSenha/closeIconSenha.png'
 import styles from './PasswordValidationList.module.css'
 
 interface ValidationItem {

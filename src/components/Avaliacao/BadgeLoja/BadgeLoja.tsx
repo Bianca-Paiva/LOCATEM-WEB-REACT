@@ -20,7 +20,7 @@ export function BadgeLoja({ loja }: BadgeLojaProps) {
                 </a>
 
                 <span className={styles.verificado}>
-                    <img src="/src/assets/verificado.png" alt="Verificado" />
+                    <img src="/src/assets/verificadoAzul.png" alt="Verificado" />
                 </span>
             </div>
         </div>

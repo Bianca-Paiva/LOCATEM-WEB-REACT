@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { InputHTMLAttributes } from 'react'
-import olhoAberto from '../../assets/olhoAberto.svg'
-import olhoFechado from '../../assets/olhoFechado.svg'
+import olhoAberto from '../../../assets/IconsSenha/olhoAberto.svg'
+import olhoFechado from '../../../assets/IconsSenha/olhoFechado.svg'
 import styles from './PasswordInput.module.css'
-import type { PasswordStrengthResult } from '../../hooks/passwordStrength'
-import { useEffect } from 'react'
+import type { PasswordStrengthResult } from '../../../hooks/passwordStrength'
 
 interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string

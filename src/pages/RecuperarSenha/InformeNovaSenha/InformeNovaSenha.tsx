@@ -5,7 +5,7 @@ import styles from "./InformeNovaSenha.module.css";
 import AuthHeader from "../../../components/Header/AuthHeader/AuthHeader";
 import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
 import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
-import PasswordField from "../../../components/PasswordInput/PasswordInput";
+import PasswordField from "../../../components/Inputs/PasswordInput/PasswordInput";
 import BtnPrincipal from "../../../components/BtnPrincipal/BtnPrincipal";
 import PasswordValidationList from "../../../components/RecuperarSenha/PasswordValidationList/PasswordValidationList";
 import PasswordStrengthMeter from "../../../components/PasswordMedidor/PasswordStrengthMeter";

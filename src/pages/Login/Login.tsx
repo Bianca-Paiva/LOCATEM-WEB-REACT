@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
-import FormInput from '../../components/FormInput/FormInput'
-import PasswordField from '../../components/PasswordInput/PasswordInput'
-import { loginUsuario } from '../../services/authService'
+import FormInput from '../../components/Inputs/FormInput/FormInput'
+import PasswordField from '../../components/Inputs/PasswordInput/PasswordInput'
+//import { loginUsuario } from '../../services/authService'
 import type { Route } from '../../router/useRouter'
 import styles from './Login.module.css'
 
@@ -21,7 +21,7 @@ export default function Login({ navigate }: LoginProps) {
 
     const triggerShake = (setState: React.Dispatch<React.SetStateAction<{ active: boolean, shake: boolean }>>) => {
         setState(prev => ({ ...prev, shake: false }))
-        
+
         setTimeout(() => {
             setState({ active: true, shake: true })
         }, 10)
@@ -49,7 +49,7 @@ export default function Login({ navigate }: LoginProps) {
             triggerShake(setEmailErrState)
             possuiErro = true
         }
-        
+
         // Dispara o erro se a senha estiver vazia OU se não cumprir os requisitos de segurança
         if (!senha || !isSenhaValida) {
             triggerShake(setSenhaErrState)
@@ -63,7 +63,7 @@ export default function Login({ navigate }: LoginProps) {
         setError('')
 
         try {
-            await loginUsuario({ email, senha })
+            // await loginUsuario({ email, senha })
             navigate('home')
         } catch (err) {
             setError(err instanceof Error ? err.message : 'E-mail ou senha inválidos')

@@ -17,20 +17,20 @@ interface BannerData {
 const BANNERS_MOCK: BannerData[] = [
   {
     id: 1,
-    image: 'src/assets/anuncioLocatem.png', // Caminho da sua imagem na pasta assets
+    image: 'src/assets/Anuncios/anuncioLocador01.png', // Caminho da sua imagem na pasta assets
     altText: 'Promoção de Julho - 25% OFF em ferramentas',
     link: '/promocao'
   },
   {
     id: 2,
-    image: 'src/assets/anuncioLocador01.png',
+    image: 'src/assets/Anuncios/anuncioLocatem.png',
     altText: 'As melhores parafusadeiras com desconto',
     link: ''
   },
 
   {
     id: 3,
-    image: 'src/assets/anuncioLocador02.png',
+    image: 'src/assets/Anuncios/anuncioLocador02.png',
     altText: 'Alugue a partir de 29,90',
     link: ''
   }

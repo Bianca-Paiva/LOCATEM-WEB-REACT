@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react'
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
-import menuHamburguer from '../../assets/menuHamburguer.png'
-import carrinho from '../../assets/carrinho.png'
-import lupa from '../../assets/lupa.png'
-import chat from '../../assets/chat.png'
-import home from '../../assets/home.png'
-import relogio from '../../assets/relogio.png'
-import calendario from '../../assets/calendario.png'
-import notificacoes from '../../assets/notificacoes.png'
-import star from '../../assets/Star.png'
-import suporte from '../../assets/suporte.png'
-import usuario from '../../assets/usuario.png'
+import menuHamburguer from '../../assets/IconsNavHeader/menuHamburguer.png'
+import carrinhoIcon from '../../assets/IconsNavHeader/carrinho.png'
+import lupaIcon from '../../assets/IconsNavHeader/lupa.png'
+import chatIcon from '../../assets/IconsNavHeader/chat.png'
+import homeIcon from '../../assets/IconsNavHeader/home.png'
+import relogioIcon from '../../assets/IconsNavHeader/relogio.png'
+import calendarioIcon from '../../assets/IconsNavHeader/calendario.png'
+import notificacoesIcon from '../../assets/IconsNavHeader/notificacoes.png'
+import starIcon from '../../assets/IconsNavHeader/Star.png'
+import suporteIcon from '../../assets/IconsNavHeader/suporte.png'
+import usuarioIcon from '../../assets/IconsNavHeader/usuario.png'
+import locacoesIcon from '../../assets/IconsNavHeader/locacoes.png'
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -36,14 +37,15 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     }, [])
 
     const navItems: { label: string; icon: string; route?: Route; href?: string }[] = [
-        { label: 'Início', icon: home, route: 'home' },
-        { label: 'Carrinho', icon: carrinho },
-        { label: 'Histórico', icon: relogio },
-        { label: 'Agendamento', icon: calendario },
-        { label: 'Notificações', icon: notificacoes, route: 'notificacoes' },
-        { label: 'Avaliações', icon: star, route: 'avaliacao' },
-        { label: 'Suporte', icon: suporte },
-        { label: 'Entrar', icon: usuario, route: 'login' },
+        { label: 'Início', icon: homeIcon, route: 'home' },
+        { label: 'Carrinho', icon: carrinhoIcon },
+        { label: 'Minhas Reservas', icon: calendarioIcon },
+        { label: 'Minhas Locações', icon: locacoesIcon, },
+        { label: 'Histórico', icon: relogioIcon },
+        { label: 'Avaliações', icon: starIcon, route: 'avaliacao' },
+        { label: 'Notificações', icon: notificacoesIcon, route: 'notificacoes' },
+        { label: 'Entrar', icon: usuarioIcon, route: 'login' },
+        { label: 'Suporte', icon: suporteIcon },
     ]
 
     return (
@@ -60,7 +62,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             <img src={menuHamburguer} alt="Menu" />
                         </button>
                         <a
-                            href="#"
+                            href="../../pages/Home/Home.tsx"
                             className={styles.logo}
                             onClick={e => { e.preventDefault(); navigate('home') }}
                         >
@@ -69,12 +71,12 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         </a>
                     </div>
                     <a href="#" className={styles.carrinhoBtn}>
-                        <img src={carrinho} alt="Carrinho" />
+                        <img src={carrinhoIcon} alt="Carrinho" />
                         <span className={styles.quantidadeCarrinho}>2</span>
                     </a>
                 </div>
                 <form className={styles.barraPesquisaMobile} onSubmit={e => e.preventDefault()}>
-                    <img src={lupa} alt="Buscar" />
+                    <img src={lupaIcon} alt="Buscar" />
                     <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
                 </form>
             </header>
@@ -94,7 +96,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             >
                 <div className={styles.menuLateralCabecalho}>
                     <a
-                        href="#"
+                        href="../../pages/Home/Home.tsx"
                         className={styles.menuLateralLogo}
                         onClick={e => { e.preventDefault(); navigate('home'); setMenuOpen(false) }}
                     >
@@ -135,7 +137,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             <header className={styles.headerDesktop}>
                 <div className={styles.linhaTopo}>
                     <a
-                        href="#"
+                        href="../../pages/Home/Home.tsx"
                         className={styles.logo}
                         onClick={e => { e.preventDefault(); navigate('home') }}
                     >
@@ -144,12 +146,12 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                     </a>
                     <form className={styles.barraPesquisa} onSubmit={e => e.preventDefault()}>
                         <button type="submit" className={styles.lupaBtn}>
-                            <img src={lupa} alt="Buscar" />
+                            <img src={lupaIcon} alt="Buscar" />
                         </button>
                         <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
                     </form>
                     <a href="#" className={styles.chatBtn}>
-                        <img src={chat} alt="Chat" />
+                        <img src={chatIcon} alt="Chat" />
                     </a>
                 </div>
 

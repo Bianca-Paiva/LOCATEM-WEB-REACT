@@ -1,5 +1,5 @@
 import styles from './InfoVendedor.module.css';
-import verificadoImg from '../../../assets/verificado.png';
+import verificadoImg from '../../../assets/verificadoAzul.png';
 
 interface InfoVendedorProps {
   nome: string;

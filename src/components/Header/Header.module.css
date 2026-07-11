@@ -34,7 +34,7 @@
     font-size: clamp(16px, 4.5vw, 20px);
     font-weight: 800;
     letter-spacing: -0.4px;
-    color: var(--color-text-dark);
+    color: #0A0A0A;
     text-decoration: none;
 }
 

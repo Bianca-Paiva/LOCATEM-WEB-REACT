@@ -6,8 +6,8 @@ import { getPasswordValidations, getConfirmPasswordStatus } from '../../hooks/pa
 import { useCadastroForm } from '../../hooks/useCadastroForm'
 import type { Route } from '../../router/useRouter'
 
-import FormInput from '../../components/FormInput/FormInput'
-import PasswordInput from '../../components/PasswordInput/PasswordInput'
+import FormInput from '../../components/Inputs/FormInput/FormInput'
+import PasswordInput from '../../components/Inputs/PasswordInput/PasswordInput'
 import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
 import PageHeader from '../../components/RecuperarSenha/PageHeader/PageHeader'
 import CardOpcaoConta from '../../components/CardOpcaoConta/CardOpcaoConta'
@@ -149,7 +149,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                     id="senha" label="Senha" placeholder="Crie uma senha segura"
                                     value={value} required shake={shakes.senha.shake}
                                     onChange={(e) => { onChange(e.target.value); clearShake('senha'); }}
-                                    status={errors.senha || shakes.senha.active ? 'erro' : ''} 
+                                    status={errors.senha || shakes.senha.active ? 'erro' : ''}
                                     error={errors.senha?.message || ''}
                                 />
                             )}
@@ -202,7 +202,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                     id="endereco" label="Endereço" type="text" placeholder="Digite seu endereço completo"
                                     value={value} required shake={shakes.endereco.shake}
                                     onChange={(e) => { onChange(e.target.value); clearShake('endereco'); }}
-                                    status={errors.endereco || shakes.endereco.active ? 'erro' : ''} 
+                                    status={errors.endereco || shakes.endereco.active ? 'erro' : ''}
                                     error={errors.endereco?.message || ''}
                                 />
                             )}

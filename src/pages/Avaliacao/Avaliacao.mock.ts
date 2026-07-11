@@ -1,9 +1,9 @@
 import type { ProdutoAvaliacao } from './Avaliacao.types';
-import FuradeiraTheBlackTools from '../../assets/FuradeiraTheBlackTools.webp';
-import MsFerramentasLogo from '../../assets/logoLojaMS.png';
+import FuradeiraTheBlackTools from '../../assets/ProdutosImg/FuradeiraTheBlackTools.png';
+import MsFerramentasLogo from '../../assets/LogosLojas/logoLojaMS.png';
 
-import SerraMarmoreMakita from '../../assets/serraMarmoreMakita.png';
-import JbFerramentasLogo from '../../assets/logoLojaJB.png';
+import SerraMarmoreMakita from '../../assets/ProdutosImg/serraMarmoreMakita.png';
+import JbFerramentasLogo from '../../assets/LogosLojas/logoLojaJB.png';
 
 /**
     * Mock temporário para testes de layout e fluxo da página de avaliação.

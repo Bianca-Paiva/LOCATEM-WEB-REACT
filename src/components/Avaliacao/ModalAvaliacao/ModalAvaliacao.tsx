@@ -8,7 +8,7 @@ import { EstrelasAvaliacao } from '../EstrelaAvaliacao/EstrelaAvaliacao';
 import { CarrosselAvaliacoesPendentes } from '../CarroselAvaliacoesPendentes/CarroselAvaliacoesPendentes';
 import styles from './ModalAvaliacao.module.css';
 
-import IconCaminhao from '../../../assets/caminhao.png';
+import IconCaminhao from '../../../assets/IconCaminhao.png';
 
 interface ModalAvaliacaoProps {
   produto: ProdutoAvaliacao | null;

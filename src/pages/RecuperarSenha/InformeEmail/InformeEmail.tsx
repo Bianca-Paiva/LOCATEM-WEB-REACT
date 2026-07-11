@@ -3,7 +3,7 @@ import styles from "./InformeEmail.module.css";
 import AuthHeader from "../../../components/Header/AuthHeader/AuthHeader";
 import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
 import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
-import FormInput from "../../../components/FormInput/FormInput";
+import FormInput from "../../../components/Inputs/FormInput/FormInput";
 import BtnPrincipal from "../../../components/BtnPrincipal/BtnPrincipal";
 import FooterLink from "../../../components/RecuperarSenha/FooterLink/FooterLink";
 import type { Route } from "../../../router/useRouter";

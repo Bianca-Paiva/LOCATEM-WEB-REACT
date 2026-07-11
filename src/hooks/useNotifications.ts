@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { FilterOption, NotificationData } from '../pages/Notificacoes/Notificacoes.types';
-import { PAGE_SIZE, mockNotifications } from '../pages/Notificacoes/data';
+import { PAGE_SIZE, mockNotifications } from '../pages/Notificacoes/Notificacao.mock';
 
 interface UseNotificationsReturn {
   notifications: NotificationData[];

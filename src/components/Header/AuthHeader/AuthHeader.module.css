@@ -7,7 +7,6 @@
         var(--color-primary) 0%,
         var(--color-primary-light) 55%,
         var(--color-primary-soft) 85%,
-        rgba(255, 202, 0, 0.2) 95%,
         transparent 100%
     );
 }
@@ -26,7 +25,7 @@
     font-size: clamp(18px, 2vw, 24px);
     font-weight: 800;
     letter-spacing: -0.4px;
-    color: var(--color-text-dark);
+    color: #0A0A0A;
     text-decoration: none;
 }
 

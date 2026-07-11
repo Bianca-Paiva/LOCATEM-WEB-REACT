@@ -1,4 +1,4 @@
- import { useState } from 'react';
+import { useState } from 'react';
 
 import type { FilterState } from '../../../pages/Busca/Busca';
 
@@ -116,7 +116,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
     setSelectedRating(null);
 
-    
+
 
     onApplyFilters({
 
@@ -145,15 +145,15 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
       {/* Fundo escurecido que fecha o menu ao ser clicado */}
 
-      <div 
+      <div
 
-        className={`sidebar-overlay-backdrop ${isOpen ? 'visible-active' : ''}`} 
+        className={`sidebar-overlay-backdrop ${isOpen ? 'visible-active' : ''}`}
 
         onClick={onClose}
 
       />
 
-      
+
 
       <aside className={`sidebar-container ${isOpen ? 'drawer-open' : ''}`}>
 
@@ -235,7 +235,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
           <div className="pills-container">
 
-            {['Bosch', 'Makita', 'DeWalt', 'Black & Decker'].map((brand) => (
+            {['MS Ferramentas', 'WZ Ferramentas', 'JB Ferramentas', 'João Ferramentas'].map((brand) => (
 
               <button
 
@@ -301,7 +301,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
           <div className="pills-container">
 
-            {['Cartão de Crédito', 'Boleto Bancário', 'Pix', 'Transferência Bancária'].map((method) => (
+            {['Cartão de Crédito', 'Cartão de Débito', 'Pix'].map((method) => (
 
               <button
 
