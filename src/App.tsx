@@ -8,6 +8,7 @@ import Busca from "./pages/Busca/Busca";
 import Notificacoes from "./pages/Notificacoes/Notificacoes";
 import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
 import Avaliacao from "./pages/Avaliacao/Avaliacao";
+import MinhasReservas from "./pages/MinhasReservas/MinhasReservas";
 
 
 import { useRouter } from "./router/useRouter";
@@ -37,6 +38,8 @@ export default function App() {
       {route === "avaliacao" && <Avaliacao navigate={navigate} />}
 
       {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
+
+      {route === "minhasReservas" && <MinhasReservas navigate={navigate} />}
     </ProdutoProvider>
   );
 }

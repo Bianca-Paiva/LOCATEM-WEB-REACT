@@ -10,7 +10,8 @@ export type Route =
   | "informeToken"
   | "informeNovaSenha"
   | "notificacoes"
-  | "avaliacao";
+  | "avaliacao"
+  | "minhasReservas";
 
 function getRouteFromHash(): Route {
   const hash = window.location.hash.replace("#", "").split("?")[0];
@@ -25,6 +26,7 @@ function getRouteFromHash(): Route {
   if (hash === "busca") return "busca";
   if (hash === "produtoDetalhe") return "produtoDetalhe";
   if (hash === "avaliacao") return "avaliacao";
+  if (hash === "minhasReservas") return "minhasReservas";
 
   return "home";
 }

@@ -39,7 +39,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const navItems: { label: string; icon: string; route?: Route; href?: string }[] = [
         { label: 'Início', icon: homeIcon, route: 'home' },
         { label: 'Carrinho', icon: carrinhoIcon },
-        { label: 'Minhas Reservas', icon: calendarioIcon },
+        { label: 'Minhas Reservas', icon: calendarioIcon, route: 'minhasReservas' },
         { label: 'Minhas Locações', icon: locacoesIcon, },
         { label: 'Histórico', icon: relogioIcon },
         { label: 'Avaliações', icon: starIcon, route: 'avaliacao' },

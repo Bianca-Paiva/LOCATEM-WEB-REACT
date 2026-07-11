@@ -1,0 +1,67 @@
+.pagina {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+}
+
+.subtitulo {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Tablet e acima: mais respiro nas laterais e título maior */
+@media (min-width: 640px) {
+  .pagina {
+    padding: 28px 24px 56px;
+  }
+
+  .titulo {
+    font-size: 26px;
+  }
+
+  .subtitulo {
+    font-size: 14px;
+  }
+
+  .lista {
+    gap: 16px;
+  }
+}
+
+/* Desktop: layout como no mockup de tela cheia */
+@media (min-width: 1024px) {
+  .pagina {
+    padding: 32px 32px 64px;
+  }
+
+  .titulo {
+    font-size: 28px;
+  }
+}

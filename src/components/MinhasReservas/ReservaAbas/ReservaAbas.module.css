@@ -1,0 +1,88 @@
+.wrapper {
+  width: 100%;
+  background: var(--color-bg-card);
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  padding: 8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.rolagemAbas {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.rolagemAbas::-webkit-scrollbar {
+  display: none;
+}
+
+.aba {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.aba:hover {
+  color: var(--color-text-dark);
+}
+
+.abaAtiva {
+  background: var(--color-primary);
+  color: var(--color-text-dark);
+}
+
+.abaAtiva:hover {
+  color: var(--color-text-dark);
+}
+
+.contador {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  background: #f0f0f0;
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.contadorAtivo {
+  background: rgba(10, 10, 10, 0.12);
+  color: var(--color-text-dark);
+}
+
+@media (min-width: 640px) {
+  .wrapper {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .aba {
+    font-size: 14px;
+    padding: 12px 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rolagemAbas {
+    justify-content: flex-start;
+  }
+}
