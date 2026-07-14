@@ -1,0 +1,118 @@
+.painel {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.simbolo {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.textoConteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mensagem {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Pendente: âmbar */
+.pendente {
+  background: var(--color-primary-soft);
+  border-color: #ffe9a8;
+}
+
+.pendente .simbolo {
+  background: var(--color-primary-light);
+  color: #8a6100;
+}
+
+.pendente .titulo,
+.pendente .mensagem {
+  color: #8a6100;
+}
+
+/* Aprovada: verde */
+.aprovada {
+  background: #e6f8ec;
+  border-color: #bdead0;
+}
+
+.aprovada .simbolo {
+  background: #34c95e;
+  color: #ffffff;
+}
+
+.aprovada .titulo {
+  color: #1a7a3c;
+}
+
+.aprovada .mensagem {
+  color: #2f8f52;
+}
+
+/* Recusada: vermelho */
+.recusada {
+  background: #fde3e3;
+  border-color: #f7c1c1;
+}
+
+.recusada .simbolo {
+  background: #f2a3a3;
+  color: #7a1010;
+}
+
+.recusada .titulo {
+  color: #8a1414;
+}
+
+.recusada .mensagem {
+  color: #a13a3a;
+}
+
+/* Cancelada: cinza-azulado */
+.cancelada {
+  background: #eef1f5;
+  border-color: #dfe4ea;
+}
+
+.cancelada .simbolo {
+  background: #cbd3dc;
+  color: #4b5563;
+}
+
+.cancelada .titulo,
+.cancelada .mensagem {
+  color: #4b5563;
+}
+
+@media (min-width: 640px) {
+  .painel {
+    padding: 18px 20px;
+  }
+}

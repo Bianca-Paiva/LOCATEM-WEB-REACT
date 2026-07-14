@@ -1,4 +1,4 @@
-import type { ReservaData } from '../../../pages/MinhasReservas/MinhasReservas.types';
+import type { ReservaData } from '../../../pages/Reservas/MinhasReservas/MinhasReservas.types';
 import StatusBadge from '../EtiquetaStatus/EtiquetaStatus';
 import calendarioIcon from '../../../assets/IconCalendarioReservas.png';
 import userIcon from '../../../assets/IconUser.png';
@@ -31,7 +31,7 @@ export default function ReservaCard({ reserva, onVerDetalhes }: ReservaCardProps
               <img src={calendarioIcon} alt="" className={styles.iconeInformacao} />
               {periodo}
             </span>
-            
+
             <span className={styles.itemInformacao}>
               <img src={userIcon} alt="" className={styles.iconeInformacao} />
               Locador: {locador}

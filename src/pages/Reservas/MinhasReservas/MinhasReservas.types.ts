@@ -14,6 +14,23 @@ export interface ReservaData {
   status: StatusReserva;
   /** Texto auxiliar exibido abaixo do locador, ex: "Aguardando aprovação do locador" */
   mensagemStatus: string;
+
+  // ── Dados usados na tela de Detalhes da Reserva ──────────────────────────
+  /** Ex: "Elétrica • Parafusadeira/Furadeira" */
+  categoria: string;
+  avaliacaoLocador: number;
+  numeroAvaliacoes: number;
+  /** Ex: "São Paulo - SP" */
+  localizacao: string;
+  dataInicio: string;
+  horaInicio: string;
+  dataFim: string;
+  horaFim: string;
+  quantidade: number;
+  /** Valor já formatado, ex: "R$ 200,00" */
+  valorEstimado: string;
+  /** Preenchido apenas quando status === 'recusada' */
+  motivoRecusa?: string;
 }
 
 /** Configuração visual/textual de cada status (usado no badge e nas abas) */

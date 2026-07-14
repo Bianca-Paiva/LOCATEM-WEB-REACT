@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
-import type { FiltroReserva, ReservaData, StatusReserva } from '../../pages/MinhasReservas/MinhasReservas.types';
-import { mockReservas } from '../../pages/MinhasReservas/MinhasReservas.mock';
+import type { FiltroReserva, ReservaData, StatusReserva } from '../../pages/Reservas/MinhasReservas/MinhasReservas.types';
+import { mockReservas } from '../../pages/Reservas/MinhasReservas/MinhasReservas.mock';
 
 interface UseMinhasReservasReturn {
   reservasFiltradas: ReservaData[];

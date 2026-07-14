@@ -1,0 +1,46 @@
+.pagina {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+}
+
+@media (min-width: 640px) {
+  .pagina {
+    padding: 28px 24px 56px;
+    gap: 20px;
+  }
+
+  .titulo {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pagina {
+    padding: 32px 32px 64px;
+  }
+
+  .titulo {
+    font-size: 28px;
+  }
+}
