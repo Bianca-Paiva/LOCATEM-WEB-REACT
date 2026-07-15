@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import TempoDropdown from '../TempoDropdown/TempoDropdown';
 import styles from './ProdutoInfo.module.css';
 
 interface ProdutoInfoProps {
@@ -9,12 +10,13 @@ interface ProdutoInfoProps {
   imageVerificado: string;
   imageNota: string;
   brand: string;
+  estoqueDisponivel: number;
   onAlugar?: () => void;
+  onReservar?: () => void;
   onAddCarrinho?: () => void;
 }
 
 const TENSAO_OPTIONS = ['127V', '220V', 'Bivolt'];
-const TAMANHO_OPTIONS = ['Selecione'];
 
 export function ProdutoInfo({
   title,
@@ -23,15 +25,21 @@ export function ProdutoInfo({
   reviewCount,
   imageNota,
   brand,
+  estoqueDisponivel,
   onAlugar,
+  onReservar,
   onAddCarrinho,
 }: ProdutoInfoProps) {
+
   const [tensaoSelecionada, setTensaoSelecionada] = useState<string | null>(null);
-  const [tamanho, setTamanho] = useState('Selecione');
+  const [tempo, setTempo] = useState('Selecione');
   const [quantidade, setQuantidade] = useState(1);
 
+  // limite mínimo é 1 unidades
   const decrement = () => setQuantidade(prev => Math.max(1, prev - 1));
-  const increment = () => setQuantidade(prev => prev + 1);
+
+  // O limite máximo de unidades é igual ao estoque disponível
+  const increment = () => setQuantidade(prev => Math.min(estoqueDisponivel, prev + 1));
 
   return (
     <div className={styles.produtoInfoWrapper}>
@@ -66,32 +74,46 @@ export function ProdutoInfo({
         </div>
       </div>
 
-      {/* Tamanho */}
-      <div className={styles.opcaoGrupo}>
-        <p className={styles.opcaoLabel}>Tempo</p>
-        <select
-          className={styles.selectTamanho}
-          value={tamanho}
-          onChange={e => setTamanho(e.target.value)}
-        >
-          {TAMANHO_OPTIONS.map(t => (
-            <option key={t} value={t}>{t}</option>
-          ))}
-          <option value="1 dia">1 dia</option>
-          <option value="3 dias">3 dias</option>
-          <option value="7 dias">7 dias</option>
-          <option value="15 dias">15 dias</option>
-          <option value="30 dias">30 dias</option>
-        </select>
-      </div>
+      <div className={styles.seletoresRow}>
 
-      {/* Quantidade */}
-      <div className={styles.opcaoGrupo}>
-        <p className={styles.opcaoLabel}>Quantidade</p>
-        <div className={styles.quantidadeControle}>
-          <button className={styles.btnQuantidade} onClick={decrement} aria-label="Diminuir">−</button>
-          <span className={styles.quantidadeValor}>{quantidade}</span>
-          <button className={styles.btnQuantidade} onClick={increment} aria-label="Aumentar">+</button>
+        {/* Tempo */}
+        <div className={styles.opcaoGrupo}>
+          <p className={styles.opcaoLabel}>Tempo</p>
+          <TempoDropdown value={tempo} onChange={setTempo} /> {/* <-- Novo Dropdown aqui! */}
+        </div>
+
+        {/* Quantidade */}
+        <div className={styles.opcaoGrupo}>
+          <p className={styles.opcaoLabel}>
+            Quantidade
+            <span className={styles.estoqueInline}>
+              ({estoqueDisponivel} disponíveis)
+            </span>
+          </p>
+
+          <div className={styles.quantidadeControle}>
+
+            {/* Desabilita o botão "-" se for 1 */}
+            <button
+              className={styles.btnQuantidade}
+              onClick={decrement}
+              disabled={quantidade <= 1}
+              aria-label="Diminuir">
+              −
+            </button>
+
+            <span className={styles.quantidadeValor}>{quantidade}</span>
+
+            {/* Desabilita o botão "+" se atingir o estoque disponível */}
+            <button
+              className={styles.btnQuantidade}
+              onClick={increment}
+              disabled={quantidade >= estoqueDisponivel}
+              aria-label="Aumentar">
+              +
+            </button>
+          </div>
+
         </div>
       </div>
 
@@ -100,9 +122,14 @@ export function ProdutoInfo({
         <button className={styles.btnLocar} onClick={onAlugar}>
           Locar
         </button>
-        <button className={styles.btnCarrinho} onClick={onAddCarrinho}>
-          Adicionar ao carrinho
-        </button>
+        <div className={styles.linhaSecundaria}>
+          <button className={styles.btnCarrinho} onClick={onAddCarrinho}>
+            Adicionar ao carrinho
+          </button>
+          <button className={styles.btnReservar} onClick={onReservar}>
+            Reservar
+          </button>
+        </div>
       </div>
     </div>
   );

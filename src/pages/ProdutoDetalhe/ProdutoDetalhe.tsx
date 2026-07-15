@@ -22,10 +22,14 @@ const FALLBACK_PRODUTO = {
   brand: 'JB Ferramentas',
   price: '15',
   rating: 4.8,
-  reviewCount: 100,
+  reviewCount: 3,
   image: 'src/assets/ProdutosImg/FuradeiraTheBlackTools.png',
   imageVerificado: 'src/assets/verificadoAzul.png',
   imageNota: 'src/assets/StarFullYellow.png',
+  locador: 'MS Ferramentas',
+  localizacao: 'São Paulo - SP',
+  categoria: 'Elétrica • Parafusadeira/Furadeira',
+  estoqueDisponivel: 5,
 };
 
 const MOCK_SEMELHANTES = [
@@ -39,6 +43,10 @@ const MOCK_SEMELHANTES = [
     imageNota: 'src/assets/StarFullYellow.png',
     rating: 4.6,
     reviewCount: 28,
+    locador: 'JB Ferramentas',
+    localizacao: 'Guarulhos - SP',
+    categoria: 'Jardinagem • Aparador de Grama',
+    estoqueDisponivel: 6,
   },
   {
     id: 11,
@@ -50,6 +58,10 @@ const MOCK_SEMELHANTES = [
     imageNota: 'src/assets/StarFullYellow.png',
     rating: 4.2,
     reviewCount: 87,
+    locador: 'WZ Ferramentas',
+    localizacao: 'Campinas - SP',
+    categoria: 'Elétrica • Pintura',
+    estoqueDisponivel: 4,
   },
   {
     id: 12,
@@ -61,6 +73,10 @@ const MOCK_SEMELHANTES = [
     imageNota: 'src/assets/StarFullYellow.png',
     rating: 4.7,
     reviewCount: 201,
+    locador: 'João Ferramentas',
+    localizacao: 'São Paulo - SP',
+    categoria: 'Elétrica • Parafusadeira/Furadeira',
+    estoqueDisponivel: 3,
   },
   {
     id: 13,
@@ -72,6 +88,10 @@ const MOCK_SEMELHANTES = [
     imageNota: 'src/assets/StarFullYellow.png',
     rating: 4.4,
     reviewCount: 76,
+    locador: 'Carlos Silva',
+    localizacao: 'São Paulo - SP',
+    categoria: 'Elétrica • Serra',
+    estoqueDisponivel: 2,
   },
   {
     id: 14,
@@ -83,6 +103,10 @@ const MOCK_SEMELHANTES = [
     imageNota: 'src/assets/StarFullYellow.png',
     rating: 4.3,
     reviewCount: 62,
+    locador: 'JB Ferramentas',
+    localizacao: 'Osasco - SP',
+    categoria: 'Elétrica • Parafusadeira/Furadeira',
+    estoqueDisponivel: 5,
   },
 ];
 
@@ -120,7 +144,6 @@ const MOCK_AVALIACOES = [
   },
 ];
 
-// ── Component ──────────────────────────────────────────────────────────────────
 
 export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const { produtoSelecionado, setProdutoSelecionado } = useProdutoStore();
@@ -132,6 +155,15 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const handleSemelhante = (p: ProdutoSelecionado) => {
     setProdutoSelecionado(p);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // "Locar" fica reservado para outro fluxo (a definir); por ora não navega para nada.
+  const handleAlugar = () => { };
+
+  // Ao clicar em "Reservar": garante que o produto está salvo no store e navega para a Solicitação de Reserva
+  const handleReservar = () => {
+    setProdutoSelecionado(produto);
+    // navigate('solicitarReserva');
   };
 
   return (
@@ -165,6 +197,9 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     brand={produto.brand}
                     imageVerificado={produto.imageVerificado}
                     imageNota={produto.imageNota}
+                    estoqueDisponivel={produto.estoqueDisponivel} // <-- Passando o estoque disponível
+                    onAlugar={handleAlugar}                       // <-- Conectando a ação de alugar
+                    onReservar={handleReservar}                   // <-- Conectando a ação de reservar
                   />
                 </div>
 
@@ -175,7 +210,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
             <section className="produto-section-padded">
               <ProdutosSemelhantes
                 produtos={MOCK_SEMELHANTES}
-                onCardClick={handleSemelhante}
+                onCardClick={(p) => handleSemelhante(p as unknown as ProdutoSelecionado)}
               />
             </section>
 
@@ -190,7 +225,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                 </div>
                 <div className="produto-vendedor-col">
                   <InfoVendedor
-                    nome="JB Ferramentas"
+                    nome="MS Ferramentas"
                     rating={4.9}
                     reviewCount={200}
                     locacoes={500}

@@ -168,43 +168,42 @@
   width: 72px;
   height: 72px;
   border-radius: 8px;
-  object-fit: cover;
+  object-fit: contain;
   border: 1px solid #f3f4f6;
 }
 
 .avaliacaoFooter {
   margin-top: 4px;
-
   display: flex;
 }
 
 .btnUtil {
+  width: 75px;
+  height: 25px;
+  padding: 0;
+  display: flex;
+  align-items: center;
   background: none;
-  border: 1px solid var(--color-primary);
+  justify-content: center;
   border-radius: 20px;
+  border: 1px solid var(--color-primary);
   font-size: 12px;
   color: #6b7280;
   cursor: pointer;
-  width: 75px;
-  padding: 0;
-  font-family: inherit;
-  align-items: center;
-  display: flex;
 }
 
 .likeIcon {
   width: 13px;
   height: 13px;
-  margin-left: 5px;
   margin-right: 3px;
   margin-bottom: 2px;
-  gap: 6px;
 }
 
 .utilCount {
   font-size: 12px;
   color: #6b7280;
   margin-left: 8px;
+  margin-top: 3px;
 }
 
 .btnUtil:hover {

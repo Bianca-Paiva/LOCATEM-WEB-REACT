@@ -44,17 +44,19 @@ export function InfoVendedor({
           <p className={styles.locacoes}>+{locacoes} locações</p>
         </div>
         {verificado && (
-  <div className={styles.verificadoBadge}>
-   <img
-  src={verificadoImg}
-  alt="Verificado"
-  className={styles.verificadoIcon}
-/>
-  </div>
-)}
+          <div className={styles.verificadoBadge}>
+            <img
+              src={verificadoImg}
+              alt="Verificado"
+              className={styles.verificadoIcon}
+            />
+          </div>
+        )}
       </div>
 
-      <button className={styles.btnVerPerfil}>Ver perfil da loja</button>
+      <button className={styles.btnVerPerfil}>
+        Ver perfil da loja
+      </button>
     </div>
   );
 }
