@@ -44,7 +44,7 @@ export default function ReservaResumoCard({ reserva }: ReservaResumoCardProps) {
 
           <div className={styles.linhaAvaliacaoLocalizacao}>
             <span className={styles.avaliacao}>
-              <img src={starIcon} alt="" className={styles.iconePequeno} />
+              <img src={starIcon} alt="" className={styles.iconePequenoStar} />
               {avaliacaoLocador.toFixed(1).replace('.', ',')}
               <span className={styles.numeroAvaliacoes}>({numeroAvaliacoes} avaliações)</span>
             </span>

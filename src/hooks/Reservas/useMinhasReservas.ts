@@ -1,20 +1,20 @@
 import { useMemo, useState } from 'react';
-import type { FiltroReserva, ReservaData, StatusReserva } from '../../pages/Reservas/MinhasReservas/MinhasReservas.types';
-import { mockReservas } from '../../pages/Reservas/MinhasReservas/MinhasReservas.mock';
+import type { FiltroReserva, StatusReserva } from '../../pages/Reservas/MinhasReservas/MinhasReservas.types';
+import { useReservaStore } from './useReservaStore';
 
 interface UseMinhasReservasReturn {
-  reservasFiltradas: ReservaData[];
+  reservasFiltradas: ReturnType<typeof useReservaStore>['reservas'];
   filtro: FiltroReserva;
   setFiltro: (filtro: FiltroReserva) => void;
   contagem: Record<FiltroReserva, number>;
 }
 
 export function useMinhasReservas(): UseMinhasReservasReturn {
-  // Fonte da verdade: todas as reservas, sem filtro de status
-  const [reservas] = useState<ReservaData[]>(mockReservas);
+  // Reservas vêm do contexto global, garantindo que alterações feitas em
+  // DetalhesReserva (ex: cancelamento) reflitam aqui também
+  const { reservas } = useReservaStore();
   const [filtro, setFiltro] = useState<FiltroReserva>('todas');
 
-  // Contagem de reservas por status, usada nos badges das abas
   const contagem = useMemo(() => {
     const base: Record<FiltroReserva, number> = {
       todas: reservas.length,
@@ -31,7 +31,6 @@ export function useMinhasReservas(): UseMinhasReservasReturn {
     return base;
   }, [reservas]);
 
-  // Lista já filtrada pela aba selecionada
   const reservasFiltradas = useMemo(() => {
     if (filtro === 'todas') return reservas;
     return reservas.filter((reserva) => reserva.status === (filtro as StatusReserva));

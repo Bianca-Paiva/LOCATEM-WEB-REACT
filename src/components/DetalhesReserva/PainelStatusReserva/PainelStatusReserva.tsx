@@ -3,8 +3,8 @@ import styles from './PainelStatusReserva.module.css';
 
 interface PainelStatusReservaProps {
   status: StatusReserva;
-  /** Usado apenas quando status === 'recusada' */
-  motivoRecusa?: string;
+  motivoRecusa?: string; /** Usado apenas quando status === 'recusada' */
+  motivoCancelamento?: string;
 }
 
 // Textos padrão exibidos em cada estado da reserva
@@ -34,9 +34,16 @@ const CONTEUDO_POR_STATUS: Record<
   },
 };
 
-export default function PainelStatusReserva({ status, motivoRecusa }: PainelStatusReservaProps) {
+export default function PainelStatusReserva({ status, motivoRecusa, motivoCancelamento }: PainelStatusReservaProps) {
   const conteudo = CONTEUDO_POR_STATUS[status];
-  const mensagem = status === 'recusada' && motivoRecusa ? motivoRecusa : conteudo.mensagem;
+
+  // Lógica para definir a mensagem dinamicamente com base no status e motivos fornecidos
+  let mensagem = conteudo.mensagem;
+  if (status === 'recusada' && motivoRecusa) {
+    mensagem = motivoRecusa;
+  } else if (status === 'cancelada' && motivoCancelamento) {
+    mensagem = motivoCancelamento;
+  }
 
   return (
     <div className={`${styles.painel} ${styles[status]}`}>

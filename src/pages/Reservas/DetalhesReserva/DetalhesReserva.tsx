@@ -14,7 +14,7 @@ interface DetalhesReservaProps {
 }
 
 export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
-  const { reservaSelecionada } = useReservaStore();
+  const { reservaSelecionada, atualizarReserva } = useReservaStore();
 
   // Sem reserva selecionada (ex: acesso direto à rota), volta para a listagem.
   useEffect(() => {
@@ -27,12 +27,14 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
     return null;
   }
 
-  const { status, motivoRecusa } = reservaSelecionada;
+  const { status, motivoRecusa, motivoCancelamento } = reservaSelecionada;
 
   const handleCancelarSolicitacao = () => {
-    // Integre aqui com a chamada de cancelamento da solicitação.
-    navigate('minhasReservas');
-  };
+    atualizarReserva(reservaSelecionada.id, {
+      status: 'cancelada',
+      motivoCancelamento: 'Esta reserva foi cancelada por você.',
+    });
+  }
 
   const handleVerLocacoes = () => {
     // Integre aqui com a tela de locações do usuário.
@@ -64,7 +66,11 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
 
         <ReservaResumoCard reserva={reservaSelecionada} />
 
-        <PainelStatusReserva status={status} motivoRecusa={motivoRecusa} />
+        <PainelStatusReserva
+          status={status}
+          motivoRecusa={motivoRecusa}
+          motivoCancelamento={motivoCancelamento}
+        />
 
         <AcoesReserva
           status={status}
