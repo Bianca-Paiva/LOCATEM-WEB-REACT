@@ -1,17 +1,17 @@
 /* ===================================================
-   ProdutoDetalhe.css — Layout responsivo da tela de produto
-   =================================================== */
+    ProdutoDetalhe.css — Layout responsivo da tela de produto
+    =================================================== */
 
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-.produto-detalhe-container {
+.produtoDetalheContainer {
   min-height: 100vh;
   background: #ffffff;
 }
 
-.produto-detalhe-main {
+.produtoDetalheMain {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -19,13 +19,13 @@
 }
 
 /* ─── LAYOUT GERAL: conteúdo + banner lateral ────── */
-.produto-layout-desktop {
+.produtoLayoutDesktop {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.produto-col-conteudo {
+.produtoColConteudo {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -34,46 +34,46 @@
 }
 
 /* Banner lateral alto: oculto no mobile, visível no desktop */
-.produto-col-banner {
+.produtoColBanner {
   display: none;
 }
 
 /* Banner mobile: visível abaixo do conteúdo em mobile */
-.produto-col-banner-mobile {
+.produtoColBannerMobile {
   width: 100%;
   padding: 0 16px;
 }
 
 /* ─── SEÇÃO HERO ─────────────────────────────────── */
-.produto-hero-section {
+.produtoHeroSection {
   background: #fff;
   border-bottom: 1px solid #f3f4f6;
   padding: 16px;
 }
 
-.produto-hero-inner {
+.produtoHeroSection {
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 100%;
 }
 
-.produto-col-imagem {
+.produtoColImagem {
   width: 100%;
 }
 
-.produto-col-info {
+.produtoColInfo {
   width: 100%;
 }
 
 /* ─── SEÇÃO PRODUTOS SEMELHANTES ─────────────────── */
-.produto-section-padded {
+.produtoSectionPadded {
   padding: 0 16px;
   width: 100%;
 }
 
 /* ─── GRID INFERIOR ──────────────────────────────── */
-.produto-grid-inferior {
+.produtoGridInferior {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -82,18 +82,18 @@
 }
 
 /* ─── DESC + VENDEDOR ROW ────────────────────────── */
-.produto-desc-vendedor-row {
+.produtoDescVendedorRow {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.produto-desc-col {
+.produtoDescCol {
   flex: 1;
   min-width: 0;
 }
 
-.produto-vendedor-col {
+.produtoVendedorCol {
   width: 100%;
 }
 
@@ -101,40 +101,41 @@
 /* TABLET: 768px+                                      */
 /* ─────────────────────────────────────────────────── */
 @media (min-width: 768px) {
-  .produto-hero-section {
+  .produtoHeroSection {
     padding: 24px;
   }
 
-  .produto-hero-inner {
+  .produtoHeroInner {
+    display: flex;
     flex-direction: row;
     align-items: flex-start;
     gap: 28px;
   }
 
-  .produto-col-imagem {
+  .produtoColImagem {
     flex: 0 0 340px;
     max-width: 340px;
   }
 
-  .produto-col-info {
+  .produtoColInfo {
     flex: 1;
     min-width: 0;
   }
 
-  .produto-section-padded {
+  .produtoSectionPadded {
     padding: 0 24px;
   }
 
-  .produto-grid-inferior {
+  .produtoGridInferior {
     padding: 0 24px;
   }
 
-  .produto-desc-vendedor-row {
+  .produtoDescVendedorRow {
     flex-direction: row;
     align-items: flex-start;
   }
 
-  .produto-vendedor-col {
+  .produtoVendedorCol {
     flex: 0 0 260px;
     max-width: 260px;
   }
@@ -146,7 +147,7 @@
 @media (min-width: 1024px) {
 
   /* Wrapper geral vira row: conteúdo (esquerda) + banner alto (direita) */
-  .produto-layout-desktop {
+  .produtoLayoutDesktop {
     flex-direction: row;
     align-items: flex-start;
     gap: 24px;
@@ -155,42 +156,44 @@
     padding: 0 32px;
   }
 
-  .produto-col-conteudo {
+  .produtoColConteudo {
     flex: 1;
     min-width: 0;
   }
 
   /* Seções internas perdem padding/max-width próprios — 
      o wrapper externo já cuida do espaçamento horizontal */
-  .produto-hero-section {
+  .produtoHeroSection {
     padding: 28px 0 0;
     border-bottom: none;
   }
 
-  .produto-hero-inner {
+  .produtoHeroInner {
+    flex-direction: row;
+    align-items: flex-start;
     gap: 32px;
   }
 
-  .produto-col-imagem {
+  .produtoColImagem {
     flex: 0 0 380px;
     max-width: 380px;
   }
 
-  .produto-col-info {
+  .produtoColInfo {
     flex: 1;
     min-width: 0;
   }
 
-  .produto-section-padded {
+  .produtoSectionPadded {
     padding: 0;
   }
 
-  .produto-grid-inferior {
+  .produtoGridInferior {
     padding: 0;
   }
 
   /* Banner lateral alto: ocupa a altura inteira da coluna de conteúdo */
-  .produto-col-banner {
+  .produtoColBanner {
     display: block;
     flex: 0 0 280px;
     max-width: 280px;
@@ -198,7 +201,7 @@
   }
 
   /* Esconde o banner inline mobile */
-  .produto-col-banner-mobile {
+  .produtoColBannerMobile {
     display: none;
   }
 }
@@ -207,12 +210,12 @@
 /* WIDESCREEN: 1280px+                                 */
 /* ─────────────────────────────────────────────────── */
 @media (min-width: 1280px) {
-  .produto-col-imagem {
+  .produtoColImagem {
     flex: 0 0 420px;
     max-width: 420px;
   }
 
-  .produto-col-banner {
+  .produtoColBanner {
     flex: 0 0 300px;
     max-width: 300px;
   }

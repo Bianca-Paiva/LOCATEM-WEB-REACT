@@ -11,7 +11,8 @@ export type Route =
   | "informeNovaSenha"
   | "notificacoes"
   | "avaliacao"
-  | "minhasReservas";
+  | "minhasReservas"
+  | "detalhesReserva";
 
 function getRouteFromHash(): Route {
   const hash = window.location.hash.replace("#", "").split("?")[0];
@@ -27,6 +28,7 @@ function getRouteFromHash(): Route {
   if (hash === "produtoDetalhe") return "produtoDetalhe";
   if (hash === "avaliacao") return "avaliacao";
   if (hash === "minhasReservas") return "minhasReservas";
+  if (hash === "detalhesReserva") return "detalhesReserva";
 
   return "home";
 }

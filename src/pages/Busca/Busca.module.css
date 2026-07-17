@@ -1,12 +1,12 @@
-/* ==========================================================================
-   ESTILOS BASE / MOBILE (Até 767px)
-   ========================================================================== */
+/* =============================================================
+    ESTILOS BASE / MOBILE (Até 767px
+============================================================= */
 
-.busca-layout {
+.buscaLayout {
   width: 100%;
   max-width: 100%; 
   margin: 16px auto;
-  padding: 0 8px; /* CORREÇÃO: Reduzido de 16px para 8px. Dá muito mais espaço lateral aos cards */
+  padding: 0 8px; 
   display: flex;
   flex-direction: column; 
   gap: 20px;
@@ -14,14 +14,14 @@
   overflow-x: hidden;
 }
 
-.busca-content-main {
+.buscaContentMain {
   width: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-.busca-controls-container {
+.buscaControlsContainer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,7 +31,7 @@
   box-sizing: border-box;
 }
 
-.order-button-container {
+.orderButtonContainer {
   display: flex;
   align-items: center;
   
@@ -39,14 +39,14 @@
   min-width: 0; 
 }
 
-.order-button-container > * {
+.orderButtonContainer > * {
   width: 100%;
   max-width: 100%;
   
 }
 
 /* BOTÃO FILTRAR */
-.mobile-filter-trigger-btn {
+.mobileFilterTriggerBtn {
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -65,21 +65,21 @@
 }
 
 /* O SEGREDO DO GRID */
-.products-grid {
+.productsGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr)); 
-  gap: 8px; /* CORREÇÃO: Reduzido de 12px para 8px no mobile, os cards ficam mais largos */
+  gap: 8px; 
   width: 100%;
   box-sizing: border-box;
 }
 
-.products-grid > * {
+.productsGrid > * {
   width: 100% !important;
   min-width: 0 !important; 
   box-sizing: border-box;
 }
 
-.no-products-message {
+.noProductsMessage {
   grid-column: 1 / -1;
   text-align: center;
   font-size: 14px;
@@ -92,19 +92,19 @@
    ========================================================================== */
 
 @media (min-width: 768px) {
-  .busca-layout {
+  .buscaLayout {
     padding: 0 16px; /* Ajustado de 24px para manter cards largos no tablet */
     margin: 20px auto;
     gap: 24px;
   }
 
-  .busca-controls-container {
+  .buscaControlsContainer {
     margin-top: 18px;
     margin-bottom: 18px;
     gap: 16px;
   }
 
-  .products-grid {
+  .productsGrid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 12px; /* Ajustado de 16px */
   }

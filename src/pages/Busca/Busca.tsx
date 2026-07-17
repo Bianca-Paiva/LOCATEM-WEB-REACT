@@ -7,163 +7,12 @@ import { useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';
 import { SideBarBusca } from '../../components/Busca/SideBarBusca/SideBarBusca';
 import Paginacao from '../../components/Busca/Paginacao/Paginacao';
-import './Busca.css';
-
-const MOCK_PRODUCTS = [
-  {
-    id: 1,
-    title: 'Furadeira Parafusadeira Impacto 1/2',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '45,00',
-    image: 'src/assets/Furadeira1.webp',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.5,
-    reviewCount: 124,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true,
-  },
-  {
-    id: 2,
-    title: 'Pistola de Pintura Profissional',
-    brand: 'Black & Decker',
-    category: 'Ferramentas Elétricas',
-    price: '30,00',
-    image: 'src/assets/pistolaPintura.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.2,
-    reviewCount: 87,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true,
-  },
-  {
-    id: 3,
-    title: 'Chave de Fenda Hidráulica Manual',
-    brand: 'Makita',
-    category: 'Ferramentas Manuais',
-    price: '15,00',
-    image: 'src/assets/Furadeira3.webp',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 3.7,
-    reviewCount: 201,
-    paymentMethods: ['Pix'],
-    available: false,
-  },
-  {
-    id: 4,
-    title: 'Aparador De Grama Bipartido',
-    brand: 'DeWalt',
-    category: 'Equipamentos de Jardinagem',
-    price: '85,00',
-    image: 'src/assets/aparadorGrama.webp',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.1,
-    reviewCount: 45,
-    paymentMethods: ['Cartão de Crédito'],
-    available: true,
-  },
-  {
-    id: 5,
-    title: 'Serra Tico-Tico de Bancada',
-    brand: 'Bosch',
-    category: 'Ferramentas Elétricas',
-    price: '50,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.4,
-    reviewCount: 76,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true,
-  },
-  {
-    id: 6,
-    title: 'Kit Chaves Combinadas Premium',
-    brand: 'DeWalt',
-    category: 'Ferramentas Manuais',
-    price: '25,00',
-    image: 'src/assets/aparadorGrama.webp',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.6,
-    reviewCount: 153,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: false,
-  },
-  {
-    id: 7,
-    title: 'Cortador de Grama Dirigível',
-    brand: 'Black & Decker',
-    category: 'Equipamentos de Jardinagem',
-    price: '210,00',
-    image: 'src/assets/parafusadeira-wap.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 2.9,
-    reviewCount: 27,
-    paymentMethods: ['Cartão de Crédito'],
-    available: true,
-  },
-  {
-    id: 8,
-    title: 'Parafusadeira Furadeira de Impacto Hanabi',
-    brand: 'Makita',
-    category: 'Ferramentas Elétricas',
-    price: '28,00',
-    image: 'src/assets/Furadeira3.webp',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.7,
-    reviewCount: 201,
-    paymentMethods: ['Pix'],
-    available: true,
-  },
-  {
-    id: 9,
-    title: 'Parafusadeira e Furadeira WAP 12V',
-    brand: 'WAP',
-    category: 'Ferramentas Elétricas',
-    price: '18,00',
-    image: 'src/assets/Furadeira4.webp',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.3,
-    reviewCount: 62,
-    paymentMethods: ['Cartão de Crédito', 'Pix'],
-    available: true,
-  },
-  {
-    id: 10,
-    title: 'Parafusadeira e Furadeira WAP BPF 12V',
-    brand: 'WAP',
-    category: 'Ferramentas Elétricas',
-    price: '18,00',
-    image: 'src/assets/parafusadeira-furadeira-WAP.webp',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.0,
-    reviewCount: 38,
-    paymentMethods: ['Cartão de Crédito'],
-    available: true,
-  },
-];
+import { produtosBuscaMock } from './busca.mock';
+import type { ProdutoBusca, FilterState } from './Busca.types';
+import styles from './Busca.module.css';
 
 interface BuscaProps {
   navigate: (route: Route) => void;
-}
-
-export interface FilterState {
-  categories: string[];
-  brands: string[];
-  brandSearch: string;
-  priceRanges: string[];
-  paymentMethods: string[];
-  availability: string | null;
-  minRating: number | null;
 }
 
 export default function Busca({ navigate }: BuscaProps) {
@@ -192,22 +41,26 @@ export default function Busca({ navigate }: BuscaProps) {
     { value: 'novidades', label: 'Novidades' },
   ];
 
-  const handleCardClick = (product: typeof MOCK_PRODUCTS[0]) => {
+  const handleCardClick = (product: ProdutoBusca) => {
     setProdutoSelecionado({
       id: product.id,
       title: product.title,
       brand: product.brand,
       price: product.price,
-      image: product.image,
+      images: product.images,
       imageVerificado: product.imageVerificado,
       imageNota: product.imageNota,
       rating: product.rating,
       reviewCount: product.reviewCount,
+      locador: product.locador,
+      localizacao: product.localizacao,
+      categoria: product.category,
+      estoqueDisponivel: product.estoqueDisponivel,
     });
     navigate('produtoDetalhe');
   };
 
-  const filteredProducts = MOCK_PRODUCTS.filter((product) => {
+  const filteredProducts = produtosBuscaMock.filter((product) => {
     const productPrice = parseFloat(product.price.replace(',', '.'));
 
     if (activeFilters.categories.length > 0 && !activeFilters.categories.includes(product.category)) return false;
@@ -255,17 +108,17 @@ export default function Busca({ navigate }: BuscaProps) {
   const currentProducts = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <div className="busca-container">
+    <div className={styles.buscaContainer}>
       <Header navigate={navigate} currentRoute="busca" />
 
-      <main className="busca-main">
-        <div className="busca-layout">
+      <main className={styles.buscaMain}>
+        <div className={styles.buscaLayout}>
 
-          <div className="busca-content-main">
+          <div className={styles.buscaContentMain}>
             <Banner />
 
-            <div className="busca-controls-container">
-              <div className="order-button-container">
+            <div className={styles.buscaControlsContainer}>
+              <div className={styles.orderButtonContainer}>
                 <ButtonOrder
                   value={sortOrder}
                   onChange={(val) => {
@@ -277,14 +130,14 @@ export default function Busca({ navigate }: BuscaProps) {
               </div>
 
               <button
-                className="mobile-filter-trigger-btn"
+                className={styles.mobileFilterTriggerBtn}
                 onClick={() => setIsFilterMobileOpen(true)}
               >
                 <span>Filtrar</span>
               </button>
             </div>
 
-            <div className="products-grid">
+            <div className={styles.productsGrid}>
               {currentProducts.length > 0 ? (
                 currentProducts.map((product) => (
                   <ProductCard
@@ -292,7 +145,7 @@ export default function Busca({ navigate }: BuscaProps) {
                     title={product.title}
                     brand={product.brand}
                     price={product.price}
-                    image={product.image}
+                    images={product.images}
                     imageVerificado={product.imageVerificado}
                     imageNota={product.imageNota}
                     rating={product.rating}
@@ -301,7 +154,7 @@ export default function Busca({ navigate }: BuscaProps) {
                   />
                 ))
               ) : (
-                <p className="no-products-message">Nenhum produto encontrado com os filtros selecionados.</p>
+                <p className={styles.noProductsMessage}>Nenhum produto encontrado com os filtros selecionados.</p>
               )}
             </div>
 

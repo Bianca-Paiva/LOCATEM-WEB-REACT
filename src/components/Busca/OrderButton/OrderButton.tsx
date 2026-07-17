@@ -1,4 +1,4 @@
-import './OrderButton.css';
+import './OrderButton.module.css';
 
 interface Option {
   value: string;

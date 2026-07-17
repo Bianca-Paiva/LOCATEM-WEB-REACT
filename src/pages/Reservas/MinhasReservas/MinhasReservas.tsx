@@ -1,11 +1,13 @@
-import Header from '../../components/Header/Header';
-import ReservaAbas from '../../components/MinhasReservas/ReservaAbas/ReservaAbas';
-import ReservaCard from '../../components/MinhasReservas/ReservaCard/ReservaCard';
-import EstadoVazio from '../../components/MinhasReservas/EstadoVazio/EstadoVazio';
-import { useMinhasReservas } from '../../hooks/MinhasReservas/useMinhasReservas';
+import Header from '../../../components/Header/Header';
+import ReservaAbas from '../../../components/MinhasReservas/ReservaAbas/ReservaAbas';
+import ReservaCard from '../../../components/MinhasReservas/ReservaCard/ReservaCard';
+import EstadoVazio from '../../../components/MinhasReservas/EstadoVazio/EstadoVazio';
+import { useMinhasReservas } from '../../../hooks/Reservas/useMinhasReservas';
+import { useReservaStore } from '../../../hooks/Reservas/useReservaStore';
 import styles from './MinhasReservas.module.css';
 
-import type { Route } from '../../router/useRouter';
+
+import type { Route } from '../../../router/useRouter';
 import type { FiltroReserva } from './MinhasReservas.types';
 
 interface MinhasReservasProps {
@@ -39,10 +41,16 @@ const ESTADO_VAZIO_TEXTO: Record<FiltroReserva, { titulo: string; descricao: str
 export default function MinhasReservas({ navigate }: MinhasReservasProps) {
   const { reservasFiltradas, filtro, setFiltro, contagem } = useMinhasReservas();
 
+  const { setReservaSelecionada } = useReservaStore();
+
   const handleVerDetalhes = (id: string) => {
-    // Integre aqui com a tela de detalhes da reserva.
-    console.log('Ver detalhes da reserva', id);
-  };
+    const reservaClicada = reservasFiltradas.find((reserva) => reserva.id === id);
+
+    if (reservaClicada) {
+      setReservaSelecionada(reservaClicada);
+      navigate('detalhesReserva');
+    };
+  }
 
   const estadoVazio = ESTADO_VAZIO_TEXTO[filtro];
 

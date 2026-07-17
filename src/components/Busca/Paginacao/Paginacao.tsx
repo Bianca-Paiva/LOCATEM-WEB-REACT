@@ -1,6 +1,6 @@
 // src/components/Pagination/Pagination.tsx
 import React from 'react';
-import './Paginacao.css';
+import './Paginacao.module.css';
 
 // 1. Definimos a tipagem das propriedades que o componente vai receber
 interface PaginacaoProps {

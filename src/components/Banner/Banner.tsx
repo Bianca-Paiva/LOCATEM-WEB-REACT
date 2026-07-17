@@ -4,7 +4,7 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import './Banner.css';
+import styles from './Banner.module.css';
 
 interface BannerData {
   id: number;
@@ -38,32 +38,31 @@ const BANNERS_MOCK: BannerData[] = [
 
 export const Banner: React.FC = () => {
   return (
-    <div className="banner-container">
+    <div className={styles.bannerContainer}>
       <Swiper
-        
-        pagination={{ 
-          el: '.banner-custom-pagination', 
-          clickable: true 
-        }} 
+        pagination={{
+          el: `.${styles.bannerCustomPagination}`,
+          clickable: true
+        }}
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={0}        // Sem espaço entre os slides para o efeito de transição ficar limpo
         slidesPerView={1}       // Mostra apenas 1 banner por vez
         navigation={false}      // Desativa as setas laterais
         autoplay={{ delay: 4000, disableOnInteraction: false }} // Passa sozinho a cada 4 segundos
-                     // Quando chegar no último, volta para o primeiro infinitamente
-        className="banner-swiper"
+        // Quando chegar no último, volta para o primeiro infinitamente
+        className={styles.bannerSwiper}
       >
         {BANNERS_MOCK.map((banner) => (
           <SwiperSlide key={banner.id}>
-            <div className="banner-slide">
-              <img src={banner.image} alt={banner.altText} className="banner-image" />
+            <div className={styles.bannerSlide}>
+              <img src={banner.image} alt={banner.altText} className={styles.bannerImage} />
             </div>
           </SwiperSlide>
         ))}
       </Swiper>
 
-      {/* ELEMENTO NOVO: Onde as bolinhas vão se renderizar, fora do Swiper */}
-      <div className="banner-custom-pagination"></div>
+      {/* Onde as bolinhas vão se renderizar, fora do Swiper */}
+      <div className={styles.bannerCustomPagination}></div>
     </div>
   );
 };

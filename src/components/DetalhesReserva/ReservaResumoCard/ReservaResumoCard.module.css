@@ -1,0 +1,213 @@
+.card {
+  width: 100%;
+  background: var(--color-bg-card);
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  padding: 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cabecalhoProduto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.miniatura {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: white;
+}
+
+.infoProduto {
+  flex: 1 1 200px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: #141D23;
+  line-height: 1.35;
+}
+
+.categoria {
+  margin: 0;
+  font-size: 13px;
+  color: #5D5E61;
+}
+
+.locador {
+  margin: 6px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #4E4634;
+}
+
+.locador span {
+  color: #141D23;
+  font-weight: 600;
+}
+
+.linhaAvaliacaoLocalizacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.avaliacao,
+.localizacao {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.avaliacao {
+  color: #141D23;
+  font-weight: 600;
+}
+
+.localizacao {
+  color: #4E4634;
+  font-weight: 500;
+}
+
+.numeroAvaliacoes {
+  color: #4E4634;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.separador {
+  color: #807662;
+}
+
+.iconePequeno {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.iconePequenoStar {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.periodoBloco {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 16px;
+}
+
+.periodoRotulo {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.periodoCaixa {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-bg-main);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.iconeCalendario {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.periodoTexto p {
+  margin: 0;
+  font-size: 13px;
+  color: #141D23;
+}
+
+.periodoTexto strong {
+  font-weight: 600;
+}
+
+.ate {
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.rodape {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.rodapeAlinhadoDireita {
+  text-align: right;
+}
+
+.rodapeRotulo {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.rodapeValor {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4E4634;
+}
+
+.rodapeValorDestaque {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: #141D23;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .titulo {
+    font-size: 18px;
+  }
+}

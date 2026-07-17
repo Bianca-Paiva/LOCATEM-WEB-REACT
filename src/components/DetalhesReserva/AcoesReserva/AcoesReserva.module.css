@@ -1,0 +1,57 @@
+.grupoBotoes {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+  width: 100%;
+}
+
+.botaoPrimario,
+.botaoSecundario,
+.botaoPerigo {
+  width: 100%;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform 0.1s ease;
+  box-sizing: border-box;
+}
+
+.botaoPrimario:active,
+.botaoSecundario:active,
+.botaoPerigo:active {
+  transform: scale(0.99);
+}
+
+.botaoPrimario {
+  border: none;
+  background: var(--color-primary);
+  color: #0A0A0A;
+}
+
+.botaoPrimario:hover {
+  background: var(--color-primary-hover);
+}
+
+.botaoSecundario {
+  border: 1px solid #eadfb0;
+  background: #F5E3B3;
+  color: #6E5000;
+}
+
+.botaoPerigo {
+  border: 1px solid #f3b8b8;
+  background: #ffffff;
+  color: #cc3333;
+}
+
+.botaoPerigo:hover {
+  background: #fdf1f1;
+}
+
+@media (min-width: 640px) {
+  .grupoBotoes {
+    flex-direction: row;
+  }
+}

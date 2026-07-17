@@ -1,4 +1,4 @@
-import type { FiltroReserva } from '../../../pages/MinhasReservas/MinhasReservas.types';
+import type { FiltroReserva } from '../../../pages/Reservas/MinhasReservas/MinhasReservas.types';
 import styles from './ReservaAbas.module.css';
 
 interface ReservaTabsProps {

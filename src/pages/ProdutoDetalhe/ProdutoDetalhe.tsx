@@ -10,117 +10,17 @@ import { BannerLateral } from '../../components/ProdutoDetalhe/BannerLateral/Ban
 import { useProdutoStore } from '../../hooks/useProdutoStore';
 import type { ProdutoSelecionado } from '../../context/ProdutoContext';
 import type { Route } from '../../router/useRouter';
-import './ProdutoDetalhe.css';
+import {
+  FALLBACK_PRODUTO,
+  MOCK_SEMELHANTES,
+  MOCK_ESPECIFICACOES,
+  MOCK_AVALIACOES
+} from './ProdutoDetalhe.mock';
+import styles from './ProdutoDetalhe.module.css';
 
 interface ProdutoDetalheProps {
   navigate: (route: Route) => void;
 }
-
-// ── Dados estáticos de fallback (exibidos quando não há produto no store) ──────
-const FALLBACK_PRODUTO = {
-  title: 'Furadeira Parafusadeira Sem Fio A Bateria Tb-12e 12v 3/8 10mm Com Maleta E Acessórios The Black Tools',
-  brand: 'JB Ferramentas',
-  price: '15',
-  rating: 4.8,
-  reviewCount: 100,
-  image: 'src/assets/ProdutosImg/FuradeiraTheBlackTools.png',
-  imageVerificado: 'src/assets/verificadoAzul.png',
-  imageNota: 'src/assets/StarFullYellow.png',
-};
-
-const MOCK_SEMELHANTES = [
-  {
-    id: 10,
-    title: 'Aparador De Grama Bipartido Tramontina',
-    brand: 'JB Ferramentas',
-    price: '18,00',
-    image: 'src/assets/ProdutosImg/aparadorGrama.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.6,
-    reviewCount: 28,
-  },
-  {
-    id: 11,
-    title: 'Pistola de Pintura Profissional',
-    brand: 'WZ Ferramentas',
-    price: '30,00',
-    image: 'src/assets/ProdutosImg/pistolaPintura.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.2,
-    reviewCount: 87,
-  },
-  {
-    id: 12,
-    title: 'Parafusadeira Furadeira de Impacto Hanabi',
-    brand: 'João Ferramentas',
-    price: '28,00',
-    image: 'src/assets/ProdutosImg/FuradeiraHanabi.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.7,
-    reviewCount: 201,
-  },
-  {
-    id: 13,
-    title: 'Serra Circular Profissional DESOON 24 Dentes',
-    brand: 'JB Ferramentas',
-    price: '18,00',
-    image: 'src/assets/ProdutosImg/serraCircularProfissional.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.4,
-    reviewCount: 76,
-  },
-  {
-    id: 14,
-    title: 'Parafusadeira e Furadeira WAP 12V',
-    brand: 'JB Ferramentas',
-    price: '18,00',
-    image: 'src/assets/ProdutosImg/FuradeiraWapCinza.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.3,
-    reviewCount: 62,
-  },
-];
-
-const MOCK_ESPECIFICACOES = [
-  { label: 'Potência de saída', valor: 'Bateria de Íon-lítio de 18V máx' },
-  { label: 'Torque máximo', valor: '65 Nm' },
-  { label: 'Tamanho do mandril', valor: '13mm Sem chave' },
-  { label: 'Acessórios incluídos', valor: '2 baterias, carregador, estojo rígido, conjunto de 10 bits' },
-];
-
-const MOCK_AVALIACOES = [
-  {
-    nome: 'João Silva',
-    rating: 5,
-    tempo: 'Há 2 dias',
-    texto: 'Furadeira muito boa, usei pra montar um guarda-roupa inteiro. Super potente e a bateria durou o projeto todo.',
-    fotos: ['src/assets/ProdutosImg/FuradeiraTheBlackTools.png', 'src/assets/ProdutosImg/FuradeiraTheBlackTools.png', 'src/assets/ProdutosImg/FuradeiraTheBlackTools.png'],
-    utilCount: 12,
-  },
-  {
-    nome: 'Maria Souza',
-    rating: 5,
-    tempo: 'Há 1 semana',
-    texto: 'O equipamento foi perfeito. O atendimento na entrega foi excelente também.',
-    fotos: [],
-    utilCount: 5,
-  },
-  {
-    nome: 'Pedro Ribeiro',
-    rating: 4,
-    tempo: 'Há 2 semanas',
-    texto: 'Máquina limpa e pronta para uso. Recomendo.',
-    fotos: [],
-    utilCount: 2,
-  },
-];
-
-// ── Component ──────────────────────────────────────────────────────────────────
 
 export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const { produtoSelecionado, setProdutoSelecionado } = useProdutoStore();
@@ -134,29 +34,38 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // "Locar" fica reservado para outro fluxo (a definir); por ora não navega para nada.
+  const handleAlugar = () => { };
+
+  // Ao clicar em "Reservar": garante que o produto está salvo no store e navega para a Solicitação de Reserva
+  const handleReservar = () => {
+    setProdutoSelecionado(produto);
+    // navigate('solicitarReserva');
+  };
+
   return (
-    <div className="produto-detalhe-container">
+    <div className={styles.produtoDetalheContainer}>
       <Header navigate={navigate} currentRoute="home" />
 
-      <main className="produto-detalhe-main">
+      <main className={styles.produtoDetalheMain}>
 
         {/* ── LAYOUT: conteúdo (esquerda) + banner alto (direita, desktop) ── */}
-        <div className="produto-layout-desktop">
+        <div className={styles.produtoLayoutDesktop}>
 
-          <div className="produto-col-conteudo">
+          <div className={styles.produtoColConteudo}>
 
             {/* ── SEÇÃO HERO ── */}
-            <section className="produto-hero-section">
-              <div className="produto-hero-inner">
+            <section className={styles.produtoHeroSection}>
+              <div className={styles.produtoHeroInner}>
 
-                <div className="produto-col-imagem">
+                <div className={styles.produtoColImagem}>
                   <ImagemCarrossel
-                    images={[produto.image, produto.image, produto.image]}
+                    images={produto.images}
                     title={produto.title}
                   />
                 </div>
 
-                <div className="produto-col-info">
+                <div className={styles.produtoColInfo}>
                   <ProdutoInfo
                     title={produto.title}
                     price={produto.price}
@@ -165,6 +74,9 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     brand={produto.brand}
                     imageVerificado={produto.imageVerificado}
                     imageNota={produto.imageNota}
+                    estoqueDisponivel={produto.estoqueDisponivel} // <-- Passando o estoque disponível
+                    onAlugar={handleAlugar}                       // <-- Conectando a ação de alugar
+                    onReservar={handleReservar}                   // <-- Conectando a ação de reservar
                   />
                 </div>
 
@@ -172,25 +84,25 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
             </section>
 
             {/* ── PRODUTOS SEMELHANTES ── */}
-            <section className="produto-section-padded">
+            <section className={styles.produtoSectionPadded}>
               <ProdutosSemelhantes
                 produtos={MOCK_SEMELHANTES}
-                onCardClick={handleSemelhante}
+                onCardClick={(p) => handleSemelhante(p as unknown as ProdutoSelecionado)}
               />
             </section>
 
             {/* ── GRID INFERIOR ── */}
-            <div className="produto-grid-inferior">
+            <div className={styles.produtoGridInferior}>
 
-              <div className="produto-desc-vendedor-row">
-                <div className="produto-desc-col">
+              <div className={styles.produtoDescVendedorRow}>
+                <div className={styles.produtoDescCol}>
                   <Descricao
                     texto="Ideal para uso doméstico e profissional leve. Perfeita para montagem de móveis, instalações e pequenos reparos. Compacta, potente e fácil de manusear — resolve o problema sem complicação."
                   />
                 </div>
-                <div className="produto-vendedor-col">
+                <div className={styles.produtoVendedorCol}>
                   <InfoVendedor
-                    nome="JB Ferramentas"
+                    nome="MS Ferramentas"
                     rating={4.9}
                     reviewCount={200}
                     locacoes={500}
@@ -214,17 +126,11 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
           </div>
 
           {/* Banner lateral alto — visível só no desktop, sticky */}
-          <div className="produto-col-banner">
+          <div className={styles.produtoColBanner}>
             <BannerLateral />
           </div>
 
         </div>
-
-        {/* Banner inline — visível só no mobile, abaixo de todo o conteúdo */}
-        <div className="produto-col-banner-mobile">
-          <BannerLateral />
-        </div>
-
       </main>
     </div>
   );

@@ -1,18 +1,18 @@
-.categories-wrapper {
+.categoriesWrapper {
   width: 100%;
   max-width: 1428px;
   margin: var(--spacing-lg) auto 0;
   padding: 0 var(--spacing-md);
 }
 
-.section-title {
+.sectionTitle {
   font-size: 20px;
   font-weight: 700;
   color: var(--color-text-dark);
   margin-bottom: var(--spacing-md);
 }
 
-.categories-container {
+.categoriesContainer {
   display: flex;
   gap: 12px;
   width: 100%;
@@ -21,11 +21,11 @@
   padding-bottom: 4px;
 }
 
-.categories-container::-webkit-scrollbar {
+.categoriesContainer::-webkit-scrollbar {
   display: none; /* Esconde no Chrome/Safari */
 }
 
-.category-pill {
+.categoryPill {
   background-color: var(--color-bg-card);
   color: var(--color-text-dark);
   border: 1px solid #E5E7EB;
@@ -38,11 +38,11 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.category-pill:hover {
+.categoryPill:hover {
   background-color: var(--color-bg-input);
 }
 
-.category-pill.active {
+.categoryPill.active {
   background-color: var(--color-bg-card);
   border-color: var(--color-text-dark); /* Borda escura destaca o ativo no design */
   font-weight: 600;

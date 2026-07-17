@@ -1,4 +1,4 @@
-import type { StatusReserva } from '../../../pages/MinhasReservas/MinhasReservas.types';
+import type { StatusReserva } from '../../../pages/Reservas/MinhasReservas/MinhasReservas.types';
 import styles from './EtiquetaStatus.module.css';
 
 interface EtiquetaStatusProps {
@@ -16,7 +16,7 @@ const LABEL_BY_STATUS: Record<StatusReserva, string> = {
 export default function EtiquetaStatus({ status }: EtiquetaStatusProps) {
   return (
     <span className={`${styles.etiqueta} ${styles[status]}`}>
-        <span className={styles.ponto} aria-hidden="true" />
+      <span className={styles.ponto} aria-hidden="true" />
       {LABEL_BY_STATUS[status]}
     </span>
   );

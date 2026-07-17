@@ -8,11 +8,11 @@
   --color-bg-card: #FFFFFF;
   --spacing-md: 16px;
   --transition-fast: 0.15s;
-  --color-text-dark: #333;
+  --color-text-dark: #141D23;
   --color-text-muted: #666;
 }
 
-.product-card {
+.productCard {
   background: var(--color-bg-card);
   border-radius: 12px;
   padding: var(--spacing-md);
@@ -27,44 +27,58 @@
   /* reset quando usado como <button> */
   text-align: left;
   cursor: default;
-  font-family: inherit;
   width: 100%;
 }
 
 /* Variante clicável — aplicada quando onNavigate é passado */
-.product-card--clickable {
+.productCardClickable {
   cursor: pointer;
 }
 
-.product-card--clickable:hover {
+.productCardClickable:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0,0,0,0.10);
 }
 
-.product-card--clickable:active {
+.productCardClickable:active {
   transform: translateY(-1px);
 }
 
-.product-card:not(.product-card--clickable):hover {
+.productCard:not(.productCardClickable):hover {
   transform: translateY(-2px);
 }
 
-.product-image-container {
+.productImageContainer {
   width: 100%;
-  height: 160px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
 }
 
-.product-card-img {
+.productInnerSwiper {
+  width: 100%;
+  height: 100%;
+}
+
+/* O slide precisa ter 100% da altura exata do Swiper */
+.productInnerSwiper :global(.swiper-slide) {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.productCardImg {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  pointer-events: none;
 }
 
-.product-title {
+.productTitle {
   font-size: 14px;
   font-weight: 500;
   color: var(--color-text-dark);
@@ -79,105 +93,105 @@
   margin: 0;
 }
 
-.product-brand-row {
+.productBrandRow {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.product-brand {
+.productBrand {
   font-size: 11.8px;
   color: #000000;
   font-weight: 600;
 }
 
-.logo-Verificado {
+.logoVerificado {
   width: 14px;
   height: 14px;
   object-fit: contain;
 }
 
-.product-footer {
+.productFooter {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 4px;
 }
 
-.product-price-row {
+.productPriceRow {
   display: flex;
   align-items: baseline;
   gap: 2px;
 }
 
-.price-prefix {
-  font-size: 14px;
+.pricePrefix {
+  font-size: 17px;
   font-weight: 700;
   color: var(--color-text-dark);
 }
 
-.price-value {
-  font-size: 20px;
+.priceValue {
+  font-size: 18px;
   font-weight: 800;
   color: var(--color-text-dark);
 }
 
-.price-suffix {
+.priceSuffix {
   font-size: 12px;
   color: var(--color-text-muted);
   margin-left: 2px;
 }
 
-.estrela-avaliação {
+.estrelaAvaliacao {
   width: 17px;
   object-fit: contain;
   vertical-align: middle;
 }
 
-.product-rating {
+.productRating {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.rating-value {
-  font-size: 14px;
-  font-weight: 500;
+.ratingValue {
+  font-size: 13px;
+  font-weight: 700;
   color: var(--color-text-dark);
 }
 
-.rating-count {
+.ratingCount {
   font-size: 10px;
   color: #888;
 }
 
 /* --- Media Mobile: Abaixo de 768px --- */
 @media (max-width: 767px) {
-  .product-footer {
+  .productFooter {
     flex-direction: column;
     align-items: flex-start;
     gap: 6px;
   }
 
-  .product-price-row,
-  .product-rating {
+  .productPriceRow,
+  .productRating {
     width: 100%;
     margin: 0;
   }
 
-  .rating-count {
+  .ratingCount {
     display: none;
   }
 
-  .estrela-avaliação {
+  .estrelaAvaliacao {
     width: 14px;
   }
 
-  .rating-value {
+  .ratingValue {
     font-size: 12px;
   }
 
-  .price-value {
+  .priceValue {
     font-size: 16px;
   }
 }

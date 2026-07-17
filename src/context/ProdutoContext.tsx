@@ -5,11 +5,15 @@ export interface ProdutoSelecionado {
   title: string;
   brand: string;
   price: string;
-  image: string;
+  images: string[];
   imageVerificado: string;
   imageNota: string;
   rating: number;
   reviewCount: number;
+  locador: string; /** Nome do locador/anunciante do produto */
+  localizacao: string; /** Localização do locador, ex: "São Paulo - SP" */
+  categoria: string; /** Categoria da ferramenta, ex: "Elétrica • Parafusadeira/Furadeira" */
+  estoqueDisponivel: number; /** Quantidade máxima disponível para reserva */
 }
 
 interface ProdutoContextType {
