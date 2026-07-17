@@ -5,7 +5,7 @@ export interface ProdutoSelecionado {
   title: string;
   brand: string;
   price: string;
-  image: string;
+  images: string[];
   imageVerificado: string;
   imageNota: string;
   rating: number;

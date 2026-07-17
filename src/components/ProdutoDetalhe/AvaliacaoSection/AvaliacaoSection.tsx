@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './AvaliacaoSection.module.css';
 import IconLike from '../../../assets/IconLike.png';
+import IconLikePreenchido from '../../../assets/IconLikePreenchido.png';
 
 interface Avaliacao {
   nome: string;
@@ -37,15 +38,46 @@ function Estrelas({ rating, size = 14 }: { rating: number; size?: number }) {
   );
 }
 
+function getIniciais(nome: string) {
+  if (!nome) return '';
+
+  // Remove espaços extras no início/fim e divide o nome pelos espaços
+  const partes = nome.trim().split(/\s+/);
+
+  // Se tiver só um nome, continua pegando as duas primeiras letras como garantia
+  if (partes.length === 1) {
+    return partes[0].slice(0, 2).toUpperCase();
+  }
+
+  // Pega a 1ª letra do primeiro nome e a 1ª letra do último sobrenome
+  const primeiraLetra = partes[0][0];
+  const ultimaLetra = partes[partes.length - 1][0];
+
+  return (primeiraLetra + ultimaLetra).toUpperCase();
+}
+
+
 export function AvaliacaoSection({
   mediaGeral,
   totalAvaliacoes,
   distribuicao,
   avaliacoes,
-  imageNota,
 }: AvaliacaoSectionProps) {
   const [showAll, setShowAll] = useState(false);
+
+  // Estado para armazenar os índices das avaliações curtidas
+  const [curtidas, setCurtidas] = useState<number[]>([]);
+
   const visiveis = showAll ? avaliacoes : avaliacoes.slice(0, 3);
+
+  // Função para alternar o status de "curtido"
+  const toggleCurtida = (index: number) => {
+    setCurtidas(prev =>
+      prev.includes(index)
+        ? prev.filter(i => i !== index) // Remove o like se já estiver curtido
+        : [...prev, index] // Adiciona o like se não estiver
+    );
+  };
 
   return (
     <section className={styles.wrapper}>
@@ -80,45 +112,52 @@ export function AvaliacaoSection({
 
       {/* Lista de avaliações */}
       <div className={styles.listaAvaliacoes}>
-        {visiveis.map((av, i) => (
-          <div key={i} className={styles.avaliacaoItem}>
-            <div className={styles.avaliacaoHeader}>
-              <div className={styles.avatarCircle}>
-                {av.nome.slice(0, 2).toUpperCase()}
+        {visiveis.map((av, i) => {
+          const isCurtido = curtidas.includes(i); // Verifica se este item está curtido
+
+          return (
+            <div key={i} className={styles.avaliacaoItem}>
+              {/* ... (cabeçalho, estrelas, texto e fotos) */}
+              <div className={styles.avaliacaoHeader}>
+                <div className={styles.avatarCircle}>{getIniciais(av.nome)}</div>
+                <div className={styles.avaliacaoMeta}>
+                  <span className={styles.avaliacaoNome}>{av.nome}</span>
+                  <span className={styles.avaliacaoTempo}>{av.tempo}</span>
+                </div>
               </div>
-              <div className={styles.avaliacaoMeta}>
-                <span className={styles.avaliacaoNome}>{av.nome}</span>
-                <span className={styles.avaliacaoTempo}>{av.tempo}</span>
+
+              <Estrelas rating={av.rating} size={13} />
+              <p className={styles.avaliacaoTexto}>{av.texto}</p>
+
+              {av.fotos && av.fotos.length > 0 && (
+                <div className={styles.fotosRow}>
+                  {av.fotos.map((foto, fi) => (
+                    <img key={fi} src={foto} alt={`Foto ${fi + 1}`} className={styles.fotoThumb} />
+                  ))}
+                </div>
+              )}
+
+              <div className={styles.avaliacaoFooter}>
+                <button
+                  // Se isCurtido for true, adiciona a classe btnUtilAtivo. Se false, não adiciona nada.
+                  className={`${styles.btnUtil} ${isCurtido ? styles.btnUtilAtivo : ''}`}
+                  onClick={() => toggleCurtida(i)}
+                >
+                  <img
+                    src={isCurtido ? IconLikePreenchido : IconLike} // Troca o ícone
+                    alt="Like"
+                    className={styles.likeIcon}
+                  />
+                  Foi útil
+                </button>
+                <p className={styles.utilCount}>
+                  {/* Incrementa +1 se estiver curtido */}
+                  · {av.utilCount + (isCurtido ? 1 : 0)} pessoas acharam útil
+                </p>
               </div>
             </div>
-
-            <Estrelas rating={av.rating} size={13} />
-
-            <p className={styles.avaliacaoTexto}>{av.texto}</p>
-
-            {av.fotos && av.fotos.length > 0 && (
-              <div className={styles.fotosRow}>
-                {av.fotos.map((foto, fi) => (
-                  <img key={fi} src={foto} alt={`Foto ${fi + 1}`} className={styles.fotoThumb} />
-                ))}
-              </div>
-            )}
-
-            <div className={styles.avaliacaoFooter}>
-              <button className={styles.btnUtil}>
-                <img
-                  src={IconLike}
-                  alt="Like"
-                  className={styles.likeIcon}
-                />
-                Foi útil
-              </button>
-              <p className={styles.utilCount}>
-                · {av.utilCount} pessoas acharam útil
-              </p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {avaliacoes.length > 3 && (

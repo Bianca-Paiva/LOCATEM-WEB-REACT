@@ -61,7 +61,7 @@
 
   z-index: 1000;
 
-  
+
 
   /* Escondido por padrão na direita */
 
@@ -69,7 +69,7 @@
 
   transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 
-  
+
 
   /* Habilita rolagem caso os filtros passem do tamanho vertical da tela mobile */
 
@@ -182,7 +182,7 @@
   font-weight: bold;
 
   color: #000000;
-  
+
 
   margin-bottom: 8px;
 
@@ -311,7 +311,8 @@
 
   gap: 8px;
 
-  margin-top: auto; /* Força os botões ficarem fixados no rodapé do drawer mobile */
+  margin-top: auto;
+  /* Força os botões ficarem fixados no rodapé do drawer mobile */
 
   padding-top: 16px;
 

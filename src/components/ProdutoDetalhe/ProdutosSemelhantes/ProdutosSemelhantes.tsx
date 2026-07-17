@@ -7,7 +7,7 @@ interface ProdutoSemelhante {
   title: string;
   brand: string;
   price: string;
-  image: string;
+  images: string[];
   imageVerificado: string;
   imageNota: string;
   rating: number;
@@ -47,7 +47,7 @@ export function ProdutosSemelhantes({ produtos, onCardClick }: ProdutosSemelhant
                 title={p.title}
                 brand={p.brand}
                 price={p.price}
-                image={p.image}
+                images={p.images}
                 imageVerificado={p.imageVerificado}
                 imageNota={p.imageNota}
                 rating={p.rating}

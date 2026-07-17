@@ -1,101 +1,16 @@
+import styles from './Home.module.css';
+import type { Route } from '../../router/useRouter';
+import { useProdutoStore } from "../../hooks/useProdutoStore";
+
+// Components
 import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { useProdutoStore } from "../../hooks/useProdutoStore";
-import type { Route } from '../../router/useRouter';
-import './Home.css';
 
-const MOCK_PRODUCTS = [
-  {
-    id: 1,
-    title: 'Furadeira Parafusadeira The Black Tools',
-    brand: 'MS Ferramentas',
-    price: '15,00',
-    image: 'src/assets/ProdutosImg/FuradeiraTheBlackTools.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.5,
-    reviewCount: 124,
-  },
-  {
-    id: 2,
-    title: 'Pistola de Pintura The Black Tools',
-    brand: 'WZ Ferramentas',
-    price: '30,00',
-    image: 'src/assets/ProdutosImg/pistolaPintura.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.2,
-    reviewCount: 87,
-  },
-  {
-    id: 3,
-    title: 'Parafusadeira Furadeira de Impacto Hanabi',
-    brand: 'João Ferramentas',
-    price: '28,00',
-    image: 'src/assets/ProdutosImg/FuradeiraHanabi.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.7,
-    reviewCount: 201,
-  },
-  {
-    id: 4,
-    title: 'Aparador De Grama Bipartido Tramontina',
-    brand: 'JB Ferramentas',
-    price: '18,00',
-    image: 'src/assets/ProdutosImg/aparadorGrama.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.1,
-    reviewCount: 45,
-  },
-  {
-    id: 5,
-    title: 'Parafusadeira e Furadeira WAP 12V',
-    brand: 'JB Ferramentas',
-    price: '18,00',
-    image: 'src/assets/ProdutosImg/FuradeiraWapCinza.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.3,
-    reviewCount: 62,
-  },
-  {
-    id: 6,
-    title: 'Parafusadeira e Furadeira WAP BPF 12V',
-    brand: 'JB Ferramentas',
-    price: '18,00',
-    image: 'src/assets/ProdutosImg/FuradeiraWapCinza.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.0,
-    reviewCount: 38,
-  },
-  {
-    id: 7,
-    title: 'Serra circular profissional DESOON 24 Dentes',
-    brand: 'JB Ferramentas',
-    price: '18,00',
-    image: 'src/assets/ProdutosImg/serraCircularProfissional.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 4.6,
-    reviewCount: 153,
-  },
-  {
-    id: 8,
-    title: 'Parafusadeira e furadeira WAP 12V Cinza',
-    brand: 'JB Ferramentas',
-    price: '18,00',
-    image: 'src/assets/ProdutosImg/FuradeiraWapPreta.png',
-    imageVerificado: 'src/assets/verificadoAzul.png',
-    imageNota: 'src/assets/StarFullYellow.png',
-    rating: 3.9,
-    reviewCount: 27,
-  },
-];
+// Dados mockados
+import { MOCK_PRODUCTS } from './Home.mock';
+import type { ProdutoHome } from './Home.types';
 
 interface HomeProps {
   navigate: (route: Route) => void;
@@ -104,38 +19,42 @@ interface HomeProps {
 export default function Home({ navigate }: HomeProps) {
   const { setProdutoSelecionado } = useProdutoStore();
 
-  const handleCardClick = (product: typeof MOCK_PRODUCTS[0]) => {
+  const handleCardClick = (product: ProdutoHome) => {
     setProdutoSelecionado({
       id: product.id,
       title: product.title,
       brand: product.brand,
       price: product.price,
-      image: product.image,
+      images: product.images,
       imageVerificado: product.imageVerificado,
       imageNota: product.imageNota,
       rating: product.rating,
       reviewCount: product.reviewCount,
+      locador: 'Nome do Locador Exemplo',
+      localizacao: 'São Paulo - SP',
+      categoria: 'Categoria Genérica',
+      estoqueDisponivel: 1,
     });
-    
+
     navigate('produtoDetalhe');
   };
 
   return (
-    <div className="home-container">
+    <div className={styles.homeContainer}>
       <Header navigate={navigate} currentRoute="home" />
 
-      <main className="home-main">
+      <main className={styles.homeMain}>
         <Banner />
         <CategoryFilter />
 
-        <div className="products-grid">
+        <div className={styles.productsGrid}>
           {MOCK_PRODUCTS.map((product) => (
             <ProductCard
               key={product.id}
               title={product.title}
               brand={product.brand}
               price={product.price}
-              image={product.image}
+              images={product.images}
               imageVerificado={product.imageVerificado}
               imageNota={product.imageNota}
               rating={product.rating}
