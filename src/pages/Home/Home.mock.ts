@@ -11,8 +11,8 @@ export const MOCK_PRODUCTS: ProdutoHome[] = [
         price: '15,00',
         images: [
             'src/assets/ProdutosImg/FuradeiraTheBlackTools.png',
-            'src/assets/ProdutosImg/FuradeiraTheBlackTools2.png', // Foto 2 de exemplo
-            'src/assets/ProdutosImg/FuradeiraTheBlackTools3.png'  // Foto 3 de exemplo
+            'src/assets/ProdutosImg/FuradeiraTheBlackTools.png',
+            'src/assets/ProdutosImg/FuradeiraTheBlackTools.png'
         ],
         imageVerificado: 'src/assets/verificadoAzul.png',
         imageNota: 'src/assets/StarFullYellow.png',

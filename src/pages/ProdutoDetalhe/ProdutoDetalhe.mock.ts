@@ -13,7 +13,7 @@ export const FALLBACK_PRODUTO = {
     reviewCount: 3,
     images: [
         'src/assets/ProdutosImg/FuradeiraTheBlackTools.png',
-        'src/assets/ProdutosImg/FuradeiraTheBlackTools2.png',
+        'src/assets/ProdutosImg/FuradeiraTheBlackTools.png',
     ],
     imageVerificado: 'src/assets/verificadoAzul.png',
     imageNota: 'src/assets/StarFullYellow.png',
