@@ -8,6 +8,7 @@ interface ReservaContextType {
   reservaSelecionada: ReservaData | null;
   setReservaSelecionada: (reserva: ReservaData) => void;
   atualizarReserva: (id: string, dadosAtualizados: Partial<ReservaData>) => void;
+  adicionarReserva: (dadosReserva: Omit<ReservaData, 'id'>) => ReservaData;
 }
 
 export const ReservaContext = createContext<ReservaContextType | null>(null);
@@ -30,9 +31,21 @@ export function ReservaProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  // Cria uma nova reserva (fluxo de Solicitar Reserva) e a insere no topo da lista
+  const adicionarReserva = (dadosReserva: Omit<ReservaData, 'id'>): ReservaData => {
+    const novaReserva: ReservaData = {
+      ...dadosReserva,
+      id: `r-${Date.now()}`,
+    };
+
+    setReservas((atuais) => [novaReserva, ...atuais]);
+
+    return novaReserva;
+  };
+
   return (
     <ReservaContext.Provider
-      value={{ reservas, reservaSelecionada, setReservaSelecionada, atualizarReserva }}
+      value={{ reservas, reservaSelecionada, setReservaSelecionada, atualizarReserva, adicionarReserva }}
     >
       {children}
     </ReservaContext.Provider>

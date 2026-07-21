@@ -1,0 +1,107 @@
+.card {
+  width: 100%;
+  background: var(--color-bg-card);
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.titulo {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.linhaPeriodo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+
+.rotulo {
+  color: var(--color-text-muted);
+}
+
+.valor {
+  color: #141D23;
+  font-weight: 500;
+  text-align: right;
+}
+
+.linhaDestaque {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 0 8px;
+  border-top: 1.5px solid #ececec;
+}
+
+.rotuloDestaque {
+  font-size: 17px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.valorDestaque {
+  font-size: 20px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: #eaf2fe;
+  border: 1px solid #d6e6fc;
+  border-radius: 12px;
+}
+
+.avisoIcone {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #3d7ce0;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aviso p {
+  margin: 0;
+  font-size: 13px;
+  color: #2c4d80;
+  line-height: 1.45;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 24px;
+  }
+}

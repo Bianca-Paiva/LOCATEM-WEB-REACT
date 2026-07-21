@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import TempoDropdown from '../TempoDropdown/TempoDropdown';
+import SeletorQuantidade from '../../SolicitarReserva/SeletorQuantidade/SeletorQuantidade';
 import styles from './ProdutoInfo.module.css';
 
 interface ProdutoInfoProps {
@@ -84,37 +85,14 @@ export function ProdutoInfo({
 
         {/* Quantidade */}
         <div className={styles.opcaoGrupo}>
-          <p className={styles.opcaoLabel}>
-            Quantidade
-            <span className={styles.estoqueInline}>
-              ({estoqueDisponivel} disponíveis)
-            </span>
-          </p>
-
-          <div className={styles.quantidadeControle}>
-
-            {/* Desabilita o botão "-" se for 1 */}
-            <button
-              className={styles.btnQuantidade}
-              onClick={decrement}
-              disabled={quantidade <= 1}
-              aria-label="Diminuir">
-              −
-            </button>
-
-            <span className={styles.quantidadeValor}>{quantidade}</span>
-
-            {/* Desabilita o botão "+" se atingir o estoque disponível */}
-            <button
-              className={styles.btnQuantidade}
-              onClick={increment}
-              disabled={quantidade >= estoqueDisponivel}
-              aria-label="Aumentar">
-              +
-            </button>
-          </div>
-
+          <SeletorQuantidade
+            quantidade={quantidade}
+            estoqueDisponivel={estoqueDisponivel}
+            onDecrementar={decrement}
+            onIncrementar={increment}
+          />
         </div>
+        
       </div>
 
       {/* CTAs */}

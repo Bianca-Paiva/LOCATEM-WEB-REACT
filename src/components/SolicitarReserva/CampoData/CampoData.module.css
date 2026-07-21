@@ -1,0 +1,64 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.campoWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 48px;
+  padding: 0 40px 0 14px;
+  background: var(--color-bg-input);
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  color: #141D23;
+  font-size: 14px;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color var(--transition-fast);
+}
+
+.input:hover {
+  border-color: #d1d5db;
+}
+
+.input:focus-visible {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+/* Deixa o indicador nativo do Chrome/Edge invisível, mas clicável sobre todo o campo */
+.input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.icone {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 0.75;
+}

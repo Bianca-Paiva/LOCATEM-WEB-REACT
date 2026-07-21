@@ -8,6 +8,7 @@ import { InfoVendedor } from '../../components/ProdutoDetalhe/InfoVendedor/InfoV
 import { AvaliacaoSection } from '../../components/ProdutoDetalhe/AvaliacaoSection/AvaliacaoSection';
 import { BannerLateral } from '../../components/ProdutoDetalhe/BannerLateral/BannerLateral';
 import { useProdutoStore } from '../../hooks/useProdutoStore';
+import { getLocadorByNome } from '../../mocks/locadores.mock';
 import type { ProdutoSelecionado } from '../../context/ProdutoContext';
 import type { Route } from '../../router/useRouter';
 import {
@@ -34,13 +35,18 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Dados do locador vêm sempre do catálogo, buscados pelo nome salvo no produto.
+  // Isso garante que a mesma loja nunca apareça com números diferentes em páginas diferentes,
+  // e que a div produtoVendedorCol sempre reflita o locador do produto exibido no momento.
+  const locador = getLocadorByNome(produto.locador);
+
   // "Locar" fica reservado para outro fluxo (a definir); por ora não navega para nada.
   const handleAlugar = () => { };
 
   // Ao clicar em "Reservar": garante que o produto está salvo no store e navega para a Solicitação de Reserva
   const handleReservar = () => {
     setProdutoSelecionado(produto);
-    // navigate('solicitarReserva');
+    navigate('solicitarReserva');
   };
 
   return (
@@ -74,7 +80,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     brand={produto.brand}
                     imageVerificado={produto.imageVerificado}
                     imageNota={produto.imageNota}
-                    estoqueDisponivel={produto.estoqueDisponivel} // <-- Passando o estoque disponível
+                    estoqueDisponivel={produto.estoqueDisponivel} 
                     onAlugar={handleAlugar}                       // <-- Conectando a ação de alugar
                     onReservar={handleReservar}                   // <-- Conectando a ação de reservar
                   />
@@ -102,11 +108,11 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                 </div>
                 <div className={styles.produtoVendedorCol}>
                   <InfoVendedor
-                    nome="MS Ferramentas"
-                    rating={4.9}
-                    reviewCount={200}
-                    locacoes={500}
-                    verificado
+                    nome={locador.nome}
+                    rating={locador.rating}
+                    reviewCount={locador.reviewCount}
+                    locacoes={locador.locacoes}
+                    verificado={locador.verificado}
                     imageNota={produto.imageNota}
                   />
                 </div>

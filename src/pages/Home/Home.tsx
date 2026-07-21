@@ -10,6 +10,8 @@ import { ProductCard } from '../../components/ProductCard/ProductCard';
 
 // Dados mockados
 import { MOCK_PRODUCTS } from './Home.mock';
+import { PRODUTOS_MOCK } from '../../mocks/produtos.mock';
+import { toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import type { ProdutoHome } from './Home.types';
 
 interface HomeProps {
@@ -20,21 +22,15 @@ export default function Home({ navigate }: HomeProps) {
   const { setProdutoSelecionado } = useProdutoStore();
 
   const handleCardClick = (product: ProdutoHome) => {
-    setProdutoSelecionado({
-      id: product.id,
-      title: product.title,
-      brand: product.brand,
-      price: product.price,
-      images: product.images,
-      imageVerificado: product.imageVerificado,
-      imageNota: product.imageNota,
-      rating: product.rating,
-      reviewCount: product.reviewCount,
-      locador: 'Nome do Locador Exemplo',
-      localizacao: 'São Paulo - SP',
-      categoria: 'Categoria Genérica',
-      estoqueDisponivel: 1,
-    });
+    // O card da Home só carrega um recorte do produto (ProdutoHome).
+    // Buscamos o produto completo no catálogo central para levar pra frente
+    // os dados reais do locador (nome, localização, categoria, estoque),
+    // em vez de valores fixos/placeholder.
+    const produtoCompleto = PRODUTOS_MOCK.find((p) => p.id === product.id);
+
+    if (!produtoCompleto) return;
+
+    setProdutoSelecionado(toProdutoSelecionado(produtoCompleto));
 
     navigate('produtoDetalhe');
   };
