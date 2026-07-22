@@ -65,3 +65,9 @@
   font-weight: normal;
   margin-left: 4px;
 }
+
+.required {
+  color: #E11D48;
+  font-size: 14px;
+  line-height: 1;
+}

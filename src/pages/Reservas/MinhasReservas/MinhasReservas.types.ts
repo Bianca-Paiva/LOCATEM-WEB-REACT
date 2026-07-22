@@ -23,9 +23,20 @@ export interface ReservaData {
   dataFim: string;
   horaFim: string;
   quantidade: number;
-  valorEstimado: string; /** Valor já formatado, ex: "R$ 200,00" */
+  valor: string; /** Valor já formatado, ex: "R$ 200,00" */
   motivoRecusa?: string; /** Preenchido apenas quando status === 'recusada' */
   motivoCancelamento?: string; /** Preenchido quando a reserva for cancelada com um motivo específico */
+
+  // ── Endereço/contato informados na solicitação (Solicitar Reserva) ───────
+  frete?: string; /** Valor do frete já formatado, ex: "R$ 15,00" */
+  endereco?: {
+    cep: string;
+    ruaAvenida: string;
+    numero: string;
+    complemento: string;
+  };
+  nomeContato?: string;
+  telefoneContato?: string;
 }
 
 /** Configuração visual/textual de cada status (usado no badge e nas abas) */

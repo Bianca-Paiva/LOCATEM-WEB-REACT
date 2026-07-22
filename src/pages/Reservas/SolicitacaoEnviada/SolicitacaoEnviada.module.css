@@ -4,14 +4,19 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-light) 22%, #fff9e0 45%, #ffffff 70%);
+  background:
+    linear-gradient(180deg,
+      var(--color-primary) 0%,
+      var(--color-primary-light) 12%,
+      var(--color-primary-soft) 22%,
+      transparent 30%);
   box-sizing: border-box;
-  padding: 72px 16px;
 }
 
 .conteudo {
   width: 100%;
-  max-width: 420px;
+  max-width: 900px;
+  padding: 40px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,8 +24,8 @@
 }
 
 .iconeCirculo {
-  width: 88px;
-  height: 88px;
+  width: 92px;
+  height: 92px;
   border-radius: 50%;
   background: #eaf2fe;
   display: flex;
@@ -30,14 +35,14 @@
 }
 
 .icone {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
 }
 
 .titulo {
   margin: 0 0 12px;
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 800;
   color: var(--color-text-dark);
 }
@@ -65,11 +70,10 @@
 
 .avisoIcone {
   flex-shrink: 0;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #3d7ce0;
-  color: #ffffff;
+  width: 16px;
+  height: 16px;
+  border-radius: none;
+  color: #3d7ce0;
   font-size: 12px;
   font-weight: 700;
   font-style: italic;
@@ -86,15 +90,15 @@
 }
 
 .acoes {
-  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   gap: 12px;
+  width: 100%;
 }
 
 .botaoPrimario,
 .botaoSecundario {
-  width: 100%;
+  flex: 1;
   height: 52px;
   border-radius: 14px;
   font-size: 15px;

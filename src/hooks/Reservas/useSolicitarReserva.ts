@@ -4,6 +4,7 @@ import type {
     ResumoReservaCalculado,
     SolicitarReservaFormState,
 } from '../../pages/Reservas/SolicitarReserva/SolicitarReserva.types';
+import { validateCEP, validatePhone, validateFullName } from '../masks';
 
 const MESES_ABREVIADOS = [
     'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
@@ -47,13 +48,17 @@ function getHojeIso(): string {
     return `${ano}-${mes}-${dia}`;
 }
 
-// Converte o valor inicial (ex: "08:00") no intervalo de 3 horas (ex: "08:00 - 11:00")
+// Converte o valor inicial (ex: "08:00") no intervalo de 3 horas (ex: "08:00 às 11:00")
 function formatarIntervaloHorario(horario: string): string {
     if (!horario) return '';
     const horaInicio = parseInt(horario.split(':')[0], 10);
     const horaFim = String(horaInicio + 3).padStart(2, '0');
-    return `${horario} - ${horaFim}:00`;
+    return `${horario} às ${horaFim}:00`;
 }
+
+// Valor fixo de frete (mock). Futuramente deve vir de um cálculo real
+// (distância entre locador/locatário, transportadora, etc.) via API.
+const FRETE_PADRAO = 15;
 
 interface UseSolicitarReservaParams {
     produto: ProdutoSelecionado;
@@ -66,6 +71,13 @@ export function useSolicitarReserva({ produto }: UseSolicitarReservaParams) {
         dataDevolucao: '',
         horarioDevolucao: '',
         quantidade: 1,
+        cep: '',
+        cepDesconhecido: false,
+        ruaAvenida: '',
+        numero: '',
+        complemento: '',
+        nomeCompleto: '',
+        telefoneContato: '',
     });
 
     const precoDiaria = useMemo(() => {
@@ -77,12 +89,16 @@ export function useSolicitarReserva({ produto }: UseSolicitarReservaParams) {
         campo: K,
         valor: SolicitarReservaFormState[K],
     ) => {
-        setForm((atual) => ({ ...atual, [campo]: valor }));
+        setForm((atual) => ({
+            ...atual, [campo]: valor
+        }));
     };
 
     // Limite mínimo é 1 unidade
     const decrementarQuantidade = () =>
-        setForm((atual) => ({ ...atual, quantidade: Math.max(1, atual.quantidade - 1) }));
+        setForm((atual) => ({
+            ...atual, quantidade: Math.max(1, atual.quantidade - 1)
+        }));
 
     // O limite máximo de unidades é igual ao estoque disponível do locador
     const incrementarQuantidade = () =>
@@ -100,17 +116,33 @@ export function useSolicitarReserva({ produto }: UseSolicitarReservaParams) {
         const periodoValido = Boolean(inicio && fim && diasBrutos > 0);
         const diarias = periodoValido ? diasBrutos : 0;
 
-        const valorEstimado = diarias * precoDiaria * form.quantidade;
+        const frete = FRETE_PADRAO;
+        const aluguel = diarias * precoDiaria * form.quantidade;
+        const valor = diarias * precoDiaria * form.quantidade + frete;
 
-        // Só libera o envio quando todos os campos obrigatórios foram preenchidos
-        // e o período (data + horário de entrega/devolução) é válido
+        // Endereço só é considerado válido quando rua e número estão preenchidos
+        // e, caso o CEP não tenha sido marcado como "desconhecido", ele também é obrigatório
+        const enderecoValido = Boolean(
+            form.ruaAvenida &&
+            form.numero &&
+            (form.cepDesconhecido || validateCEP(form.cep)),
+        );
+
+        const contatoValido = Boolean(
+            validateFullName(form.nomeCompleto) && validatePhone(form.telefoneContato),
+        );
+
+        // Só libera o envio quando todos os campos obrigatórios foram preenchidos,
+        // o período (data + horário de entrega/devolução) é válido, e o endereço/contato também
         const formularioCompleto = Boolean(
             form.dataEntrega &&
             form.horarioEntrega &&
             form.dataDevolucao &&
             form.horarioDevolucao &&
             form.quantidade > 0 &&
-            periodoValido,
+            periodoValido &&
+            enderecoValido &&
+            contatoValido,
         );
 
         return {
@@ -125,10 +157,18 @@ export function useSolicitarReserva({ produto }: UseSolicitarReservaParams) {
                 : '—',
             quantidadeFormatada: `${form.quantidade} ${form.quantidade === 1 ? 'unidade' : 'unidades'}`,
             diarias,
-            valorEstimado,
-            valorEstimadoFormatado: formatarMoeda(valorEstimado),
+            frete,
+            freteFormatado: formatarMoeda(frete),
+            valor,
+            valorFormatado: formatarMoeda(valor),
             periodoValido,
             formularioCompleto,
+            dataEntregaFormatada: formatarDataBr(form.dataEntrega),
+            dataDevolucaoFormatada: formatarDataBr(form.dataDevolucao),
+            entregaHorarioFormatado: form.horarioEntrega ? formatarIntervaloHorario(form.horarioEntrega) : '',
+            devolucaoHorarioFormatado: form.horarioDevolucao ? formatarIntervaloHorario(form.horarioDevolucao) : '',
+            aluguel,
+            aluguelFormatado: formatarMoeda(aluguel),
         };
     }, [form, precoDiaria]);
 
@@ -149,7 +189,16 @@ export function useSolicitarReserva({ produto }: UseSolicitarReservaParams) {
         dataFim: formatarDataBr(form.dataDevolucao),
         horaFim: form.horarioDevolucao,
         quantidade: form.quantidade,
-        valorEstimado: resumo.valorEstimadoFormatado,
+        valor: resumo.valorFormatado,
+        frete: resumo.freteFormatado,
+        endereco: {
+            cep: form.cepDesconhecido ? '' : form.cep,
+            ruaAvenida: form.ruaAvenida,
+            numero: form.numero,
+            complemento: form.complemento,
+        },
+        nomeContato: form.nomeCompleto,
+        telefoneContato: form.telefoneContato,
     });
 
     return {

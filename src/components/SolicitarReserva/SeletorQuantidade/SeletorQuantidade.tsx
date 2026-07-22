@@ -17,6 +17,7 @@ export default function SeletorQuantidade({
     <div className={styles.wrapper}>
       <p className={styles.label}>
         Quantidade
+        <span className={styles.required}> *</span>
         <span className={styles.estoque}>
           ({estoqueDisponivel} {estoqueDisponivel === 1 ? 'disponível' : 'disponíveis'})
         </span>

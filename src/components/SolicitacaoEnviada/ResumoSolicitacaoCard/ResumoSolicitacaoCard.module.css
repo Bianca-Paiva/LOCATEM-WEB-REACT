@@ -1,0 +1,100 @@
+.card {
+  width: 100%;
+  background: var(--color-bg-card);
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.titulo {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.linha {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 14px 0;
+}
+
+.linha:last-child {
+  padding-bottom: 0;
+}
+
+.rotulo {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+.valor {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-dark);
+  text-align: right;
+}
+
+.valorBloco {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.diarias {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.valorDestaque {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+}
+
+.etiquetaStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1;
+  background: #fff4d6;
+  color: #a16a00;
+  text-transform: uppercase;
+}
+
+.ponto {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 24px;
+  }
+
+  .titulo {
+    font-size: 17px;
+  }
+
+  .linha {
+    gap: 80px;
+  }
+}

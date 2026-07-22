@@ -96,3 +96,43 @@
   color: #6E5000;
   font-weight: 600;
 }
+
+.required {
+  color: #E11D48;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.trigger.erro {
+  border-color: #E11D48;
+  box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
+}
+
+.error {
+  font-size: 12px;
+  color: #E11D48;
+  font-weight: 600;
+}
+
+/* Chacoalhar sutil */
+.shake {
+  animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}

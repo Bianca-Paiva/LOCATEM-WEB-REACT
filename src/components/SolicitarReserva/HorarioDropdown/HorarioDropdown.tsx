@@ -31,9 +31,20 @@ interface HorarioDropdownProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  required?: boolean;
+  error?: string;
+  shake?: boolean;
 }
 
-export default function HorarioDropdown({ id, label, value, onChange }: HorarioDropdownProps) {
+export default function HorarioDropdown({
+  id,
+  label,
+  value,
+  onChange,
+  required = false,
+  error,
+  shake = false,
+}: HorarioDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -54,16 +65,17 @@ export default function HorarioDropdown({ id, label, value, onChange }: HorarioD
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${shake ? styles.shake : ''}`}>
       <label htmlFor={id} className={styles.label}>
         {label}
+        {required && <span className={styles.required}> *</span>}
       </label>
 
       <div className={styles.container} ref={containerRef}>
         <button
           id={id}
           type="button"
-          className={styles.trigger}
+          className={`${styles.trigger} ${error ? styles.erro : ''}`}
           onClick={() => setIsOpen((prev) => !prev)}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
@@ -97,6 +109,7 @@ export default function HorarioDropdown({ id, label, value, onChange }: HorarioD
           </ul>
         )}
       </div>
+      {error && <small className={styles.error}>{error}</small>}
     </div>
   );
 }

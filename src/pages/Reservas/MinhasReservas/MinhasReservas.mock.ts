@@ -26,7 +26,7 @@ export const mockReservas: ReservaData[] = [
     dataFim: '18/07/2025',
     horaFim: '18:00',
     quantidade: 1,
-    valorEstimado: 'R$ 180,00',
+    valor: 'R$ 180,00',
   },
   {
     id: '2',
@@ -45,7 +45,7 @@ export const mockReservas: ReservaData[] = [
     dataFim: '12/07/2025',
     horaFim: '17:00',
     quantidade: 1,
-    valorEstimado: 'R$ 90,00',
+    valor: 'R$ 90,00',
   },
   {
     id: '3',
@@ -64,7 +64,7 @@ export const mockReservas: ReservaData[] = [
     dataFim: '07/07/2025',
     horaFim: '18:00',
     quantidade: 1,
-    valorEstimado: 'R$ 70,00',
+    valor: 'R$ 70,00',
     motivoRecusa: 'Infelizmente a ferramenta estará em manutenção na data solicitada.',
   },
   {
@@ -84,7 +84,7 @@ export const mockReservas: ReservaData[] = [
     dataFim: '03/07/2025',
     horaFim: '18:00',
     quantidade: 1,
-    valorEstimado: 'R$ 60,00',
+    valor: 'R$ 60,00',
   },
   {
     id: '5',
@@ -103,7 +103,7 @@ export const mockReservas: ReservaData[] = [
     dataFim: '25/07/2025',
     horaFim: '18:00',
     quantidade: 1,
-    valorEstimado: 'R$ 250,00',
+    valor: 'R$ 250,00',
   },
   {
     id: '6',
@@ -122,6 +122,6 @@ export const mockReservas: ReservaData[] = [
     dataFim: '24/07/2025',
     horaFim: '18:00',
     quantidade: 1,
-    valorEstimado: 'R$ 120,00',
+    valor: 'R$ 120,00',
   },
 ];
