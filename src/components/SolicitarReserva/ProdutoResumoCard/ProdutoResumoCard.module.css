@@ -1,0 +1,149 @@
+.card {
+  width: 100%;
+  background: var(--color-bg-card);
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  padding: 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.miniatura {
+  flex-shrink: 0;
+  width: 88px;
+  height: 88px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-bg-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: white;
+}
+
+.infoProduto {
+  flex: 1 1 200px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #141D23;
+  line-height: 1.35;
+}
+
+.categoria {
+  margin: 0;
+  font-size: 13px;
+  color: #5D5E61;
+}
+
+.locador {
+  margin: 6px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #4E4634;
+}
+
+.locador span {
+  color: #141D23;
+  font-weight: 600;
+}
+
+.linhaAvaliacaoLocalizacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.avaliacao,
+.localizacao {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.avaliacao {
+  color: #141D23;
+  font-weight: 600;
+}
+
+.localizacao {
+  color: #4E4634;
+  font-weight: 500;
+}
+
+.numeroAvaliacoes {
+  color: #4E4634;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.separador {
+  color: #807662;
+}
+
+.iconePequeno {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.iconePequenoStar {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.precoBloco {
+  flex-shrink: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.precoValor {
+  font-size: 21px;
+  font-weight: 800;
+  color: #141D23;
+}
+
+.precoUnidade {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 24px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .titulo {
+    font-size: 18px;
+  }
+}

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Header from '../../../components/Header/Header';
+import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
 import EtiquetaStatus from '../../../components/MinhasReservas/EtiquetaStatus/EtiquetaStatus';
 import ReservaResumoCard from '../../../components/DetalhesReserva/ReservaResumoCard/ReservaResumoCard';
 import PainelStatusReserva from '../../../components/DetalhesReserva/PainelStatusReserva/PainelStatusReserva';
@@ -27,30 +28,39 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
     return null;
   }
 
-  const { status, motivoRecusa, motivoCancelamento } = reservaSelecionada;
+  const { status, motivoRecusa, motivoCancelamento, horaInicio, horaFim } = reservaSelecionada;
 
   const handleCancelarSolicitacao = () => {
+    const mensagem = 'Esta reserva foi cancelada por você.';
     atualizarReserva(reservaSelecionada.id, {
       status: 'cancelada',
-      motivoCancelamento: 'Esta reserva foi cancelada por você.',
+      mensagemStatus: mensagem,
+      motivoCancelamento: mensagem,
     });
   }
 
   const handleVerLocacoes = () => {
-    // Integre aqui com a tela de locações do usuário.
+    // Integrar aqui com a tela de locações do usuário.
     navigate('minhasReservas');
   };
 
   const handleProsseguirAluguel = () => {
-    // Integre aqui com o fluxo de pagamento/retirada.
+    // Integrar aqui com o fluxo de pagamento/retirada.
   };
 
   const handleVoltarReservas = () => {
     navigate('minhasReservas');
   };
 
+  const handleAvaliacao = () => {
+    // A reserva finalizada já está em `reservaSelecionada` (contexto), então a
+    // página de Avaliação consegue montar a ferramenta de avaliação com os
+    // dados dela assim que a rota mudar.
+    navigate('avaliacao');
+  };
+
   const handleSolicitarNovaReserva = () => {
-    // Integre aqui com a tela de busca/produto para uma nova solicitação.
+    // Integrar aqui com a tela de busca/produto para uma nova solicitação.
     navigate('busca');
   };
 
@@ -59,10 +69,7 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
       <Header navigate={navigate} currentRoute="minhasReservas" />
 
       <main className={styles.pagina}>
-        <div className={styles.cabecalho}>
-          <h1 className={styles.titulo}>Detalhes da Reserva</h1>
-          <EtiquetaStatus status={status} />
-        </div>
+        <CabecalhoPagina titulo="Detalhes da Reserva" acao={<EtiquetaStatus status={status} />} />
 
         <ReservaResumoCard reserva={reservaSelecionada} />
 
@@ -70,12 +77,15 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
           status={status}
           motivoRecusa={motivoRecusa}
           motivoCancelamento={motivoCancelamento}
+          horaInicio={horaInicio}
+          horaFim={horaFim}
         />
 
         <AcoesReserva
           status={status}
           onCancelarSolicitacao={handleCancelarSolicitacao}
           onVerLocacoes={handleVerLocacoes}
+          onAvaliacao={handleAvaliacao}
           onProsseguirAluguel={handleProsseguirAluguel}
           onVoltarReservas={handleVoltarReservas}
           onSolicitarNovaReserva={handleSolicitarNovaReserva}

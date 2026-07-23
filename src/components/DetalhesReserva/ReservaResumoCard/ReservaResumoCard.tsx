@@ -1,8 +1,7 @@
+import { Calendar, User, MapPin } from 'lucide-react';
 import type { ReservaData } from '../../../pages/Reservas/MinhasReservas/MinhasReservas.types';
-import calendarioIcon from '../../../assets/iconCalendarioReservas.png';
-import userIcon from '../../../assets/IconUser.png';
+import { formatarIntervaloHorario } from '../../../utils/horario';
 import starIcon from '../../../assets/StarFullYellow.png';
-import localizacaoIcon from '../../../assets/IconLocalizacao.png';
 import styles from './ReservaResumoCard.module.css';
 
 interface ReservaResumoCardProps {
@@ -23,7 +22,7 @@ export default function ReservaResumoCard({ reserva }: ReservaResumoCardProps) {
     dataFim,
     horaFim,
     quantidade,
-    valorEstimado,
+    valor,
   } = reserva;
 
   return (
@@ -38,7 +37,7 @@ export default function ReservaResumoCard({ reserva }: ReservaResumoCardProps) {
           <p className={styles.categoria}>{categoria}</p>
 
           <p className={styles.locador}>
-            <img src={userIcon} alt="" className={styles.iconePequeno} />
+            <User className={styles.iconePequeno} aria-hidden="true" strokeWidth={2} />
             Locador: <span>{locador}</span>
           </p>
 
@@ -50,7 +49,7 @@ export default function ReservaResumoCard({ reserva }: ReservaResumoCardProps) {
             </span>
             <span className={styles.separador}>•</span>
             <span className={styles.localizacao}>
-              <img src={localizacaoIcon} alt="" className={styles.iconePequeno} />
+              <MapPin className={styles.iconePequeno} aria-hidden="true" strokeWidth={2} />
               {localizacao}
             </span>
           </div>
@@ -60,14 +59,14 @@ export default function ReservaResumoCard({ reserva }: ReservaResumoCardProps) {
       <div className={styles.periodoBloco}>
         <p className={styles.periodoRotulo}>Período solicitado</p>
         <div className={styles.periodoCaixa}>
-          <img src={calendarioIcon} alt="" className={styles.iconeCalendario} />
+          <Calendar className={styles.iconeCalendario} aria-hidden="true" strokeWidth={2} />
           <div className={styles.periodoTexto}>
             <p>
-              <strong>{dataInicio}</strong> às {horaInicio}
+              <strong>{dataInicio}</strong> das {formatarIntervaloHorario(horaInicio)}
             </p>
             <p className={styles.ate}>até</p>
             <p>
-              <strong>{dataFim}</strong> às {horaFim}
+              <strong>{dataFim}</strong> das {formatarIntervaloHorario(horaFim)}
             </p>
           </div>
         </div>
@@ -83,7 +82,7 @@ export default function ReservaResumoCard({ reserva }: ReservaResumoCardProps) {
 
         <div className={styles.rodapeAlinhadoDireita}>
           <p className={styles.rodapeRotulo}>Valor estimado</p>
-          <p className={styles.rodapeValorDestaque}>{valorEstimado}</p>
+          <p className={styles.rodapeValorDestaque}>{valor}</p>
         </div>
       </div>
     </section>

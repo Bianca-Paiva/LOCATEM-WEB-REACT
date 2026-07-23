@@ -1,6 +1,6 @@
 import type { ReservaData } from '../../../pages/Reservas/MinhasReservas/MinhasReservas.types';
 import StatusBadge from '../EtiquetaStatus/EtiquetaStatus';
-import calendarioIcon from '../../../assets/IconCalendarioReservas.png';
+import calendarioIcon from '../../../assets/iconCalendarioReservas.png';
 import userIcon from '../../../assets/IconUser.png';
 import styles from './ReservaCard.module.css';
 

@@ -1,0 +1,47 @@
+.cabecalho {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.linhaTitulo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+}
+
+.titulo {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--color-text-dark);
+}
+
+.subtitulo {
+    margin: 0;
+    font-size: 13px;
+    color: var(--color-text-muted);
+}
+
+/* Tablet e acima: mais respiro e título maior */
+@media (min-width: 640px) {
+    .titulo {
+        font-size: 26px;
+    }
+
+    .subtitulo {
+        font-size: 14px;
+    }
+}
+
+/* Desktop: título ainda maior, como no mockup de tela cheia */
+@media (min-width: 1024px) {
+    .titulo {
+        font-size: 28px;
+    }
+}

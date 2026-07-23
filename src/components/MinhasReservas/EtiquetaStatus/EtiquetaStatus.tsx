@@ -1,23 +1,28 @@
 import type { StatusReserva } from '../../../pages/Reservas/MinhasReservas/MinhasReservas.types';
+import { STATUS_CONFIG } from './statusConfig';
 import styles from './EtiquetaStatus.module.css';
 
 interface EtiquetaStatusProps {
   status: StatusReserva;
 }
 
-// Rótulo exibido dentro de cada badge
-const LABEL_BY_STATUS: Record<StatusReserva, string> = {
-  pendente: 'Pendente',
-  aprovada: 'Aprovada',
-  recusada: 'Recusada',
-  cancelada: 'Cancelada',
-};
-
 export default function EtiquetaStatus({ status }: EtiquetaStatusProps) {
+  const config = STATUS_CONFIG[status];
+  const Icone = config.icon;
+
   return (
-    <span className={`${styles.etiqueta} ${styles[status]}`}>
-      <span className={styles.ponto} aria-hidden="true" />
-      {LABEL_BY_STATUS[status]}
+    <span
+      className={styles.etiqueta}
+      style={
+        {
+          '--etiqueta-cor': config.cor,
+          '--etiqueta-borda': config.borda,
+          '--etiqueta-fundo': config.fundo,
+        } as React.CSSProperties
+      }
+    >
+      <Icone className={styles.icone} aria-hidden="true" strokeWidth={2.25} />
+      {config.label}
     </span>
   );
 }

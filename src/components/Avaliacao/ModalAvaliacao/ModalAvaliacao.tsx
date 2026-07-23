@@ -1,3 +1,4 @@
+import { ImageOff } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type {
   ChaveSubAvaliacao,
@@ -19,7 +20,7 @@ interface ModalAvaliacaoProps {
   aoFechar: () => void;
   aoMudarObservacao: (texto: string) => void;
   aoSelecionarSubNota: (chave: ChaveSubAvaliacao, valor: number) => void;
-  aoSelecionarProdutoCarrossel: (id: number) => void;
+  aoSelecionarProdutoCarrossel: (id: string) => void;
   aoEnviar: () => void;
 }
 
@@ -65,7 +66,7 @@ export function ModalAvaliacao({
 
   if (!produto) return null;
 
-  const iconesPorSub: Record<ChaveSubAvaliacao, string> = {
+  const iconesPorSub: Record<ChaveSubAvaliacao, string | null> = {
     locador: produto.loja.logo,
     entrega: IconCaminhao,
     produto: produto.imagem,
@@ -120,11 +121,15 @@ export function ModalAvaliacao({
                   <span className={styles.subRatingLabel}>{LABEL_SUB_AVALIACAO[chave]}</span>
 
                   <div className={styles.subRatingIcone}>
-                    <img
-                      src={iconesPorSub[chave]}
-                      alt={chave}
-                      loading="eager"
-                    />
+                    {iconesPorSub[chave] ? (
+                      <img
+                        src={iconesPorSub[chave] as string}
+                        alt={chave}
+                        loading="eager"
+                      />
+                    ) : (
+                      <ImageOff size={20} aria-label="Loja sem logo cadastrada" />
+                    )}
                   </div>
 
                   <EstrelasAvaliacao

@@ -8,43 +8,27 @@
   font-weight: 700;
   white-space: nowrap;
   line-height: 1;
+  color: var(--etiqueta-cor);
+  background: var(--etiqueta-fundo);
+  border: 1px solid var(--etiqueta-borda);
 }
 
-.ponto {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
+.icone {
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
-}
-
-/* Pendente: amarelo/âmbar */
-.pendente {
-  background: #fff4d6;
-  color: #a16a00;
-}
-
-/* Aprovada: verde */
-.aprovada {
-  background: #e0f5e6;
-  color: #1f8a3d;
-}
-
-/* Recusada: vermelho */
-.recusada {
-  background: #fbe4e4;
-  color: #cc3333;
-}
-
-/* Cancelada: cinza */
-.cancelada {
-  background: #ececec;
-  color: #6b7280;
+  color: var(--etiqueta-cor);
 }
 
 @media (min-width: 640px) {
   .etiqueta {
     font-size: 13px;
     padding: 7px 14px;
+    gap: 7px;
+  }
+
+  .icone {
+    width: 15px;
+    height: 15px;
   }
 }

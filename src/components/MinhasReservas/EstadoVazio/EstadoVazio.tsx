@@ -1,4 +1,4 @@
-import calendarioIcon from '../../../assets/IconCalendarioReservas.png';
+import calendarioIcon from '../../../assets/iconCalendarioReservas.png';
 import styles from './EstadoVazio.module.css';
 
 interface EstadoVazioProps {

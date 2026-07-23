@@ -12,7 +12,9 @@ export type Route =
   | "notificacoes"
   | "avaliacao"
   | "minhasReservas"
-  | "detalhesReserva";
+  | "detalhesReserva"
+  | "solicitarReserva"
+  | "solicitacaoEnviada";
 
 function getRouteFromHash(): Route {
   const hash = window.location.hash.replace("#", "").split("?")[0];
@@ -29,6 +31,8 @@ function getRouteFromHash(): Route {
   if (hash === "avaliacao") return "avaliacao";
   if (hash === "minhasReservas") return "minhasReservas";
   if (hash === "detalhesReserva") return "detalhesReserva";
+  if (hash === "solicitarReserva") return "solicitarReserva";
+  if (hash === "solicitacaoEnviada") return "solicitacaoEnviada";
 
   return "home";
 }

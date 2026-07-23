@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react'
+import type { ReactNode } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
-import menuHamburguer from '../../assets/IconsNavHeader/menuHamburguer.png'
-import carrinhoIcon from '../../assets/IconsNavHeader/carrinho.png'
-import lupaIcon from '../../assets/IconsNavHeader/lupa.png'
-import chatIcon from '../../assets/IconsNavHeader/chat.png'
-import homeIcon from '../../assets/IconsNavHeader/home.png'
-import relogioIcon from '../../assets/IconsNavHeader/relogio.png'
-import calendarioIcon from '../../assets/IconsNavHeader/calendario.png'
-import notificacoesIcon from '../../assets/IconsNavHeader/notificacoes.png'
-import starIcon from '../../assets/IconsNavHeader/Star.png'
-import suporteIcon from '../../assets/IconsNavHeader/suporte.png'
-import usuarioIcon from '../../assets/IconsNavHeader/usuario.png'
-import locacoesIcon from '../../assets/IconsNavHeader/locacoes.png'
+import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
+import {
+    X
+} from "lucide-react";
 import styles from './Header.module.css'
+
 
 interface HeaderProps {
     navigate: (route: Route) => void
     currentRoute: Route
+}
+
+interface NavItem {
+    label: string;
+    route?: Route;
+    href?: string;
+    renderIcon: (active: boolean) => ReactNode;
 }
 
 export default function Header({ navigate, currentRoute }: HeaderProps) {
@@ -36,17 +37,103 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         return () => document.removeEventListener('keydown', handler)
     }, [])
 
-    const navItems: { label: string; icon: string; route?: Route; href?: string }[] = [
-        { label: 'Início', icon: homeIcon, route: 'home' },
-        { label: 'Carrinho', icon: carrinhoIcon },
-        { label: 'Minhas Reservas', icon: calendarioIcon, route: 'minhasReservas' },
-        { label: 'Minhas Locações', icon: locacoesIcon, },
-        { label: 'Histórico', icon: relogioIcon },
-        { label: 'Avaliações', icon: starIcon, route: 'avaliacao' },
-        { label: 'Notificações', icon: notificacoesIcon, route: 'notificacoes' },
-        { label: 'Entrar', icon: usuarioIcon, route: 'login' },
-        { label: 'Suporte', icon: suporteIcon },
-    ]
+    const navItems: NavItem[] = [
+        {
+            label: "Início",
+            route: "home",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:home" : "mdi:home-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Carrinho",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:cart" : "mdi:cart-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Minhas Reservas",
+            route: "minhasReservas",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:calendar-blank" : "mdi:calendar-blank-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Minhas Locações",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "material-symbols:package-2" : "material-symbols:package-2-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Histórico",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:clock" : "mdi:clock-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Avaliações",
+            route: "avaliacao",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:star" : "mdi:star-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Notificações",
+            route: "notificacoes",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:bell" : "mdi:bell-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Entrar",
+            route: "login",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Suporte",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "material-symbols:headset-mic" : "material-symbols:headset-mic-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+    ];
 
     return (
         <>
@@ -59,7 +146,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             onClick={() => setMenuOpen(true)}
                             aria-label="Abrir menu"
                         >
-                            <img src={menuHamburguer} alt="Menu" />
+                            <Icon icon="mdi:menu" width={26} height={26} />
                         </button>
                         <a
                             href="../../pages/Home/Home.tsx"
@@ -71,12 +158,12 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         </a>
                     </div>
                     <a href="#" className={styles.carrinhoBtn}>
-                        <img src={carrinhoIcon} alt="Carrinho" />
+                        <Icon icon="mdi:cart-outline" width={24} height={24} />
                         <span className={styles.quantidadeCarrinho}>2</span>
                     </a>
                 </div>
                 <form className={styles.barraPesquisaMobile} onSubmit={e => e.preventDefault()}>
-                    <img src={lupaIcon} alt="Buscar" />
+                    <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
                     <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
                 </form>
             </header>
@@ -108,27 +195,31 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         onClick={() => setMenuOpen(false)}
                         aria-label="Fechar menu"
                     >
-                        ✕
+                        <X size={24} />
                     </button>
                 </div>
 
                 <div className={styles.menuLateralConteudo}>
                     <nav className={styles.menuLateralNav}>
-                        {navItems.map(item => (
-                            <a
-                                key={item.label}
-                                href="#"
-                                className={item.route === currentRoute ? styles.ativo : ''}
-                                onClick={e => {
-                                    e.preventDefault()
-                                    if (item.route) navigate(item.route)
-                                    setMenuOpen(false)
-                                }}
-                            >
-                                <img src={item.icon} alt="" />
-                                {item.label}
-                            </a>
-                        ))}
+                        {navItems.map(item => {
+                            const active = item.route === currentRoute;
+
+                            return (
+                                <a
+                                    key={item.label}
+                                    href="#"
+                                    className={active ? styles.ativo : ""}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        if (item.route) navigate(item.route);
+                                        setMenuOpen(false);
+                                    }}
+                                >
+                                    {item.renderIcon(active)}
+                                    {item.label}
+                                </a>
+                            );
+                        })}
                     </nav>
                 </div>
             </aside>
@@ -146,31 +237,42 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                     </a>
                     <form className={styles.barraPesquisa} onSubmit={e => e.preventDefault()}>
                         <button type="submit" className={styles.lupaBtn}>
-                            <img src={lupaIcon} alt="Buscar" />
+                            <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
                         </button>
                         <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
                     </form>
-                    <a href="#" className={styles.chatBtn}>
-                        <img src={chatIcon} alt="Chat" />
+                    <a
+                        href="../../pages/Login/Login.tsx"
+                        className={styles.loginBtn}
+                        onClick={e => { e.preventDefault(); navigate('login') }}
+                    >
+                        <Icon icon="mdi:account-circle-outline"
+                            width={32}
+                            height={32}
+                        />
                     </a>
                 </div>
 
                 {/* ── DESKTOP NAV MOVIDO PARA DENTRO DO HEADER ── */}
                 <nav className={styles.menuNavDesktop}>
-                    {navItems.map(item => (
-                        <a
-                            key={item.label}
-                            href="#"
-                            className={item.route === currentRoute ? styles.ativo : ''}
-                            onClick={e => {
-                                e.preventDefault()
-                                if (item.route) navigate(item.route)
-                            }}
-                        >
-                            <img src={item.icon} alt="" />
-                            {item.label}
-                        </a>
-                    ))}
+                    {navItems.map(item => {
+                        const active = item.route === currentRoute;
+
+                        return (
+                            <a
+                                key={item.label}
+                                href="#"
+                                className={active ? styles.ativo : ""}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    if (item.route) navigate(item.route);
+                                }}
+                            >
+                                {item.renderIcon(active)}
+                                {item.label}
+                            </a>
+                        );
+                    })}
                 </nav>
             </header>
         </>

@@ -1,4 +1,5 @@
 import type { FiltroReserva } from '../../../pages/Reservas/MinhasReservas/MinhasReservas.types';
+import { STATUS_CONFIG } from '../EtiquetaStatus/statusConfig';
 import styles from './ReservaAbas.module.css';
 
 interface ReservaTabsProps {
@@ -7,13 +8,19 @@ interface ReservaTabsProps {
   contagem: Record<FiltroReserva, number>;
 }
 
-// Ordem e rótulo de exibição de cada aba
+// Ordem e rótulo de exibição de cada aba (segue a ordem do fluxo de uma reserva)
 const ABAS: { key: FiltroReserva; label: string }[] = [
   { key: 'todas', label: 'Todas' },
-  { key: 'pendente', label: 'Pendentes' },
-  { key: 'aprovada', label: 'Aprovadas' },
-  { key: 'recusada', label: 'Recusadas' },
-  { key: 'cancelada', label: 'Canceladas' },
+  { key: 'pendente', label: STATUS_CONFIG.pendente.tabLabel },
+  { key: 'aguardandoPagamento', label: STATUS_CONFIG.aguardandoPagamento.tabLabel },
+  { key: 'preparandoEntrega', label: STATUS_CONFIG.preparandoEntrega.tabLabel },
+  { key: 'emTransporte', label: STATUS_CONFIG.emTransporte.tabLabel },
+  { key: 'emAndamento', label: STATUS_CONFIG.emAndamento.tabLabel },
+  { key: 'aguardandoDevolucao', label: STATUS_CONFIG.aguardandoDevolucao.tabLabel },
+  { key: 'devolucaoEmTransporte', label: STATUS_CONFIG.devolucaoEmTransporte.tabLabel },
+  { key: 'finalizada', label: STATUS_CONFIG.finalizada.tabLabel },
+  { key: 'recusada', label: STATUS_CONFIG.recusada.tabLabel },
+  { key: 'cancelada', label: STATUS_CONFIG.cancelada.tabLabel },
 ];
 
 export default function ReservaTabs({ filtro, onChange, contagem }: ReservaTabsProps) {

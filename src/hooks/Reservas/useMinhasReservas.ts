@@ -19,7 +19,13 @@ export function useMinhasReservas(): UseMinhasReservasReturn {
     const base: Record<FiltroReserva, number> = {
       todas: reservas.length,
       pendente: 0,
-      aprovada: 0,
+      aguardandoPagamento: 0,
+      preparandoEntrega: 0,
+      emTransporte: 0,
+      emAndamento: 0,
+      aguardandoDevolucao: 0,
+      devolucaoEmTransporte: 0,
+      finalizada: 0,
       recusada: 0,
       cancelada: 0,
     };

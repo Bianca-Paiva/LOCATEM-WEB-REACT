@@ -41,6 +41,10 @@
   line-height: 1.5;
 }
 
+.destaque {
+  font-weight: 800;
+}
+
 /* Pendente: âmbar */
 .pendente {
   background: var(--color-primary-soft);
@@ -57,23 +61,68 @@
   color: #8a6100;
 }
 
-/* Aprovada: verde */
-.aprovada {
-  background: #e6f8ec;
-  border-color: #bdead0;
+/* Aguardando pagamento: laranja */
+.aguardandoPagamento {
+  background: #FFEBCF;
+  border-color: rgba(167, 75, 0, 0.25);
 }
 
-.aprovada .simbolo {
-  background: #34c95e;
+.aguardandoPagamento .simbolo {
+  background: #A74B00;
   color: #ffffff;
 }
 
-.aprovada .titulo {
-  color: #1a7a3c;
+.aguardandoPagamento .titulo,
+.aguardandoPagamento .mensagem {
+  color: #A74B00;
 }
 
-.aprovada .mensagem {
-  color: #2f8f52;
+/* Preparando entrega / Em transporte / Em andamento / Aguardando devolução / Devolução em transporte: azul */
+.preparandoEntrega,
+.emTransporte,
+.emAndamento,
+.aguardandoDevolucao,
+.devolucaoEmTransporte {
+  background: #EAF6FF;
+  border-color: rgba(0, 93, 117, 0.25);
+}
+
+.preparandoEntrega .simbolo,
+.emTransporte .simbolo,
+.emAndamento .simbolo,
+.aguardandoDevolucao .simbolo,
+.devolucaoEmTransporte .simbolo {
+  background: #005D75;
+  color: #ffffff;
+}
+
+.preparandoEntrega .titulo,
+.preparandoEntrega .mensagem,
+.emTransporte .titulo,
+.emTransporte .mensagem,
+.emAndamento .titulo,
+.emAndamento .mensagem,
+.aguardandoDevolucao .titulo,
+.aguardandoDevolucao .mensagem,
+.devolucaoEmTransporte .titulo,
+.devolucaoEmTransporte .mensagem {
+  color: #005D75;
+}
+
+/* Finalizada: verde */
+.finalizada {
+  background: #E6F4EA;
+  border-color: rgba(19, 115, 51, 0.25);
+}
+
+.finalizada .simbolo {
+  background: #137333;
+  color: #ffffff;
+}
+
+.finalizada .titulo,
+.finalizada .mensagem {
+  color: #137333;
 }
 
 /* Recusada: vermelho */

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import type { InputHTMLAttributes } from 'react'
-import olhoAberto from '../../../assets/IconsSenha/olhoAberto.svg'
-import olhoFechado from '../../../assets/IconsSenha/olhoFechado.svg'
 import styles from './PasswordInput.module.css'
 import type { PasswordStrengthResult } from '../../../hooks/passwordStrength'
+
+import { Eye, EyeClosed } from "lucide-react";
 
 interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string
@@ -48,8 +48,8 @@ export default function PasswordInput({
                     aria-label={visible ? 'Ocultar senha' : 'Mostrar senha'}
                 >
                     {visible
-                        ? <img src={olhoAberto} alt="Mostrar" />
-                        : <img src={olhoFechado} alt="Ocultar" />
+                        ? <Eye size={20} />
+                        : <EyeClosed size={20} />
                     }
                 </button>
             </div>

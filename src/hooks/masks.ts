@@ -44,6 +44,27 @@ export function maskPhone(value: string): string {
 }
 
 /**
+ * Aplica a máscara de CEP (99999-999) em tempo de digitação.
+ * value String bruta contendo o texto digitado pelo usuário.
+ */
+export function maskCEP(value: string): string {
+    // 1. Remove tudo que não for número e limita a 8 dígitos
+    const digits = value.replace(/\D/g, '').substring(0, 8)
+
+    // 2. Coloca o hífen após o 5º dígito: 12345-678
+    return digits.replace(/(\d{5})(\d)/, '$1-$2')
+}
+
+/**
+ * Valida se o CEP possui a quantidade de dígitos correta.
+ * value O CEP com ou sem máscara.
+ */
+export function validateCEP(value: string): boolean {
+    const digits = value.replace(/\D/g, '')
+    return digits.length === 8
+}
+
+/**
  * Valida se o texto inserido é um nome completo.
  * Critério: Ter pelo menos 2 palavras e cada palavra ter pelo menos 2 letras.
  */

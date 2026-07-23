@@ -1,0 +1,146 @@
+.card {
+  width: 100%;
+  background: var(--color-bg-card);
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.linhaPeriodo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0 14px;
+  font-size: 14px;
+}
+
+.rotuloPeriodo {
+  font-weight: 600;
+  color: #141D23;
+}
+
+.valorPeriodo {
+  color: #141D23;
+  text-align: right;
+}
+
+.diarias {
+  color: #8A8F98;
+  font-size: 12px;
+}
+
+.boxes {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #ffdf9440;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.boxLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #8A6D2E;
+}
+
+.boxValor {
+  font-size: 14px;
+  font-weight: 500;
+  color: #141D23;
+}
+
+.divisor {
+  border-top: 1px solid #ececec;
+  margin-bottom: 4px;
+}
+
+.divisorForte {
+  border-top: 1px solid #ececec;
+  margin: 12px 0 0;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 14px;
+}
+
+.rotulo {
+  color: var(--color-text-muted);
+}
+
+.valor {
+  color: #141D23;
+  font-weight: 500;
+  text-align: right;
+}
+
+.linhaDestaque {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0 4px;
+}
+
+.rotuloDestaque {
+  font-size: 17px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.valorDestaque {
+  font-size: 20px;
+  font-weight: 700;
+  color: #141D23;
+}
+
+.aviso {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #EAF2FE;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #4B5A73;
+}
+
+.avisoIcone {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #4C7FE0;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 24px;
+  }
+}

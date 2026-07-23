@@ -56,13 +56,6 @@
     flex-shrink: 0;
 }
 
-.menuBtn img,
-.carrinhoBtn img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-}
-
 .carrinhoBtn {
     position: relative;
     text-decoration: none;
@@ -95,13 +88,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.barraPesquisaMobile img {
-    width: 20px;
-    height: 20px;
-    opacity: 0.55;
-    flex-shrink: 0;
 }
 
 .barraPesquisaMobile input {
@@ -360,12 +346,6 @@
         cursor: pointer;
     }
 
-    .barraPesquisa img {
-        width: 18px;
-        height: 18px;
-        opacity: 0.5;
-    }
-
     .barraPesquisa input {
         flex: 1;
         border: none;
@@ -380,7 +360,7 @@
         color: var(--color-text-muted);
     }
 
-    .chatBtn {
+    .loginBtn {
         width: clamp(38px, 3vw, 46px);
         height: clamp(38px, 3vw, 46px);
         border-radius: 50%;
@@ -392,16 +372,6 @@
         transition: background var(--transition-fast);
         text-decoration: none;
         justify-self: end;
-    }
-
-    .chatBtn img {
-        width: 55%;
-        height: 55%;
-        object-fit: contain;
-    }
-
-    .chatBtn:hover {
-        background: var(--color-bg-chat-hover);
     }
 
     /* Desktop Nav */

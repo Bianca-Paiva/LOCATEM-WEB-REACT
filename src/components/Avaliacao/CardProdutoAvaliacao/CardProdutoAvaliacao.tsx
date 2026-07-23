@@ -6,12 +6,12 @@ import styles from './CardProdutoAvaliacao.module.css';
 interface CardProdutoAvaliacaoProps {
     produto: ProdutoAvaliacao;
     /** Abre o modal ao clicar em qualquer parte do card. */
-    aoClicarCard: (id: number) => void;
+    aoClicarCard: (id: string) => void;
     /**
      * Clique direto numa estrela: salva a nota global e abre o modal.
      * Só é passado quando o card está na aba "Pendentes".
      */
-    aoSelecionarEstrela?: (id: number, valor: number) => void;
+    aoSelecionarEstrela?: (id: string, valor: number) => void;
 }
 
 /** Card clicável de um produto, com badge da loja + estrelas de nota global. */

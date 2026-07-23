@@ -11,7 +11,11 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "@iconify-json/material-symbols-light": "^1.2.86",
+    "@iconify-json/mdi": "^1.2.3",
+    "@iconify/react": "^6.0.2",
     "cpf-cnpj-validator": "^2.1.2",
+    "lucide-react": "^1.25.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-hook-form": "^7.80.0",

@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '../icons/NotificationIcons';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
@@ -30,7 +30,7 @@ export default function Pagination({
         disabled={currentPage === 1}
         aria-label="Página anterior"
       >
-        <ChevronLeftIcon />
+        <ChevronLeft size={16} />
       </button>
 
       {pages.map((page) => (
@@ -52,7 +52,7 @@ export default function Pagination({
         disabled={currentPage === totalPages}
         aria-label="Próxima página"
       >
-        <ChevronRightIcon />
+        <ChevronRight size={16} />
       </button>
     </nav>
   );

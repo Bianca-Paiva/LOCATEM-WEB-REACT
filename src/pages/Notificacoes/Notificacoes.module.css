@@ -8,27 +8,6 @@
   flex-direction: column; 
 }
 
-.headerRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 25px;
-  width: 100%;
-}
-
-.title {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0;
-  font-size: 22px;
-  font-weight: 800;
-  color: #1a1a1a;
-}
-
 .controls {
   width: 100%;
   display: flex;
@@ -108,20 +87,12 @@
   .page {
     padding: 28px 24px 56px;
   }
-
-  .title {
-    font-size: 26px;
-  }
 }
 
 /* Desktop: layout como no mockup de tela cheia */
 @media (min-width: 1024px) {
   .page {
     padding: 32px 32px 64px;
-  }
-
-  .title {
-    font-size: 28px;
   }
 
   .emptyState {

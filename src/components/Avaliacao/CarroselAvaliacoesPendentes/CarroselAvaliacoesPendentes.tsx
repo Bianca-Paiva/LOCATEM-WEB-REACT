@@ -4,7 +4,7 @@ import styles from './CarroselAvaliacoesPendentes.module.css';
 
 interface CarrosselAvaliacoesPendentesProps {
     itens: ProdutoAvaliacao[];
-    aoSelecionarItem: (id: number) => void;
+    aoSelecionarItem: (id: string) => void;
 }
 
 /** Faixa horizontal com os outros produtos ainda pendentes, dentro do modal. */

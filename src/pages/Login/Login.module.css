@@ -5,21 +5,6 @@ main {
     align-items: center;
 }
 
-.topo {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.titulo {
-    margin-bottom: 10px;
-    font-size: 28px;
-    font-weight: 600;
-}
-
-.paragrafo {
-    font-size: 14px;
-    color: #333333d7;
-}
 
 .card {
     width: 100%;

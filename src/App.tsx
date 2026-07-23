@@ -10,6 +10,8 @@ import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
 import Avaliacao from "./pages/Avaliacao/Avaliacao";
 import MinhasReservas from "./pages/Reservas/MinhasReservas/MinhasReservas";
 import DetalhesReserva from "./pages/Reservas/DetalhesReserva/DetalhesReserva";
+import SolicitarReserva from "./pages/Reservas/SolicitarReserva/SolicitarReserva";
+import SolicitacaoEnviada from "./pages/Reservas/SolicitacaoEnviada/SolicitacaoEnviada";
 
 
 import { useRouter } from "./router/useRouter";
@@ -45,6 +47,10 @@ export default function App() {
         {route === "minhasReservas" && <MinhasReservas navigate={navigate} />}
 
         {route === "detalhesReserva" && <DetalhesReserva navigate={navigate} />}
+
+        {route === "solicitarReserva" && <SolicitarReserva navigate={navigate} />}
+
+        {route === "solicitacaoEnviada" && <SolicitacaoEnviada navigate={navigate} />}
       </ReservaProvider>
     </ProdutoProvider>
   );

@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
+import PageHeader from '../../components/RecuperarSenha/PageHeader/PageHeader'
 import FormInput from '../../components/Inputs/FormInput/FormInput'
 import PasswordField from '../../components/Inputs/PasswordInput/PasswordInput'
 //import { loginUsuario } from '../../services/authService'
@@ -79,10 +80,7 @@ export default function Login({ navigate }: LoginProps) {
             <AuthHeader navigate={navigate} />
 
             <main>
-                <div className={styles.topo}>
-                    <h1 className={styles.titulo}>Bem-vindo de volta</h1>
-                    <p className={styles.paragrafo}>Entre na sua conta para continuar</p>
-                </div>
+                <PageHeader title='Bem-vindo de volta!' subtitle='Entre na sua conta para continuar' />
 
                 <div className={styles.card}>
                     <form onSubmit={handleSubmit} noValidate>

@@ -3,23 +3,6 @@
     padding: 30px 18px 48px;
 }
 
-.tituloPage {
-    margin-bottom: 28px;
-}
-
-.tituloPage h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: var(--text-primary, #1a1814);
-}
-
-.tituloPage p {
-    font-size: 0.85rem;
-    color: var(--text-secondary, #6b6860);
-    margin-top: 4px;
-}
-
 /* Tabs */
 .tabs {
     display: flex;

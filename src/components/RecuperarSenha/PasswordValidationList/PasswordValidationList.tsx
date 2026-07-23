@@ -1,5 +1,4 @@
-import checkIconSenha from '../../../assets/IconsSenha/checkIconSenha.png'
-import closeIconSenha from '../../../assets/IconsSenha/closeIconSenha.png'
+import { Check, X } from "lucide-react";
 import styles from './PasswordValidationList.module.css'
 
 interface ValidationItem {
@@ -23,11 +22,11 @@ export default function ValidationList({
             <div className={styles.list}>
                 {items.map((item) => (
                     <div key={item.label} className={styles.item}>
-                        <img
-                            src={item.valid ? checkIconSenha : closeIconSenha}
-                            alt=""
-                            className={styles.icon}
-                        />
+                        {item.valid ? (
+                            <Check className={styles.iconCheck} />
+                        ) : (
+                            <X className={styles.iconX} />
+                        )}
 
                         <span
                             className={`${styles.label} ${item.valid ? styles.valid : styles.invalid
