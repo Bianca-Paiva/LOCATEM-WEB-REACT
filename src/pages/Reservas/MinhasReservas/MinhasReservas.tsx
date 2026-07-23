@@ -6,7 +6,6 @@ import { useMinhasReservas } from '../../../hooks/Reservas/useMinhasReservas';
 import { useReservaStore } from '../../../hooks/Reservas/useReservaStore';
 import styles from './MinhasReservas.module.css';
 
-
 import type { Route } from '../../../router/useRouter';
 import type { FiltroReserva } from './MinhasReservas.types';
 
@@ -21,12 +20,36 @@ const ESTADO_VAZIO_TEXTO: Record<FiltroReserva, { titulo: string; descricao: str
     descricao: 'Assim que você solicitar uma locação, ela aparecerá nesta tela.',
   },
   pendente: {
-    titulo: 'Nenhuma reserva pendente',
+    titulo: 'Nenhuma reserva aguardando aprovação',
     descricao: 'Você não possui solicitações aguardando aprovação do locador.',
   },
-  aprovada: {
-    titulo: 'Nenhuma reserva aprovada',
-    descricao: 'Assim que uma reserva for aprovada, ela aparecerá aqui.',
+  aguardandoPagamento: {
+    titulo: 'Nenhuma reserva aguardando pagamento',
+    descricao: 'Assim que uma reserva for aceita pelo locador, ela aparecerá aqui.',
+  },
+  preparandoEntrega: {
+    titulo: 'Nenhuma reserva em preparação',
+    descricao: 'Reservas com pagamento confirmado, aguardando o envio, aparecerão aqui.',
+  },
+  emTransporte: {
+    titulo: 'Nenhuma reserva em transporte',
+    descricao: 'Ferramentas a caminho do seu endereço aparecerão aqui.',
+  },
+  emAndamento: {
+    titulo: 'Nenhuma reserva em andamento',
+    descricao: 'Locações que você já recebeu e estão no período de uso aparecerão aqui.',
+  },
+  aguardandoDevolucao: {
+    titulo: 'Nenhuma reserva aguardando devolução',
+    descricao: 'Reservas com o período de locação encerrando aparecerão aqui.',
+  },
+  devolucaoEmTransporte: {
+    titulo: 'Nenhuma devolução em transporte',
+    descricao: 'Ferramentas coletadas e a caminho do locador aparecerão aqui.',
+  },
+  finalizada: {
+    titulo: 'Nenhuma reserva finalizada',
+    descricao: 'Locações concluídas com sucesso aparecerão aqui.',
   },
   recusada: {
     titulo: 'Nenhuma reserva recusada',

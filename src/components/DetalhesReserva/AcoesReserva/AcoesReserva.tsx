@@ -18,6 +18,7 @@ export default function AcoesReserva({
   onVoltarReservas,
   onSolicitarNovaReserva,
 }: AcoesReservaProps) {
+  // Aguardando aprovação: única ação possível é cancelar a solicitação
   if (status === 'pendente') {
     return (
       <button
@@ -30,20 +31,37 @@ export default function AcoesReserva({
     );
   }
 
-  if (status === 'aprovada') {
+  // Aguardando pagamento: reserva aceita pelo locador, falta efetuar o pagamento
+  if (status === 'aguardandoPagamento') {
     return (
       <div className={styles.grupoBotoes}>
         <button type="button" className={styles.botaoSecundario} onClick={onVerLocacoes}>
           Ver minhas locações
         </button>
         <button type="button" className={styles.botaoPrimario} onClick={onProsseguirAluguel}>
-          Prosseguir para aluguel
+          Efetuar pagamento
         </button>
       </div>
     );
   }
 
-  // recusada e cancelada compartilham o mesmo par de ações
+  // Preparando entrega, em transporte, em andamento, aguardando devolução e devolução em
+  // transporte: a reserva já está em curso, o usuário só acompanha o status
+  if (
+    status === 'preparandoEntrega' ||
+    status === 'emTransporte' ||
+    status === 'emAndamento' ||
+    status === 'aguardandoDevolucao' ||
+    status === 'devolucaoEmTransporte'
+  ) {
+    return (
+      <button type="button" className={styles.botaoSecundario} onClick={onVerLocacoes}>
+        Ver minhas locações
+      </button>
+    );
+  }
+
+  // Finalizada, recusada e cancelada compartilham o mesmo par de ações
   return (
     <div className={styles.grupoBotoes}>
       <button type="button" className={styles.botaoSecundario} onClick={onVoltarReservas}>

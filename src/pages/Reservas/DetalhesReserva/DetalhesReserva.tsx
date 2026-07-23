@@ -27,22 +27,24 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
     return null;
   }
 
-  const { status, motivoRecusa, motivoCancelamento } = reservaSelecionada;
+  const { status, motivoRecusa, motivoCancelamento, horaInicio, horaFim } = reservaSelecionada;
 
   const handleCancelarSolicitacao = () => {
+    const mensagem = 'Esta reserva foi cancelada por você.';
     atualizarReserva(reservaSelecionada.id, {
       status: 'cancelada',
-      motivoCancelamento: 'Esta reserva foi cancelada por você.',
+      mensagemStatus: mensagem,
+      motivoCancelamento: mensagem,
     });
   }
 
   const handleVerLocacoes = () => {
-    // Integre aqui com a tela de locações do usuário.
+    // Integrar aqui com a tela de locações do usuário.
     navigate('minhasReservas');
   };
 
   const handleProsseguirAluguel = () => {
-    // Integre aqui com o fluxo de pagamento/retirada.
+    // Integrar aqui com o fluxo de pagamento/retirada.
   };
 
   const handleVoltarReservas = () => {
@@ -50,7 +52,7 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
   };
 
   const handleSolicitarNovaReserva = () => {
-    // Integre aqui com a tela de busca/produto para uma nova solicitação.
+    // Integrar aqui com a tela de busca/produto para uma nova solicitação.
     navigate('busca');
   };
 
@@ -70,6 +72,8 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
           status={status}
           motivoRecusa={motivoRecusa}
           motivoCancelamento={motivoCancelamento}
+          horaInicio={horaInicio}
+          horaFim={horaFim}
         />
 
         <AcoesReserva

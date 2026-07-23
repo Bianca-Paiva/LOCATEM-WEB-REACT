@@ -18,8 +18,6 @@ import PasswordValidationList from '../../components/RecuperarSenha/PasswordVali
 import Alerta from "../../components/RecuperarSenha/Alerta/Alerta"
 import SuccessModal from "../../components/SuccessModal/SucessesModal"
 
-import IconLocatario from '../../assets/IconLocatario.svg'
-import IconLocador from '../../assets/IconLocador.svg'
 
 interface CadastroProps { navigate: (route: Route) => void }
 
@@ -44,14 +42,12 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             id="locatario" name="tipo" value="locatario"
                             selected={tipo === "locatario"} title="Locatário"
                             description="Quero alugar ferramentas" onChange={handleTipoChange}
-                            icon={<img src={IconLocatario} alt="Icone Locatário" />}
                         />
 
                         <CardOpcaoConta
                             id="locador" name="tipo" value="locador"
                             selected={tipo === "locador"} title="Locador"
                             description="Quero anunciar ferramentas" onChange={handleTipoChange}
-                            icon={<img src={IconLocador} alt="Icone Locador" />}
                         />
                     </div>
 

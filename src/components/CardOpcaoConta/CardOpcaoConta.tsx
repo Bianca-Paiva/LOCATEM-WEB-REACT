@@ -1,5 +1,7 @@
 import styles from "./CardOpcaoConta.module.css";
-import type { ReactNode } from "react";
+
+import { User } from "lucide-react";
+import { Icon } from "@iconify/react"; // ícone tools (ferramentas)
 
 
 interface CardOpcaoContaProps {
@@ -9,7 +11,6 @@ interface CardOpcaoContaProps {
     selected: boolean;
     title: string;
     description: string;
-    icon: ReactNode;
     onChange: (value: 'locador' | 'locatario') => void;
 }
 
@@ -20,7 +21,6 @@ export default function CardOpcaoConta({
     selected,
     title,
     description,
-    icon,
     onChange,
 }: CardOpcaoContaProps) {
     return (
@@ -42,7 +42,11 @@ export default function CardOpcaoConta({
                 <div
                     className={`${styles.icone} ${selected ? styles.iconeSelected : ""}`}
                 >
-                    {icon}
+                    {value === "locatario" ? (
+                        <User size={24} />
+                    ) : (
+                        <Icon icon="mdi:tools" width={24} height={24} />
+                    )}
                 </div>
 
                 <h3>{title}</h3>
