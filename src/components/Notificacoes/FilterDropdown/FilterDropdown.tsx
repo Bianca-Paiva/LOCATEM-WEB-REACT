@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDownIcon } from '../icons/NotificationIcons';
+import { ChevronDown } from 'lucide-react';
 import type { FilterOption } from '../../../pages/Notificacoes/Notificacoes.types';
 import styles from './FilterDropdown.module.css';
 
@@ -40,7 +40,10 @@ export default function FilterDropdown({ value, onChange }: FilterDropdownProps)
         aria-expanded={isOpen}
       >
         <span>{value}</span>
-        <ChevronDownIcon className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`} />
+        <ChevronDown
+          size={14}
+          className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}
+        />
       </button>
 
       {isOpen && (

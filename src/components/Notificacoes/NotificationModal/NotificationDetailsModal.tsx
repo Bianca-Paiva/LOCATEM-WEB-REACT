@@ -1,27 +1,54 @@
 import { useEffect } from 'react';
 import {
-    CheckIcon,
-    CloseIcon,
-    RefreshIcon,
-    TruckIcon,
-    WalletIcon,
-    WarningIcon,
-} from '../icons/NotificationIcons';
-import type { NotificationData } from '../../../pages/Notificacoes/Notificacoes.types';
+    AlertTriangle,
+    BadgePercent,
+    BellRing,
+    CheckCircle2,
+    CreditCard,
+    Eye,
+    Info,
+    MessageSquare,
+    RefreshCw,
+    Star,
+    Tag,
+    Truck,
+    X,
+    XCircle,
+    type LucideIcon,
+} from 'lucide-react';
+import { STATUS_CONFIG } from '../../MinhasReservas/EtiquetaStatus/statusConfig';
+import type {
+    NotificationCategory,
+    NotificationData,
+} from '../../../pages/Notificacoes/Notificacoes.types';
 import styles from './NotificationDetailsModal.module.css';
 
 interface NotificationDetailsModalProps {
     notification: NotificationData | null; // null = modal fechado
     onClose: () => void;
     onRenovar?: (id: string) => void;
-    onPagar?: (id: string) => void;
+    /** Leva o usuário até 'Detalhes da Reserva' com a reserva já selecionada
+     * (usado para "Ver locação", "Efetuar pagamento", "Tentar pagamento novamente" etc). */
+    onVerReserva?: (reservaId: string) => void;
+    /** Leva o usuário até o fluxo de avaliação da locação finalizada. */
+    onAvaliar?: (reservaId: string) => void;
+    /** Leva o usuário até a busca de ferramentas (notificações de promoção). */
+    onVerOfertas?: () => void;
 }
 
-const ICON_BY_TYPE = {
-    success: CheckIcon,
-    warning: WarningIcon,
-    delivery: TruckIcon,
-} as const;
+// Ícone/cor genéricos por `type`, usados apenas quando a notificação não está atrelada
+// a uma reserva (ex: promoção, nova mensagem, pagamento recusado). Notificações de
+// reservas/locações usam o mesmo ícone/cor de STATUS_CONFIG (EtiquetaStatus).
+const ICON_BY_TYPE: Record<NotificationData['type'], LucideIcon> = {
+    success: CheckCircle2,
+    warning: AlertTriangle,
+    delivery: Truck,
+    error: XCircle,
+    info: Info,
+    promotion: BadgePercent,
+    message: MessageSquare,
+    reminder: BellRing,
+};
 
 interface DetailRow {
     label: string;
@@ -71,8 +98,109 @@ function getDetailRows(notification: NotificationData): DetailRow[] {
                 { label: 'Valor', value: details.valor ?? '-' },
             ];
 
+        case 'reserva-cancelada':
+            return [
+                { label: 'Equipamento', value: details.equipamento ?? '-' },
+                { label: 'Motivo', value: details.motivoCancelamento ?? '-' },
+                { label: 'Cancelado em', value: details.dataCancelamento ?? '-' },
+                { label: 'Valor reembolsado', value: details.valorReembolso ?? '-' },
+            ];
+
+        case 'devolucao-atrasada':
+            return [
+                { label: 'Equipamento', value: details.equipamento ?? '-' },
+                { label: 'Data limite', value: details.dataLimite ?? '-' },
+                { label: 'Dias em atraso', value: details.diasAtraso ?? '-' },
+                { label: 'Multa', value: details.multa ?? '-' },
+            ];
+
+        case 'entrega-concluida':
+            return [
+                { label: 'Equipamento', value: details.equipamento ?? '-' },
+                { label: 'Entregue em', value: details.dataEntrega ?? '-' },
+                { label: 'Recebido por', value: details.recebidoPor ?? '-' },
+            ];
+
+        case 'pagamento-confirmado':
+            return [
+                { label: 'Valor', value: details.valor ?? '-' },
+                { label: 'Forma de pagamento', value: details.formaPagamento ?? '-' },
+                { label: 'Confirmado em', value: details.dataConfirmacao ?? '-' },
+            ];
+
+        case 'pagamento-recusado':
+            return [
+                { label: 'Valor', value: details.valor ?? '-' },
+                { label: 'Forma de pagamento', value: details.formaPagamento ?? '-' },
+                { label: 'Motivo da recusa', value: details.motivoRecusa ?? '-' },
+            ];
+
+        case 'promocao-disponivel':
+            return [
+                { label: 'Categoria', value: details.categoriaEquipamento ?? '-' },
+                { label: 'Cupom', value: details.cupom ?? '-' },
+                { label: 'Desconto', value: details.desconto ?? '-' },
+                { label: 'Válido até', value: details.validade ?? '-' },
+            ];
+
+        case 'avaliacao-pendente':
+            return [
+                { label: 'Equipamento', value: details.equipamento ?? '-' },
+                { label: 'Devolvido em', value: details.dataDevolucao ?? '-' },
+                { label: 'Nota sugerida', value: details.notaSugerida ?? '-' },
+            ];
+
+        case 'nova-mensagem':
+            return [
+                { label: 'De', value: details.remetente ?? '-' },
+                { label: 'Assunto', value: details.assunto ?? '-' },
+                { label: 'Mensagem', value: details.mensagem ?? '-' },
+            ];
         default:
             return [];
+    }
+}
+
+type AlvoAcao = 'reserva' | 'avaliacao' | 'ofertas';
+
+interface AcaoConfig {
+    label: string;
+    Icon: LucideIcon;
+    alvo: AlvoAcao;
+}
+
+// Define o botão de ação principal do modal de acordo com a categoria da notificação,
+// levando o usuário para o próximo passo natural daquele fluxo (pagamento, avaliação,
+// detalhes da locação, etc).
+function getAcaoConfig(category: NotificationCategory): AcaoConfig | null {
+    switch (category) {
+        case 'reserva-confirmada':
+        case 'entrega-andamento':
+        case 'entrega-concluida':
+        case 'devolucao-pendente':
+        case 'devolucao-atrasada':
+        case 'ferramenta-devolvida':
+        case 'pagamento-confirmado':
+            return { label: 'Ver locação', Icon: Eye, alvo: 'reserva' };
+
+        case 'reserva-cancelada':
+            return { label: 'Ver detalhes', Icon: Eye, alvo: 'reserva' };
+
+        case 'pagamento-pendente':
+            return { label: 'Efetuar pagamento', Icon: CreditCard, alvo: 'reserva' };
+
+        case 'pagamento-recusado':
+            return { label: 'Tentar pagamento novamente', Icon: CreditCard, alvo: 'reserva' };
+
+        case 'avaliacao-pendente':
+            return { label: 'Avaliar locação', Icon: Star, alvo: 'avaliacao' };
+
+        case 'promocao-disponivel':
+            return { label: 'Ver ofertas', Icon: Tag, alvo: 'ofertas' };
+
+        case 'nova-mensagem':
+        default:
+            return null;
     }
 }
 
@@ -80,7 +208,9 @@ export default function NotificationDetailsModal({
     notification,
     onClose,
     onRenovar,
-    onPagar,
+    onVerReserva,
+    onAvaliar,
+    onVerOfertas,
 }: NotificationDetailsModalProps) {
     // Fecha o modal ao pressionar Esc
     useEffect(() => {
@@ -96,21 +226,46 @@ export default function NotificationDetailsModal({
 
     if (!notification) return null; // nada selecionado, modal não renderiza
 
-    const { id, type, category, title, description, showRenovar } = notification;
-    const Icon = ICON_BY_TYPE[type];
+    const { id, type, category, title, description, showRenovar, statusReserva, reservaId } =
+        notification;
+
+    // Quando a notificação está atrelada a uma reserva, usa o mesmo ícone/cor de
+    // STATUS_CONFIG (o mesmo exibido em 'Minhas Reservas'); caso contrário, cai no
+    // ícone genérico baseado em `type`.
+    const configStatus = statusReserva ? STATUS_CONFIG[statusReserva] : null;
+    const Icon = configStatus ? configStatus.icon : ICON_BY_TYPE[type];
+    const iconStyle = configStatus
+        ? ({ background: configStatus.fundo, color: configStatus.cor } as React.CSSProperties)
+        : undefined;
+
     const rows = getDetailRows(notification);
 
-    // Botões de ação variam conforme a categoria
-    const showRenovarButton = category === 'devolucao-pendente' && showRenovar;
-    const showPagarButton = category === 'pagamento-pendente';
+    // Botão "Renovar" continua exclusivo das categorias de devolução
+    const showRenovarButton =
+        (category === 'devolucao-pendente' || category === 'devolucao-atrasada') && showRenovar;
+
+    // Botão de ação contextual (avaliação, pagamento, ver locação, ofertas...) de acordo
+    // com a categoria da notificação. Só é exibido quando há para onde navegar.
+    const acaoConfig = getAcaoConfig(category);
+    const showAcaoButton =
+        !!acaoConfig && (acaoConfig.alvo === 'ofertas' || !!reservaId);
 
     const handleRenovar = () => {
         onRenovar?.(id);
         onClose();
     };
 
-    const handlePagar = () => {
-        onPagar?.(id);
+    const handleAcao = () => {
+        if (!acaoConfig) return;
+
+        if (acaoConfig.alvo === 'reserva' && reservaId) {
+            onVerReserva?.(reservaId);
+        } else if (acaoConfig.alvo === 'avaliacao' && reservaId) {
+            onAvaliar?.(reservaId);
+        } else if (acaoConfig.alvo === 'ofertas') {
+            onVerOfertas?.();
+        }
+
         onClose();
     };
 
@@ -125,8 +280,11 @@ export default function NotificationDetailsModal({
                 onClick={(event) => event.stopPropagation()}
             >
                 <div className={styles.header}>
-                    <span className={`${styles.iconWrapper} ${styles[`icon_${type}`]}`}>
-                        <Icon />
+                    <span
+                        className={`${styles.iconWrapper} ${configStatus ? '' : styles[`icon_${type}`]}`}
+                        style={iconStyle}
+                    >
+                        <Icon size={20} strokeWidth={2.25} />
                     </span>
 
                     <div className={styles.headerText}>
@@ -142,7 +300,7 @@ export default function NotificationDetailsModal({
                         onClick={onClose}
                         aria-label="Fechar"
                     >
-                        <CloseIcon />
+                        <X size={18} />
                     </button>
                 </div>
 
@@ -155,18 +313,18 @@ export default function NotificationDetailsModal({
                     ))}
                 </div>
 
-                {(showRenovarButton || showPagarButton) && (
+                {(showRenovarButton || showAcaoButton) && (
                     <div className={styles.footer}>
                         {showRenovarButton && (
                             <button type="button" className={styles.renovarButton} onClick={handleRenovar}>
-                                <RefreshIcon />
+                                <RefreshCw size={14} />
                                 Renovar locação
                             </button>
                         )}
-                        {showPagarButton && (
-                            <button type="button" className={styles.pagarButton} onClick={handlePagar}>
-                                <WalletIcon />
-                                Pagar agora
+                        {showAcaoButton && acaoConfig && (
+                            <button type="button" className={styles.acaoButton} onClick={handleAcao}>
+                                <acaoConfig.Icon size={14} />
+                                {acaoConfig.label}
                             </button>
                         )}
                     </div>

@@ -1,11 +1,18 @@
 import {
-  CheckIcon,
-  ClockIcon,
-  DocumentIcon,
-  RefreshIcon,
-  TruckIcon,
-  WarningIcon,
-} from '../icons/NotificationIcons';
+  AlertTriangle,
+  BadgePercent,
+  BellRing,
+  CheckCircle2,
+  Clock,
+  FileText,
+  Info,
+  MessageSquare,
+  RefreshCw,
+  Truck,
+  XCircle,
+  type LucideIcon,
+} from 'lucide-react';
+import { STATUS_CONFIG } from '../../MinhasReservas/EtiquetaStatus/statusConfig';
 import type { NotificationData } from '../../../pages/Notificacoes/Notificacoes.types';
 import styles from './NotificationCard.module.css';
 
@@ -15,26 +22,46 @@ interface NotificationCardProps {
   onVerDetalhes?: (id: string) => void;
 }
 
-// Mapeia o "type" (estilo visual) ao ícone correspondente
-const ICON_BY_TYPE = {
-  success: CheckIcon,
-  warning: WarningIcon,
-  delivery: TruckIcon,
-} as const;
+// Mapeia o "type" (estilo visual) ao ícone correspondente. Usado como fallback quando a
+// notificação não possui `statusReserva` (ex: promoção, mensagem, pagamento recusado).
+// Todos os ícones desta tela usam a biblioteca lucide-react, incluindo os mesmos ícones
+// usados em EtiquetaStatus (STATUS_CONFIG) para as notificações de reservas/locações.
+const ICON_BY_TYPE: Record<NotificationData['type'], LucideIcon> = {
+  success: CheckCircle2,
+  warning: AlertTriangle,
+  delivery: Truck,
+  error: XCircle,
+  info: Info,
+  promotion: BadgePercent,
+  message: MessageSquare,
+  reminder: BellRing,
+};
 
 export default function NotificationCard({
   notification,
   onRenovar,
   onVerDetalhes,
 }: NotificationCardProps) {
-  const { id, type, title, description, timestamp, extraInfo, showRenovar } = notification;
-  const Icon = ICON_BY_TYPE[type];
+  const { id, type, title, description, timestamp, extraInfo, showRenovar, statusReserva } =
+    notification;
+
+  // Quando a notificação está atrelada a uma reserva, usa o mesmo ícone/cor de
+  // `STATUS_CONFIG` (o mesmo exibido em 'Minhas Reservas'); caso contrário, cai no
+  // ícone genérico baseado em `type`.
+  const configStatus = statusReserva ? STATUS_CONFIG[statusReserva] : null;
+  const Icon = configStatus ? configStatus.icon : ICON_BY_TYPE[type];
+  const iconStyle = configStatus
+    ? ({ background: configStatus.fundo, color: configStatus.cor } as React.CSSProperties)
+    : undefined;
 
   return (
     <article className={styles.card}>
       <div className={styles.header}>
-        <span className={`${styles.iconWrapper} ${styles[`icon_${type}`]}`}>
-          <Icon />
+        <span
+          className={`${styles.iconWrapper} ${configStatus ? '' : styles[`icon_${type}`]}`}
+          style={iconStyle}
+        >
+          <Icon size={18} strokeWidth={2.25} />
         </span>
 
         <div className={styles.content}>
@@ -55,7 +82,7 @@ export default function NotificationCard({
         {/* timestamp vazio (ex: notificação de entrega) não renderiza o relógio */}
         {timestamp ? (
           <span className={styles.timestamp}>
-            <ClockIcon />
+            <Clock size={14} />
             {timestamp}
           </span>
         ) : (
@@ -65,12 +92,12 @@ export default function NotificationCard({
         <div className={styles.actions}>
           {showRenovar && (
             <button type="button" className={styles.renovarButton} onClick={() => onRenovar?.(id)}>
-              <RefreshIcon />
+              <RefreshCw size={14} />
               Renovar
             </button>
           )}
           <button type="button" className={styles.detailsButton} onClick={() => onVerDetalhes?.(id)}>
-            <DocumentIcon />
+            <FileText size={14} />
             Ver detalhes
           </button>
         </div>
