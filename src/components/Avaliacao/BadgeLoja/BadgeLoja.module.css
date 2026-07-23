@@ -23,6 +23,12 @@
     object-fit: contain;
 }
 
+.logoAusente {
+    background: var(--bg-muted, #f1efe9);
+    color: var(--text-muted, #9a958a);
+    border: 1px dashed var(--border, #e0ddd6);
+}
+
 .container {
     display: flex;
     align-items: center;

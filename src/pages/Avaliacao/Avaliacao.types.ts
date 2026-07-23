@@ -15,11 +15,12 @@ export interface SubAvaliacoes {
 
 export interface LojaProduto {
     nome: string;
-    logo: string;
+    /** `null` quando o locador não tem logo cadastrada (fallback: ícone de imagem quebrada). */
+    logo: string | null;
 }
 
 export interface ProdutoAvaliacao {
-    id: number;
+    id: string;
     nome: string;
     dataLocacao: string;
     imagem: string;

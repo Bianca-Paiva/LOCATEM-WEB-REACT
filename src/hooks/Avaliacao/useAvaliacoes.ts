@@ -1,8 +1,26 @@
 import { useMemo, useState } from 'react';
 import type { ChaveSubAvaliacao, ProdutoAvaliacao } from '../../pages/Avaliacao/Avaliacao.types';
 import { produtosAvaliacaoMock } from '../../pages/Avaliacao/Avaliacao.mock';
+import { obterLogoLocador } from '../../pages/Avaliacao/logoLocador';
+import type { ReservaData } from '../../pages/Reservas/MinhasReservas/MinhasReservas.types';
 
 const DURACAO_TOAST_MS = 3000;
+
+/** Converte a reserva finalizada (vinda de "Detalhes da Reserva") no formato
+ *  usado pela tela de avaliação, já pronta para ser avaliada. */
+function criarProdutoAvaliacaoAPartirDaReserva(reserva: ReservaData): ProdutoAvaliacao {
+    return {
+        id: reserva.id,
+        nome: reserva.produto,
+        dataLocacao: `Locado em ${reserva.periodo}`,
+        imagem: reserva.imagem,
+        status: 'pendente',
+        notaGlobal: 0,
+        subAvaliacoes: { locador: 0, entrega: 0, produto: 0 },
+        observacao: '',
+        loja: { nome: reserva.locador, logo: obterLogoLocador(reserva.locador) },
+    };
+}
 
 /**
  * Hook que concentra todo o estado e as regras do fluxo de avaliação:
@@ -18,7 +36,7 @@ const DURACAO_TOAST_MS = 3000;
  */
 export function useAvaliacoes() {
     const [produtos, setProdutos] = useState<ProdutoAvaliacao[]>(produtosAvaliacaoMock);
-    const [idAtual, setIdAtual] = useState<number | null>(null);
+    const [idAtual, setIdAtual] = useState<string | null>(null);
     const [observacaoRascunho, setObservacaoRascunho] = useState('');
     const [camposComErro, setCamposComErro] = useState<ChaveSubAvaliacao[]>([]);
     const [erroVisivel, setErroVisivel] = useState(false);
@@ -45,12 +63,27 @@ export function useAvaliacoes() {
     );
 
     /** Abre o modal para o produto informado, carregando a observação já salva. */
-    function abrirModal(id: number) {
+    function abrirModal(id: string) {
         const produto = produtos.find((p) => p.id === id);
         setIdAtual(id);
         setObservacaoRascunho(produto?.observacao ?? '');
         setCamposComErro([]);
         setErroVisivel(false);
+    }
+
+    /**
+     * Chamada ao chegar na página de avaliação vindo do botão "Avaliar Locação"
+     * (tela de Detalhes da Reserva, status "finalizada"). Garante que exista um
+     * item na lista para aquela reserva — criando-o a partir dos dados dela caso
+     * ainda não exista — e já abre o modal de avaliação direto nele.
+     */
+    function iniciarAvaliacaoDaReserva(reserva: ReservaData) {
+        setProdutos((atual) => {
+            const jaExiste = atual.some((p) => p.id === reserva.id);
+            return jaExiste ? atual : [criarProdutoAvaliacaoAPartirDaReserva(reserva), ...atual];
+        });
+
+        abrirModal(reserva.id);
     }
 
     function fecharModal() {
@@ -64,7 +97,7 @@ export function useAvaliacoes() {
      * Clique direto na estrela do card da lista: salva a nota global
      * e já abre o modal, replicando o comportamento original.
      */
-    function selecionarNotaGlobalEAbrir(id: number, valor: number) {
+    function selecionarNotaGlobalEAbrir(id: string, valor: number) {
         setProdutos((atual) =>
             atual.map((p) => (p.id === id ? { ...p, notaGlobal: valor } : p)),
         );
@@ -136,6 +169,7 @@ export function useAvaliacoes() {
         toastVisivel,
         setObservacaoRascunho,
         abrirModal,
+        iniciarAvaliacaoDaReserva,
         fecharModal,
         selecionarNotaGlobalEAbrir,
         selecionarSubNota,

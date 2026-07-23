@@ -4,8 +4,7 @@ import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
 import {
-    MessageCircle,
-    X,
+    X
 } from "lucide-react";
 import styles from './Header.module.css'
 
@@ -242,8 +241,15 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         </button>
                         <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
                     </form>
-                    <a href="#" className={styles.chatBtn}>
-                        <MessageCircle size={22} />
+                    <a
+                        href="../../pages/Login/Login.tsx"
+                        className={styles.loginBtn}
+                        onClick={e => { e.preventDefault(); navigate('login') }}
+                    >
+                        <Icon icon="mdi:account-circle-outline"
+                            width={32}
+                            height={32}
+                        />
                     </a>
                 </div>
 

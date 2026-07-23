@@ -1,3 +1,4 @@
+import { ImageOff } from 'lucide-react';
 import type { LojaProduto } from '../../../pages/Avaliacao/Avaliacao.types';
 import styles from './BadgeLoja.module.css';
 
@@ -9,8 +10,12 @@ interface BadgeLojaProps {
 export function BadgeLoja({ loja }: BadgeLojaProps) {
     return (
         <div className={styles.badge}>
-            <span className={styles.logoContainer}>
-                <img src={loja.logo} alt={loja.nome} />
+            <span className={`${styles.logoContainer} ${!loja.logo ? styles.logoAusente : ''}`}>
+                {loja.logo ? (
+                    <img src={loja.logo} alt={loja.nome} />
+                ) : (
+                    <ImageOff size={16} aria-label="Loja sem logo cadastrada" />
+                )}
             </span>
 
             <div className={styles.container}>

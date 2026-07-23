@@ -139,8 +139,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--color-bg-main);
-  border-radius: 12px;
+  background: var(--color-bg-input);
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
   padding: 14px 16px;
 }
 

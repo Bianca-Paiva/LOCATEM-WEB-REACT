@@ -51,6 +51,13 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
     navigate('minhasReservas');
   };
 
+  const handleAvaliacao = () => {
+    // A reserva finalizada já está em `reservaSelecionada` (contexto), então a
+    // página de Avaliação consegue montar a ferramenta de avaliação com os
+    // dados dela assim que a rota mudar.
+    navigate('avaliacao');
+  };
+
   const handleSolicitarNovaReserva = () => {
     // Integrar aqui com a tela de busca/produto para uma nova solicitação.
     navigate('busca');
@@ -80,6 +87,7 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
           status={status}
           onCancelarSolicitacao={handleCancelarSolicitacao}
           onVerLocacoes={handleVerLocacoes}
+          onAvaliacao={handleAvaliacao}
           onProsseguirAluguel={handleProsseguirAluguel}
           onVoltarReservas={handleVoltarReservas}
           onSolicitarNovaReserva={handleSolicitarNovaReserva}

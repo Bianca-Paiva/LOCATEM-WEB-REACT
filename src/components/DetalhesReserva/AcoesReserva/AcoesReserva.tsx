@@ -5,6 +5,7 @@ interface AcoesReservaProps {
   status: StatusReserva;
   onCancelarSolicitacao?: () => void;
   onVerLocacoes?: () => void;
+  onAvaliacao?: () => void;
   onProsseguirAluguel?: () => void;
   onVoltarReservas?: () => void;
   onSolicitarNovaReserva?: () => void;
@@ -14,6 +15,7 @@ export default function AcoesReserva({
   status,
   onCancelarSolicitacao,
   onVerLocacoes,
+  onAvaliacao,
   onProsseguirAluguel,
   onVoltarReservas,
   onSolicitarNovaReserva,
@@ -21,13 +23,23 @@ export default function AcoesReserva({
   // Aguardando aprovação: única ação possível é cancelar a solicitação
   if (status === 'pendente') {
     return (
-      <button
-        type="button"
-        className={styles.botaoPerigo}
-        onClick={onCancelarSolicitacao}
-      >
-        Cancelar solicitação
-      </button>
+      <div className={styles.grupoBotoes}>
+        <button
+          type="button"
+          className={styles.botaoSecundario}
+          onClick={onVoltarReservas}
+        >
+          Voltar para minhas reservas
+        </button>
+
+        <button
+          type="button"
+          className={styles.botaoPerigo}
+          onClick={onCancelarSolicitacao}
+        >
+          Cancelar solicitação
+        </button>
+      </div>
     );
   }
 
@@ -35,10 +47,18 @@ export default function AcoesReserva({
   if (status === 'aguardandoPagamento') {
     return (
       <div className={styles.grupoBotoes}>
-        <button type="button" className={styles.botaoSecundario} onClick={onVerLocacoes}>
+        <button
+          type="button"
+          className={styles.botaoSecundario}
+          onClick={onVerLocacoes}
+        >
           Ver minhas locações
         </button>
-        <button type="button" className={styles.botaoPrimario} onClick={onProsseguirAluguel}>
+        <button
+          type="button"
+          className={styles.botaoPrimario}
+          onClick={onProsseguirAluguel}
+        >
           Efetuar pagamento
         </button>
       </div>
@@ -61,7 +81,22 @@ export default function AcoesReserva({
     );
   }
 
-  // Finalizada, recusada e cancelada compartilham o mesmo par de ações
+  if (
+    status === 'finalizada'
+  ) {
+    return (
+      <div className={styles.grupoBotoes}>
+        <button type="button" className={styles.botaoSecundario} onClick={onVoltarReservas}>
+          Voltar para minhas reservas
+        </button>
+        <button type="button" className={styles.botaoPrimario} onClick={onAvaliacao}>
+          Avaliar Locação
+        </button>
+      </div>
+    );
+  }
+
+  // Recusada e cancelada compartilham o mesmo par de ações
   return (
     <div className={styles.grupoBotoes}>
       <button type="button" className={styles.botaoSecundario} onClick={onVoltarReservas}>
