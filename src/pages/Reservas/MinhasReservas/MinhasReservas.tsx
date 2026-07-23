@@ -1,4 +1,5 @@
 import Header from '../../../components/Header/Header';
+import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
 import ReservaAbas from '../../../components/MinhasReservas/ReservaAbas/ReservaAbas';
 import ReservaCard from '../../../components/MinhasReservas/ReservaCard/ReservaCard';
 import EstadoVazio from '../../../components/MinhasReservas/EstadoVazio/EstadoVazio';
@@ -82,10 +83,10 @@ export default function MinhasReservas({ navigate }: MinhasReservasProps) {
       <Header navigate={navigate} currentRoute="minhasReservas" />
 
       <main className={styles.pagina}>
-        <div className={styles.cabecalho}>
-          <h1 className={styles.titulo}>Minhas Reservas</h1>
-          <p className={styles.subtitulo}>Acompanhe todas as suas solicitações de reserva.</p>
-        </div>
+        <CabecalhoPagina
+          titulo="Minhas Reservas"
+          subtitulo="Acompanhe todas as suas solicitações de reserva."
+        />
 
         <ReservaAbas filtro={filtro} onChange={setFiltro} contagem={contagem} />
 

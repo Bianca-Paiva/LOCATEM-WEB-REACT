@@ -7,6 +7,7 @@ import { ModalAvaliacao } from '../../components/Avaliacao/ModalAvaliacao/ModalA
 import { ToastConfirmacao } from '../../components/Avaliacao/ToastConfirmacao/ToastConfirmacao';
 import { EstadoVazio } from '../../components/Avaliacao/EstadoVazio/EstadoVazio';
 import Header from '../../components/Header/Header';
+import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
 
 import { useAvaliacoes } from '../../hooks/Avaliacao/useAvaliacoes';
 import { useReservaStore } from '../../hooks/Reservas/useReservaStore';
@@ -63,10 +64,10 @@ export default function Avaliacao({ navigate }: AvaliacaoProps) {
             <Header navigate={navigate} currentRoute='avaliacao'/>
 
             <div className={styles.contentArea}>
-                <div className={styles.tituloPage}>
-                    <h1>Minhas Avaliações</h1>
-                    <p>Avalie os produtos que você locou e ajude outros locatários.</p>
-                </div>
+                <CabecalhoPagina
+                    titulo="Minhas Avaliações"
+                    subtitulo="Avalie os produtos que você locou e ajude outros locatários."
+                />
 
                 <nav className={styles.tabs} role="tablist" aria-label="Filtro de avaliações">
                     <button

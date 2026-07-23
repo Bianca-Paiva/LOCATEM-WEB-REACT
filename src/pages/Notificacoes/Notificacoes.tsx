@@ -8,6 +8,7 @@ import { useNotifications } from '../../hooks/useNotifications';
 import { useReservaStore } from '../../hooks/Reservas/useReservaStore';
 import styles from './Notificacoes.module.css';
 import Header from '../../components/Header/Header';
+import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
 
 import type { Route } from '../../router/useRouter';
 import type { NotificationData } from './Notificacoes.types';
@@ -74,23 +75,24 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
       <Header navigate={navigate} currentRoute="notificacoes" />
 
       <main className={styles.page}>
-        <div className={styles.headerRow}>
-          <h1 className={styles.title}>Notificações</h1>
+        <CabecalhoPagina
+          titulo="Notificações"
+          acao={
+            <div className={styles.controls}>
+              <FilterDropdown value={filter} onChange={setFilter} />
 
-          <div className={styles.controls}>
-            <FilterDropdown value={filter} onChange={setFilter} />
-
-            <button
-              type="button"
-              className={styles.clearButton}
-              onClick={clearAll}
-              disabled={notifications.length === 0}
-            >
-              <Trash size={16} />
-              Limpar tudo
-            </button>
-          </div>
-        </div>
+              <button
+                type="button"
+                className={styles.clearButton}
+                onClick={clearAll}
+                disabled={notifications.length === 0}
+              >
+                <Trash size={16} />
+                Limpar tudo
+              </button>
+            </div>
+          }
+        />
 
         {notifications.length === 0 ? (
           <div className={styles.emptyState}>

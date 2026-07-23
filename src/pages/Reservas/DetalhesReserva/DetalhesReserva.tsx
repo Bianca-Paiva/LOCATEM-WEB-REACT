@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Header from '../../../components/Header/Header';
+import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
 import EtiquetaStatus from '../../../components/MinhasReservas/EtiquetaStatus/EtiquetaStatus';
 import ReservaResumoCard from '../../../components/DetalhesReserva/ReservaResumoCard/ReservaResumoCard';
 import PainelStatusReserva from '../../../components/DetalhesReserva/PainelStatusReserva/PainelStatusReserva';
@@ -68,10 +69,7 @@ export default function DetalhesReserva({ navigate }: DetalhesReservaProps) {
       <Header navigate={navigate} currentRoute="minhasReservas" />
 
       <main className={styles.pagina}>
-        <div className={styles.cabecalho}>
-          <h1 className={styles.titulo}>Detalhes da Reserva</h1>
-          <EtiquetaStatus status={status} />
-        </div>
+        <CabecalhoPagina titulo="Detalhes da Reserva" acao={<EtiquetaStatus status={status} />} />
 
         <ReservaResumoCard reserva={reservaSelecionada} />
 

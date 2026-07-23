@@ -3,22 +3,6 @@
     padding: 30px 18px 48px;
 }
 
-.tituloPage {
-    margin-bottom: 28px;
-}
-
-.tituloPage h1 {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text-primary, #1a1814);
-}
-
-.tituloPage p {
-    font-size: 13;
-    color: var(--text-secondary, #6b6860);
-    margin-top: 4px;
-}
-
 /* Tabs */
 .tabs {
     display: flex;

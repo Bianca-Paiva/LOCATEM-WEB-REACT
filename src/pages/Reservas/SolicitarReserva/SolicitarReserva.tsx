@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from '../../../components/Header/Header';
+import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
 import ProdutoResumoCard from '../../../components/SolicitarReserva/ProdutoResumoCard/ProdutoResumoCard';
 import CampoData from '../../../components/SolicitarReserva/CampoData/CampoData';
 import HorarioDropdown from '../../../components/SolicitarReserva/HorarioDropdown/HorarioDropdown';
@@ -114,12 +115,10 @@ export default function SolicitarReserva({ navigate }: SolicitarReservaProps) {
       <Header navigate={navigate} currentRoute="home" />
 
       <main className={styles.pagina}>
-        <div className={styles.cabecalho}>
-          <h1 className={styles.titulo}>Solicitar Reserva</h1>
-          <p className={styles.subtitulo}>
-            Preencha as informações abaixo para solicitar a reserva desta ferramenta.
-          </p>
-        </div>
+        <CabecalhoPagina
+          titulo="Solicitar Reserva"
+          subtitulo="Preencha as informações abaixo para solicitar a reserva desta ferramenta."
+        />
 
         <ProdutoResumoCard produto={produto} />
 
