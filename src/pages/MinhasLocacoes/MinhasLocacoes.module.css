@@ -1,0 +1,52 @@
+.pagina {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.grade {
+  max-width: 1428px;
+  margin: 24px auto 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.botaoNovaFerramenta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #0A0A0A;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast);
+}
+
+.botaoNovaFerramenta:hover {
+  background: var(--color-primary-hover);
+}
+
+@media (min-width: 640px) {
+  .pagina {
+    padding: 28px 24px 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grade {
+    grid-template-columns: 1fr;
+  }
+}

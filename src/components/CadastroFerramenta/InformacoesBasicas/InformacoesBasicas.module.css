@@ -1,0 +1,180 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.linha2col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 16px;
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #141D23;
+  margin-bottom: 6px;
+}
+
+.obrigatorio {
+  color: #E11D48;
+}
+
+/* ---------- Select customizado (Categoria / Estado de Conservação) ---------- */
+.campoSelect {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.selectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select {
+  width: 100%;
+  height: 48px;
+  padding: 0 38px 0 14px;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  font-size: 14px;
+  background-color: var(--color-bg-input);
+  color: var(--color-text-dark);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.select.placeholder {
+  color: var(--color-text-muted);
+}
+
+.select:focus {
+  outline: none;
+  border: 1px solid #ffcc0060;
+}
+
+.select.erro {
+  border: 1px solid #E11D48;
+  box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
+}
+
+.chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.error {
+  font-size: 13px;
+  color: #E11D48;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+/* ---------- Quantidade (stepper) ---------- */
+.campoQuantidade {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+}
+
+.stepperBotao {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid #e5e7eb;
+  background: var(--color-bg-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-dark);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.stepperBotao:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.stepperBotao:disabled {
+  color: #c4c4c4;
+  cursor: not-allowed;
+}
+
+.stepperValor {
+  min-width: 20px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+/* ---------- Fonte de Alimentação (chips) ---------- */
+.campoFonte {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  background: var(--color-bg-input);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: var(--color-primary);
+}
+
+.chipAtivo {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: #6E5000;
+}
+
+.shake {
+  animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+@media (min-width: 640px) {
+  .linha2col {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+}

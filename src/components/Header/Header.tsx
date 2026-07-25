@@ -72,6 +72,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Minhas Locações",
+            route: "minhasLocacoes",
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "material-symbols:package-2" : "material-symbols:package-2-outline"}
@@ -112,17 +113,17 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                 />
             ),
         },
-        {
-            label: "Entrar",
-            route: "login",
-            renderIcon: (active) => (
-                <Icon
-                    icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
-                    width={22}
-                    height={22}
-                />
-            ),
-        },
+        // {
+        //     label: "Entrar",
+        //     route: "login",
+        //     renderIcon: (active) => (
+        //         <Icon
+        //             icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
+        //             width={22}
+        //             height={22}
+        //         />
+        //     ),
+        // },
         {
             label: "Suporte",
             renderIcon: (active) => (

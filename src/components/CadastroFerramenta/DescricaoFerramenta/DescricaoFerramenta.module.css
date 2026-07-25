@@ -1,0 +1,57 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid #e5e7eb;
+  font-size: 14px;
+  background-color: var(--color-bg-input);
+  resize: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  color: var(--color-text-dark);
+}
+
+.textarea:focus {
+  outline: none;
+  border: 1px solid #ffcc0060;
+}
+
+.textarea.erro {
+  border: 1px solid #E11D48;
+  box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
+}
+
+.rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.contador {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-left: auto;
+}
+
+.error {
+  font-size: 13px;
+  color: #E11D48;
+  font-weight: 500;
+}
+
+.shake {
+  animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}

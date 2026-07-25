@@ -1,0 +1,84 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #141D23;
+}
+
+.obrigatorio {
+  color: #E11D48;
+}
+
+.inputMoeda {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  background-color: var(--color-bg-input);
+  padding: 0 14px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.inputMoeda:focus-within {
+  border: 1px solid #ffcc0060;
+}
+
+.prefixo {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-right: 6px;
+}
+
+.input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--color-text-dark);
+  outline: none;
+}
+
+.input.erro {
+  color: #E11D48;
+}
+
+.inputMoeda:has(.erro) {
+  border: 1px solid #E11D48;
+  box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
+}
+
+.dica {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.error {
+  font-size: 13px;
+  color: #E11D48;
+  font-weight: 500;
+}
+
+.shake {
+  animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
