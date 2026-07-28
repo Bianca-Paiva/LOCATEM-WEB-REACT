@@ -1,0 +1,79 @@
+.card {
+    background: var(--color-bg-card);
+    border-radius: 16px;
+    padding: 24px 28px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid #F3F4F6;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 18px;
+}
+
+.notaBloco {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 20px;
+}
+
+.nota {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--color-text-dark);
+    line-height: 1;
+}
+
+.estrelas {
+    display: flex;
+    gap: 3px;
+}
+
+.estrelaCheia {
+    fill: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.estrelaVazia {
+    fill: none;
+    color: #E0E0E0;
+}
+
+.estatisticas {
+    text-align: center;
+    margin-top: auto;
+}
+
+.baseadoEm {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 4px;
+}
+
+.linhaForte {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--color-text-dark);
+    line-height: 1.35;
+}
+
+.verAvaliacoes {
+    align-self: flex-end;
+    margin-top: 18px;
+    background: none;
+    border: none;
+    color: #B98900;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.verAvaliacoes:hover {
+    text-decoration: underline;
+}

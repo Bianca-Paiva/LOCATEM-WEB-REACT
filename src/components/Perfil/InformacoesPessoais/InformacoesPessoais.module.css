@@ -1,0 +1,115 @@
+.card {
+    background: var(--color-bg-card);
+    border-radius: 16px;
+    padding: 24px 28px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 1px solid #F3F4F6;
+    height: 100%;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.titulo {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.btnIcone {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    background: var(--color-primary-soft);
+    color: var(--color-text-dark);
+    border: none;
+    border-radius: 8px;
+    transition: background var(--transition-fast);
+}
+
+.btnIcone:hover {
+    background: var(--color-primary-light);
+}
+
+.acoesEdicao {
+    display: flex;
+    gap: 8px;
+}
+
+.btnSalvar {
+    background: #DCF5E3;
+    color: #1E8A44;
+}
+
+.btnSalvar:hover {
+    background: #c3ecd0;
+}
+
+.btnCancelar {
+    background: #FBDCDC;
+    color: #C23B3B;
+}
+
+.btnCancelar:hover {
+    background: #f6c6c6;
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.semBorda {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.icone {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    color: #B98900;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.itemTexto {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.itemTexto dt {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+}
+
+.itemTexto dd {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    word-break: break-word;
+}
+
+.formEdicao {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 8px;
+}
