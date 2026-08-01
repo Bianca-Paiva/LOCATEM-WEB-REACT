@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
+import FormInput from '../../Inputs/FormInput/FormInput';
 import type { EspecificacaoForm } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './EspecificacoesTecnicasForm.module.css';
 
@@ -7,16 +9,58 @@ interface EspecificacoesTecnicasFormProps {
   onChange: (especificacoes: EspecificacaoForm[]) => void;
 }
 
-export default function EspecificacoesTecnicasForm({ especificacoes, onChange }: EspecificacoesTecnicasFormProps) {
+export default function EspecificacoesTecnicasForm({
+  especificacoes,
+  onChange,
+}: EspecificacoesTecnicasFormProps) {
+  const [erro, setErro] = useState('');
+
+  // Atualiza uma especificação técnica existente.
+  // O parâmetro "campo" define se o texto digitado vai alterar "label" ou "valor".
+  // ou seja, quando o usuário digitar no campo ESPECIFICAÇÃO ou no campo VALOR, atualize aquela linha específica dentro do array especificacoes.
+  // Essa função é chamada toda vez que o usuário digita em um dos inputs.
+  // Esses dados ainda não vão para o banco aqui; eles só são preparados no formulário.
   const atualizarLinha = (id: string, campo: 'label' | 'valor', texto: string) => {
-    onChange(especificacoes.map((esp) => (esp.id === id ? { ...esp, [campo]: texto } : esp)));
+    const especificacoesAtualizadas = especificacoes.map((esp) =>
+      esp.id === id ? { ...esp, [campo]: texto } : esp
+    );
+
+    onChange(especificacoesAtualizadas);
+
+    const todasPreenchidas = especificacoesAtualizadas.every(
+      (esp) => esp.label.trim() !== '' && esp.valor.trim() !== ''
+    );
+
+    if (todasPreenchidas) {
+      setErro('');
+    }
   };
 
   const removerLinha = (id: string) => {
-    onChange(especificacoes.filter((esp) => esp.id !== id));
+    const especificacoesAtualizadas = especificacoes.filter((esp) => esp.id !== id);
+
+    onChange(especificacoesAtualizadas);
+
+    const todasPreenchidas = especificacoesAtualizadas.every(
+      (esp) => esp.label.trim() !== '' && esp.valor.trim() !== ''
+    );
+
+    if (todasPreenchidas) {
+      setErro('');
+    }
   };
 
   const adicionarLinha = () => {
+    const existeEspecificacaoIncompleta = especificacoes.some(
+      (esp) => esp.label.trim() === '' || esp.valor.trim() === ''
+    );
+
+    if (existeEspecificacaoIncompleta) {
+      setErro('Preencha a especificação anterior antes de adicionar uma nova.');
+      return;
+    }
+
+    setErro('');
     onChange([...especificacoes, { id: `esp-${Date.now()}`, label: '', valor: '' }]);
   };
 
@@ -29,20 +73,26 @@ export default function EspecificacoesTecnicasForm({ especificacoes, onChange }:
 
       {especificacoes.map((esp) => (
         <div key={esp.id} className={styles.linha}>
-          <input
+          <FormInput
+            id={`especificacao-${esp.id}`}
             type="text"
-            className={styles.input}
-            placeholder="Voltagem"
+            placeholder="Torque máximo"
             value={esp.label}
             onChange={(e) => atualizarLinha(esp.id, 'label', e.target.value)}
+            aria-label="Especificação"
+            status={erro && esp.label.trim() === '' ? 'erro' : ''}
           />
-          <input
+
+          <FormInput
+            id={`valor-${esp.id}`}
             type="text"
-            className={styles.input}
-            placeholder="220V"
+            placeholder="65 Nm"
             value={esp.valor}
             onChange={(e) => atualizarLinha(esp.id, 'valor', e.target.value)}
+            aria-label="Valor da especificação"
+            status={erro && esp.valor.trim() === '' ? 'erro' : ''}
           />
+
           <button
             type="button"
             className={styles.botaoRemover}
@@ -53,6 +103,8 @@ export default function EspecificacoesTecnicasForm({ especificacoes, onChange }:
           </button>
         </div>
       ))}
+
+      {erro && <p className={styles.error}>{erro}</p>}
 
       <button type="button" className={styles.botaoAdicionar} onClick={adicionarLinha}>
         <Plus size={16} />

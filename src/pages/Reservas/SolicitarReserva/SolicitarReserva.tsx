@@ -4,7 +4,7 @@ import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina
 import ProdutoResumoCard from '../../../components/SolicitarReserva/ProdutoResumoCard/ProdutoResumoCard';
 import CampoData from '../../../components/SolicitarReserva/CampoData/CampoData';
 import HorarioDropdown from '../../../components/SolicitarReserva/HorarioDropdown/HorarioDropdown';
-import SeletorQuantidade from '../../../components/SolicitarReserva/SeletorQuantidade/SeletorQuantidade';
+import SeletorQuantidade from '../../../components/Inputs/SeletorQuantidade/SeletorQuantidade';
 import EnderecoEntrega from '../../../components/SolicitarReserva/EnderecoEntrega/EnderecoEntrega';
 import ResumoReserva from '../../../components/SolicitarReserva/ResumoReserva/ResumoReserva';
 import { useProdutoStore } from '../../../hooks/useProdutoStore';

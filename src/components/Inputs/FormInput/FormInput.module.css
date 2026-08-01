@@ -20,7 +20,7 @@
     border-radius: 10px;
     border: 1.5px solid #e5e7eb;
     font-size: 14px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
     background-color: var(--color-bg-input);
     transition: border 0.2s, box-shadow 0.2s;
 }

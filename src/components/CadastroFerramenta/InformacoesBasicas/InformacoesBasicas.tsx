@@ -1,5 +1,6 @@
-import { ChevronDown, Minus, Plus } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import FormInput from '../../Inputs/FormInput/FormInput';
+import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import {
   CATEGORIAS_FERRAMENTA,
   ESTADOS_CONSERVACAO,
@@ -123,29 +124,22 @@ export default function InformacoesBasicas({ form, onChangeCampo, erros, shake }
 
       <div className={styles.linha2col}>
         <div className={styles.campoQuantidade}>
-          <label className={styles.label}>
-            Quantidade Disponível<span className={styles.obrigatorio}> *</span>
-          </label>
-          <div className={styles.stepper}>
-            <button
-              type="button"
-              className={styles.stepperBotao}
-              onClick={() => onChangeCampo('quantidadeDisponivel', Math.max(1, quantidadeDisponivel - 1))}
-              disabled={quantidadeDisponivel <= 1}
-              aria-label="Diminuir quantidade"
-            >
-              <Minus size={15} />
-            </button>
-            <span className={styles.stepperValor}>{quantidadeDisponivel}</span>
-            <button
-              type="button"
-              className={styles.stepperBotao}
-              onClick={() => onChangeCampo('quantidadeDisponivel', Math.min(999, quantidadeDisponivel + 1))}
-              aria-label="Aumentar quantidade"
-            >
-              <Plus size={15} />
-            </button>
-          </div>
+          <SeletorQuantidade
+            quantidade={quantidadeDisponivel}
+            exibirEstoqueDisponivel={false}
+            onDecrementar={() =>
+              onChangeCampo(
+                'quantidadeDisponivel',
+                Math.max(1, quantidadeDisponivel - 1)
+              )
+            }
+            onIncrementar={() =>
+              onChangeCampo(
+                'quantidadeDisponivel',
+                Math.min(999, quantidadeDisponivel + 1)
+              )
+            }
+          />
         </div>
 
         <div className={styles.campoFonte}>

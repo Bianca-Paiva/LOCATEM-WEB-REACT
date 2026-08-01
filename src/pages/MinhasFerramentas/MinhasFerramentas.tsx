@@ -9,15 +9,15 @@ import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { useCatalogoStore } from '../../hooks/useCatalogoStore';
 import { useProdutoStore } from '../../hooks/useProdutoStore';
 import { toProdutoHome, toProdutoSelecionado } from '../../mocks/produtos.adapters';
-import styles from './MinhasLocacoes.module.css';
+import styles from './MinhasFerramentas.module.css';
 
 import type { Route } from '../../router/useRouter';
 
-interface MinhasLocacoesProps {
+interface MinhasFerramentasProps {
   navigate: (route: Route) => void;
 }
 
-export default function MinhasLocacoes({ navigate }: MinhasLocacoesProps) {
+export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) {
   const { produtos } = useCatalogoStore();
   const { setProdutoSelecionado } = useProdutoStore();
 
@@ -47,11 +47,11 @@ export default function MinhasLocacoes({ navigate }: MinhasLocacoesProps) {
 
   return (
     <>
-      <Header navigate={navigate} currentRoute="minhasLocacoes" />
+      <Header navigate={navigate} currentRoute="minhasFerramentas" />
 
       <main className={styles.pagina}>
         <CabecalhoPagina
-          titulo="Minhas Locações"
+          titulo="Minhas Ferramentas"
           subtitulo="Gerencie as ferramentas que você anuncia para locação."
           acao={botaoNovaFerramenta}
         />

@@ -12,7 +12,7 @@ import MinhasReservas from "./pages/Reservas/MinhasReservas/MinhasReservas";
 import DetalhesReserva from "./pages/Reservas/DetalhesReserva/DetalhesReserva";
 import SolicitarReserva from "./pages/Reservas/SolicitarReserva/SolicitarReserva";
 import SolicitacaoEnviada from "./pages/Reservas/SolicitacaoEnviada/SolicitacaoEnviada";
-import MinhasLocacoes from "./pages/MinhasLocacoes/MinhasLocacoes";
+import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
 import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
 
 
@@ -56,7 +56,7 @@ export default function App() {
 
         {route === "solicitacaoEnviada" && <SolicitacaoEnviada navigate={navigate} />}
 
-        {route === "minhasLocacoes" && <MinhasLocacoes navigate={navigate} />}
+        {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
 
         {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
       </ReservaProvider>

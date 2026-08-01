@@ -71,8 +71,8 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Minhas Locações",
-            route: "minhasLocacoes",
+            label: "Minhas Ferramentas",
+            route: "minhasFerramentas",
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "material-symbols:package-2" : "material-symbols:package-2-outline"}

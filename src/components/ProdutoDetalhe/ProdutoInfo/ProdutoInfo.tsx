@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import TempoDropdown from '../TempoDropdown/TempoDropdown';
-import SeletorQuantidade from '../../SolicitarReserva/SeletorQuantidade/SeletorQuantidade';
+import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import styles from './ProdutoInfo.module.css';
 
 interface ProdutoInfoProps {
@@ -92,7 +92,7 @@ export function ProdutoInfo({
             onIncrementar={increment}
           />
         </div>
-        
+
       </div>
 
       {/* CTAs */}

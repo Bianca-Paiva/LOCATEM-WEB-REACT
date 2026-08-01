@@ -15,7 +15,7 @@ export type Route =
   | "detalhesReserva"
   | "solicitarReserva"
   | "solicitacaoEnviada"
-  | "minhasLocacoes"
+  | "minhasFerramentas"
   | "cadastroFerramenta";
 
 function getRouteFromHash(): Route {
@@ -35,7 +35,7 @@ function getRouteFromHash(): Route {
   if (hash === "detalhesReserva") return "detalhesReserva";
   if (hash === "solicitarReserva") return "solicitarReserva";
   if (hash === "solicitacaoEnviada") return "solicitacaoEnviada";
-  if (hash === "minhasLocacoes") return "minhasLocacoes";
+  if (hash === "minhasFerramentas") return "minhasFerramentas";
   if (hash === "cadastroFerramenta") return "cadastroFerramenta";
 
   return "home";

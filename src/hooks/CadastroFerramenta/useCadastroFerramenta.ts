@@ -13,7 +13,7 @@ const ESTADO_INICIAL: CadastroFerramentaFormState = {
   quantidadeDisponivel: 1,
   fonteAlimentacao: '',
   descricao: '',
-  especificacoes: [{ id: 'esp-inicial', label: 'Voltagem', valor: '' }],
+  especificacoes: [{ id: 'esp-inicial', label: '', valor: '' }],
   valorDiaria: '',
   caucao: '',
   acessorios: [],

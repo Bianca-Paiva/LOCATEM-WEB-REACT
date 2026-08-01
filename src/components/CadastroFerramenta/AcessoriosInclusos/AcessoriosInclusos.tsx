@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { X } from 'lucide-react';
+
+import FormInput from '../../Inputs/FormInput/FormInput';
 import styles from './AcessoriosInclusos.module.css';
 
 interface AcessoriosInclusosProps {
@@ -49,14 +51,16 @@ export default function AcessoriosInclusos({ acessorios, onChange }: AcessoriosI
         </div>
       )}
 
-      <input
+      <FormInput
+        id="acessorio-incluso"
         type="text"
-        className={styles.input}
+        label=""
         placeholder="Adicione"
         value={texto}
         onChange={(e) => setTexto(e.target.value)}
         onKeyDown={handleKeyDown}
         onBlur={adicionar}
+        aria-label="Adicionar acessório incluso"
       />
 
       <small className={styles.dica}>Pressione Enter para adicionar cada acessório.</small>

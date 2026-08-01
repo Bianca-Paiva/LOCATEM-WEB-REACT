@@ -34,7 +34,7 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
   const [modalAberto, setModalAberto] = useState(false);
 
   const handleCancelar = () => {
-    navigate('minhasLocacoes');
+    navigate('minhasFerramentas');
   };
 
   const handlePublicar = () => {
@@ -63,7 +63,7 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
 
   return (
     <>
-      <Header navigate={navigate} currentRoute="minhasLocacoes" />
+      <Header navigate={navigate} currentRoute="minhasFerramentas" />
 
       <main className={styles.pagina}>
         <CabecalhoPagina
@@ -210,8 +210,8 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
         open={modalAberto}
         title="Ferramenta publicada!"
         message="Sua ferramenta já está disponível para locação."
-        buttonText="Ver minhas locações"
-        onConfirm={() => navigate('minhasLocacoes')}
+        buttonText="Ver minhas ferramentas"
+        onConfirm={() => navigate('minhasFerramentas')}
       />
     </>
   );
