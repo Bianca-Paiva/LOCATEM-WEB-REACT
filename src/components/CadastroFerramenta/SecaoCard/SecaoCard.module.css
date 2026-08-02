@@ -57,6 +57,8 @@
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  container-type: inline-size;
+  container-name: secaoCard;
 }
 
 @media (min-width: 640px) {

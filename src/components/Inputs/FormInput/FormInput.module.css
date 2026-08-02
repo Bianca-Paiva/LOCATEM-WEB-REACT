@@ -66,10 +66,9 @@
 }
 
 .error {
-    font-size: 14px;
+    font-size: 13px;
     color: #E11D48;
-    margin-top: -20px;
-    margin-bottom: 20px;
+    margin: 0;
     display: block;
     font-weight: 500;
 }

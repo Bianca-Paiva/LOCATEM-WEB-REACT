@@ -1,14 +1,15 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 20px;
   width: 100%;
+  margin-bottom: 24px;
 }
 
 .linha2col {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0 16px;
+  gap: 20px 16px;
   width: 100%;
 }
 
@@ -24,56 +25,6 @@
   color: #E11D48;
 }
 
-/* ---------- Select customizado (Categoria / Estado de Conservação) ---------- */
-.campoSelect {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 24px;
-}
-
-.selectWrapper {
-  position: relative;
-  width: 100%;
-}
-
-.select {
-  width: 100%;
-  height: 48px;
-  padding: 0 38px 0 14px;
-  border-radius: 10px;
-  border: 1.5px solid #e5e7eb;
-  font-size: 14px;
-  background-color: var(--color-bg-input);
-  color: var(--color-text-dark);
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-  transition: border 0.2s, box-shadow 0.2s;
-}
-
-.select.placeholder {
-  color: var(--color-text-muted);
-}
-
-.select:focus {
-  outline: none;
-  border: 1px solid #ffcc0060;
-}
-
-.select.erro {
-  border: 1px solid #E11D48;
-  box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
-}
-
-.chevron {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-text-muted);
-  pointer-events: none;
-}
-
 .error {
   font-size: 13px;
   color: #E11D48;
@@ -85,7 +36,6 @@
 .campoQuantidade {
   display: flex;
   flex-direction: column;
-  margin-bottom: 24px;
 }
 
 .stepper {
@@ -130,13 +80,16 @@
 .campoFonte {
   display: flex;
   flex-direction: column;
-  margin-bottom: 24px;
 }
 
 .chips {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.chips+.error {
+  margin-top: 8px;
 }
 
 .chip {
@@ -175,13 +128,38 @@
 }
 
 @keyframes gentleShake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-4px); }
-  40%, 80% { transform: translateX(4px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
 }
 
 @media (min-width: 640px) {
   .linha2col {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+}
+
+/* Categoria / Estado de Conservação: reage à largura real do card (não da tela). Empilha sempre que não houver espaço para os dois selects sem cortar o texto selecionado; volta a ficar lado a lado quando couber. */
+.linhaCategoria {
+  grid-template-columns: 1fr;
+  gap: 20px 16px;
+}
+
+@container secaoCard (min-width: 420px) {
+  .linhaCategoria {
     grid-template-columns: 1fr 1fr;
     gap: 0 20px;
   }

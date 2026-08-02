@@ -24,9 +24,9 @@ interface CadastroFerramentaProps {
   navigate: (route: Route) => void;
 }
 
+
 export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps) {
-  const { form, setCampo, toggleDiaIndisponivel, erros, formularioCompleto, montarProduto } =
-    useCadastroFerramenta();
+  const { form, setCampo, toggleDiaIndisponivel, erros, formularioCompleto, montarProduto } = useCadastroFerramenta();
   const { adicionarProduto } = useCatalogoStore();
 
   const [tentouPublicar, setTentouPublicar] = useState(false);
@@ -103,6 +103,7 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
                   modelo: tentouPublicar ? erros.modelo : undefined,
                   categoria: tentouPublicar ? erros.categoria : undefined,
                   estadoConservacao: tentouPublicar ? erros.estadoConservacao : undefined,
+                  fonteAlimentacao: tentouPublicar ? erros.fonteAlimentacao : undefined,
                 }}
                 shake={shake}
               />
@@ -131,6 +132,7 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
               <EspecificacoesTecnicasForm
                 especificacoes={form.especificacoes}
                 onChange={(especificacoes) => setCampo('especificacoes', especificacoes)}
+                erroPublicacao={tentouPublicar ? erros.especificacoes : undefined}
               />
             </SecaoCard>
           </div>

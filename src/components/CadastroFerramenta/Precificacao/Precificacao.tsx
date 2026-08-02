@@ -1,4 +1,5 @@
 import styles from './Precificacao.module.css';
+import FormInput from '../../Inputs/FormInput/FormInput';
 
 interface PrecificacaoProps {
   valorDiaria: string;
@@ -13,7 +14,9 @@ interface PrecificacaoProps {
 function maskMoeda(valor: string): string {
   const limpo = valor.replace(/[^\d,]/g, '');
   const partes = limpo.split(',');
+
   if (partes.length <= 1) return limpo;
+
   return `${partes[0]},${partes.slice(1).join('').slice(0, 2)}`;
 }
 
@@ -33,15 +36,16 @@ export default function Precificacao({
         </label>
         <div className={styles.inputMoeda}>
           <span className={styles.prefixo}>R$</span>
-          <input
-            id="valorDiaria"
-            type="text"
-            inputMode="decimal"
-            placeholder="Ex: 45,00"
-            className={`${styles.input} ${error ? styles.erro : ''}`}
-            value={valorDiaria}
-            onChange={(e) => onChangeValorDiaria(maskMoeda(e.target.value))}
-          />
+            <FormInput
+              id="valorDiaria"
+              type="text"
+              inputMode="decimal"
+              placeholder="Ex: 45,00"
+              value={valorDiaria}
+              onChange={(e) => onChangeValorDiaria(maskMoeda(e.target.value))}
+              status={error ? 'erro' : ''}
+              aria-label="Valor da diária"
+            />
         </div>
         {error ? (
           <small className={styles.error}>{error}</small>
@@ -54,15 +58,15 @@ export default function Precificacao({
         <label htmlFor="caucao" className={styles.label}>Caução (opcional)</label>
         <div className={styles.inputMoeda}>
           <span className={styles.prefixo}>R$</span>
-          <input
-            id="caucao"
-            type="text"
-            inputMode="decimal"
-            placeholder="Ex: 200,00"
-            className={styles.input}
-            value={caucao}
-            onChange={(e) => onChangeCaucao(maskMoeda(e.target.value))}
-          />
+            <FormInput
+              id="caucao"
+              type="text"
+              inputMode="decimal"
+              placeholder="Ex: 200,00"
+              value={caucao}
+              onChange={(e) => onChangeCaucao(maskMoeda(e.target.value))}
+              aria-label="Caução"
+            />
         </div>
         <small className={styles.dica}>Valor devolvido após a devolução da ferramenta.</small>
       </div>

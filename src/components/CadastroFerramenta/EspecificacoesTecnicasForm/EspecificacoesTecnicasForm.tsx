@@ -7,13 +7,18 @@ import styles from './EspecificacoesTecnicasForm.module.css';
 interface EspecificacoesTecnicasFormProps {
   especificacoes: EspecificacaoForm[];
   onChange: (especificacoes: EspecificacaoForm[]) => void;
+  // Erro vindo da validação global do formulário (ao clicar em "Publicar Ferramenta").
+  // Quando presente, tem prioridade sobre a mensagem de erro local.
+  erroPublicacao?: string;
 }
 
 export default function EspecificacoesTecnicasForm({
   especificacoes,
   onChange,
+  erroPublicacao,
 }: EspecificacoesTecnicasFormProps) {
   const [erro, setErro] = useState('');
+  const mensagemErro = erroPublicacao ?? erro;
 
   // Atualiza uma especificação técnica existente.
   // O parâmetro "campo" define se o texto digitado vai alterar "label" ou "valor".
@@ -80,7 +85,7 @@ export default function EspecificacoesTecnicasForm({
             value={esp.label}
             onChange={(e) => atualizarLinha(esp.id, 'label', e.target.value)}
             aria-label="Especificação"
-            status={erro && esp.label.trim() === '' ? 'erro' : ''}
+            status={mensagemErro && esp.label.trim() === '' ? 'erro' : ''}
           />
 
           <FormInput
@@ -90,7 +95,7 @@ export default function EspecificacoesTecnicasForm({
             value={esp.valor}
             onChange={(e) => atualizarLinha(esp.id, 'valor', e.target.value)}
             aria-label="Valor da especificação"
-            status={erro && esp.valor.trim() === '' ? 'erro' : ''}
+            status={mensagemErro && esp.valor.trim() === '' ? 'erro' : ''}
           />
 
           <button
@@ -104,7 +109,7 @@ export default function EspecificacoesTecnicasForm({
         </div>
       ))}
 
-      {erro && <p className={styles.error}>{erro}</p>}
+      {mensagemErro && <p className={styles.error}>{mensagemErro}</p>}
 
       <button type="button" className={styles.botaoAdicionar} onClick={adicionarLinha}>
         <Plus size={16} />

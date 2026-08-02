@@ -1,5 +1,5 @@
-import { ChevronDown } from 'lucide-react';
 import FormInput from '../../Inputs/FormInput/FormInput';
+import FormSelect from '../../Inputs/FormSelect/FormSelect';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import {
   CATEGORIAS_FERRAMENTA,
@@ -24,6 +24,7 @@ interface ErrosBasico {
   modelo?: string;
   categoria?: string;
   estadoConservacao?: string;
+  fonteAlimentacao?: string;
 }
 
 interface InformacoesBasicasProps {
@@ -78,48 +79,30 @@ export default function InformacoesBasicas({ form, onChangeCampo, erros, shake }
         />
       </div>
 
-      <div className={styles.linha2col}>
-        <div className={`${styles.campoSelect} ${shake && erros.categoria ? styles.shake : ''}`}>
-          <label htmlFor="categoria" className={styles.label}>
-            Categoria<span className={styles.obrigatorio}> *</span>
-          </label>
-          <div className={styles.selectWrapper}>
-            <select
-              id="categoria"
-              className={`${styles.select} ${!categoria ? styles.placeholder : ''} ${erros.categoria ? styles.erro : ''}`}
-              value={categoria}
-              onChange={(e) => onChangeCampo('categoria', e.target.value)}
-            >
-              <option value="" disabled>Selecione uma categoria</option>
-              {CATEGORIAS_FERRAMENTA.map((opcao) => (
-                <option key={opcao} value={opcao}>{opcao}</option>
-              ))}
-            </select>
-            <ChevronDown size={16} className={styles.chevron} />
-          </div>
-          {erros.categoria && <small className={styles.error}>{erros.categoria}</small>}
-        </div>
+      <div className={`${styles.linha2col} ${styles.linhaCategoria}`}>
+        <FormSelect
+          id="categoria"
+          label="Categoria"
+          required
+          placeholder="Selecione uma categoria"
+          options={CATEGORIAS_FERRAMENTA}
+          value={categoria}
+          error={erros.categoria}
+          shake={shake && Boolean(erros.categoria)}
+          onChange={(valor) => onChangeCampo('categoria', valor)}
+        />
 
-        <div className={`${styles.campoSelect} ${shake && erros.estadoConservacao ? styles.shake : ''}`}>
-          <label htmlFor="estadoConservacao" className={styles.label}>
-            Estado de Conservação<span className={styles.obrigatorio}> *</span>
-          </label>
-          <div className={styles.selectWrapper}>
-            <select
-              id="estadoConservacao"
-              className={`${styles.select} ${!estadoConservacao ? styles.placeholder : ''} ${erros.estadoConservacao ? styles.erro : ''}`}
-              value={estadoConservacao}
-              onChange={(e) => onChangeCampo('estadoConservacao', e.target.value)}
-            >
-              <option value="" disabled>Selecione o estado</option>
-              {ESTADOS_CONSERVACAO.map((opcao) => (
-                <option key={opcao} value={opcao}>{opcao}</option>
-              ))}
-            </select>
-            <ChevronDown size={16} className={styles.chevron} />
-          </div>
-          {erros.estadoConservacao && <small className={styles.error}>{erros.estadoConservacao}</small>}
-        </div>
+        <FormSelect
+          id="estadoConservacao"
+          label="Estado de Conservação"
+          required
+          placeholder="Selecione o estado"
+          options={ESTADOS_CONSERVACAO}
+          value={estadoConservacao}
+          error={erros.estadoConservacao}
+          shake={shake && Boolean(erros.estadoConservacao)}
+          onChange={(valor) => onChangeCampo('estadoConservacao', valor)}
+        />
       </div>
 
       <div className={styles.linha2col}>
@@ -142,7 +125,7 @@ export default function InformacoesBasicas({ form, onChangeCampo, erros, shake }
           />
         </div>
 
-        <div className={styles.campoFonte}>
+        <div className={`${styles.campoFonte} ${shake && erros.fonteAlimentacao ? styles.shake : ''}`}>
           <label className={styles.label}>
             Fonte de Alimentação / Voltagem<span className={styles.obrigatorio}> *</span>
           </label>
@@ -158,6 +141,7 @@ export default function InformacoesBasicas({ form, onChangeCampo, erros, shake }
               </button>
             ))}
           </div>
+          {erros.fonteAlimentacao && <small className={styles.error}>{erros.fonteAlimentacao}</small>}
         </div>
       </div>
     </div>

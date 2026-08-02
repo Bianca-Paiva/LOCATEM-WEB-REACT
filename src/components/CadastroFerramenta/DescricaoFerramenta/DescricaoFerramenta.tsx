@@ -1,4 +1,5 @@
 import styles from './DescricaoFerramenta.module.css';
+import FormTextarea from '../../Inputs/FormTextarea/FormTextarea';
 
 const LIMITE_CARACTERES = 1000;
 const MIN_CARACTERES = 50;
@@ -10,24 +11,32 @@ interface DescricaoFerramentaProps {
   shake?: boolean;
 }
 
-export default function DescricaoFerramenta({ value, onChange, error, shake }: DescricaoFerramentaProps) {
+export default function DescricaoFerramenta({
+  value,
+  onChange,
+  error,
+  shake
+}: DescricaoFerramentaProps) {
   return (
     <div className={`${styles.wrapper} ${shake ? styles.shake : ''}`}>
-      <textarea
+      <FormTextarea
         id="descricao"
-        className={`${styles.textarea} ${error ? styles.erro : ''}`}
-        placeholder="Descreva seu equipamento, usos ideais, recomendações e outras informações importantes."
+        label="Descrição da Ferramenta"
+        required
+        placeholder="Descreva a ferramenta, estado de uso, recomendações e observações importantes."
         value={value}
         minLength={MIN_CARACTERES}
         maxLength={LIMITE_CARACTERES}
         onChange={(e) => onChange(e.target.value)}
+        error={error}
+        status={error ? 'erro' : ''}
+        shake={shake}
       />
 
       <div className={styles.rodape}>
-        {error ? <small className={styles.error}>{error}</small> : <span />}
-        <span className={styles.contador}>
+        <small className={styles.contador}>
           {value.length} / {LIMITE_CARACTERES}
-        </span>
+        </small>
       </div>
     </div>
   );
