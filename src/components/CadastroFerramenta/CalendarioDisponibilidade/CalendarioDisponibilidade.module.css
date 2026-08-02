@@ -95,8 +95,7 @@
       transparent calc(50% - 1px),
       #ff4d4d calc(50% - 1px),
       #ff4d4d calc(50% + 1px),
-      transparent calc(50% + 1px)
-    ),
+      transparent calc(50% + 1px)),
     #fff5f5;
   cursor: pointer;
 }
@@ -136,8 +135,7 @@
       transparent calc(50% - 0.7px),
       #ff4d4d calc(50% - 0.7px),
       #ff4d4d calc(50% + 0.7px),
-      transparent calc(50% + 0.7px)
-    ),
+      transparent calc(50% + 0.7px)),
     #fff;
 }
 
@@ -150,4 +148,22 @@
   font-size: 12px;
   color: var(--color-text-muted);
   line-height: 1.5;
+}
+
+/* Em tablets o formulário ainda ocupa a largura toda (o layout só vira
+    2 colunas a partir de 1024px), então os quadradinhos do calendário
+    ficariam enormes se seguissem o 1fr do grid. Limitamos a largura da
+    grade nesse intervalo para manter os dias em um tamanho compacto. */
+@media (min-width: 640px) and (max-width: 800px) {
+
+  .gradeCabecalho,
+  .grade {
+    max-width: 350px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .dia {
+    font-size: 13px;
+  }
 }
