@@ -20,6 +20,7 @@ const ESTADO_INICIAL: CadastroFerramentaFormState = {
   caucao: '',
   acessorios: [],
   diasIndisponiveis: [],
+  tipoAprovacao: '',
   cep: '',
   ruaAvenida: '',
   numero: '',
@@ -89,6 +90,7 @@ export function useCadastroFerramenta() {
       ? 'O campo Especificações técnicas é obrigatório.'
       : undefined,
     valorDiaria: parseMoeda(form.valorDiaria) <= 0 ? 'Informe o valor da diária' : undefined,
+    tipoAprovacao: !form.tipoAprovacao ? 'Selecione uma opção' : undefined,
     cep: !validateCEP(form.cep) ? 'Informe um CEP válido' : undefined,
     ruaAvenida: !form.ruaAvenida.trim() ? 'Informe a rua/avenida' : undefined,
     numero: !form.numero.trim() ? 'Informe o número' : undefined,

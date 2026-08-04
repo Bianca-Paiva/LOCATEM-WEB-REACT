@@ -4,6 +4,8 @@ export interface EspecificacaoForm {
   valor: string;
 }
 
+export type TipoAprovacao = 'manual' | 'automatica' | '';
+
 export interface CadastroFerramentaFormState {
   // Fotos
   fotos: string[]; // data URLs
@@ -32,6 +34,9 @@ export interface CadastroFerramentaFormState {
 
   // Disponibilidade
   diasIndisponiveis: string[]; // "yyyy-mm-dd"
+
+  // Aprovação da locação
+  tipoAprovacao: TipoAprovacao;
 
   // Endereço de retirada e devolução
   cep: string;

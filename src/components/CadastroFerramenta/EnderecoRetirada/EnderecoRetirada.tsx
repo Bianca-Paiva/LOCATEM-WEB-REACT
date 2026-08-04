@@ -20,7 +20,7 @@ interface EnderecoRetiradaProps {
 }
 
 export default function EnderecoRetirada({ form, onChangeCampo, erros, shake }: EnderecoRetiradaProps) {
-  const { cep, ruaAvenida, numero, complemento, usarMesmoEnderecoDevolucao } = form;
+  const { cep, ruaAvenida, numero, complemento } = form;
 
   return (
     <div className={styles.wrapper}>
@@ -83,14 +83,14 @@ export default function EnderecoRetirada({ form, onChangeCampo, erros, shake }: 
         onChange={(e) => onChangeCampo('complemento', e.target.value)}
       />
 
-      <label className={styles.checkboxLinha}>
+      {/* <label className={styles.checkboxLinha}>
         <input
           type="checkbox"
           checked={usarMesmoEnderecoDevolucao}
           onChange={(e) => onChangeCampo('usarMesmoEnderecoDevolucao', e.target.checked)}
         />
         Usar o mesmo endereço para devolução
-      </label>
+      </label> */}
     </div>
   );
 }
