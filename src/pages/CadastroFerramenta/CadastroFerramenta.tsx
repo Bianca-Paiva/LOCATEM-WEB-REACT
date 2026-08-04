@@ -188,8 +188,6 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
               <AprovacaoLocacao
                 tipoAprovacao={form.tipoAprovacao}
                 onChange={(valor) => setCampo('tipoAprovacao', valor)}
-                error={tentouPublicar ? erros.tipoAprovacao : undefined}
-                shake={shake && Boolean(erros.tipoAprovacao)}
               />
             </SecaoCard>
 
