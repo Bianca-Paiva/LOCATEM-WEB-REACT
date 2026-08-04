@@ -28,7 +28,7 @@ export function ProdutoInfo({
   brand,
   estoqueDisponivel,
   onAlugar,
-  onReservar,
+  // onReservar,
   onAddCarrinho,
 }: ProdutoInfoProps) {
 
@@ -104,9 +104,9 @@ export function ProdutoInfo({
           <button className={styles.btnCarrinho} onClick={onAddCarrinho}>
             Adicionar ao carrinho
           </button>
-          <button className={styles.btnReservar} onClick={onReservar}>
+          {/*<button className={styles.btnReservar} onClick={onReservar}>
             Reservar
-          </button>
+          </button>*/}
         </div>
       </div>
     </div>
