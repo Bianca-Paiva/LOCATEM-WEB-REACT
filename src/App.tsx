@@ -12,7 +12,7 @@ import MinhasReservas from "./pages/Reservas/MinhasReservas/MinhasReservas";
 import DetalhesReserva from "./pages/Reservas/DetalhesReserva/DetalhesReserva";
 import SolicitarReserva from "./pages/Reservas/SolicitarReserva/SolicitarReserva";
 import SolicitacaoEnviada from "./pages/Reservas/SolicitacaoEnviada/SolicitacaoEnviada";
-
+import Carrinho from "./pages/Carrinho/Carrinho";
 
 import { useRouter } from "./router/useRouter";
 import { ProdutoProvider } from "../src/context/ProdutoContext";
@@ -51,6 +51,8 @@ export default function App() {
         {route === "solicitarReserva" && <SolicitarReserva navigate={navigate} />}
 
         {route === "solicitacaoEnviada" && <SolicitacaoEnviada navigate={navigate} />}
+
+        {route === "carrinho" && <Carrinho navigate={navigate} />}
       </ReservaProvider>
     </ProdutoProvider>
   );

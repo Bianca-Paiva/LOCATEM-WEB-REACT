@@ -14,7 +14,14 @@ export type Route =
   | "minhasReservas"
   | "detalhesReserva"
   | "solicitarReserva"
-  | "solicitacaoEnviada";
+  | "solicitacaoEnviada"
+  | "solicitacaoEnviada"
+  | "solicitacaoEnviada"
+  | "solicitacaoEnviada"
+   | "carrinho"          
+  | "pagamentoCartao" 
+  | "pagamentoPix";
+  ;
 
 function getRouteFromHash(): Route {
   const hash = window.location.hash.replace("#", "").split("?")[0];
@@ -33,8 +40,10 @@ function getRouteFromHash(): Route {
   if (hash === "detalhesReserva") return "detalhesReserva";
   if (hash === "solicitarReserva") return "solicitarReserva";
   if (hash === "solicitacaoEnviada") return "solicitacaoEnviada";
-
-  return "home";
+  if (hash === "carrinho") return "carrinho";
+  if (hash === "pagamentoCartao") return "pagamentoCartao";
+  if (hash === "pagamentoPix") return "pagamentoPix";
+  return "carrinho";
 }
 
 export function useRouter() {

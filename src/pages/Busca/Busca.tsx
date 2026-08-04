@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';
 import { SideBarBusca } from '../../components/Busca/SideBarBusca/SideBarBusca';
 import Paginacao from '../../components/Busca/Paginacao/Paginacao';
-import { produtosBuscaMock } from './busca.mock';
+import { produtosBuscaMock } from './Busca.mock';
 import type { ProdutoBusca, FilterState } from './Busca.types';
 import styles from './Busca.module.css';
 

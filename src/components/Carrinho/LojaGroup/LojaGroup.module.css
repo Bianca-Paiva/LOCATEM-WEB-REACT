@@ -1,0 +1,54 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.header,
+.itens {
+  border: 1px solid #dce1e8;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.header {
+  min-height: 68px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 20px;
+}
+
+.nomeLoja {
+  margin: 0 0 5px;
+
+  color: #111111;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.lojaOficial {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #667085;
+  font-size: 12px;
+}
+
+.itens {
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .header {
+    min-height: 62px;
+    padding: 13px 14px;
+  }
+
+  .nomeLoja {
+    font-size: 14px;
+  }
+}

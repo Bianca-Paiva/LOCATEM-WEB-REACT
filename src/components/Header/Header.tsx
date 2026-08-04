@@ -51,6 +51,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Carrinho",
+             route: "carrinho",
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:cart" : "mdi:cart-outline"}
