@@ -28,4 +28,5 @@ export interface Produto {
     acessorios?: string[]; /** Itens inclusos que acompanham a ferramenta */
     caucao?: string; /** Valor de caução (opcional), devolvido após a locação */
     diasIndisponiveis?: string[]; /** Datas ("yyyy-mm-dd") em que a ferramenta não está disponível */
+    tipoAprovacao?: 'manual' | 'automatica'; /** Forma como as solicitações de locação são aprovadas */
 }
