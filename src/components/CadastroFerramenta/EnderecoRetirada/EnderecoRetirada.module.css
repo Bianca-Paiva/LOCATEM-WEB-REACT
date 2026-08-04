@@ -18,7 +18,7 @@
 }
 
 .linkCepDesconhecido {
-  margin-top: 35px;
+  height: 120%;
   background: none;
   border: none;
   padding: 0;
@@ -61,8 +61,8 @@
 
 @media (max-width: 390px) {
   .linkCepDesconhecido {
-    margin-top: -25px;
-    margin-bottom: 30px;
+    height: 100%;
+    display: flex;
   }
 }
 

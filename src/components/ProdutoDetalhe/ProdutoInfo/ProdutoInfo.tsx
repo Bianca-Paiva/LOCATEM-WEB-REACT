@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TempoDropdown from '../TempoDropdown/TempoDropdown';
+import PeriodoLocacaoDropdown from '../PeriodoLocacaoDropdown/PeriodoLocacaoDropdown';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import styles from './ProdutoInfo.module.css';
 
@@ -33,7 +33,7 @@ export function ProdutoInfo({
 }: ProdutoInfoProps) {
 
   const [tensaoSelecionada, setTensaoSelecionada] = useState<string | null>(null);
-  const [tempo, setTempo] = useState('Selecione');
+  const [periodoLocacao, setPeriodoLocacao] = useState('Selecione');
   const [quantidade, setQuantidade] = useState(1);
 
   // limite mínimo é 1 unidades
@@ -77,10 +77,10 @@ export function ProdutoInfo({
 
       <div className={styles.seletoresRow}>
 
-        {/* Tempo */}
+        {/* Periodo da Locação */}
         <div className={styles.opcaoGrupo}>
-          <p className={styles.opcaoLabel}>Tempo</p>
-          <TempoDropdown value={tempo} onChange={setTempo} /> {/* <-- Novo Dropdown aqui! */}
+          <p className={styles.opcaoLabel}>Periodo da Locação</p>
+          <PeriodoLocacaoDropdown value={periodoLocacao} onChange={setPeriodoLocacao} /> 
         </div>
 
         {/* Quantidade */}

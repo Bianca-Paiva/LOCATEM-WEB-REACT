@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import styles from './TempoDropdown.module.css';
+import styles from './PeriodoLocacaoDropdown.module.css';
 import IconSeta from '../../../assets/IconSeta.png'; 
 
-const TEMPO_OPTIONS = [
+const PERIODOLOCACAO_OPTIONS = [
     'Selecione',
     ...Array.from({ length: 30 }, (_, i) => {
         const dia = i + 1;
@@ -10,12 +10,12 @@ const TEMPO_OPTIONS = [
     })
 ];
 
-interface TempoDropdownProps {
+interface PeriodoLocacaoDropdownProps {
     value: string;
     onChange: (value: string) => void;
 }
 
-export default function TempoDropdown({ value, onChange }: TempoDropdownProps) {
+export default function PeriodoLocacaoDropdown({ value, onChange }: PeriodoLocacaoDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -55,7 +55,7 @@ export default function TempoDropdown({ value, onChange }: TempoDropdownProps) {
 
             {isOpen && (
                 <ul className={styles.menu} role="listbox">
-                    {TEMPO_OPTIONS.map((option) => (
+                    {PERIODOLOCACAO_OPTIONS.map((option) => (
                         <li key={option}>
                             <button
                                 type="button"

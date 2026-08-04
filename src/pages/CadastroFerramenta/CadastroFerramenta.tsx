@@ -136,6 +136,19 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
                 erroPublicacao={tentouPublicar ? erros.especificacoes : undefined}
               />
             </SecaoCard>
+
+            <SecaoCard
+              icone={<Icon icon="mdi:clipboard-check-outline" width={20} height={20} />}
+              titulo="Aprovação da locação"
+              obrigatorio
+              subtitulo="Defina como as solicitações de locação serão aprovadas."
+            >
+              <AprovacaoLocacao
+                tipoAprovacao={form.tipoAprovacao}
+                onChange={(valor) => setCampo('tipoAprovacao', valor)}
+              />
+            </SecaoCard>
+
           </div>
 
           {/* ── Coluna direita ── */}
@@ -176,18 +189,6 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
               <CalendarioDisponibilidade
                 diasIndisponiveis={form.diasIndisponiveis}
                 onToggleDia={toggleDiaIndisponivel}
-              />
-            </SecaoCard>
-
-            <SecaoCard
-              icone={<Icon icon="mdi:clipboard-check-outline" width={20} height={20} />}
-              titulo="Aprovação da locação"
-              obrigatorio
-              subtitulo="Defina como as solicitações de locação serão aprovadas."
-            >
-              <AprovacaoLocacao
-                tipoAprovacao={form.tipoAprovacao}
-                onChange={(valor) => setCampo('tipoAprovacao', valor)}
               />
             </SecaoCard>
 
