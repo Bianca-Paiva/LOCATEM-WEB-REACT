@@ -1,0 +1,78 @@
+.card {
+  width: 100%;
+  background: var(--color-bg-card);
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.iconeBadge {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--color-primary-soft);
+  color: #8a6d00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 2px;
+}
+
+.titulo {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  line-height: 1.3;
+}
+
+.obrigatorio {
+  color: #E11D48;
+}
+
+.subtitulo {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  container-type: inline-size;
+  container-name: secaoCard;
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .iconeBadge {
+    width: 44px;
+    height: 44px;
+  }
+
+  .titulo {
+    font-size: 17px;
+  }
+}

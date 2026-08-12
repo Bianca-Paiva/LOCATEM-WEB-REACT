@@ -52,7 +52,7 @@ export default function AcoesReserva({
           className={styles.botaoSecundario}
           onClick={onVerLocacoes}
         >
-          Ver minhas locações
+          Ver minhas ferramentas
         </button>
         <button
           type="button"
@@ -76,7 +76,7 @@ export default function AcoesReserva({
   ) {
     return (
       <button type="button" className={styles.botaoSecundario} onClick={onVerLocacoes}>
-        Ver minhas locações
+        Ver minhas ferramentas
       </button>
     );
   }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BellOff, Trash } from 'lucide-react';
 import NotificationCard from '../../components/Notificacoes/NotificationCard/NotificationCard';
-import FilterDropdown from '../../components/Notificacoes/FilterDropdown/FilterDropdown';
+import FilterDropdown from '../../components/Notificacoes/FilterDropdownNotificacao/FilterDropdown';
 import Pagination from '../../components/Notificacoes/Pagination/Pagination';
 import NotificationDetailsModal from '../../components/Notificacoes/NotificationModal/NotificationDetailsModal';
 import { useNotifications } from '../../hooks/useNotifications';

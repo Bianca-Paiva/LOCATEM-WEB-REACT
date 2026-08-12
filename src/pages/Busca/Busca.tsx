@@ -2,12 +2,13 @@ import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { useProdutoStore } from '../../hooks/useProdutoStore';
+import { useCatalogoStore } from '../../hooks/useCatalogoStore';
 import type { Route } from '../../router/useRouter';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';
 import { SideBarBusca } from '../../components/Busca/SideBarBusca/SideBarBusca';
 import Paginacao from '../../components/Busca/Paginacao/Paginacao';
-import { produtosBuscaMock } from './busca.mock';
+import { toProdutoBusca } from '../../mocks/produtos.adapters';
 import type { ProdutoBusca, FilterState } from './Busca.types';
 import styles from './Busca.module.css';
 
@@ -17,6 +18,16 @@ interface BuscaProps {
 
 export default function Busca({ navigate }: BuscaProps) {
   const { setProdutoSelecionado } = useProdutoStore();
+  const { produtos } = useCatalogoStore();
+
+  // Catálogo de busca (ids 15-24) + ferramentas recém-publicadas pelo usuário.
+  const produtosBuscaMock = useMemo(
+    () =>
+      produtos
+        .filter((p) => p.meuAnuncio || (p.id >= 15 && p.id <= 24))
+        .map(toProdutoBusca),
+    [produtos],
+  );
 
   const [sortOrder, setSortOrder] = useState('menor-preco');
   const [isFilterMobileOpen, setIsFilterMobileOpen] = useState(false);
