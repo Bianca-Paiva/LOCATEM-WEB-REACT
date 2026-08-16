@@ -32,7 +32,7 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
     renovar,
   } = useNotifications();
 
-  // Fonte das reservas reais (mesma usada em 'Minhas Reservas' e 'Detalhes da Reserva')
+  // Fonte das reservas reais (mesma usada em 'Minhas Locações' e 'Detalhes da Reserva')
   const { reservas, setReservaSelecionada } = useReservaStore();
 
   // Notificação atualmente aberta no modal; null = modal fechado

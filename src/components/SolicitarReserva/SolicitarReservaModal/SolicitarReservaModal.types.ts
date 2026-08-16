@@ -47,3 +47,13 @@ export interface DadosReservaModal {
 
 /** Qual botão da página de detalhe abriu o modal — define o rótulo/ação do botão de confirmação */
 export type ModoAberturaModal = 'locar' | 'carrinho';
+
+/**
+ * Prazos (em horas) usados para calcular a primeira data de retirada
+ * selecionável quando o locador exige aprovação manual: o locatário não
+ * pode escolher uma retirada mais cedo do que o tempo que o locador tem
+ * para responder somado ao prazo de pagamento já usado no restante do
+ * projeto (ver `MinhasReservas.mock.ts` -> PRAZO_PADRAO_PAGAMENTO_HORAS).
+ */
+export const PRAZO_APROVACAO_HORAS = 24;
+export const PRAZO_PAGAMENTO_HORAS = 24;
