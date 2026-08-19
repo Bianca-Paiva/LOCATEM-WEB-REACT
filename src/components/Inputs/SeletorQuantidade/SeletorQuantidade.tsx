@@ -30,7 +30,6 @@ export default function SeletorQuantidade({
         {exibirEstoqueDisponivel && estoqueDisponivel !== undefined && (
           <span className={styles.estoque}>
             {' '}
-            ({estoqueDisponivel}{' '})
             ({estoqueDisponivel} {estoqueDisponivel === 1 ? 'disponível' : 'disponíveis'})
           </span>
         )}

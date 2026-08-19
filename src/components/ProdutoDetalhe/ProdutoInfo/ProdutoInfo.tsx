@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PeriodoLocacaoDropdown from '../PeriodoLocacaoDropdown/PeriodoLocacaoDropdown';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import styles from './ProdutoInfo.module.css';
@@ -15,9 +15,20 @@ interface ProdutoInfoProps {
   onAlugar?: () => void;
   onReservar?: () => void;
   onAddCarrinho?: () => void;
+
+  /**
+   * Eleva quantidade, período (em diárias) e tensão selecionados aqui para a página de detalhe, que os repassa como valores iniciais do modal de Solicitação de Locação — assim o usuário não precisa escolher de novo.
+  */
+  onSelecaoChange?: (selecao: { quantidade: number; diarias: number | null; tensao: string | null }) => void;
 }
 
 const TENSAO_OPTIONS = ['127V', '220V', 'Bivolt'];
+
+// Extrai o número de diárias de um valor do PeriodoLocacaoDropdown (ex: "2 dias" -> 2)
+function extrairDiarias(periodo: string): number | null {
+  const match = periodo.match(/^(\d+)\s*dia/);
+  return match ? Number(match[1]) : null;
+}
 
 export function ProdutoInfo({
   title,
@@ -30,11 +41,22 @@ export function ProdutoInfo({
   onAlugar,
   // onReservar,
   onAddCarrinho,
+  onSelecaoChange,
 }: ProdutoInfoProps) {
 
   const [tensaoSelecionada, setTensaoSelecionada] = useState<string | null>(null);
   const [periodoLocacao, setPeriodoLocacao] = useState('Selecione');
   const [quantidade, setQuantidade] = useState(1);
+
+  // Repassa a seleção atual (quantidade, diárias, tensão) para a página de detalhe sempre que qualquer uma delas mudar, para pré-preencher o modal.
+  useEffect(() => {
+    onSelecaoChange?.({
+      quantidade,
+      diarias: extrairDiarias(periodoLocacao),
+      tensao: tensaoSelecionada,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quantidade, periodoLocacao, tensaoSelecionada]);
 
   // limite mínimo é 1 unidades
   const decrement = () => setQuantidade(prev => Math.max(1, prev - 1));
