@@ -1,0 +1,144 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 6px;
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.opcao {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: var(--color-bg-input);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.opcao:hover {
+  border-color: var(--color-primary);
+}
+
+.opcaoSelecionada {
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+/* Aplicada em cada opção quando o campo não foi preenchido e o usuário tentou publicar */
+.opcaoErro {
+  border: 1px solid #E11D48;
+  box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
+}
+
+.error {
+  font-size: 13px;
+  color: #E11D48;
+  margin: 0;
+  display: block;
+  font-weight: 500;
+}
+
+/* Chacoalhar sutil, igual ao FormInput */
+.shake {
+  animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.radio {
+  /* Remove o estilo padrão do navegador */
+  -webkit-appearance: none;
+  appearance: none;
+
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  cursor: pointer;
+
+  border: 1.5px solid var(--color-text-muted); 
+  border-radius: 50%; 
+
+  /* Centraliza a bolinha interna */
+  display: grid;
+  place-content: center;
+}
+
+/* Cria o preenchimento interno (a bolinha colorida) */
+.radio::before {
+  content: "";
+  width: 10px; /* Tamanho da bolinha interna */
+  height: 10px;
+  border-radius: 50%;
+  
+  /* Usa a sua variável de cor para o centro */
+  background-color: var(--color-primary);
+  
+  /* Começa invisível (escala 0) para o estado desmarcado */
+  transform: scale(0);
+  transition: transform 0.1s ease-in-out; /* Animação suave ao clicar */
+}
+
+/* Faz a bolinha aparecer quando o radio for marcado */
+.radio:checked::before {
+  transform: scale(1);
+}
+
+.textos {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.linhaTitulo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.titulo {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: var(--color-text-dark);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.descricao {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}

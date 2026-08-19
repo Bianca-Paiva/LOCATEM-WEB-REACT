@@ -2,7 +2,7 @@ import type { InputHTMLAttributes } from 'react'
 import styles from './FormInput.module.css'
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label: string
+    label?: string
     error?: string
     status?: 'erro' | 'sucesso' | ''
     shake?: boolean

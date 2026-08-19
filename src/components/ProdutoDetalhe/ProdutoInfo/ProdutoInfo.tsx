@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import TempoDropdown from '../TempoDropdown/TempoDropdown';
-import SeletorQuantidade from '../../SolicitarReserva/SeletorQuantidade/SeletorQuantidade';
+import PeriodoLocacaoDropdown from '../PeriodoLocacaoDropdown/PeriodoLocacaoDropdown';
+import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import styles from './ProdutoInfo.module.css';
 
 interface ProdutoInfoProps {
@@ -28,12 +28,12 @@ export function ProdutoInfo({
   brand,
   estoqueDisponivel,
   onAlugar,
-  onReservar,
+  // onReservar,
   onAddCarrinho,
 }: ProdutoInfoProps) {
 
   const [tensaoSelecionada, setTensaoSelecionada] = useState<string | null>(null);
-  const [tempo, setTempo] = useState('Selecione');
+  const [periodoLocacao, setPeriodoLocacao] = useState('Selecione');
   const [quantidade, setQuantidade] = useState(1);
 
   // limite mínimo é 1 unidades
@@ -77,10 +77,10 @@ export function ProdutoInfo({
 
       <div className={styles.seletoresRow}>
 
-        {/* Tempo */}
+        {/* Periodo da Locação */}
         <div className={styles.opcaoGrupo}>
-          <p className={styles.opcaoLabel}>Tempo</p>
-          <TempoDropdown value={tempo} onChange={setTempo} /> {/* <-- Novo Dropdown aqui! */}
+          <p className={styles.opcaoLabel}>Periodo da Locação</p>
+          <PeriodoLocacaoDropdown value={periodoLocacao} onChange={setPeriodoLocacao} /> 
         </div>
 
         {/* Quantidade */}
@@ -92,7 +92,7 @@ export function ProdutoInfo({
             onIncrementar={increment}
           />
         </div>
-        
+
       </div>
 
       {/* CTAs */}
@@ -104,9 +104,9 @@ export function ProdutoInfo({
           <button className={styles.btnCarrinho} onClick={onAddCarrinho}>
             Adicionar ao carrinho
           </button>
-          <button className={styles.btnReservar} onClick={onReservar}>
+          {/*<button className={styles.btnReservar} onClick={onReservar}>
             Reservar
-          </button>
+          </button>*/}
         </div>
       </div>
     </div>

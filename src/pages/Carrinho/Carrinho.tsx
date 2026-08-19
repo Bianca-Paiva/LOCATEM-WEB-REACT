@@ -30,6 +30,7 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
+        estoqueDisponivel: 5,
       },
       {
         id: 'jb-2',
@@ -39,6 +40,7 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
+        estoqueDisponivel: 5,
       },
       {
         id: 'jb-3',
@@ -48,6 +50,7 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
+        estoqueDisponivel: 5,
       },
     ],
   },
@@ -65,6 +68,7 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
+        estoqueDisponivel: 5,
       },
       {
         id: 'wz-2',
@@ -74,6 +78,7 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
+        estoqueDisponivel: 5,
       },
     ],
   },

@@ -1,34 +1,244 @@
-.card { position: sticky; top: 16px; height: fit-content; padding: 16px; border: 1px solid #dfe3e8; border-radius: 8px; background: #fff; }
-.titulo { margin: 0; padding-bottom: 13px; border-bottom: 1px solid #eceff3; color: #111; font-size: 12px; font-weight: 700; }
-.textoVazio { color: #9ca3af; font-size: 12px; line-height: 1.5; }
-.corpo { display: flex; flex-direction: column; }
-.linha { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; font-size: 10px; }
-.linhaLabel { color: #6b7280; }
-.linhaValor { color: #111; font-weight: 500; }
-.freteBloco { border-top: 1px solid #eceff3; border-bottom: 1px solid #eceff3; }
-.freteToggle { display: flex; width: 100%; align-items: center; justify-content: space-between; padding: 10px 0; border: 0; background: transparent; color: #374151; font-size: 10px; font-weight: 600; cursor: pointer; }
-.freteChevron { color: #9ca3af; font-size: 8px; }
-.freteConteudo { padding: 0 0 10px; }
-.freteInputRow { display: flex; gap: 6px; }
-.input, .inputComIcone { height: 29px; border: 1px solid #dfe3e8; border-radius: 4px; background: #fff; }
-.input { min-width: 0; flex: 1; padding: 0 9px; color: #374151; font: inherit; font-size: 9px; outline: none; }
-.input:focus, .inputComIcone:focus-within { border-color: #f3bd00; box-shadow: 0 0 0 2px rgba(255,205,0,.18); }
-.btnSecundario { height: 29px; padding: 0 10px; border: 0; border-radius: 3px; background: #e9f3ff; color: #2582d8; font-size: 9px; cursor: pointer; }
-.linkTexto { margin-top: 5px; padding: 0; border: 0; background: transparent; color: #2582d8; font-size: 8.5px; cursor: pointer; }
-.freteGratis { color: #20a35a; font-weight: 500; }
-.cupomBloco { padding: 12px 0; border-bottom: 1px solid #eceff3; }
-.inputComIcone { display: flex; align-items: center; gap: 6px; padding-left: 8px; color: #9ca3af; }
-.inputSemBorda { min-width: 0; flex: 1; border: 0; outline: 0; background: transparent; color: #374151; font: inherit; font-size: 9px; }
-.aplicarInline { align-self: stretch; padding: 0 7px; border: 0; background: #e9f3ff; color: #2582d8; font-size: 8px; cursor: pointer; }
-.cupomAplicadoTexto { margin: 5px 0 0; color: #16a34a; font-size: 9px; }
-.linhaTotal { display: flex; align-items: baseline; justify-content: space-between; padding: 14px 0 12px; color: #111; font-size: 12px; font-weight: 800; }
-.linhaTotal span:last-child { font-size: 17px; }
-.btnPrimario { width: 100%; height: 38px; border: 0; border-radius: 5px; background: #ffd000; color: #111; font-size: 10px; font-weight: 800; cursor: pointer; }
-.btnPrimario:hover:not(:disabled) { background: #f4c700; }
-.btnPrimario:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
-.btnPrimario:disabled { cursor: not-allowed; opacity: .5; }
-.prazoBloco { display: flex; flex-direction: column; gap: 3px; padding: 10px 0; border-top: 1px solid #eceff3; }
-.prazoLabel { color: #6b7280; font-size: 10px; }
-.prazoValor { color: #111; font-size: 11px; }
-.seguroRodape { display: flex; align-items: center; justify-content: center; gap: 5px; padding-top: 10px; color: #9ca3af; font-size: 9px; }
-@media (max-width: 900px) { .card { position: static; } }
+.card {
+  position: sticky;
+  top: 16px;
+  width: 100%;
+  max-width: 450px; /* Adicionado para deixar o card mais largo[cite: 1] */
+  height: fit-content;
+  padding: 32px; /* Aumentado de 24px para 32px para dar mais respiro[cite: 1] */
+  border: 1px solid #dfe3e8;
+  border-radius: 16px; /* Bordas um pouco mais arredondadas[cite: 1] */
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.titulo {
+  margin: 0;
+  padding-bottom: 20px; /* Aumentado[cite: 1] */
+  color: #111;
+  font-size: 20px; /* Aumentado de 18px[cite: 1] */
+  font-weight: 800;
+}
+
+.textoVazio {
+  color: #9ca3af;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0; /* Aumentado o espaçamento[cite: 1] */
+  font-size: 15px; /* Aumentado de 14px[cite: 1] */
+}
+
+.linhaLabel {
+  color: #6b7280;
+}
+
+.required {
+  color: #e11d48;
+}
+
+.linhaValor {
+  color: #111;
+  font-weight: 700;
+}
+
+.freteBloco {
+  padding-bottom: 16px;
+}
+
+.freteInputRow {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Aumentado[cite: 1] */
+  width: 100%;
+}
+
+/* NOVO: Container para o input do CEP */
+.inputContainer {
+  display: flex;
+  align-items: center;
+  height: 48px; /* Mais alto (era 40px) */
+  padding: 4px 4px 4px 16px;
+  border: 1.5px solid #dfe3e8;
+  border-radius: 10px;
+  background: #fff;
+  box-sizing: border-box;
+  flex: 1; /* Ocupa o espaço disponível */
+}
+
+.inputContainer:focus-within {
+  border-color: #f3bd00;
+  box-shadow: 0 0 0 2px rgba(255, 205, 0, 0.18);
+}
+
+.linkTexto {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #2582d8;
+  font-size: 13px; /* Aumentado[cite: 1] */
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.freteGratis {
+  color: #20a35a;
+  font-weight: 700;
+}
+
+.cupomBloco {
+  padding: 20px 0; /* Aumentado[cite: 1] */
+}
+
+/* ATUALIZADO: Container do Cupom com mesmo padrão do CEP */
+.inputComIcone {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px; /* Mais alto (era 40px) */
+  padding: 4px 4px 4px 16px; /* Espaço para soltar o botão[cite: 1] */
+  border: 1.5px solid #dfe3e8;
+  border-radius: 10px;
+  background: #fff;
+  color: #9ca3af;
+  box-sizing: border-box;
+}
+
+.inputComIcone:focus-within {
+  border-color: #f3bd00;
+  box-shadow: 0 0 0 2px rgba(255, 205, 0, 0.18);
+}
+
+/* Aplicado em AMBOS os inputs (CEP e Cupom) */
+.inputSemBorda {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #374151;
+  font: inherit;
+  font-size: 14px; /* Aumentado de 13px[cite: 1] */
+}
+
+/* NOVO: Botão interno (Usar/Aplicar) */
+.btnInterno {
+  height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #e9f3ff;
+  color: #2582d8;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cupomAplicadoTexto {
+  margin: 8px 0 0;
+  color: #16a34a;
+  font-size: 13.5px;
+}
+
+.linhaTotal {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 24px 0 20px; /* Aumentado o respiro[cite: 1] */
+  color: #111;
+  font-size: 18px; /* Aumentado de 16px[cite: 1] */
+  font-weight: 800;
+}
+
+.linhaTotal span:last-child {
+  font-size: 28px; /* Aumentado de 24px[cite: 1] */
+}
+
+.btnPrimario {
+  width: 100%;
+  height: 56px; /* Botão principal mais alto (era 52px)[cite: 1] */
+  border: 0;
+  border-radius: 10px;
+  background: #ffd000;
+  color: #111;
+  font-size: 16px; /* Aumentado de 15px[cite: 1] */
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btnPrimario:hover:not(:disabled) {
+  background: #f4c700;
+}
+
+.btnPrimario:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+
+.btnPrimario:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.prazoBloco {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 0;
+}
+
+.prazoLabel {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.prazoValor {
+  color: #111;
+  font-size: 15px;
+}
+
+.seguroRodape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 18px;
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .card {
+    position: static;
+    max-width: 100%; /* No mobile/tablet, ocupa 100% da tela pai[cite: 1] */
+  }
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: 24px;
+  }
+  .freteInputRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .inputContainer {
+    width: 100%; /* Faz o CEP ocupar a linha toda no mobile */
+  }
+  .linkTexto {
+    margin-left: 0;
+  }
+}

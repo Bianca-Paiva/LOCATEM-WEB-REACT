@@ -20,7 +20,9 @@ export type Route =
   | "solicitacaoEnviada"
    | "carrinho"          
   | "pagamentoCartao" 
-  | "pagamentoPix";
+  | "pagamentoPix"
+  | "minhasFerramentas"
+  | "cadastroFerramenta";
   ;
 
 function getRouteFromHash(): Route {
@@ -43,7 +45,9 @@ function getRouteFromHash(): Route {
   if (hash === "carrinho") return "carrinho";
   if (hash === "pagamentoCartao") return "pagamentoCartao";
   if (hash === "pagamentoPix") return "pagamentoPix";
-  return "carrinho";
+  if (hash === "minhasFerramentas") return "minhasFerramentas";
+  if (hash === "cadastroFerramenta") return "cadastroFerramenta";
+  return "home";
 }
 
 export function useRouter() {

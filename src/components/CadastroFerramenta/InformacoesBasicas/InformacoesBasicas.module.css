@@ -1,0 +1,166 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.linha2col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px 16px;
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #141D23;
+  margin-bottom: 6px;
+}
+
+.obrigatorio {
+  color: #E11D48;
+}
+
+.error {
+  font-size: 13px;
+  color: #E11D48;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+/* ---------- Quantidade (stepper) ---------- */
+.campoQuantidade {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+}
+
+.stepperBotao {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid #e5e7eb;
+  background: var(--color-bg-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-dark);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.stepperBotao:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.stepperBotao:disabled {
+  color: #c4c4c4;
+  cursor: not-allowed;
+}
+
+.stepperValor {
+  min-width: 20px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+/* ---------- Fonte de Alimentação (chips) ---------- */
+.campoFonte {
+  display: flex;
+  flex-direction: column;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chips+.error {
+  margin-top: 8px;
+}
+
+.chip {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1.5px solid #e5e7eb;
+  background: var(--color-bg-input);
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.1s, box-shadow 0.1s, filter 0.1s;
+}
+
+.chip:hover {
+  filter: brightness(0.98);
+  transform: translateY(0);
+}
+
+.chip:active {
+  transform: translateY(2px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0);
+}
+
+.chipAtivo {
+  border-color: var(--color-secondary, #F9C01A);
+  background: #fffbebae;
+  color: #0a0a0a;
+  font-weight: 700;
+}
+
+
+.shake {
+  animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+@media (min-width: 640px) {
+  .linha2col {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+}
+
+/* Categoria / Estado de Conservação: reage à largura real do card (não da tela). Empilha sempre que não houver espaço para os dois selects sem cortar o texto selecionado; volta a ficar lado a lado quando couber. */
+.linhaCategoria {
+  grid-template-columns: 1fr;
+  gap: 20px 16px;
+}
+
+@container secaoCard (min-width: 420px) {
+  .linhaCategoria {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+}

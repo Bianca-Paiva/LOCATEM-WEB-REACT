@@ -1,54 +1,47 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.card {
+    border: 1px solid #dfe3e8;
+    border-radius: 12px;
+    background: #fff;
+    padding: 24px;
 }
 
-.header,
-.itens {
-  border: 1px solid #dce1e8;
-  border-radius: 10px;
-  background: #ffffff;
-}
-
-.header {
-  min-height: 68px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 14px 20px;
+.cabecalho {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eef0f3;
+    margin-bottom: 4px;
 }
 
 .nomeLoja {
-  margin: 0 0 5px;
-
-  color: #111111;
-  font-size: 15px;
-  font-weight: 800;
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #111;
 }
 
 .lojaOficial {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;
+    font-size: 13px;
+    color: #6b7280;
+}
 
-  color: #667085;
-  font-size: 12px;
+.selo {
+     width: 22px;
+    height: 22px;
+    fill: #1877f2;
+    color: white;
+    stroke-width: 2.5;
 }
 
 .itens {
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 @media (max-width: 640px) {
-  .header {
-    min-height: 62px;
-    padding: 13px 14px;
-  }
-
-  .nomeLoja {
-    font-size: 14px;
-  }
+    .card {
+        padding: 16px;
+    }
 }

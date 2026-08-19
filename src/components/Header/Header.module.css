@@ -289,7 +289,7 @@
         flex-direction: column;
         width: 100%;
         padding-top: 30px;
-        max-width: 2000px;
+        max-width: 4000px;
         margin: 0 auto;
 
         background: linear-gradient(to bottom,
@@ -383,7 +383,7 @@
         gap: clamp(15px, 3vw, 45px);
         padding: 30px var(--spacing-xl) 40px;
         width: 100%;
-        max-width: 2000px;
+        max-width: 4000px;
         margin: 0 auto;
     }
 

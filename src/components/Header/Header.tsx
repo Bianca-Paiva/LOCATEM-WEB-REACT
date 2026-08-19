@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import type { ReactNode } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
-import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
+import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star, calendar-blank, headset-mic
 import {
     X
 } from "lucide-react";
@@ -51,31 +51,10 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Carrinho",
-             route: "carrinho",
+            route: "carrinho",
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:cart" : "mdi:cart-outline"}
-                    width={22}
-                    height={22}
-                />
-            ),
-        },
-        {
-            label: "Minhas Reservas",
-            route: "minhasReservas",
-            renderIcon: (active) => (
-                <Icon
-                    icon={active ? "mdi:calendar-blank" : "mdi:calendar-blank-outline"}
-                    width={22}
-                    height={22}
-                />
-            ),
-        },
-        {
-            label: "Minhas Locações",
-            renderIcon: (active) => (
-                <Icon
-                    icon={active ? "material-symbols:package-2" : "material-symbols:package-2-outline"}
                     width={22}
                     height={22}
                 />
@@ -92,11 +71,10 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Avaliações",
-            route: "avaliacao",
+            label: "Agendamento",
             renderIcon: (active) => (
                 <Icon
-                    icon={active ? "mdi:star" : "mdi:star-outline"}
+                    icon={active ? "mdi:calendar-blank" : "mdi:calendar-blank-outline"}
                     width={22}
                     height={22}
                 />
@@ -114,11 +92,11 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Entrar",
-            route: "login",
+            label: "Avaliações",
+            route: "avaliacao",
             renderIcon: (active) => (
                 <Icon
-                    icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
+                    icon={active ? "mdi:star" : "mdi:star-outline"}
                     width={22}
                     height={22}
                 />
@@ -129,6 +107,17 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "material-symbols:headset-mic" : "material-symbols:headset-mic-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Entrar",
+            route: "login",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
                     width={22}
                     height={22}
                 />

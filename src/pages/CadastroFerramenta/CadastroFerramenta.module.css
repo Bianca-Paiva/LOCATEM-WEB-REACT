@@ -1,0 +1,100 @@
+.pagina {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 20px 16px 56px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.acoes {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: stretch;
+  gap: 25px;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.botaoPrimario,
+.botaoSecundario {
+  width: 100%;
+  height: 52px;
+  padding: 0 32px;
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform 0.1s ease;
+  box-sizing: border-box;
+}
+
+.botaoPrimario:active,
+.botaoSecundario:active {
+  transform: scale(0.99);
+}
+
+.botaoPrimario {
+  border: none;
+  background: var(--color-primary);
+  color: #0A0A0A;
+}
+
+.botaoPrimario:hover {
+  background: var(--color-primary-hover);
+}
+
+.botaoSecundario {
+  border: 1.5px solid #f6c9ce;
+  background: #fff;
+  color: #E11D48;
+}
+
+.botaoSecundario:hover {
+  background: #fdf1f2;
+}
+
+@media (min-width: 640px) {
+  .pagina {
+    padding: 28px 24px 64px;
+    gap: 24px;
+  }
+
+  .acoes {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .botaoPrimario,
+  .botaoSecundario {
+    min-width: 220px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pagina {
+    padding: 32px 32px 72px;
+  }
+
+  .grid {
+    grid-template-columns:  1.30fr 0.70fr;
+    gap: 24px;
+    align-items: start;
+  }
+}

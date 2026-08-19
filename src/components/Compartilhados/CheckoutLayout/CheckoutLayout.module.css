@@ -7,16 +7,17 @@
 
 .main {
     flex: 1;
-    width: min(100%, 1240px);
-    margin: 0 auto;
-    padding: 16px 36px 64px;
+
+  width: min(100%, 1400px);
+     margin: 0 auto;
+  padding: 16px 36px 64px;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 330px;
-    gap: 20px;
-    align-items: start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 370px;     
+  gap: 20px;
+  align-items: start;
 }
 
 .coluna {
@@ -31,17 +32,21 @@
 }
 
 @media (max-width: 900px) {
-    .main {
-        padding: 16px 20px 48px;
-    }
+  .main {
+    padding: 16px 20px 48px;
+  }
 
-    .grid {
-        grid-template-columns: 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 
-    .colunaAside {
-        grid-row: 1;
-    }
+  .coluna {
+    order: 1;
+  }
+
+  .colunaAside {
+    order: 2;
+  }
 }
 
 @media (max-width: 520px) {

@@ -12,16 +12,19 @@ import MinhasReservas from "./pages/Reservas/MinhasReservas/MinhasReservas";
 import DetalhesReserva from "./pages/Reservas/DetalhesReserva/DetalhesReserva";
 import SolicitarReserva from "./pages/Reservas/SolicitarReserva/SolicitarReserva";
 import SolicitacaoEnviada from "./pages/Reservas/SolicitacaoEnviada/SolicitacaoEnviada";
+import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
+import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
 import Carrinho from "./pages/Carrinho/Carrinho";
-
 import { useRouter } from "./router/useRouter";
 import { ProdutoProvider } from "../src/context/ProdutoContext";
 import { ReservaProvider } from "./context/ReservaContext";
+import { CatalogoProvider } from "./context/CatalogoContext";
 
 export default function App() {
   const { route, navigate } = useRouter();
 
   return (
+    <CatalogoProvider>
     <ProdutoProvider>
       <ReservaProvider>
         {route === "home" && <Home navigate={navigate} />}
@@ -52,8 +55,13 @@ export default function App() {
 
         {route === "solicitacaoEnviada" && <SolicitacaoEnviada navigate={navigate} />}
 
+        {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
+
+        {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
+
         {route === "carrinho" && <Carrinho navigate={navigate} />}
       </ReservaProvider>
     </ProdutoProvider>
+    </CatalogoProvider>
   );
 }
