@@ -13,4 +13,5 @@ export interface ProdutoHome {
     imageNota: string;
     rating: number;
     reviewCount: number;
+    tipoAprovacao?: 'manual' | 'automatica';
 }
