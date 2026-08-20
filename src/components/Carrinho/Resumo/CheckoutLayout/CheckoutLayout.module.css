@@ -2,6 +2,7 @@
   max-width: 100%;
   max-width: 2000px;
   margin: 0 auto;
+  padding: 0;
   background: #ffffff;
   display: flex;
   flex-direction: column;
