@@ -127,6 +127,9 @@ export function useCadastroFerramenta() {
       acessorios: form.acessorios,
       caucao: form.caucao || undefined,
       diasIndisponiveis: form.diasIndisponiveis,
+      // Neste ponto o formulário já foi validado (formularioCompleto === true),
+      // então tipoAprovacao nunca será '' — o cast reflete essa garantia.
+      tipoAprovacao: form.tipoAprovacao as 'manual' | 'automatica',
     };
   };
 
