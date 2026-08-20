@@ -1,15 +1,16 @@
 import { useMemo, useState } from 'react';
 
-import { CheckoutLayout } from '../../components/Compartilhados/CheckoutLayout/CheckoutLayout';
 import Header from '../../components/Header/Header';
 import { CarrinhoVazio } from '../../components/Carrinho/CarrinhoVazio/CarrinhoVazio';
 import { LojaGroup } from '../../components/Carrinho/LojaGroup/LojaGroup';
-import { ResumoPedido } from '../../components/Compartilhados/ResumoPedido/ResumoPedido';
+import { ResumoPedido } from '../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
 
 import type { LojaGroupData } from '../../types/checkout';
 import type { Route } from '../../router/useRouter';
 
 import styles from './Carrinho.module.css';
+import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
+import { CheckoutLayout } from '../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
 
 /* ============================================================
    MOCK
@@ -30,7 +31,6 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
-        estoqueDisponivel: 5,
       },
       {
         id: 'jb-2',
@@ -40,7 +40,6 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
-        estoqueDisponivel: 5,
       },
       {
         id: 'jb-3',
@@ -50,7 +49,6 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
-        estoqueDisponivel: 5,
       },
     ],
   },
@@ -68,7 +66,6 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
-        estoqueDisponivel: 5,
       },
       {
         id: 'wz-2',
@@ -78,7 +75,6 @@ const LOJAS_MOCK: LojaGroupData[] = [
         voltagem: '220V',
         quantidade: 1,
         precoUnitario: 599.98,
-        estoqueDisponivel: 5,
       },
     ],
   },
@@ -152,8 +148,8 @@ export function Carrinho({
             (totalDosItens, item) =>
               totalDosItens +
               item.precoUnitario *
-                item.quantidade *
-                item.dias,
+              item.quantidade *
+              item.dias,
             0,
           ),
         0,
@@ -190,9 +186,9 @@ export function Carrinho({
         itens: loja.itens.map((item) =>
           item.id === id
             ? {
-                ...item,
-                quantidade,
-              }
+              ...item,
+              quantidade,
+            }
             : item,
         ),
       })),
@@ -214,9 +210,9 @@ export function Carrinho({
         itens: loja.itens.map((item) =>
           item.id === id
             ? {
-                ...item,
-                dias,
-              }
+              ...item,
+              dias,
+            }
             : item,
         ),
       })),
@@ -271,64 +267,70 @@ export function Carrinho({
   }
 
   return (
-    <div className={styles.carrinhoContainer}>
+    <>
       <Header
         navigate={navigate}
         currentRoute="carrinho"
       />
 
-      <CheckoutLayout 
-        titulo="Carrinho"
-        onBack={onBack}
-        aside={
-          <ResumoPedido
-            variant={
-              carrinhoVazio
-                ? 'vazio'
-                : 'carrinho'
-            }
-            subtotal={subtotal}
-            total={total}
-            freteValor={freteValor}
-            onCalcularFrete={
-              handleCalcularFrete
-            }
-            onAplicarCupom={
-              handleAplicarCupom
-            }
-            cupomAplicado={cupomAplicado}
-            ctaLabel="Continuar para Pagamento"
-            onCtaClick={
-              onContinuarParaPagamento
-            }
-            ctaDisabled={carrinhoVazio}
-          />
-        }
-      >
-        {carrinhoVazio ? (
-          <CarrinhoVazio
-            onConferirProdutos={
-              onConferirProdutos
-            }
-          />
-        ) : (
-          lojas.map((loja) => (
-            <LojaGroup
-              key={loja.id}
-              loja={loja}
-              onQuantidadeChange={
-                handleQuantidadeChange
+      <main className={styles.pagina}>
+        <CabecalhoPagina
+          titulo="Carrinho"
+        />
+
+        <CheckoutLayout
+          titulo="Carrinho"
+          onBack={onBack}
+          aside={
+            <ResumoPedido
+              variant={
+                carrinhoVazio
+                  ? 'vazio'
+                  : 'carrinho'
               }
-              onDiasChange={
-                handleDiasChange
+              subtotal={subtotal}
+              total={total}
+              freteValor={freteValor}
+              onCalcularFrete={
+                handleCalcularFrete
               }
-              onRemoveItem={
-                handleRemoveItem
+              onAplicarCupom={
+                handleAplicarCupom
+              }
+              cupomAplicado={cupomAplicado}
+              ctaLabel="Continuar para Pagamento"
+              onCtaClick={
+                onContinuarParaPagamento
+              }
+              ctaDisabled={carrinhoVazio}
+            />
+          }
+        >
+          {carrinhoVazio ? (
+            <CarrinhoVazio
+              onConferirProdutos={
+                onConferirProdutos
               }
             />
-          ))
-        )}
-      </CheckoutLayout>
-    </div>
+          ) : (
+            lojas.map((loja) => (
+              <LojaGroup
+                key={loja.id}
+                loja={loja}
+                onQuantidadeChange={
+                  handleQuantidadeChange
+                }
+                onDiasChange={
+                  handleDiasChange
+                }
+                onRemoveItem={
+                  handleRemoveItem
+                }
+              />
+            ))
+          )}
+        </CheckoutLayout>
+      </main>
+    </>
   );
 }

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { CheckoutLayout } from '../../components/Compartilhados/CheckoutLayout/CheckoutLayout';
+import { CheckoutLayout } from '../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
 import { HeaderPagamento } from '../../components/Pagamento/HeaderPagamento/HeaderPagamento';
 import { PagamentoPix as PagamentoPixCard } from '../../components/Pagamento/PagamentoPix/PagamentoPix';
 import { PagamentoExpirado } from '../../components/Pagamento/PagamentoExpirado/PagamentoExpirado';
-import { ResumoPedido } from '../../components/Compartilhados/ResumoPedido/ResumoPedido';
+import { ResumoPedido } from '../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
 
 interface PagamentoPixPageProps {
   total?: number;

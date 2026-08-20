@@ -1,34 +1,35 @@
 .page {
-    min-height: 100vh;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
+  max-width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
 }
 
 .main {
-    flex: 1;
-
+  flex: 1;
   width: min(100%, 1400px);
-     margin: 0 auto;
+  margin: 0 auto;
   padding: 16px 36px 64px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 370px;     
+  grid-template-columns: minmax(0, 1fr) 370px;
   gap: 20px;
   align-items: start;
 }
 
 .coluna {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 28px;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .colunaAside {
-    min-width: 0;
+  min-width: 0;
 }
 
 @media (max-width: 900px) {
@@ -50,7 +51,7 @@
 }
 
 @media (max-width: 520px) {
-    .main {
-        padding: 12px 10px 36px;
-    }
+  .main {
+    padding: 12px 10px 36px;
+  }
 }

@@ -4,7 +4,7 @@ import { Tag, Lock } from 'lucide-react';
 import type {
   PrazoPagamento,
   ResumoPedidoVariant,
-} from '../../../types/checkout';
+} from '../../../../types/checkout';
 
 interface ResumoPedidoProps {
   variant: ResumoPedidoVariant;

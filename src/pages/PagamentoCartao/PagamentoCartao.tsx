@@ -1,7 +1,7 @@
-import { CheckoutLayout } from '../../components/Compartilhados/CheckoutLayout/CheckoutLayout';
+import { CheckoutLayout } from '../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
 import { HeaderPagamento } from '../../components/Pagamento/HeaderPagamento/HeaderPagamento';
 import { PagamentoCartaoForm } from '../../components/Pagamento/PagamentoCartaoForm/PagamentoCartaoForm';
-import { ResumoPedido } from '../../components/Compartilhados/ResumoPedido/ResumoPedido';
+import { ResumoPedido } from '../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
 
 interface PagamentoCartaoProps {
   total?: number;

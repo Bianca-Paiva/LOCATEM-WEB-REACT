@@ -1,15 +1,10 @@
 .linha {
   display: grid;
   grid-template-columns:
-    112px
-    minmax(220px, 1fr)
-    132px
-    130px
-    38px;
+    112px minmax(220px, 1fr) 132px 130px 38px;
   align-items: center;
   gap: 18px;
 
-  min-height: 116px;
   padding: 18px 20px;
 
   border-bottom: 1px solid #ffffff;
@@ -184,11 +179,7 @@
 @media (max-width: 1050px) {
   .linha {
     grid-template-columns:
-      96px
-      minmax(180px, 1fr)
-      120px
-      115px
-      34px;
+      96px minmax(180px, 1fr) 120px 115px 34px;
 
     gap: 14px;
     padding: 16px;
@@ -211,9 +202,7 @@
 @media (max-width: 760px) {
   .linha {
     grid-template-columns:
-      90px
-      minmax(0, 1fr)
-      38px;
+      90px minmax(0, 1fr) 38px;
 
     align-items: start;
     gap: 14px;
@@ -252,9 +241,7 @@
 @media (max-width: 480px) {
   .linha {
     grid-template-columns:
-      78px
-      minmax(0, 1fr)
-      34px;
+      78px minmax(0, 1fr) 34px;
 
     gap: 10px;
     padding: 12px;
