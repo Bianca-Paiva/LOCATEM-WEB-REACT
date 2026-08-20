@@ -14,6 +14,8 @@ export interface ProdutoSelecionado {
   localizacao: string; /** Localização do locador, ex: "São Paulo - SP" */
   categoria: string; /** Categoria da ferramenta, ex: "Elétrica • Parafusadeira/Furadeira" */
   estoqueDisponivel: number; /** Quantidade máxima disponível para reserva */
+  diasIndisponiveis?: string[]; /** Datas ("yyyy-mm-dd") em que a ferramenta não está disponível */
+  tipoAprovacao?: 'manual' | 'automatica'; /** Forma como as solicitações de locação são aprovadas por este locador */
 }
 
 interface ProdutoContextType {

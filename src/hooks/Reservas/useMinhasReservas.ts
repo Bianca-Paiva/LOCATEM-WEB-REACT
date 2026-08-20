@@ -20,6 +20,7 @@ export function useMinhasReservas(): UseMinhasReservasReturn {
       todas: reservas.length,
       pendente: 0,
       aguardandoPagamento: 0,
+      confirmada: 0,
       preparandoEntrega: 0,
       emTransporte: 0,
       emAndamento: 0,

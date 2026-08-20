@@ -1,0 +1,181 @@
+.calendario {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 2px 8px;
+}
+
+.mesLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #141D23;
+  text-transform: capitalize;
+}
+
+.navBotao {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.navBotao:hover:not(:disabled) {
+  background: var(--color-bg-input);
+}
+
+.navBotao:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.setaEsquerda,
+.setaDireita {
+  width: 10px;
+  height: 10px;
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+.setaEsquerda {
+  transform: rotate(90deg);
+}
+
+.setaDireita {
+  transform: rotate(-90deg);
+}
+
+.semana {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 2px;
+}
+
+.semanaLabel {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-muted, #6b7280);
+  padding: 4px 0;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.dia {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #141D23;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.dia:hover:not(:disabled) {
+  background: var(--color-bg-input);
+}
+
+.diaForaDoMes {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.diaDesabilitado {
+  color: #C7CDD3;
+  cursor: not-allowed;
+  font-weight: 500;
+}
+
+.diaDesabilitado:hover {
+  background: transparent;
+}
+
+.diaIndisponivel {
+  color: #C7CDD3;
+  text-decoration: line-through;
+  text-decoration-color: #E5B8C2;
+}
+
+.diaHoje:not(.diaSelecionado)::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-primary, #F9C01A);
+}
+
+.diaNoIntervalo {
+  background: #FBEED2;
+  border-radius: 0;
+}
+
+.diaSelecionado {
+  background: var(--color-primary, #F9C01A);
+  color: #141D23;
+  font-weight: 800;
+}
+
+.diaSelecionadoInicio {
+  border-radius: 8px 0 0 8px;
+}
+
+.diaSelecionadoFim {
+  border-radius: 0 8px 8px 0;
+}
+
+.legenda {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #eeeeee;
+}
+
+.legendaItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--color-text-muted, #6b7280);
+}
+
+.legendaBolinha {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendaDisponivel {
+  background: var(--color-primary, #F9C01A);
+}
+
+.legendaIndisponivel {
+  background: #E5B8C2;
+}

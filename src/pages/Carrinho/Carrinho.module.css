@@ -1,0 +1,103 @@
+.pagina {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.itemLinha {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--color-bg-card, #fff);
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.detalhesItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  padding: 0 4px;
+}
+
+.valorItem {
+  font-weight: 800;
+  color: var(--color-text-dark);
+}
+
+.botaoRemover {
+  margin-left: auto;
+  border: none;
+  background: none;
+  color: #BA1A1A;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botaoRemover:hover {
+  text-decoration: underline;
+}
+
+.rodape {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--color-bg-card, #fff);
+  border: 1px solid #eeeeee;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  color: var(--color-text-dark);
+}
+
+@media (min-width: 640px) {
+  .pagina {
+    padding: 28px 24px 56px;
+  }
+
+  .itemLinha {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .rodape {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .rodape > :global(button) {
+    width: auto;
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pagina {
+    padding: 32px 32px 64px;
+  }
+}

@@ -1,6 +1,6 @@
 .card {
   width: 100%;
-  background: var(--color-bg-card);
+  background-color: var(--color-bg-card);
   border: 1px solid #eeeeee;
   border-radius: 16px;
   padding: 20px;

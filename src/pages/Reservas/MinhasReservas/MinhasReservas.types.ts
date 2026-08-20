@@ -2,6 +2,7 @@
 export type StatusReserva =
   | 'pendente' // Aguardando aprovação do locador
   | 'aguardandoPagamento'
+  | 'confirmada' // Pagamento confirmado (aprovação automática ou manual já aprovada)
   | 'preparandoEntrega'
   | 'emTransporte'
   | 'emAndamento'
