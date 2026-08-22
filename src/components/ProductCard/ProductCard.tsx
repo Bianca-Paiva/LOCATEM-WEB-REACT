@@ -15,6 +15,8 @@ interface ProductCardProps {
   rating: number;
   reviewCount: number; // Quando fornecido, o card inteiro vira clicável e chama essa função 
   onNavigate?: () => void;
+  /** Forma de aprovação da locação. Quando informado, exibe um selo no card (ex: telas de "Minhas Ferramentas"). */
+  tipoAprovacao?: 'manual' | 'automatica';
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -27,6 +29,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   imageNota,
   reviewCount,
   onNavigate,
+  tipoAprovacao,
 }) => {
   const content = (
     <>
@@ -44,6 +47,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </SwiperSlide>
           ))}
         </Swiper>
+
+        {tipoAprovacao && (
+          <span
+            className={`${styles.badgeAprovacao} ${
+              tipoAprovacao === 'automatica' ? styles.badgeAprovacaoAutomatica : styles.badgeAprovacaoManual
+            }`}
+          >
+            {tipoAprovacao === 'automatica' ? 'Aprovação automática' : 'Aprovação manual'}
+          </span>
+        )}
       </div>
 
       <div className={styles.productInfo}>

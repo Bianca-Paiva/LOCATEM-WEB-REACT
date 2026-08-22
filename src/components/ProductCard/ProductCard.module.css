@@ -78,6 +78,30 @@
   pointer-events: none;
 }
 
+/* Selo indicando o tipo de aprovação da locação (telas de "Minhas Ferramentas") */
+.badgeAprovacao {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill, 999px);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.badgeAprovacaoManual {
+  background: #FFF3CD;
+  color: #8A6100;
+}
+
+.badgeAprovacaoAutomatica {
+  background: #D9F2E3;
+  color: #146C43;
+}
+
 .productTitle {
   font-size: 14px;
   font-weight: 500;

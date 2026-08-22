@@ -28,6 +28,10 @@ const ESTADO_VAZIO_TEXTO: Record<FiltroReserva, { titulo: string; descricao: str
     titulo: 'Nenhuma reserva aguardando pagamento',
     descricao: 'Assim que uma reserva for aceita pelo locador, ela aparecerá aqui.',
   },
+  confirmada: {
+    titulo: 'Nenhuma locação confirmada',
+    descricao: 'Locações com pagamento confirmado aparecerão aqui.',
+  },
   preparandoEntrega: {
     titulo: 'Nenhuma reserva em preparação',
     descricao: 'Reservas com pagamento confirmado, aguardando o envio, aparecerão aqui.',
@@ -84,8 +88,8 @@ export default function MinhasReservas({ navigate }: MinhasReservasProps) {
 
       <main className={styles.pagina}>
         <CabecalhoPagina
-          titulo="Minhas Reservas"
-          subtitulo="Acompanhe todas as suas solicitações de reserva."
+          titulo="Minhas Locações"
+          subtitulo="Acompanhe todas as suas solicitações de locação."
         />
 
         <ReservaAbas filtro={filtro} onChange={setFiltro} contagem={contagem} />

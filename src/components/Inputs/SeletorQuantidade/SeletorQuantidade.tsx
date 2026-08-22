@@ -28,6 +28,8 @@ export default function SeletorQuantidade({
 
         {exibirEstoqueDisponivel && estoqueDisponivel !== undefined && (
           <span className={styles.estoque}>
+            {' '}
+            ({estoqueDisponivel} {estoqueDisponivel === 1 ? 'disponível' : 'disponíveis'})
             ({estoqueDisponivel}{' '}
             {estoqueDisponivel === 1
               ? 'disponível'

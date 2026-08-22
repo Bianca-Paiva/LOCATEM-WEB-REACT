@@ -74,6 +74,7 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
                 imageNota={produto.imageNota}
                 rating={produto.rating}
                 reviewCount={produto.reviewCount}
+                tipoAprovacao={produto.tipoAprovacao}
                 onNavigate={() => handleCardClick(produto.id)}
               />
             ))}

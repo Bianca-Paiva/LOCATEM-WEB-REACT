@@ -23,6 +23,7 @@ export const toProdutoHome = (p: Produto): ProdutoHome => ({
     imageNota: p.imageNota,
     rating: p.rating,
     reviewCount: p.reviewCount,
+    tipoAprovacao: p.tipoAprovacao,
 });
 
 export const toProdutoBusca = (p: Produto): ProdutoBusca => ({

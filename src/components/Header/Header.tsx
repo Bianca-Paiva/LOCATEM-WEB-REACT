@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 import type { ReactNode } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
-import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star, calendar-blank, headset-mic
-import { X } from "lucide-react";
+import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
+import {
+    X
+} from "lucide-react";
 import styles from './Header.module.css'
 
 interface HeaderProps {
@@ -20,6 +22,8 @@ interface NavItem {
 
 export default function Header({ navigate, currentRoute }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
+    const { itens: itensCarrinho } = useCarrinhoStore()
+    const quantidadeCarrinho = itensCarrinho.length
 
     // lock scroll when menu open
     useEffect(() => {
@@ -144,9 +148,15 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             LOCATEM
                         </a>
                     </div>
-                    <a href="#" className={styles.carrinhoBtn}>
+                    <a
+                        href="#"
+                        className={styles.carrinhoBtn}
+                        onClick={e => { e.preventDefault(); navigate('carrinho') }}
+                    >
                         <Icon icon="mdi:cart-outline" width={24} height={24} />
-                        <span className={styles.quantidadeCarrinho}>2</span>
+                        {quantidadeCarrinho > 0 && (
+                            <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
+                        )}
                     </a>
                 </div>
                 <form className={styles.barraPesquisaMobile} onSubmit={e => e.preventDefault()}>
