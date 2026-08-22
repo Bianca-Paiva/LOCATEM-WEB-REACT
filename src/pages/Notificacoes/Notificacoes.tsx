@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BellOff, Trash } from 'lucide-react';
+import { BellOff, Trash2 } from 'lucide-react';
 import NotificationCard from '../../components/Notificacoes/NotificationCard/NotificationCard';
 import FilterDropdown from '../../components/Notificacoes/FilterDropdownNotificacao/FilterDropdown';
 import Pagination from '../../components/Notificacoes/Pagination/Pagination';
@@ -87,7 +87,7 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
                 onClick={clearAll}
                 disabled={notifications.length === 0}
               >
-                <Trash size={16} />
+                <Trash2 size={16} />
                 Limpar tudo
               </button>
             </div>

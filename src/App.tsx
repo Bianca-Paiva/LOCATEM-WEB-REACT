@@ -25,41 +25,43 @@ export default function App() {
 
   return (
     <CatalogoProvider>
-    <ProdutoProvider>
-      <ReservaProvider>
-      <NotificationProvider>
-      <CarrinhoProvider>
-        {route === "home" && <Home navigate={navigate} />}
+      <ProdutoProvider>
+        <ReservaProvider>
+          <NotificationProvider>
+            <CarrinhoProvider>
+              {route === "home" && <Home navigate={navigate} />}
 
-        {route === "busca" && <Busca navigate={navigate} />}
+              {route === "busca" && <Busca navigate={navigate} />}
 
-        {route === "login" && <Login navigate={navigate} />}
+              {route === "login" && <Login navigate={navigate} />}
 
-        {route === "cadastro" && <Cadastro navigate={navigate} />}
+              {route === "cadastro" && <Cadastro navigate={navigate} />}
 
-        {route === "recuperarSenha" && <RecuperarSenha navigate={navigate} />}
+              {route === "recuperarSenha" && <RecuperarSenha navigate={navigate} />}
 
-        {route === "informeToken" && <InformeToken navigate={navigate} />}
+              {route === "informeToken" && <InformeToken navigate={navigate} />}
 
-        {route === "informeNovaSenha" && <InformeNovaSenha navigate={navigate} />}
+              {route === "informeNovaSenha" && <InformeNovaSenha navigate={navigate} />}
 
-        {route === "notificacoes" && <Notificacoes navigate={navigate} />}
+              {route === "notificacoes" && <Notificacoes navigate={navigate} />}
 
-        {route === "avaliacao" && <Avaliacao navigate={navigate} />}
+              {route === "avaliacao" && <Avaliacao navigate={navigate} />}
 
-        {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
+              {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
 
-        {route === "minhasReservas" && <MinhasReservas navigate={navigate} />}
+              {route === "minhasReservas" && <MinhasReservas navigate={navigate} />}
 
-        {route === "detalhesReserva" && <DetalhesReserva navigate={navigate} />}
+              {route === "detalhesReserva" && <DetalhesReserva navigate={navigate} />}
 
-        {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
+              {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
 
-        {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
+              {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
 
-        {route === "carrinho" && <Carrinho navigate={navigate} />}
-      </ReservaProvider>
-    </ProdutoProvider>
+              {route === "carrinho" && <Carrinho navigate={navigate} />}
+            </CarrinhoProvider>
+          </NotificationProvider>
+        </ReservaProvider>
+      </ProdutoProvider >
     </CatalogoProvider>
   );
 }

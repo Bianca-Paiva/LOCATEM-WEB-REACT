@@ -6,7 +6,9 @@ import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-out
 import {
     X
 } from "lucide-react";
+import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
 import styles from './Header.module.css'
+
 
 interface HeaderProps {
     navigate: (route: Route) => void
@@ -62,17 +64,8 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Histórico",
-            renderIcon: (active) => (
-                <Icon
-                    icon={active ? "mdi:clock" : "mdi:clock-outline"}
-                    width={22}
-                    height={22}
-                />
-            ),
-        },
-        {
-            label: "Agendamento",
+            label: "Minhas Reservas",
+            route: "minhasReservas",
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:calendar-blank" : "mdi:calendar-blank-outline"}
@@ -82,11 +75,21 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Notificações",
-            route: "notificacoes",
+            label: "Minhas Ferramentas",
+            route: "minhasFerramentas",
             renderIcon: (active) => (
                 <Icon
-                    icon={active ? "mdi:bell" : "mdi:bell-outline"}
+                    icon={active ? "material-symbols:package-2" : "material-symbols:package-2-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Histórico",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:clock" : "mdi:clock-outline"}
                     width={22}
                     height={22}
                 />
@@ -104,21 +107,32 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Suporte",
+            label: "Notificações",
+            route: "notificacoes",
             renderIcon: (active) => (
                 <Icon
-                    icon={active ? "material-symbols:headset-mic" : "material-symbols:headset-mic-outline"}
+                    icon={active ? "mdi:bell" : "mdi:bell-outline"}
                     width={22}
                     height={22}
                 />
             ),
         },
+        // {
+        //     label: "Entrar",
+        //     route: "login",
+        //     renderIcon: (active) => (
+        //         <Icon
+        //             icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
+        //             width={22}
+        //             height={22}
+        //         />
+        //     ),
+        // },
         {
-            label: "Entrar",
-            route: "login",
+            label: "Suporte",
             renderIcon: (active) => (
                 <Icon
-                    icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
+                    icon={active ? "material-symbols:headset-mic" : "material-symbols:headset-mic-outline"}
                     width={22}
                     height={22}
                 />
