@@ -99,7 +99,6 @@ export function ResumoPedido({
             </div>
 
             <div className={styles.freteInputRow}>
-              {/* NOVO CONTAINER DO CEP */}
               <div className={styles.inputContainer}>
                 <input
                   className={styles.inputSemBorda}
@@ -133,7 +132,6 @@ export function ResumoPedido({
           </div>
 
           <div className={styles.cupomBloco}>
-            {/* CONTAINER DO CUPOM ATUALIZADO */}
             <div className={styles.inputComIcone}>
               <Tag
                 size={18}

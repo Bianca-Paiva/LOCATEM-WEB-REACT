@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import styles from './CheckoutLayout.module.css';
 
 interface CheckoutLayoutProps {
-  titulo: string;
   onBack?: () => void;
   children: ReactNode;
   aside: ReactNode;

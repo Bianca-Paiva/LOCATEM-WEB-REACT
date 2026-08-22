@@ -3,11 +3,8 @@ import type { ReactNode } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star, calendar-blank, headset-mic
-import {
-    X
-} from "lucide-react";
+import { X } from "lucide-react";
 import styles from './Header.module.css'
-
 
 interface HeaderProps {
     navigate: (route: Route) => void

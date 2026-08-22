@@ -10,32 +10,34 @@
 
 .main {
   flex: 1;
-  width: min(100%, 1400px);
+  width: min(100%, 2000px);
   margin: 0 auto;
-  padding: 16px 36px 64px;
+  padding: 0;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 370px;
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 32px;
   align-items: start;
 }
 
 .coluna {
   display: flex;
+  width: 100%;
   min-width: 0;
   flex-direction: column;
   gap: 28px;
 }
 
 .colunaAside {
+  width: 100%;
   min-width: 0;
 }
 
 @media (max-width: 900px) {
   .main {
-    padding: 16px 20px 48px;
+    padding: 0;
   }
 
   .grid {
@@ -53,6 +55,6 @@
 
 @media (max-width: 520px) {
   .main {
-    padding: 12px 10px 36px;
+    padding: 0;
   }
 }
