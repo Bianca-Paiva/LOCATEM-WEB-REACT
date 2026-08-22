@@ -1,17 +1,13 @@
 .page {
-  max-width: 100%;
-  max-width: 2000px;
-  margin: 0 auto;
+  width: 100%;
   padding: 0;
-  background: #ffffff;
   display: flex;
   flex-direction: column;
 }
 
 .main {
   flex: 1;
-  width: min(100%, 2000px);
-  margin: 0 auto;
+  width: 100%;
   padding: 0;
 }
 
