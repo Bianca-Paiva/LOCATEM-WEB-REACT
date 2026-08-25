@@ -44,7 +44,8 @@
 }
 
 .menuBtn,
-.carrinhoBtn {
+.carrinhoBtn,
+.contaBtnMobile {
     width: 40px;
     height: 40px;
     border: none;
@@ -58,6 +59,16 @@
 
 .carrinhoBtn {
     position: relative;
+    text-decoration: none;
+}
+
+.ladoDireito {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.contaBtnMobile {
     text-decoration: none;
 }
 

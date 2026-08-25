@@ -4,6 +4,7 @@ import PageHeader from '../../components/RecuperarSenha/PageHeader/PageHeader'
 import FormInput from '../../components/Inputs/FormInput/FormInput'
 import PasswordField from '../../components/Inputs/PasswordInput/PasswordInput'
 //import { loginUsuario } from '../../services/authService'
+import { useAuth } from '../../hooks/useAuth'
 import type { Route } from '../../router/useRouter'
 import styles from './Login.module.css'
 
@@ -12,6 +13,7 @@ interface LoginProps {
 }
 
 export default function Login({ navigate }: LoginProps) {
+    const { login } = useAuth()
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const [submitting, setSubmitting] = useState(false)
@@ -65,6 +67,10 @@ export default function Login({ navigate }: LoginProps) {
 
         try {
             // await loginUsuario({ email, senha })
+            // authService ainda não está integrado a um backend real (endpoint comentado
+            // acima), então resolvemos o usuário autenticado a partir do AuthContext, que
+            // por sua vez usa o catálogo mockado em mocks/usuarios.mock.ts.
+            login(email)
             navigate('home')
         } catch (err) {
             setError(err instanceof Error ? err.message : 'E-mail ou senha inválidos')

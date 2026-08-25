@@ -23,7 +23,8 @@ export type Route =
   | "pagamentoPix"
   | "minhasFerramentas"
   | "cadastroFerramenta"
-  | "carrinho";
+  | "carrinho"
+  | "perfil";
 
 function getRouteFromHash(): Route {
   const hash = window.location.hash.replace("#", "").split("?")[0];
@@ -48,6 +49,7 @@ function getRouteFromHash(): Route {
   if (hash === "minhasFerramentas") return "minhasFerramentas";
   if (hash === "cadastroFerramenta") return "cadastroFerramenta";
   if (hash === "carrinho") return "carrinho";
+  if (hash === "perfil") return "perfil";
 
   return "home";
 }
