@@ -2,11 +2,11 @@
   position: sticky;
   top: 16px;
   width: 100%;
-  max-width: 450px; /* Adicionado para deixar o card mais largo[cite: 1] */
+  max-width: 450px; 
   height: fit-content;
-  padding: 32px; /* Aumentado de 24px para 32px para dar mais respiro[cite: 1] */
+  padding: 32px; 
   border: 1px solid #dfe3e8;
-  border-radius: 16px; /* Bordas um pouco mais arredondadas[cite: 1] */
+  border-radius: 16px;
   background: #fff;
   box-sizing: border-box;
 }
