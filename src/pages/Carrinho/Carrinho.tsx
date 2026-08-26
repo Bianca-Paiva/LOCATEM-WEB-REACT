@@ -297,16 +297,18 @@ export function Carrinho({
             />
           ) : (
             <>
-              <label className={styles.selecionarTodos}>
-                <input
-                  type="checkbox"
-                  checked={todosSelecionados}
-                  onChange={(e) =>
-                    handleSelecionarTodos(e.target.checked)
-                  }
-                />
-                Selecionar todos
-              </label>
+              <div className={styles.selecionarTodosCard}>
+                <label className={styles.selecionarTodos}>
+                  <input
+                    type="checkbox"
+                    checked={todosSelecionados}
+                    onChange={(e) =>
+                      handleSelecionarTodos(e.target.checked)
+                    }
+                  />
+                  Selecionar todos
+                </label>
+              </div>
 
               {lojas.map((loja) => (
                 <LojaGroup

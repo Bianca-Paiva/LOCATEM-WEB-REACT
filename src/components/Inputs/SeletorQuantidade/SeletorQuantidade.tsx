@@ -30,10 +30,6 @@ export default function SeletorQuantidade({
           <span className={styles.estoque}>
             {' '}
             ({estoqueDisponivel} {estoqueDisponivel === 1 ? 'disponível' : 'disponíveis'})
-            ({estoqueDisponivel}{' '}
-            {estoqueDisponivel === 1
-              ? 'disponível'
-              : 'disponíveis'})
           </span>
         )}
       </p>
@@ -56,11 +52,7 @@ export default function SeletorQuantidade({
             type="button"
             className={styles.botao}
             onClick={onIncrementar}
-            disabled={
-              estoqueDisponivel !== undefined
-                ? quantidade >= estoqueDisponivel
-                : quantidade >= 999
-            }
+            disabled={quantidade >= limiteMaximo}
             aria-label="Aumentar quantidade"
           >
             +

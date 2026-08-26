@@ -8,22 +8,37 @@
   flex-direction: column;
 }
 
+.selecionarTodosCard {
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.184);
+  padding: 18px 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .selecionarTodos {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #111;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0A0A0A;
   cursor: pointer;
-  padding: 2px 2px 4px;
 }
 
 .selecionarTodos input {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   accent-color: var(--color-secondary, #f9c01a);
   cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .selecionarTodosCard {
+    padding: 14px 16px;
+  }
 }
 
 
