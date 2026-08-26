@@ -156,25 +156,17 @@
   border: none;
   border-radius: 7px;
 
-  background: transparent;
+  background-color: transparent;
   color: #98a2b3;
 
   cursor: pointer;
-
-  transition:
-    color 0.15s ease,
-    background 0.15s ease;
 }
 
 .btnRemover:hover {
   color: #dc2626;
-  background: #fff1f2;
+  background-color: transparent;
 }
 
-.btnRemover:focus-visible {
-  outline: 2px solid #f2be00;
-  outline-offset: 2px;
-}
 
 @media (max-width: 1050px) {
   .linha {

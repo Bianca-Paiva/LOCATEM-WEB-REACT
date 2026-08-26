@@ -1,5 +1,6 @@
 import styles from './InfoVendedor.module.css';
 import verificadoImg from '../../../assets/verificadoAzul.png';
+import { getIniciais } from '../../../utils/iniciais';
 
 interface InfoVendedorProps {
   nome: string;
@@ -20,7 +21,9 @@ export function InfoVendedor({
   verificado,
   imageNota,
 }: InfoVendedorProps) {
-  const initials = nome.slice(0, 2).toUpperCase();
+  // Usa o mesmo utilitário de iniciais do resto do projeto (Avatar, AvaliacaoSection),
+  // em vez da lógica local que existia aqui antes (slice das 2 primeiras letras).
+  const initials = getIniciais(nome);
 
   return (
     <div className={styles.vendedorCard}>
@@ -39,7 +42,7 @@ export function InfoVendedor({
           <div className={styles.ratingRow}>
             <img src={imageNota} alt="estrela" className={styles.starIcon} />
             <span className={styles.ratingValor}>{rating.toFixed(1)}</span>
-            <span className={styles.ratingCount}></span>
+            <span className={styles.ratingCount}>({reviewCount})</span>
           </div>
           <p className={styles.locacoes}>+{locacoes} locações</p>
         </div>

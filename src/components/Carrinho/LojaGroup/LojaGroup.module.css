@@ -1,13 +1,16 @@
 .card {
-    border: 1px solid #dfe3e8;
-    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
     background: #fff;
-    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.184);
+    padding: 24px 30px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .cabecalho {
     padding-bottom: 16px;
-    border-bottom: 1px solid #eef0f3;
+    border-bottom: 1px solid #a0a0a09a;
     margin-bottom: 4px;
 }
 
@@ -15,7 +18,7 @@
     margin: 0 0 4px;
     font-size: 18px;
     font-weight: 800;
-    color: #111;
+    color: #0A0A0A;
 }
 
 .lojaOficial {
@@ -24,14 +27,13 @@
     gap: 5px;
     margin: 0;
     font-size: 13px;
-    color: #6b7280;
+    color: #7a7a7a;
 }
 
 .selo {
-    width: 22px;
-    height: 22px;
-    fill: #1877f2;
-    color: white;
+    width: 16px;
+    height: 16px;
+    color: #1a8bf5;
     stroke-width: 2.5;
 }
 

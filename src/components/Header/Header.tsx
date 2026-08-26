@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react'
 import type { ReactNode } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
-import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star, calendar-blank, headset-mic
+import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
 import {
     X
 } from "lucide-react";
+import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
+import { useAuth } from '../../hooks/useAuth'
+import Avatar from '../Avatar/Avatar'
 import styles from './Header.module.css'
 
 
@@ -23,6 +26,13 @@ interface NavItem {
 
 export default function Header({ navigate, currentRoute }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
+    const { itens: itensCarrinho } = useCarrinhoStore()
+    const quantidadeCarrinho = itensCarrinho.length
+    const { usuario, isAuthenticated } = useAuth()
+
+    // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o
+    // comportamento atual (leva para o Login).
+    const rotaConta: Route = isAuthenticated ? 'perfil' : 'login'
 
     // lock scroll when menu open
     useEffect(() => {
@@ -61,17 +71,8 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Histórico",
-            renderIcon: (active) => (
-                <Icon
-                    icon={active ? "mdi:clock" : "mdi:clock-outline"}
-                    width={22}
-                    height={22}
-                />
-            ),
-        },
-        {
-            label: "Agendamento",
+            label: "Minhas Reservas",
+            route: "minhasReservas",
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:calendar-blank" : "mdi:calendar-blank-outline"}
@@ -81,11 +82,21 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Notificações",
-            route: "notificacoes",
+            label: "Minhas Ferramentas",
+            route: "minhasFerramentas",
             renderIcon: (active) => (
                 <Icon
-                    icon={active ? "mdi:bell" : "mdi:bell-outline"}
+                    icon={active ? "material-symbols:package-2" : "material-symbols:package-2-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Histórico",
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:clock" : "mdi:clock-outline"}
                     width={22}
                     height={22}
                 />
@@ -103,21 +114,32 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Suporte",
+            label: "Notificações",
+            route: "notificacoes",
             renderIcon: (active) => (
                 <Icon
-                    icon={active ? "material-symbols:headset-mic" : "material-symbols:headset-mic-outline"}
+                    icon={active ? "mdi:bell" : "mdi:bell-outline"}
                     width={22}
                     height={22}
                 />
             ),
         },
+        // {
+        //     label: "Entrar",
+        //     route: "login",
+        //     renderIcon: (active) => (
+        //         <Icon
+        //             icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
+        //             width={22}
+        //             height={22}
+        //         />
+        //     ),
+        // },
         {
-            label: "Entrar",
-            route: "login",
+            label: "Suporte",
             renderIcon: (active) => (
                 <Icon
-                    icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
+                    icon={active ? "material-symbols:headset-mic" : "material-symbols:headset-mic-outline"}
                     width={22}
                     height={22}
                 />
@@ -147,10 +169,31 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             LOCATEM
                         </a>
                     </div>
-                    <a href="#" className={styles.carrinhoBtn}>
-                        <Icon icon="mdi:cart-outline" width={24} height={24} />
-                        <span className={styles.quantidadeCarrinho}>2</span>
-                    </a>
+                    <div className={styles.ladoDireito}>
+                        <a
+                            href="#"
+                            className={styles.carrinhoBtn}
+                            onClick={e => { e.preventDefault(); navigate('carrinho') }}
+                        >
+                            <Icon icon="mdi:cart-outline" width={24} height={24} />
+                            {quantidadeCarrinho > 0 && (
+                                <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
+                            )}
+                        </a>
+
+                        <a
+                            href="#"
+                            className={styles.contaBtnMobile}
+                            aria-label={isAuthenticated ? 'Meu perfil' : 'Entrar'}
+                            onClick={e => { e.preventDefault(); navigate(rotaConta) }}
+                        >
+                            {isAuthenticated && usuario ? (
+                                <Avatar nome={usuario.nome} fotoUrl={usuario.fotoUrl} size={30} />
+                            ) : (
+                                <Icon icon="mdi:account-circle-outline" width={26} height={26} />
+                            )}
+                        </a>
+                    </div>
                 </div>
                 <form className={styles.barraPesquisaMobile} onSubmit={e => e.preventDefault()}>
                     <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
@@ -232,14 +275,19 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
                     </form>
                     <a
-                        href="../../pages/Login/Login.tsx"
+                        href="#"
                         className={styles.loginBtn}
-                        onClick={e => { e.preventDefault(); navigate('login') }}
+                        aria-label={isAuthenticated ? 'Meu perfil' : 'Entrar'}
+                        onClick={e => { e.preventDefault(); navigate(rotaConta) }}
                     >
-                        <Icon icon="mdi:account-circle-outline"
-                            width={32}
-                            height={32}
-                        />
+                        {isAuthenticated && usuario ? (
+                            <Avatar nome={usuario.nome} fotoUrl={usuario.fotoUrl} size={38} />
+                        ) : (
+                            <Icon icon="mdi:account-circle-outline"
+                                width={32}
+                                height={32}
+                            />
+                        )}
                     </a>
                 </div>
 

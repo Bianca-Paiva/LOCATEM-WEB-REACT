@@ -247,7 +247,7 @@ export function Carrinho({
 
     /*
      * Frete gratuito temporário.
-     * Depois, este trecho pode chamar a API de frete.
+     * Depois, este trecho deve chamar a API de frete.
      */
     setFreteValor(0);
   }
@@ -279,7 +279,6 @@ export function Carrinho({
         />
 
         <CheckoutLayout
-          titulo="Carrinho"
           onBack={onBack}
           aside={
             <ResumoPedido

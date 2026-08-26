@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './AvaliacaoSection.module.css';
 import IconLike from '../../../assets/IconLike.png';
 import IconLikePreenchido from '../../../assets/IconLikePreenchido.png';
+import { getIniciais } from '../../../utils/iniciais';
 
 interface Avaliacao {
   nome: string;
@@ -37,25 +38,6 @@ function Estrelas({ rating, size = 14 }: { rating: number; size?: number }) {
     </div>
   );
 }
-
-function getIniciais(nome: string) {
-  if (!nome) return '';
-
-  // Remove espaços extras no início/fim e divide o nome pelos espaços
-  const partes = nome.trim().split(/\s+/);
-
-  // Se tiver só um nome, continua pegando as duas primeiras letras como garantia
-  if (partes.length === 1) {
-    return partes[0].slice(0, 2).toUpperCase();
-  }
-
-  // Pega a 1ª letra do primeiro nome e a 1ª letra do último sobrenome
-  const primeiraLetra = partes[0][0];
-  const ultimaLetra = partes[partes.length - 1][0];
-
-  return (primeiraLetra + ultimaLetra).toUpperCase();
-}
-
 
 export function AvaliacaoSection({
   mediaGeral,

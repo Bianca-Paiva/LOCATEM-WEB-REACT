@@ -49,9 +49,6 @@
   background: #fff;
   border-bottom: 1px solid #f3f4f6;
   padding: 16px;
-}
-
-.produtoHeroSection {
   display: flex;
   flex-direction: column;
   gap: 20px;

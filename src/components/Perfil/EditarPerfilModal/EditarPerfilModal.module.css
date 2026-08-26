@@ -1,0 +1,79 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 100;
+}
+
+.modal {
+    width: 100%;
+    max-width: 460px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1.5px solid #f6c945;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.titulo {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-text-dark);
+    margin: 0;
+}
+
+.btnFechar {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    transition: background var(--transition-fast);
+}
+
+.btnFechar:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.fotoWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btnFoto {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary-soft);
+    color: #8a6d00;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.btnFoto:hover {
+    background: var(--color-primary-light);
+}
