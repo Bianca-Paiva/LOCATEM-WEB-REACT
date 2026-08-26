@@ -13,7 +13,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 380px;
+  grid-template-columns: minmax(0, 2fr) minmax(380px, 1fr);
   gap: 32px;
   align-items: start;
 }

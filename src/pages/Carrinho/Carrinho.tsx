@@ -4,8 +4,10 @@ import Header from '../../components/Header/Header';
 import { CarrinhoVazio } from '../../components/Carrinho/CarrinhoVazio/CarrinhoVazio';
 import { LojaGroup } from '../../components/Carrinho/LojaGroup/LojaGroup';
 import { ResumoPedido } from '../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
+import { useCarrinhoStore } from '../../hooks/useCarrinhoStore';
 
-import type { LojaGroupData } from '../../types/checkout';
+import type { CarrinhoItemData, LojaGroupData } from '../../types/checkout';
+import type { ItemCarrinho as ItemCarrinhoContexto } from '../../context/CarrinhoContext';
 import type { Route } from '../../router/useRouter';
 
 import styles from './Carrinho.module.css';
@@ -13,72 +15,51 @@ import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
 import { CheckoutLayout } from '../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
 
 /* ============================================================
-   MOCK
+   HELPERS
 ============================================================ */
 
-const LOJAS_MOCK: LojaGroupData[] = [
-  {
-    id: 'jb',
-    nomeLoja: 'Produto de JB Ferramentas',
-    lojaOficialDe: 'Dewalt',
-    verificado: true,
-    itens: [
-      {
-        id: 'jb-1',
-        image: 'src/assets/ProdutosImg/FuradeiraWapCinza.png',
-        title: 'Furadeira Elétrica de Impacto',
-        dias: 1,
-        voltagem: '220V',
-        quantidade: 1,
-        precoUnitario: 599.98,
-      },
-      {
-        id: 'jb-2',
-        image: 'src/assets/ProdutosImg/FuradeiraWapCinza.png',
-        title: 'Furadeira Elétrica de Impacto',
-        dias: 1,
-        voltagem: '220V',
-        quantidade: 1,
-        precoUnitario: 599.98,
-      },
-      {
-        id: 'jb-3',
-        image: 'src/assets/ProdutosImg/FuradeiraWapCinza.png',
-        title: 'Furadeira Elétrica de Impacto',
-        dias: 1,
-        voltagem: '220V',
-        quantidade: 1,
-        precoUnitario: 599.98,
-      },
-    ],
-  },
-  {
-    id: 'wz',
-    nomeLoja: 'Produto de WZ Ferramentas',
-    lojaOficialDe: 'Wap',
-    verificado: true,
-    itens: [
-      {
-        id: 'wz-1',
-        image: 'src/assets/ProdutosImg/FuradeiraWapCinza.png',
-        title: 'Furadeira Elétrica de Impacto',
-        dias: 1,
-        voltagem: '220V',
-        quantidade: 1,
-        precoUnitario: 599.98,
-      },
-      {
-        id: 'wz-2',
-        image: 'src/assets/ProdutosImg/FuradeiraWapCinza.png',
-        title: 'Furadeira Elétrica de Impacto',
-        dias: 1,
-        voltagem: '220V',
-        quantidade: 1,
-        precoUnitario: 599.98,
-      },
-    ],
-  },
-];
+// Preço do produto vem como string ("599,98") vinda do cadastro — mesma
+// conversão usada em useSolicitarReservaModal.ts.
+function precoDiariaDoProduto(price: string): number {
+  const preco = Number(String(price).replace(',', '.'));
+  return Number.isFinite(preco) ? preco : 0;
+}
+
+// Agrupa os itens do carrinho (contexto global, populado só via "Adicionar
+// ao carrinho" na página do produto) por locador, no formato que
+// LojaGroup/ItemCarrinho já sabem exibir.
+function agruparPorLoja(itens: ItemCarrinhoContexto[]): LojaGroupData[] {
+  const grupos = new Map<string, LojaGroupData>();
+
+  itens.forEach((item) => {
+    const nomeLoja = item.produto.locador;
+
+    const itemData: CarrinhoItemData = {
+      id: item.id,
+      image: item.produto.images[0] ?? '',
+      title: item.produto.title,
+      dias: item.dados.resumo.diarias,
+      precoUnitario: precoDiariaDoProduto(item.produto.price),
+      quantidade: item.dados.quantidade,
+      selecionado: item.selecionado,
+      estoqueDisponivel: item.produto.estoqueDisponivel,
+    };
+
+    const grupoExistente = grupos.get(nomeLoja);
+    if (grupoExistente) {
+      grupoExistente.itens.push(itemData);
+    } else {
+      grupos.set(nomeLoja, {
+        id: nomeLoja,
+        nomeLoja: `Produto de ${nomeLoja}`,
+        verificado: true,
+        itens: [itemData],
+      });
+    }
+  });
+
+  return Array.from(grupos.values());
+}
 
 /* ============================================================
    PAGE
@@ -109,7 +90,6 @@ export default function CarrinhoPage({
 
 interface CarrinhoProps {
   navigate: (route: Route) => void;
-  forcarVazio?: boolean;
   onBack?: () => void;
   onConferirProdutos?: () => void;
   onContinuarParaPagamento?: () => void;
@@ -117,14 +97,20 @@ interface CarrinhoProps {
 
 export function Carrinho({
   navigate,
-  forcarVazio = false,
   onBack,
   onConferirProdutos,
   onContinuarParaPagamento,
 }: CarrinhoProps) {
-  const [lojas, setLojas] = useState<LojaGroupData[]>(
-    forcarVazio ? [] : LOJAS_MOCK,
-  );
+  const {
+    itens,
+    removerItem,
+    atualizarQuantidade,
+    atualizarDias,
+    alternarSelecao,
+    selecionarTodos,
+  } = useCarrinhoStore();
+
+  const lojas = useMemo(() => agruparPorLoja(itens), [itens]);
 
   const [freteValor, setFreteValor] =
     useState<number | null>(null);
@@ -132,12 +118,28 @@ export function Carrinho({
   const [cupomAplicado, setCupomAplicado] =
     useState<string | null>(null);
 
+  const [cupomAviso, setCupomAviso] =
+    useState<string | null>(null);
+
+  const [percentualDesconto, setPercentualDesconto] =
+    useState(0);
+
+  const carrinhoVazio = itens.length === 0;
+
+  const todosSelecionados =
+    itens.length > 0 && itens.every((item) => item.selecionado);
+
+  const nenhumSelecionado =
+    itens.length === 0 || itens.every((item) => !item.selecionado);
+
   /*
    * O preço unitário está sendo considerado como o valor
    * de uma unidade por dia.
    *
    * Fórmula:
    * preço unitário × quantidade × dias
+   *
+   * Apenas os itens selecionados (checkbox) entram no subtotal.
    */
   const subtotal = useMemo(
     () =>
@@ -147,9 +149,11 @@ export function Carrinho({
           loja.itens.reduce(
             (totalDosItens, item) =>
               totalDosItens +
-              item.precoUnitario *
-              item.quantidade *
-              item.dias,
+              (item.selecionado
+                ? item.precoUnitario *
+                  item.quantidade *
+                  item.dias
+                : 0),
             0,
           ),
         0,
@@ -157,82 +161,43 @@ export function Carrinho({
     [lojas],
   );
 
-  const total = useMemo(
-    () => subtotal + (freteValor ?? 0),
-    [subtotal, freteValor],
+  const desconto = useMemo(
+    () => subtotal * percentualDesconto,
+    [subtotal, percentualDesconto],
   );
 
-  const carrinhoVazio = useMemo(
-    () =>
-      lojas.length === 0 ||
-      lojas.every(
-        (loja) => loja.itens.length === 0,
-      ),
-    [lojas],
+  const freteComCupom =
+    cupomAplicado === 'FRETEGRATIS' ? 0 : freteValor;
+
+  const total = useMemo(
+    () => subtotal - desconto + (freteComCupom ?? 0),
+    [subtotal, desconto, freteComCupom],
   );
 
   function handleQuantidadeChange(
     id: string,
     quantidade: number,
   ) {
-    if (quantidade < 1) {
-      return;
-    }
-
-    setLojas((lojasAtuais) =>
-      lojasAtuais.map((loja) => ({
-        ...loja,
-
-        itens: loja.itens.map((item) =>
-          item.id === id
-            ? {
-              ...item,
-              quantidade,
-            }
-            : item,
-        ),
-      })),
-    );
+    atualizarQuantidade(id, quantidade);
   }
 
   function handleDiasChange(
     id: string,
     dias: number,
   ) {
-    if (dias < 1) {
-      return;
-    }
-
-    setLojas((lojasAtuais) =>
-      lojasAtuais.map((loja) => ({
-        ...loja,
-
-        itens: loja.itens.map((item) =>
-          item.id === id
-            ? {
-              ...item,
-              dias,
-            }
-            : item,
-        ),
-      })),
-    );
+    atualizarDias(id, dias);
   }
 
   function handleRemoveItem(id: string) {
-    setLojas((lojasAtuais) =>
-      lojasAtuais
-        .map((loja) => ({
-          ...loja,
+    removerItem(id);
+  }
 
-          itens: loja.itens.filter(
-            (item) => item.id !== id,
-          ),
-        }))
-        .filter(
-          (loja) => loja.itens.length > 0,
-        ),
-    );
+  function handleSelecionarItem(id: string) {
+    alternarSelecao(id);
+  }
+
+  function handleSelecionarTodos(selecionado: boolean) {
+    selecionarTodos(selecionado);
   }
 
   function handleCalcularFrete(cep: string) {
@@ -249,7 +214,7 @@ export function Carrinho({
      * Frete gratuito temporário.
      * Depois, este trecho deve chamar a API de frete.
      */
-    setFreteValor(0);
+    setFreteValor(10);
   }
 
   function handleAplicarCupom(
@@ -259,11 +224,27 @@ export function Carrinho({
       .trim()
       .toUpperCase();
 
-    if (!codigoNormalizado) {
+    if (codigoNormalizado === 'LOCATEM10') {
+      setCupomAplicado(codigoNormalizado);
+      setCupomAviso(codigoNormalizado);
+      setPercentualDesconto(0.1);
       return;
     }
 
-    setCupomAplicado(codigoNormalizado);
+    if (codigoNormalizado === 'FRETEGRATIS') {
+      setCupomAplicado(codigoNormalizado);
+      setCupomAviso(codigoNormalizado);
+      setPercentualDesconto(0);
+      return;
+    }
+
+    setCupomAplicado(null);
+    setCupomAviso(null);
+    setPercentualDesconto(0);
+  }
+
+  function handleOcultarCupomAviso() {
+    setCupomAviso(null);
   }
 
   return (
@@ -278,6 +259,7 @@ export function Carrinho({
           titulo="Carrinho"
         />
 
+        <div className={styles.checkout}>
         <CheckoutLayout
           onBack={onBack}
           aside={
@@ -288,20 +270,22 @@ export function Carrinho({
                   : 'carrinho'
               }
               subtotal={subtotal}
+              desconto={desconto}
               total={total}
-              freteValor={freteValor}
+              freteValor={freteComCupom}
               onCalcularFrete={
                 handleCalcularFrete
               }
               onAplicarCupom={
                 handleAplicarCupom
               }
-              cupomAplicado={cupomAplicado}
+              cupomAviso={cupomAviso}
+              onOcultarCupomAviso={handleOcultarCupomAviso}
               ctaLabel="Continuar para Pagamento"
               onCtaClick={
                 onContinuarParaPagamento
               }
-              ctaDisabled={carrinhoVazio}
+              ctaDisabled={carrinhoVazio || nenhumSelecionado}
             />
           }
         >
@@ -312,23 +296,40 @@ export function Carrinho({
               }
             />
           ) : (
-            lojas.map((loja) => (
-              <LojaGroup
-                key={loja.id}
-                loja={loja}
-                onQuantidadeChange={
-                  handleQuantidadeChange
-                }
-                onDiasChange={
-                  handleDiasChange
-                }
-                onRemoveItem={
-                  handleRemoveItem
-                }
-              />
-            ))
+            <>
+              <label className={styles.selecionarTodos}>
+                <input
+                  type="checkbox"
+                  checked={todosSelecionados}
+                  onChange={(e) =>
+                    handleSelecionarTodos(e.target.checked)
+                  }
+                />
+                Selecionar todos
+              </label>
+
+              {lojas.map((loja) => (
+                <LojaGroup
+                  key={loja.id}
+                  loja={loja}
+                  onQuantidadeChange={
+                    handleQuantidadeChange
+                  }
+                  onDiasChange={
+                    handleDiasChange
+                  }
+                  onRemoveItem={
+                    handleRemoveItem
+                  }
+                  onSelecionarItem={
+                    handleSelecionarItem
+                  }
+                />
+              ))}
+            </>
           )}
         </CheckoutLayout>
+        </div>
       </main>
     </>
   );

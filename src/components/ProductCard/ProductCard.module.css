@@ -130,8 +130,7 @@
 }
 
 .logoVerificado {
-  width: 14px;
-  height: 14px;
+  color: #0077FF;
   object-fit: contain;
 }
 

@@ -5,16 +5,16 @@ export interface CarrinhoItemData {
   title: string;
   image: string;
   dias: number;
-  voltagem: string;
+  voltagem?: string;
   precoUnitario: number;
   quantidade: number;
+  selecionado: boolean;
+  estoqueDisponivel?: number;
 }
-``
 
 export interface LojaGroupData {
   id: string;
   nomeLoja: string; // ex: "Produto de JB Ferramentas"
-  lojaOficialDe: string; // ex: "Dewalt"
   verificado: boolean;
   itens: CarrinhoItemData[];
 }

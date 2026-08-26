@@ -9,16 +9,17 @@
 }
 
 .cabecalho {
-    padding-bottom: 16px;
+    padding-bottom: 3px;
     border-bottom: 1px solid #a0a0a09a;
     margin-bottom: 4px;
 }
 
 .nomeLoja {
-    margin: 0 0 4px;
-    font-size: 18px;
-    font-weight: 800;
+    margin: 0;
+    padding-bottom: 16px;
     color: #0A0A0A;
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .lojaOficial {
@@ -30,11 +31,9 @@
     color: #7a7a7a;
 }
 
-.selo {
-    width: 16px;
-    height: 16px;
-    color: #1a8bf5;
-    stroke-width: 2.5;
+.logoVerificado {
+    color: #0077FF;
+    object-fit: contain;
 }
 
 .itens {

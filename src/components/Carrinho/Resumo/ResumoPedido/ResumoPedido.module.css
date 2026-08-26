@@ -2,9 +2,8 @@
   position: sticky;
   top: 16px;
   width: 100%;
-  max-width: 420px; 
   height: fit-content;
-  padding: 22px 20px 20px; 
+  padding: 22px 20px 20px;
   border: 1px solid #E5E7EB;
   border-radius: 14px;
   background: #fff;
@@ -54,13 +53,13 @@
 }
 
 .freteBloco {
-  padding-bottom: 16px;
+  padding-bottom: 5px;
 }
 
 .freteInputRow {
   display: flex;
   align-items: center;
-  gap: 12px; 
+  gap: 12px;
   width: 100%;
 }
 
@@ -78,8 +77,8 @@
 }
 
 .inputContainer:focus-within {
-  border-color: #FFCA00;
-  box-shadow: 0 0 0 2px rgba(255, 202, 0, 0.18);
+  outline: none;
+  border: 1px solid #ffcc0060;
 }
 
 .linkTexto {
@@ -94,8 +93,18 @@
 }
 
 .freteGratis {
-  color: #22c55e;
-  font-weight: 700;
+  color: #4A5565;
+  font-weight: 400;
+}
+
+.freteValor {
+  color: #4A5565;
+  font-weight: 400;
+}
+
+.desconto {
+  color: #4A5565;
+  font-weight: 400;
 }
 
 .cupomBloco {
@@ -116,8 +125,8 @@
 }
 
 .inputComIcone:focus-within {
-  border-color: #FFCA00;
-  box-shadow: 0 0 0 2px rgba(255, 202, 0, 0.18);
+  outline: none;
+  border: 1px solid #ffcc0060;
 }
 
 /* Aplicado em AMBOS os inputs (CEP e Cupom) */
@@ -144,6 +153,11 @@
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.btnInterno:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .cupomAplicadoTexto {
@@ -230,7 +244,8 @@
 @media (max-width: 900px) {
   .card {
     position: static;
-    max-width: 100%; /* No mobile/tablet, ocupa 100% da tela pai[cite: 1] */
+    max-width: 100%;
+    /* No mobile/tablet, ocupa 100% da tela pai[cite: 1] */
   }
 }
 
@@ -240,9 +255,12 @@
     align-items: flex-start;
     gap: 12px;
   }
+
   .inputContainer {
-    width: 100%; /* Faz o CEP ocupar a linha toda no mobile */
+    width: 100%;
+    /* Faz o CEP ocupar a linha toda no mobile */
   }
+
   .linkTexto {
     margin-left: 0;
   }

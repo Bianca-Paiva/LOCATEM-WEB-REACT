@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './ProductCard.module.css';
 
+import { Icon } from "@iconify/react";
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -10,7 +12,6 @@ interface ProductCardProps {
   title: string;
   brand: string;
   price: string;
-  imageVerificado: string;
   imageNota: string;
   rating: number;
   reviewCount: number; // Quando fornecido, o card inteiro vira clicável e chama essa função 
@@ -24,7 +25,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   title,
   brand,
   price,
-  imageVerificado,
   rating,
   imageNota,
   reviewCount,
@@ -50,9 +50,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {tipoAprovacao && (
           <span
-            className={`${styles.badgeAprovacao} ${
-              tipoAprovacao === 'automatica' ? styles.badgeAprovacaoAutomatica : styles.badgeAprovacaoManual
-            }`}
+            className={`${styles.badgeAprovacao} ${tipoAprovacao === 'automatica' ? styles.badgeAprovacaoAutomatica : styles.badgeAprovacaoManual
+              }`}
           >
             {tipoAprovacao === 'automatica' ? 'Aprovação automática' : 'Aprovação manual'}
           </span>
@@ -65,7 +64,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         <div className={styles.productBrandRow}>
           <span className={styles.productBrand}>{brand}</span>
           <div>
-            <img src={imageVerificado} alt="Verificado" className={styles.logoVerificado} />
+            <Icon
+              icon={"codicon:verified-filled"}
+              width={14}
+              height={14}
+              className={styles.logoVerificado}
+            />
           </div>
         </div>
 

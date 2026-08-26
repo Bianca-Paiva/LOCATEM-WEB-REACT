@@ -8,6 +8,24 @@
   flex-direction: column;
 }
 
+.selecionarTodos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+  padding: 2px 2px 4px;
+}
+
+.selecionarTodos input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--color-secondary, #f9c01a);
+  cursor: pointer;
+}
+
 
 @media (min-width: 640px) {
   .pagina {

@@ -10,6 +10,7 @@ interface ItemCarrinhoDataShape {
   dias: number;
   quantidade: number;
   precoUnitario: number;
+  selecionado: boolean;
   estoqueDisponivel?: number;
 }
 
@@ -18,6 +19,7 @@ interface ItemCarrinhoProps {
   onQuantidadeChange: (id: string, quantidade: number) => void;
   onDiasChange: (id: string, dias: number) => void;
   onRemove: (id: string) => void;
+  onSelecionar: (id: string) => void;
   diasMaximo?: number;
 }
 
@@ -29,28 +31,37 @@ export function ItemCarrinho({
   onQuantidadeChange,
   onDiasChange,
   onRemove,
+  onSelecionar,
   diasMaximo = 30,
 }: ItemCarrinhoProps) {
   const total = item.precoUnitario * item.quantidade * item.dias;
 
+  // Cada opção já mostra o valor total do período (diária × dias × quantidade),
+  // não só o número de dias.
   const opcoesDias: FormSelectOption[] = Array.from({ length: diasMaximo }, (_, index) => {
     const dia = index + 1;
-    return { value: String(dia), label: `${dia} ${dia === 1 ? 'dia' : 'dias'}` };
+    const valorTotalDia = item.precoUnitario * dia * item.quantidade;
+    return {
+      value: String(dia),
+      label: `${dia} ${dia === 1 ? 'dia' : 'dias'} — ${formatarPreco(valorTotalDia)}`,
+    };
   });
 
   return (
     <div className={styles.item}>
       <div className={styles.linhaPrincipal}>
+        <input
+          type="checkbox"
+          className={styles.checkbox}
+          checked={item.selecionado}
+          onChange={() => onSelecionar(item.id)}
+          aria-label={`Selecionar ${item.title}`}
+        />
+
         <img className={styles.imagem} src={item.image} alt={item.title} />
 
         <div className={styles.info}>
           <h3 className={styles.titulo}>{item.title}</h3>
-          <p className={styles.subinfo}>
-            {item.dias} {item.dias === 1 ? 'dia' : 'dias'} de aluguel
-          </p>
-          <p className={styles.preco}>
-            {formatarPreco(item.precoUnitario)}/dia × {item.dias} {item.dias === 1 ? 'dia' : 'dias'}
-          </p>
         </div>
 
         <div className={styles.acoes}>

@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './ResumoPedido.module.css';
 import { Tag, Lock } from 'lucide-react';
+import { maskCEP, validateCEP } from '../../../../hooks/masks';
 import type {
   PrazoPagamento,
   ResumoPedidoVariant,
@@ -9,11 +10,13 @@ import type {
 interface ResumoPedidoProps {
   variant: ResumoPedidoVariant;
   subtotal?: number;
+  desconto?: number;
   total?: number;
   onCalcularFrete?: (cep: string) => void;
   freteValor?: number | null;
   onAplicarCupom?: (codigo: string) => void;
-  cupomAplicado?: string | null;
+  cupomAviso?: string | null;
+  onOcultarCupomAviso?: () => void;
   ctaLabel?: string;
   onCtaClick?: () => void;
   ctaDisabled?: boolean;
@@ -30,11 +33,13 @@ const formatarPreco = (valor: number) =>
 export function ResumoPedido({
   variant,
   subtotal = 0,
+  desconto = 0,
   total = 0,
   onCalcularFrete,
   freteValor,
   onAplicarCupom,
-  cupomAplicado,
+  cupomAviso,
+  onOcultarCupomAviso,
   ctaLabel,
   onCtaClick,
   ctaDisabled,
@@ -43,16 +48,21 @@ export function ResumoPedido({
 }: ResumoPedidoProps) {
   const [cepInput, setCepInput] = useState('');
   const [cupomInput, setCupomInput] = useState('');
+  const cepValido = validateCEP(cepInput);
+
+  useEffect(() => {
+    if (!cupomAviso || !onOcultarCupomAviso) {
+      return;
+    }
+
+    const timeout = window.setTimeout(onOcultarCupomAviso, 6_000);
+
+    return () => window.clearTimeout(timeout);
+  }, [cupomAviso, onOcultarCupomAviso]);
 
   return (
-    <section
-      className={styles.card}
-      aria-labelledby="resumo-pedido-titulo"
-    >
-      <h2
-        className={styles.titulo}
-        id="resumo-pedido-titulo"
-      >
+    <section className={styles.card} aria-labelledby="resumo-pedido-titulo">
+      <h2 className={styles.titulo} id="resumo-pedido-titulo">
         Resumo do Pedido
       </h2>
 
@@ -88,7 +98,7 @@ export function ResumoPedido({
                   className={
                     freteValor === 0
                       ? styles.freteGratis
-                      : styles.linhaValor
+                      : styles.freteValor
                   }
                 >
                   {freteValor === 0
@@ -105,9 +115,7 @@ export function ResumoPedido({
                   value={cepInput}
                   placeholder="Informe um CEP"
                   inputMode="numeric"
-                  onChange={(e) =>
-                    setCepInput(e.target.value)
-                  }
+                  onChange={(e) => setCepInput(maskCEP(e.target.value))}
                   aria-label="CEP"
                 />
 
@@ -117,6 +125,7 @@ export function ResumoPedido({
                     onCalcularFrete?.(cepInput)
                   }
                   type="button"
+                  disabled={!cepValido}
                 >
                   Usar
                 </button>
@@ -143,7 +152,7 @@ export function ResumoPedido({
                 value={cupomInput}
                 placeholder="Inserir código de cupom"
                 onChange={(e) =>
-                  setCupomInput(e.target.value)
+                  setCupomInput(e.target.value.toUpperCase())
                 }
                 aria-label="Código do cupom"
               />
@@ -159,11 +168,20 @@ export function ResumoPedido({
               </button>
             </div>
 
-            {cupomAplicado && (
+            {cupomAviso && (
               <p className={styles.cupomAplicadoTexto}>
-                Cupom “{cupomAplicado}” aplicado
+                Cupom {cupomAviso} aplicado
               </p>
             )}
+
+            {desconto > 0 && (
+              <div className={styles.linha}>
+                <span className={styles.linhaLabel}>Desconto</span>
+                <strong className={styles.desconto}>-{formatarPreco(desconto)}</strong>
+              </div>
+            )}
+
+
           </div>
 
           <div className={styles.linhaTotal}>
