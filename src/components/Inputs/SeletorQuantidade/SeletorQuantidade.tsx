@@ -4,6 +4,7 @@ interface SeletorQuantidadeProps {
   quantidade: number;
   estoqueDisponivel?: number;
   exibirEstoqueDisponivel?: boolean;
+  exibirObrigatorio?: boolean;
   onDecrementar: () => void;
   onIncrementar: () => void;
 }
@@ -12,10 +13,10 @@ export default function SeletorQuantidade({
   quantidade,
   estoqueDisponivel,
   exibirEstoqueDisponivel = true,
+  exibirObrigatorio = true,
   onDecrementar,
   onIncrementar,
 }: SeletorQuantidadeProps) {
-
   const limiteMaximo =
     exibirEstoqueDisponivel && estoqueDisponivel !== undefined
       ? estoqueDisponivel
@@ -25,7 +26,7 @@ export default function SeletorQuantidade({
     <div className={styles.wrapper}>
       <p className={styles.label}>
         Quantidade
-        <span className={styles.required}> *</span>
+        {exibirObrigatorio && <span className={styles.required}> *</span>}
 
         {exibirEstoqueDisponivel && estoqueDisponivel !== undefined && (
           <span className={styles.estoque}>

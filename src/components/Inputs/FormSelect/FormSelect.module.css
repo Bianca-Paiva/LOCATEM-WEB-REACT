@@ -16,7 +16,7 @@
 
 .required {
     color: #E11D48;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1;
 }
 
@@ -50,7 +50,7 @@
 
 .trigger:focus-visible {
     outline: none;
-    border: 1px solid #ffcc0060;
+    border: 1px solid #e8cf8a;
 }
 
 .trigger.erro {
@@ -122,12 +122,12 @@
 }
 
 .option:hover:not(:disabled) {
-    background: var(--color-primary-soft);
+    background: #fbf4df;
 }
 
 .optionActive {
-    background: var(--color-primary-light);
-    color: var(--color-text-dark);
+    background: #F5E3B3;
+    color: #6E5000;
     font-weight: 600;
 }
 

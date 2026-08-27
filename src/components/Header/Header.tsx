@@ -7,6 +7,8 @@ import {
     X
 } from "lucide-react";
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
+import { useAuth } from '../../hooks/useAuth'
+import Avatar from '../Avatar/Avatar'
 import styles from './Header.module.css'
 
 
@@ -26,6 +28,11 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
     const { itens: itensCarrinho } = useCarrinhoStore()
     const quantidadeCarrinho = itensCarrinho.length
+    const { usuario, isAuthenticated } = useAuth()
+
+    // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o
+    // comportamento atual (leva para o Login).
+    const rotaConta: Route = isAuthenticated ? 'perfil' : 'login'
 
     // lock scroll when menu open
     useEffect(() => {
@@ -162,16 +169,31 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             LOCATEM
                         </a>
                     </div>
-                    <a
-                        href="#"
-                        className={styles.carrinhoBtn}
-                        onClick={e => { e.preventDefault(); navigate('carrinho') }}
-                    >
-                        <Icon icon="mdi:cart-outline" width={24} height={24} />
-                        {quantidadeCarrinho > 0 && (
-                            <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
-                        )}
-                    </a>
+                    <div className={styles.ladoDireito}>
+                        <a
+                            href="#"
+                            className={styles.carrinhoBtn}
+                            onClick={e => { e.preventDefault(); navigate('carrinho') }}
+                        >
+                            <Icon icon="mdi:cart-outline" width={24} height={24} />
+                            {quantidadeCarrinho > 0 && (
+                                <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
+                            )}
+                        </a>
+
+                        <a
+                            href="#"
+                            className={styles.contaBtnMobile}
+                            aria-label={isAuthenticated ? 'Meu perfil' : 'Entrar'}
+                            onClick={e => { e.preventDefault(); navigate(rotaConta) }}
+                        >
+                            {isAuthenticated && usuario ? (
+                                <Avatar nome={usuario.nome} fotoUrl={usuario.fotoUrl} size={30} />
+                            ) : (
+                                <Icon icon="mdi:account-circle-outline" width={26} height={26} />
+                            )}
+                        </a>
+                    </div>
                 </div>
                 <form className={styles.barraPesquisaMobile} onSubmit={e => e.preventDefault()}>
                     <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
@@ -253,14 +275,19 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
                     </form>
                     <a
-                        href="../../pages/Login/Login.tsx"
+                        href="#"
                         className={styles.loginBtn}
-                        onClick={e => { e.preventDefault(); navigate('login') }}
+                        aria-label={isAuthenticated ? 'Meu perfil' : 'Entrar'}
+                        onClick={e => { e.preventDefault(); navigate(rotaConta) }}
                     >
-                        <Icon icon="mdi:account-circle-outline"
-                            width={32}
-                            height={32}
-                        />
+                        {isAuthenticated && usuario ? (
+                            <Avatar nome={usuario.nome} fotoUrl={usuario.fotoUrl} size={38} />
+                        ) : (
+                            <Icon icon="mdi:account-circle-outline"
+                                width={32}
+                                height={32}
+                            />
+                        )}
                     </a>
                 </div>
 

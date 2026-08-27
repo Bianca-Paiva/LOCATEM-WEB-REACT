@@ -8,96 +8,58 @@
   flex-direction: column;
 }
 
-.lista {
+.selecionarTodosCard {
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 18px 30px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  box-sizing: border-box;
 }
 
-.itemLinha {
+.selecionarTodos {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background: var(--color-bg-card, #fff);
-  border: 1px solid #eeeeee;
-  border-radius: 16px;
-  padding: 12px;
-}
-
-.detalhesItem {
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  font-size: 13px;
-  color: var(--color-text-muted);
-  padding: 0 4px;
-}
-
-.valorItem {
-  font-weight: 800;
-  color: var(--color-text-dark);
-}
-
-.botaoRemover {
-  margin-left: auto;
-  border: none;
-  background: none;
-  color: #BA1A1A;
-  font-size: 12px;
-  font-weight: 700;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0A0A0A;
   cursor: pointer;
 }
 
-.botaoRemover:hover {
-  text-decoration: underline;
+.selecionarTodos input {
+  width: 18px;
+  height: 18px;
+  appearance: none;
+  border: 1.5px solid #d8d8d8;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
-.rodape {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  border-radius: 16px;
-  background: var(--color-bg-card, #fff);
-  border: 1px solid #eeeeee;
+.selecionarTodos input:checked {
+  border-color: #FFCF15;
+  background-color: #FFCF15;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3 8 3 3 7-7' fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.3'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.total {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 15px;
-  color: var(--color-text-dark);
+.selecionarTodos input:focus-visible {
+  outline: 2px solid #e8cf8a;
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .selecionarTodosCard {
+    padding: 14px 16px;
+  }
 }
 
 @media (min-width: 640px) {
   .pagina {
     padding: 28px 24px 56px;
-  }
-
-  .itemLinha {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .rodape {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .rodape > :global(button) {
-    width: auto;
-    padding: 0 32px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .pagina {
-    padding: 32px 32px 64px;
   }
 }

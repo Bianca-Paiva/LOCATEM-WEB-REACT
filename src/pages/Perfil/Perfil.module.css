@@ -1,0 +1,75 @@
+.pagina {
+    width: 100%;
+    max-width: 1428px;
+    margin: 0 auto;
+    padding: 20px 16px 56px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.colunas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.btnSair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    align-self: flex-end;
+    height: 42px;
+    padding: 0 18px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid #f3c2c2;
+    background: #fff;
+    color: #d33;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background var(--transition-fast);
+}
+
+.btnSair:hover {
+    background: #fff5f5;
+}
+
+.semSessao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 60px 16px;
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.btnLogin {
+    height: 42px;
+    padding: 0 20px;
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--color-primary);
+    color: #0A0A0A;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+@media (min-width: 640px) {
+    .pagina {
+        padding: 28px 24px 64px;
+    }
+}
+
+@media (min-width: 900px) {
+    .colunas {
+        grid-template-columns: 2fr 1fr;
+    }
+
+    .btnSair {
+        align-self: flex-end;
+    }
+}

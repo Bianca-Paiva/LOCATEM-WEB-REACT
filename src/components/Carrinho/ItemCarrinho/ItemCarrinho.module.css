@@ -1,0 +1,131 @@
+.item {
+    width: 100%;
+    padding: 20px 0;
+    border-bottom: 1px solid #eef0f3;
+}
+
+.item:last-child {
+    border-bottom: none;
+    padding-bottom: 4px;
+}
+
+.linhaPrincipal {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    margin-top: 4px;
+    appearance: none;
+    border: 1.5px solid #d8d8d8;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox:checked {
+    border-color: #FFCF15;
+    background-color: #FFCF15;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3 8 3 3 7-7' fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.3'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.checkbox:focus-visible {
+    outline: 2px solid #e8cf8a;
+    outline-offset: 2px;
+}
+
+.imagem {
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: transparent;
+    flex-shrink: 0;
+}
+
+.info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.titulo {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+}
+
+.acoes {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 26px;
+    flex-shrink: 0;
+}
+
+.remover {
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 2px;
+    border-radius: 6px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.remover:hover {
+    background: transparent;
+    color: #dc2626;
+}
+
+.total {
+    font-size: 14px;
+    font-weight: 800;
+    color: #111;
+    white-space: nowrap;
+}
+
+.controles {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.controleDias {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.controleQuantidade {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 540px) {
+    .linhaPrincipal {
+        flex-wrap: wrap;
+    }
+
+    .acoes {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .controleDias,
+    .controleQuantidade {
+        flex: 1 1 0;
+    }
+}

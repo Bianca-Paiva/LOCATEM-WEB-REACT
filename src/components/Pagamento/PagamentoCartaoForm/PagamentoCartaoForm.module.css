@@ -1,0 +1,89 @@
+.card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #f3f4f6;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.titulo {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.linhaDupla {
+  display: flex;
+  gap: 16px;
+}
+
+.linhaDupla .campo {
+  flex: 1;
+}
+
+.label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.input,
+.select {
+  height: 42px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 13.5px;
+  color: #0a0a0a;
+  outline: none;
+  font-family: inherit;
+  background: #fff;
+}
+
+.input::placeholder {
+  color: #9ca3af;
+}
+
+.input:focus,
+.select:focus {
+  border-color: var(--color-secondary, #f9c01a);
+}
+
+.select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #6b7280;
+  cursor: pointer;
+  padding-top: 4px;
+}
+
+.checkboxRow input {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--color-secondary, #f9c01a);
+  cursor: pointer;
+}

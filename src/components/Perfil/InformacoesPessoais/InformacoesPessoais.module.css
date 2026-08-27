@@ -1,0 +1,85 @@
+.card {
+    background: var(--color-bg-card);
+    border-radius: 14px;
+    border: 1px solid #f3f4f6;
+    padding: 18px 20px;
+    height: fit-content;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.titulo {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin: 0;
+}
+
+.btnEditar {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: var(--color-primary-soft);
+    color: #8a6d00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-fast);
+}
+
+.btnEditar:hover {
+    background: var(--color-primary-light);
+}
+
+.lista {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.linha {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.linha:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.linha:first-child {
+    padding-top: 0;
+}
+
+.rotulo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--color-text-muted);
+}
+
+.rotulo svg {
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.valor {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    word-break: break-word;
+}

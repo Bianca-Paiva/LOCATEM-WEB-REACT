@@ -110,6 +110,7 @@ export function ProdutoInfo({
           <SeletorQuantidade
             quantidade={quantidade}
             estoqueDisponivel={estoqueDisponivel}
+            exibirObrigatorio={false}
             onDecrementar={decrement}
             onIncrementar={increment}
           />

@@ -1,0 +1,267 @@
+.card {
+  position: sticky;
+  top: 16px;
+  width: 100%;
+  height: fit-content;
+  padding: 22px 20px 20px;
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.titulo {
+  margin: 0;
+  padding-bottom: 16px;
+  color: #0A0A0A;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.textoVazio {
+  color: #7a7a7a;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 15px;
+}
+
+.linhaLabel {
+  color: #4A5565;
+}
+
+.required {
+  color: #e11d48;
+}
+
+.linhaValor {
+  color: #4A5565;
+  font-weight: 400;
+}
+
+.freteBloco {
+  padding-bottom: 5px;
+}
+
+.freteInputRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 4px 4px 4px 14px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  background: #fff;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 210px;
+}
+
+.inputContainer:focus-within {
+  outline: none;
+  border: 1px solid #ffcc0060;
+}
+
+.linkTexto {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #3A83FA;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.freteGratis {
+  color: #4A5565;
+  font-weight: 400;
+}
+
+.freteValor {
+  color: #4A5565;
+  font-weight: 400;
+}
+
+.desconto {
+  color: #4A5565;
+  font-weight: 400;
+}
+
+.cupomBloco {
+  padding: 20px 0;
+}
+
+.inputComIcone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 5px 0 14px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  background: #fff;
+  color: #A0A0A0;
+  box-sizing: border-box;
+}
+
+.inputComIcone:focus-within {
+  outline: none;
+  border: 1px solid #ffcc0060;
+}
+
+/* Aplicado em AMBOS os inputs (CEP e Cupom) */
+.inputSemBorda {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #0A0A0A;
+  font: inherit;
+  font-size: 14px;
+}
+
+/* Botão interno (Usar/Aplicar) */
+.btnInterno {
+  height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #D5ECFF;
+  color: #3A83FA;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btnInterno:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.cupomAplicadoTexto {
+  margin: 8px 0 0;
+  color: #22c55e;
+  font-size: 13.5px;
+}
+
+.linhaTotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  padding: 10px 0 20px;
+  color: #0A0A0A;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.linhaTotal span:last-child {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.btnPrimario {
+  width: 100%;
+  height: 54px;
+  border: 0;
+  border-radius: 25px;
+  background: #FFCA00;
+  color: #0A0A0A;
+  font-size: 16px;
+  font-weight: 700;
+  transition: background .2s, transform .1s;
+  cursor: pointer;
+}
+
+.btnPrimario:hover:not(:disabled) {
+  background: #f0c000;
+}
+
+.btnPrimario:active:not(:disabled) {
+  transform: scale(.98);
+}
+
+.btnPrimario:focus-visible {
+  outline: 2px solid #0A0A0A;
+  outline-offset: 2px;
+}
+
+.btnPrimario:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.prazoBloco {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 0;
+}
+
+.prazoLabel {
+  color: #4A5565;
+  font-size: 14px;
+}
+
+.prazoValor {
+  color: #0A0A0A;
+  font-size: 15px;
+}
+
+.seguroRodape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 18px;
+  color: #A0A0A0;
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .card {
+    position: static;
+    max-width: 100%;
+    /* No mobile/tablet, ocupa 100% da tela pai[cite: 1] */
+  }
+}
+
+@media (max-width: 520px) {
+  .freteInputRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .inputContainer {
+    width: 100%;
+    /* Faz o CEP ocupar a linha toda no mobile */
+  }
+
+  .linkTexto {
+    margin-left: 0;
+  }
+}
