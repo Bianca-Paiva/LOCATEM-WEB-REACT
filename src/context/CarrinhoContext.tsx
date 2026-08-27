@@ -19,6 +19,7 @@ interface CarrinhoContextType {
   atualizarDias: (id: string, dias: number) => void;
   alternarSelecao: (id: string) => void;
   selecionarTodos: (selecionado: boolean) => void;
+  selecionarItens: (ids: string[], selecionado: boolean) => void;
 }
 
 export const CarrinhoContext = createContext<CarrinhoContextType | null>(null);
@@ -106,6 +107,15 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
     setItens((atuais) => atuais.map((item) => ({ ...item, selecionado })));
   };
 
+  const selecionarItens = (ids: string[], selecionado: boolean) => {
+    const idsSelecionados = new Set(ids);
+    setItens((atuais) =>
+      atuais.map((item) =>
+        idsSelecionados.has(item.id) ? { ...item, selecionado } : item,
+      ),
+    );
+  };
+
   return (
     <CarrinhoContext.Provider
       value={{
@@ -116,6 +126,7 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
         atualizarDias,
         alternarSelecao,
         selecionarTodos,
+        selecionarItens,
       }}
     >
       {children}

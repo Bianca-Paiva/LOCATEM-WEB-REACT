@@ -76,7 +76,7 @@ export function ItemCarrinho({
         <div className={styles.controleDias}>
           <FormSelect
             id={`dias-${item.id}`}
-            label="Dias de aluguel"
+            label="Período da Locação "
             required
             options={opcoesDias}
             value={String(item.dias)}

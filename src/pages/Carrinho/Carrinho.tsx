@@ -108,6 +108,7 @@ export function Carrinho({
     atualizarDias,
     alternarSelecao,
     selecionarTodos,
+    selecionarItens,
   } = useCarrinhoStore();
 
   const lojas = useMemo(() => agruparPorLoja(itens), [itens]);
@@ -198,6 +199,10 @@ export function Carrinho({
 
   function handleSelecionarTodos(selecionado: boolean) {
     selecionarTodos(selecionado);
+  }
+
+  function handleSelecionarLoja(ids: string[], selecionado: boolean) {
+    selecionarItens(ids, selecionado);
   }
 
   function handleCalcularFrete(cep: string) {
@@ -326,6 +331,7 @@ export function Carrinho({
                   onSelecionarItem={
                     handleSelecionarItem
                   }
+                  onSelecionarLoja={handleSelecionarLoja}
                 />
               ))}
             </>

@@ -8,13 +8,24 @@ interface LojaGroupProps {
   onDiasChange: (id: string, dias: number) => void;
   onRemoveItem: (id: string) => void;
   onSelecionarItem: (id: string) => void;
+  onSelecionarLoja: (ids: string[], selecionado: boolean) => void;
 }
 
-export function LojaGroup({ loja, onQuantidadeChange, onDiasChange, onRemoveItem, onSelecionarItem }: LojaGroupProps) {
+export function LojaGroup({ loja, onQuantidadeChange, onDiasChange, onRemoveItem, onSelecionarItem, onSelecionarLoja }: LojaGroupProps) {
+  const todosSelecionados = loja.itens.length > 0 && loja.itens.every((item) => item.selecionado);
+
   return (
     <section className={styles.card}>
       <header className={styles.cabecalho}>
-        <h2 className={styles.nomeLoja}>{loja.nomeLoja}</h2>
+        <label className={styles.selecionarLoja}>
+          <input
+            type="checkbox"
+            checked={todosSelecionados}
+            onChange={(event) => onSelecionarLoja(loja.itens.map((item) => item.id), event.target.checked)}
+            aria-label={`Selecionar todos os produtos de ${loja.nomeLoja}`}
+          />
+          <h2 className={styles.nomeLoja}>{loja.nomeLoja}</h2>
+        </label>
       </header>
 
       <div className={styles.itens}>

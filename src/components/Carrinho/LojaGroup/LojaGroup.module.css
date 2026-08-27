@@ -2,24 +2,54 @@
     border: 1px solid #E5E7EB;
     border-radius: 14px;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.184);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     padding: 24px 30px;
     width: 100%;
     box-sizing: border-box;
 }
 
 .cabecalho {
-    padding-bottom: 3px;
+    padding-bottom: 16px;
     border-bottom: 1px solid #a0a0a09a;
     margin-bottom: 4px;
 }
 
+.selecionarLoja {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.selecionarLoja input {
+    width: 18px;
+    height: 18px;
+    appearance: none;
+    border: 1.5px solid #d8d8d8;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.selecionarLoja input:checked {
+    border-color: #FFCF15;
+    background-color: #FFCF15;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3 8 3 3 7-7' fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.3'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.selecionarLoja input:focus-visible {
+    outline: 2px solid #e8cf8a;
+    outline-offset: 2px;
+}
+
 .nomeLoja {
     margin: 0;
-    padding-bottom: 16px;
     color: #0A0A0A;
     font-size: 17px;
-    font-weight: 700;
+    font-weight: 650;
 }
 
 .lojaOficial {
