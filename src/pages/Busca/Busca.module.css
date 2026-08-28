@@ -2,6 +2,19 @@
     ESTILOS BASE / MOBILE (Até 767px
 ============================================================= */
 
+.buscaContainer {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.buscaMain {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 .buscaLayout {
   width: 100%;
   max-width: 100%; 
@@ -115,7 +128,7 @@
    ========================================================================== */
 
 @media (min-width: 1024px) {
-  .busca-layout {
+  .buscaLayout {
     /* Mudei de 100% para um valor fixo máximo. Assim, ao diminuir o zoom,
        a sidebar e o conteúdo continuam juntos e centralizados. */
     max-width: 1440px; 
@@ -127,43 +140,40 @@
     overflow-x: hidden;
   }
 
-  .busca-content-main {
+  .buscaContentMain {
     flex-grow: 1;
     width: auto;
     /* Garante que o conteúdo principal não passe do espaço disponível */
     min-width: 0; 
   }
 
-  .mobile-filter-trigger-btn {
+  .mobileFilterTriggerBtn {
     display: none !important;
   }
 
-  .busca-controls-container {
+  .buscaControlsContainer {
     justify-content: flex-start;
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  .order-button-container {
+  .orderButtonContainer {
     flex: none;
     max-width: none;
   }
 
-  .products-grid {
+  .productsGrid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Cards um pouco maiores */
     gap: 20px; 
   }
 
-  .products-grid > * {
+  .productsGrid > * {
     width: auto !important;
   }
 
   /* CORREÇÃO: O transform: translateX(50px) foi removido daqui para alinhar corretamente */
-  .order-button-container > * {
+  .orderButtonContainer > * {
     width: 100%;
     max-width: 100%;
   }
 }
-
-
-  

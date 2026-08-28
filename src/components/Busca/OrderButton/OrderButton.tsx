@@ -1,4 +1,5 @@
-import './OrderButton.module.css';
+import FormSelect from '../../Inputs/FormSelect/FormSelect';
+import styles from './OrderButton.module.css';
 
 interface Option {
   value: string;
@@ -17,23 +18,19 @@ export function ButtonOrder({
   options,
 }: ButtonOrderProps) {
   return (
-    <div className="button-order-container">
-      <label htmlFor="button-order-select" className="sort-label">
+    <div className={styles.buttonOrderContainer}>
+      <label htmlFor="button-order-select" className={styles.sortLabel}>
         Ordenar por
       </label>
 
-      <select
-        id="button-order"
-        className="button-order-box"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <div className={styles.selectWrapper}>
+        <FormSelect
+          id="button-order-select"
+          options={options}
+          value={value}
+          onChange={onChange}
+        />
+      </div>
     </div>
   );
 }

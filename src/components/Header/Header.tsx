@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
-import type { ReactNode } from "react";
+import type { ReactNode, FormEvent } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
-import {
-    X
-} from "lucide-react";
+import { X } from "lucide-react";
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
 import { useAuth } from '../../hooks/useAuth'
+import { useBuscaStore } from '../../hooks/useBuscaStore'
 import Avatar from '../Avatar/Avatar'
 import styles from './Header.module.css'
 
@@ -29,6 +28,18 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const { itens: itensCarrinho } = useCarrinhoStore()
     const quantidadeCarrinho = itensCarrinho.length
     const { usuario, isAuthenticated } = useAuth()
+
+    // Busca global: funciona a partir de qualquer tela que renderize o Header.
+    // O termo digitado é centralizado no BuscaContext para que a página de
+    // Busca consiga ler o valor mais recente assim que for montada.
+    const { termoBusca, setTermoBusca } = useBuscaStore()
+    const [termoPesquisado, setTermoPesquisado] = useState(termoBusca)
+
+    const handleBuscar = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setTermoBusca(termoPesquisado.trim())
+        navigate('busca')
+    }
 
     // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o
     // comportamento atual (leva para o Login).
@@ -195,9 +206,14 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         </a>
                     </div>
                 </div>
-                <form className={styles.barraPesquisaMobile} onSubmit={e => e.preventDefault()}>
+                <form className={styles.barraPesquisaMobile} onSubmit={handleBuscar}>
                     <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
-                    <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
+                    <input
+                        type="search"
+                        placeholder="Qual ferramenta você precisa hoje?"
+                        value={termoPesquisado}
+                        onChange={e => setTermoPesquisado(e.target.value)}
+                    />
                 </form>
             </header>
 
@@ -268,11 +284,16 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         <img src={logoIcon} alt="Logo LOCATEM" />
                         LOCATEM
                     </a>
-                    <form className={styles.barraPesquisa} onSubmit={e => e.preventDefault()}>
+                    <form className={styles.barraPesquisa} onSubmit={handleBuscar}>
                         <button type="submit" className={styles.lupaBtn}>
                             <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
                         </button>
-                        <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
+                        <input
+                            type="search"
+                            placeholder="Qual ferramenta você precisa hoje?"
+                            value={termoPesquisado}
+                            onChange={e => setTermoPesquisado(e.target.value)}
+                        />
                     </form>
                     <a
                         href="#"

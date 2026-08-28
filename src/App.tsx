@@ -21,12 +21,14 @@ import { CatalogoProvider } from "./context/CatalogoContext";
 import { NotificationProvider } from "./context/NotificationContext";
 import { CarrinhoProvider } from "./context/CarrinhoContext";
 import { AuthProvider } from "./context/AuthContext";
+import { BuscaProvider } from "./context/BuscaContext";
 
 export default function App() {
   const { route, navigate } = useRouter();
 
   return (
     <AuthProvider>
+      <BuscaProvider>
       <CatalogoProvider>
         <ProdutoProvider>
           <ReservaProvider>
@@ -68,6 +70,7 @@ export default function App() {
           </ReservaProvider>
         </ProdutoProvider>
       </CatalogoProvider>
+      </BuscaProvider>
     </AuthProvider>
   );
 }

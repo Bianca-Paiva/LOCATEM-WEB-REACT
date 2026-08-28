@@ -1,8 +1,8 @@
 import Header from '../../components/Header/Header';
-import { Banner } from '../../components/Banner/Banner';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { useProdutoStore } from '../../hooks/useProdutoStore';
 import { useCatalogoStore } from '../../hooks/useCatalogoStore';
+import { useBuscaStore } from '../../hooks/useBuscaStore';
 import type { Route } from '../../router/useRouter';
 import { useMemo, useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';
@@ -19,6 +19,8 @@ interface BuscaProps {
 export default function Busca({ navigate }: BuscaProps) {
   const { setProdutoSelecionado } = useProdutoStore();
   const { produtos } = useCatalogoStore();
+  // Termo pesquisado na barra de busca do Header (funciona em qualquer tela).
+  const { termoBusca } = useBuscaStore();
 
   // Catálogo de busca (ids 15-24) + ferramentas recém-publicadas pelo usuário.
   const produtosBuscaMock = useMemo(
@@ -33,6 +35,15 @@ export default function Busca({ navigate }: BuscaProps) {
   const [isFilterMobileOpen, setIsFilterMobileOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 18;
+
+  // Sempre que o usuário pesquisar um novo termo (a partir de qualquer tela),
+  // volta pra primeira página pra não deixar a paginação "presa" fora do range.
+  // Ajustado durante a renderização (em vez de um useEffect) pra evitar re-render em cascata.
+  const [termoBuscaAnterior, setTermoBuscaAnterior] = useState(termoBusca);
+  if (termoBusca !== termoBuscaAnterior) {
+    setTermoBuscaAnterior(termoBusca);
+    setCurrentPage(1);
+  }
 
   const [activeFilters, setActiveFilters] = useState<FilterState>({
     categories: [],
@@ -51,6 +62,8 @@ export default function Busca({ navigate }: BuscaProps) {
     { value: 'melhores-avaliacoes', label: 'Melhores avaliações' },
     { value: 'novidades', label: 'Novidades' },
   ];
+
+
 
   const handleCardClick = (product: ProdutoBusca) => {
     setProdutoSelecionado({
@@ -101,6 +114,15 @@ export default function Busca({ navigate }: BuscaProps) {
 
     if (activeFilters.minRating !== null && product.rating < activeFilters.minRating) return false;
 
+    if (termoBusca) {
+      const termo = termoBusca.toLowerCase();
+      const correspondeTermo =
+        product.title.toLowerCase().includes(termo) ||
+        product.brand.toLowerCase().includes(termo) ||
+        product.category.toLowerCase().includes(termo);
+      if (!correspondeTermo) return false;
+    }
+
     return true;
   });
 
@@ -126,8 +148,6 @@ export default function Busca({ navigate }: BuscaProps) {
         <div className={styles.buscaLayout}>
 
           <div className={styles.buscaContentMain}>
-            <Banner />
-
             <div className={styles.buscaControlsContainer}>
               <div className={styles.orderButtonContainer}>
                 <ButtonOrder

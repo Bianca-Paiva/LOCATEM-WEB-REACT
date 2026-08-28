@@ -13,6 +13,8 @@ interface ProductCardProps {
   brand: string;
   price: string;
   imageNota: string;
+  /** Selo de verificação do locador (não exibido no card hoje; aceito para compatibilidade com o mock). */
+  imageVerificado?: string;
   rating: number;
   reviewCount: number; // Quando fornecido, o card inteiro vira clicável e chama essa função 
   onNavigate?: () => void;
