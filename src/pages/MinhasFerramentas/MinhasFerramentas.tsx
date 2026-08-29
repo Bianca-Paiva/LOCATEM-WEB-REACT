@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 
 import Header from '../../components/Header/Header';
 import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
-import EstadoVazio from '../../components/MinhasReservas/EstadoVazio/EstadoVazio';
+import EstadoVazio from '../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 
 import { useCatalogoStore } from '../../hooks/useCatalogoStore';

@@ -16,7 +16,7 @@ import {
     XCircle,
     type LucideIcon,
 } from 'lucide-react';
-import { STATUS_CONFIG } from '../../MinhasReservas/EtiquetaStatus/statusConfig';
+import { STATUS_CONFIG } from '../../MinhasLocacoes/EtiquetaStatus/statusConfig';
 import type {
     NotificationCategory,
     NotificationData,
@@ -27,18 +27,18 @@ interface NotificationDetailsModalProps {
     notification: NotificationData | null; // null = modal fechado
     onClose: () => void;
     onRenovar?: (id: string) => void;
-    /** Leva o usuário até 'Detalhes da Reserva' com a reserva já selecionada
+    /** Leva o usuário até 'Detalhes da Locacao' com a locacao já selecionada
      * (usado para "Ver locação", "Efetuar pagamento", "Tentar pagamento novamente" etc). */
-    onVerReserva?: (reservaId: string) => void;
+    onVerLocacao?: (locacaoId: string) => void;
     /** Leva o usuário até o fluxo de avaliação da locação finalizada. */
-    onAvaliar?: (reservaId: string) => void;
+    onAvaliar?: (locacaoId: string) => void;
     /** Leva o usuário até a busca de ferramentas (notificações de promoção). */
     onVerOfertas?: () => void;
 }
 
 // Ícone/cor genéricos por `type`, usados apenas quando a notificação não está atrelada
-// a uma reserva (ex: promoção, nova mensagem, pagamento recusado). Notificações de
-// reservas/locações usam o mesmo ícone/cor de STATUS_CONFIG (EtiquetaStatus).
+// a uma locacao (ex: promoção, nova mensagem, pagamento recusado). Notificações de
+// locacoes/locações usam o mesmo ícone/cor de STATUS_CONFIG (EtiquetaStatus).
 const ICON_BY_TYPE: Record<NotificationData['type'], LucideIcon> = {
     success: CheckCircle2,
     warning: AlertTriangle,
@@ -60,7 +60,7 @@ function getDetailRows(notification: NotificationData): DetailRow[] {
     const { category, details } = notification;
 
     switch (category) {
-        case 'reserva-confirmada':
+        case 'locacao-confirmada':
             return [
                 { label: 'Equipamento', value: details.equipamento ?? '-' },
                 { label: 'Status', value: details.status ?? '-' },
@@ -98,7 +98,7 @@ function getDetailRows(notification: NotificationData): DetailRow[] {
                 { label: 'Valor', value: details.valor ?? '-' },
             ];
 
-        case 'reserva-cancelada':
+        case 'locacao-cancelada':
             return [
                 { label: 'Equipamento', value: details.equipamento ?? '-' },
                 { label: 'Motivo', value: details.motivoCancelamento ?? '-' },
@@ -161,7 +161,7 @@ function getDetailRows(notification: NotificationData): DetailRow[] {
     }
 }
 
-type AlvoAcao = 'reserva' | 'avaliacao' | 'ofertas';
+type AlvoAcao = 'locacao' | 'avaliacao' | 'ofertas';
 
 interface AcaoConfig {
     label: string;
@@ -174,23 +174,23 @@ interface AcaoConfig {
 // detalhes da locação, etc).
 function getAcaoConfig(category: NotificationCategory): AcaoConfig | null {
     switch (category) {
-        case 'reserva-confirmada':
+        case 'locacao-confirmada':
         case 'entrega-andamento':
         case 'entrega-concluida':
         case 'devolucao-pendente':
         case 'devolucao-atrasada':
         case 'ferramenta-devolvida':
         case 'pagamento-confirmado':
-            return { label: 'Ver locação', Icon: Eye, alvo: 'reserva' };
+            return { label: 'Ver locação', Icon: Eye, alvo: 'locacao' };
 
-        case 'reserva-cancelada':
-            return { label: 'Ver detalhes', Icon: Eye, alvo: 'reserva' };
+        case 'locacao-cancelada':
+            return { label: 'Ver detalhes', Icon: Eye, alvo: 'locacao' };
 
         case 'pagamento-pendente':
-            return { label: 'Efetuar pagamento', Icon: CreditCard, alvo: 'reserva' };
+            return { label: 'Efetuar pagamento', Icon: CreditCard, alvo: 'locacao' };
 
         case 'pagamento-recusado':
-            return { label: 'Tentar pagamento novamente', Icon: CreditCard, alvo: 'reserva' };
+            return { label: 'Tentar pagamento novamente', Icon: CreditCard, alvo: 'locacao' };
 
         case 'avaliacao-pendente':
             return { label: 'Avaliar locação', Icon: Star, alvo: 'avaliacao' };
@@ -208,7 +208,7 @@ export default function NotificationDetailsModal({
     notification,
     onClose,
     onRenovar,
-    onVerReserva,
+    onVerLocacao,
     onAvaliar,
     onVerOfertas,
 }: NotificationDetailsModalProps) {
@@ -226,13 +226,13 @@ export default function NotificationDetailsModal({
 
     if (!notification) return null; // nada selecionado, modal não renderiza
 
-    const { id, type, category, title, description, showRenovar, statusReserva, reservaId } =
+    const { id, type, category, title, description, showRenovar, statusLocacao, locacaoId } =
         notification;
 
-    // Quando a notificação está atrelada a uma reserva, usa o mesmo ícone/cor de
-    // STATUS_CONFIG (o mesmo exibido em 'Minhas Reservas'); caso contrário, cai no
+    // Quando a notificação está atrelada a uma locacao, usa o mesmo ícone/cor de
+    // STATUS_CONFIG (o mesmo exibido em 'Minhas Locacoes'); caso contrário, cai no
     // ícone genérico baseado em `type`.
-    const configStatus = statusReserva ? STATUS_CONFIG[statusReserva] : null;
+    const configStatus = statusLocacao ? STATUS_CONFIG[statusLocacao] : null;
     const Icon = configStatus ? configStatus.icon : ICON_BY_TYPE[type];
     const iconStyle = configStatus
         ? ({ background: configStatus.fundo, color: configStatus.cor } as React.CSSProperties)
@@ -248,7 +248,7 @@ export default function NotificationDetailsModal({
     // com a categoria da notificação. Só é exibido quando há para onde navegar.
     const acaoConfig = getAcaoConfig(category);
     const showAcaoButton =
-        !!acaoConfig && (acaoConfig.alvo === 'ofertas' || !!reservaId);
+        !!acaoConfig && (acaoConfig.alvo === 'ofertas' || !!locacaoId);
 
     const handleRenovar = () => {
         onRenovar?.(id);
@@ -258,10 +258,10 @@ export default function NotificationDetailsModal({
     const handleAcao = () => {
         if (!acaoConfig) return;
 
-        if (acaoConfig.alvo === 'reserva' && reservaId) {
-            onVerReserva?.(reservaId);
-        } else if (acaoConfig.alvo === 'avaliacao' && reservaId) {
-            onAvaliar?.(reservaId);
+        if (acaoConfig.alvo === 'locacao' && locacaoId) {
+            onVerLocacao?.(locacaoId);
+        } else if (acaoConfig.alvo === 'avaliacao' && locacaoId) {
+            onAvaliar?.(locacaoId);
         } else if (acaoConfig.alvo === 'ofertas') {
             onVerOfertas?.();
         }

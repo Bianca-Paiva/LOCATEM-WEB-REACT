@@ -10,7 +10,7 @@ import Header from '../../components/Header/Header';
 import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
 
 import { useAvaliacoes } from '../../hooks/Avaliacao/useAvaliacoes';
-import { useReservaStore } from '../../hooks/Reservas/useReservaStore';
+import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import type { AbaAvaliacao } from './Avaliacao.types';
 import styles from './Avaliacao.module.css';
 
@@ -25,7 +25,7 @@ interface AvaliacaoProps {
  */
 export default function Avaliacao({ navigate }: AvaliacaoProps) {
     const [abaAtiva, setAbaAtiva] = useState<AbaAvaliacao>('pendentes');
-    const { reservaSelecionada } = useReservaStore();
+    const { locacaoSelecionada } = useLocacaoStore();
 
     const {
         produtosPendentes,
@@ -38,7 +38,7 @@ export default function Avaliacao({ navigate }: AvaliacaoProps) {
         toastVisivel,
         setObservacaoRascunho,
         abrirModal,
-        iniciarAvaliacaoDaReserva,
+        iniciarAvaliacaoDaLocacao,
         fecharModal,
         selecionarNotaGlobalEAbrir,
         selecionarSubNota,
@@ -46,18 +46,18 @@ export default function Avaliacao({ navigate }: AvaliacaoProps) {
     } = useAvaliacoes();
 
     // Quando o usuário chega aqui pelo botão "Avaliar Locação" (Detalhes da
-    // Reserva, status "finalizada"), abre direto o modal já com os dados
-    // daquela reserva prontos para avaliação. Só roda uma vez, ao montar a
+    // Locacao, status "finalizada"), abre direto o modal já com os dados
+    // daquela locacao prontos para avaliação. Só roda uma vez, ao montar a
     // página, para não reabrir o modal em navegações subsequentes.
     const avaliacaoIniciada = useRef(false);
 
     useEffect(() => {
         if (avaliacaoIniciada.current) return;
-        if (!reservaSelecionada || reservaSelecionada.status !== 'finalizada') return;
+        if (!locacaoSelecionada || locacaoSelecionada.status !== 'finalizada') return;
 
         avaliacaoIniciada.current = true;
-        iniciarAvaliacaoDaReserva(reservaSelecionada);
-    }, [reservaSelecionada, iniciarAvaliacaoDaReserva]);
+        iniciarAvaliacaoDaLocacao(locacaoSelecionada);
+    }, [locacaoSelecionada, iniciarAvaliacaoDaLocacao]);
 
     return (
         <>

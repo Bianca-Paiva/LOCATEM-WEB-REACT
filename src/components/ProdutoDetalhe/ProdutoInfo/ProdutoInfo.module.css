@@ -177,7 +177,7 @@
   font-weight: 700;
   color: #6E5000;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: filter 0.15s, transform 0.1s;
   padding: 0 8px;
 }
 
@@ -190,25 +190,25 @@
   transform: translateY(0);
 }
 
-.btnReservar {
+.btnLocar {
   flex: 1;
-  height: 44px;
-  background-color: #F5E3B3;
+  height: 46px;
+  background-color: #FFC327;
   border: none;
   border-radius: 30px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
-  color: #6E5000;
+  color: #0A0A0A;
   cursor: pointer;
   transition: filter 0.15s, transform 0.1s;
   padding: 0 8px;
 }
 
-.btnReservar:hover {
+.btnLocar:hover {
   filter: brightness(1.01);
   transform: translateY(-1px);
 }
 
-.btnReservar:active {
+.btnLocar:active {
   transform: translateY(0);
 }

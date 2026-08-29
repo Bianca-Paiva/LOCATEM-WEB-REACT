@@ -8,17 +8,17 @@ import { EspecificacoesTecnicas } from '../../components/ProdutoDetalhe/Especifi
 import { InfoVendedor } from '../../components/ProdutoDetalhe/InfoVendedor/InfoVendedor';
 import { AvaliacaoSection } from '../../components/ProdutoDetalhe/AvaliacaoSection/AvaliacaoSection';
 import { BannerLateral } from '../../components/ProdutoDetalhe/BannerLateral/BannerLateral';
-import SolicitarReservaModal from '../../components/SolicitarReserva/SolicitarReservaModal/SolicitarReservaModal';
+import SolicitarLocacaoModal from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal';
 import SuccessModal from '../../components/SuccessModal/SucessesModal';
 import { useProdutoStore } from '../../hooks/useProdutoStore';
-import { useReservaStore } from '../../hooks/Reservas/useReservaStore';
-import { useNotificationStore } from '../../hooks/Reservas/useNotificationStore';
+import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
+import { useNotificationStore } from '../../hooks/Locacoes/useNotificationStore';
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
-import { montarReservaPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/montarReservaData';
+import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/montarLocacaoData';
 import type { ProdutoSelecionado } from '../../context/ProdutoContext';
 import type { Route } from '../../router/useRouter';
-import type { DadosReservaModal, ModoAberturaModal } from '../../components/SolicitarReserva/SolicitarReservaModal/SolicitarReservaModal.types';
+import type { DadosLocacaoModal, ModoAberturaModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import {
   FALLBACK_PRODUTO,
   MOCK_SEMELHANTES,
@@ -33,7 +33,7 @@ interface ProdutoDetalheProps {
 
 export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const { produtoSelecionado, setProdutoSelecionado } = useProdutoStore();
-  const { adicionarReserva } = useReservaStore();
+  const { adicionarLocacao } = useLocacaoStore();
   const { adicionarNotificacao } = useNotificationStore();
   const { adicionarItem } = useCarrinhoStore();
 
@@ -80,7 +80,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
 
   const handleFecharModal = () => setModalAberto(false);
 
-  const handleContinuar = (dados: DadosReservaModal) => {
+  const handleContinuar = (dados: DadosLocacaoModal) => {
     setProdutoSelecionado(produto);
     setModalAberto(false);
 
@@ -88,9 +88,9 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
       // Aprovação manual: cria a solicitação como "Aguardando aprovação",
       // notifica o locatário do prazo de 24h e mostra o modal de sucesso —
       // nada de pagamento nem confirmação automática aqui.
-      const novaReserva = adicionarReserva(montarReservaPendente(produto, dados));
+      const novaLocacao = adicionarLocacao(montarLocacaoPendente(produto, dados));
       adicionarNotificacao(
-        montarNotificacaoSolicitacaoEnviada(produto, novaReserva.id, novaReserva.periodo),
+        montarNotificacaoSolicitacaoEnviada(produto, novaLocacao.id, novaLocacao.periodo),
       );
       setSuccessAberto(true);
     } else {
@@ -103,10 +103,10 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
 
   const handleFecharSuccess = () => {
     setSuccessAberto(false);
-    navigate('minhasReservas');
+    navigate('minhasLocacoes');
   };
 
-  const handleAdicionarAoCarrinhoConfirmado = (dados: DadosReservaModal) => {
+  const handleAdicionarAoCarrinhoConfirmado = (dados: DadosLocacaoModal) => {
     // Apenas adiciona a ferramenta ao carrinho (datas, horários e
     // quantidade) — não cria solicitação, notificação nem dispara
     // fluxo de aprovação/pagamento algum.
@@ -147,7 +147,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     imageNota={produto.imageNota}
                     estoqueDisponivel={produto.estoqueDisponivel}
                     onAlugar={handleAlugar}                          // <-- abre o modal em modo "locar"
-                    onReservar={handleAlugar}                        // <-- mantido por compatibilidade; use handleAlugar
+                    onLocar={handleAlugar}                        // <-- mantido por compatibilidade; use handleAlugar
                     onAddCarrinho={handleAdicionarCarrinho}          // <-- abre o modal em modo "carrinho"
                     onSelecaoChange={setSelecaoProduto}              // <-- eleva quantidade/diárias/tensão para o modal
                   />
@@ -206,7 +206,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
         </div>
       </main>
 
-      <SolicitarReservaModal
+      <SolicitarLocacaoModal
         aberto={modalAberto}
         produto={produto}
         modo={modoModal}

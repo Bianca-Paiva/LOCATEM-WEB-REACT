@@ -8,30 +8,28 @@ import Busca from "./pages/Busca/Busca";
 import Notificacoes from "./pages/Notificacoes/Notificacoes";
 import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
 import Avaliacao from "./pages/Avaliacao/Avaliacao";
-import MinhasReservas from "./pages/Reservas/MinhasReservas/MinhasReservas";
-import DetalhesReserva from "./pages/Reservas/DetalhesReserva/DetalhesReserva";
+import MinhasLocacoes from "./pages/Locacoes/MinhasLocacoes/MinhasLocacoes";
+import DetalhesLocacao from "./pages/Locacoes/DetalhesLocacao/DetalhesLocacao";
 import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
 import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
 import Carrinho from "./pages/Carrinho/Carrinho";
 import Perfil from "./pages/Perfil/Perfil";
 import { useRouter } from "./router/useRouter";
 import { ProdutoProvider } from "./context/ProdutoContext";
-import { ReservaProvider } from "./context/ReservaContext";
+import { LocacaoProvider } from "./context/LocacaoContext";
 import { CatalogoProvider } from "./context/CatalogoContext";
 import { NotificationProvider } from "./context/NotificationContext";
 import { CarrinhoProvider } from "./context/CarrinhoContext";
 import { AuthProvider } from "./context/AuthContext";
-import { BuscaProvider } from "./context/BuscaContext";
 
 export default function App() {
   const { route, navigate } = useRouter();
 
   return (
     <AuthProvider>
-      <BuscaProvider>
       <CatalogoProvider>
         <ProdutoProvider>
-          <ReservaProvider>
+          <LocacaoProvider>
             <NotificationProvider>
               <CarrinhoProvider>
                 {route === "home" && <Home navigate={navigate} />}
@@ -54,9 +52,9 @@ export default function App() {
 
                 {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
 
-                {route === "minhasReservas" && <MinhasReservas navigate={navigate} />}
+                {route === "minhasLocacoes" && <MinhasLocacoes navigate={navigate} />}
 
-                {route === "detalhesReserva" && <DetalhesReserva navigate={navigate} />}
+                {route === "detalhesLocacao" && <DetalhesLocacao navigate={navigate} />}
 
                 {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
 
@@ -67,10 +65,9 @@ export default function App() {
                 {route === "perfil" && <Perfil navigate={navigate} />}
               </CarrinhoProvider>
             </NotificationProvider>
-          </ReservaProvider>
+          </LocacaoProvider>
         </ProdutoProvider>
       </CatalogoProvider>
-      </BuscaProvider>
     </AuthProvider>
   );
 }

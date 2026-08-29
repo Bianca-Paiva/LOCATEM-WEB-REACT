@@ -5,7 +5,7 @@ import FilterDropdown from '../../components/Notificacoes/FilterDropdownNotifica
 import Pagination from '../../components/Notificacoes/Pagination/Pagination';
 import NotificationDetailsModal from '../../components/Notificacoes/NotificationModal/NotificationDetailsModal';
 import { useNotifications } from '../../hooks/useNotifications';
-import { useReservaStore } from '../../hooks/Reservas/useReservaStore';
+import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import styles from './Notificacoes.module.css';
 import Header from '../../components/Header/Header';
 import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
@@ -32,8 +32,8 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
     renovar,
   } = useNotifications();
 
-  // Fonte das reservas reais (mesma usada em 'Minhas Locações' e 'Detalhes da Reserva')
-  const { reservas, setReservaSelecionada } = useReservaStore();
+  // Fonte das locacoes reais (mesma usada em 'Minhas Locações' e 'Detalhes da Locacao')
+  const { locacoes, setLocacaoSelecionada } = useLocacaoStore();
 
   // Notificação atualmente aberta no modal; null = modal fechado
   const [selectedNotification, setSelectedNotification] = useState<NotificationData | null>(null);
@@ -45,23 +45,23 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
 
   const handleCloseModal = () => setSelectedNotification(null);
 
-  // Seleciona a reserva vinculada (mesmo padrão usado em MinhasReservas ao abrir uma
-  // reserva) e leva o usuário para a tela de Detalhes da Reserva. Usado pelos botões
+  // Seleciona a locacao vinculada (mesmo padrão usado em MinhasLocacoes ao abrir uma
+  // locacao) e leva o usuário para a tela de Detalhes da Locacao. Usado pelos botões
   // "Ver locação", "Efetuar pagamento", "Tentar pagamento novamente" e "Ver detalhes".
-  const handleVerReserva = (reservaId: string) => {
-    const reserva = reservas.find((item) => item.id === reservaId);
-    if (!reserva) return;
+  const handleVerLocacao = (locacaoId: string) => {
+    const locacao = locacoes.find((item) => item.id === locacaoId);
+    if (!locacao) return;
 
-    setReservaSelecionada(reserva);
-    navigate('detalhesReserva');
+    setLocacaoSelecionada(locacao);
+    navigate('detalhesLocacao');
   };
 
-  // Seleciona a reserva finalizada e leva o usuário direto para o fluxo de avaliação.
-  const handleAvaliar = (reservaId: string) => {
-    const reserva = reservas.find((item) => item.id === reservaId);
-    if (!reserva) return;
+  // Seleciona a locacao finalizada e leva o usuário direto para o fluxo de avaliação.
+  const handleAvaliar = (locacaoId: string) => {
+    const locacao = locacoes.find((item) => item.id === locacaoId);
+    if (!locacao) return;
 
-    setReservaSelecionada(reserva);
+    setLocacaoSelecionada(locacao);
     navigate('avaliacao');
   };
 
@@ -99,7 +99,7 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
             <BellOff size={40} className={styles.emptyIcon} />
             <p className={styles.emptyTitle}>Nenhuma notificação por aqui</p>
             <p className={styles.emptyDescription}>
-              Assim que houver novidades sobre suas reservas e entregas, elas aparecem nesta tela.
+              Assim que houver novidades sobre suas locacoes e entregas, elas aparecem nesta tela.
             </p>
           </div>
         ) : (
@@ -130,7 +130,7 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
         notification={selectedNotification}
         onClose={handleCloseModal}
         onRenovar={renovar}
-        onVerReserva={handleVerReserva}
+        onVerLocacao={handleVerLocacao}
         onAvaliar={handleAvaliar}
         onVerOfertas={handleVerOfertas}
       />

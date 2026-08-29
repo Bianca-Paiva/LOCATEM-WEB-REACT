@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import styles from './CabecalhoPagina.module.css';
 
 interface CabecalhoPaginaProps {
-    /** Título principal da página (ex: "Minhas Reservas") */
+    /** Título principal da página (ex: "Minhas Locacoes") */
     titulo: string;
     /** Texto de apoio abaixo do título (opcional) */
     subtitulo?: string;
@@ -13,7 +13,7 @@ interface CabecalhoPaginaProps {
 }
 
 // Cabeçalho padrão usado no topo das páginas internas (título + subtítulo opcional).
-// Baseado no cabeçalho original da página "Minhas Reservas".
+// Baseado no cabeçalho original da página "Minhas Locacoes".
 export default function CabecalhoPagina({ titulo, subtitulo, acao, className }: CabecalhoPaginaProps) {
     return (
         <div className={`${styles.cabecalho}${className ? ` ${className}` : ''}`}>

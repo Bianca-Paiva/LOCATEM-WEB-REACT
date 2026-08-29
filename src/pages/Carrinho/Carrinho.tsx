@@ -19,7 +19,7 @@ import { CheckoutLayout } from '../../components/Carrinho/Resumo/CheckoutLayout/
 ============================================================ */
 
 // Preço do produto vem como string ("599,98") vinda do cadastro — mesma
-// conversão usada em useSolicitarReservaModal.ts.
+// conversão usada em useSolicitarLocacaoModal.ts.
 function precoDiariaDoProduto(price: string): number {
   const preco = Number(String(price).replace(',', '.'));
   return Number.isFinite(preco) ? preco : 0;
@@ -152,8 +152,8 @@ export function Carrinho({
               totalDosItens +
               (item.selecionado
                 ? item.precoUnitario *
-                  item.quantidade *
-                  item.dias
+                item.quantidade *
+                item.dias
                 : 0),
             0,
           ),
@@ -265,78 +265,78 @@ export function Carrinho({
         />
 
         <div className={styles.checkout}>
-        <CheckoutLayout
-          onBack={onBack}
-          aside={
-            <ResumoPedido
-              variant={
-                carrinhoVazio
-                  ? 'vazio'
-                  : 'carrinho'
-              }
-              subtotal={subtotal}
-              desconto={desconto}
-              total={total}
-              freteValor={freteComCupom}
-              onCalcularFrete={
-                handleCalcularFrete
-              }
-              onAplicarCupom={
-                handleAplicarCupom
-              }
-              cupomAviso={cupomAviso}
-              onOcultarCupomAviso={handleOcultarCupomAviso}
-              ctaLabel="Continuar para Pagamento"
-              onCtaClick={
-                onContinuarParaPagamento
-              }
-              ctaDisabled={carrinhoVazio || nenhumSelecionado}
-            />
-          }
-        >
-          {carrinhoVazio ? (
-            <CarrinhoVazio
-              onConferirProdutos={
-                onConferirProdutos
-              }
-            />
-          ) : (
-            <>
-              <div className={styles.selecionarTodosCard}>
-                <label className={styles.selecionarTodos}>
-                  <input
-                    type="checkbox"
-                    checked={todosSelecionados}
-                    onChange={(e) =>
-                      handleSelecionarTodos(e.target.checked)
-                    }
-                  />
-                  Selecionar todos
-                </label>
-              </div>
+          <CheckoutLayout
+            onBack={onBack}
+            aside={
+              <ResumoPedido
+                variant={
+                  carrinhoVazio
+                    ? 'vazio'
+                    : 'carrinho'
+                }
+                subtotal={subtotal}
+                desconto={desconto}
+                total={total}
+                freteValor={freteComCupom}
+                onCalcularFrete={
+                  handleCalcularFrete
+                }
+                onAplicarCupom={
+                  handleAplicarCupom
+                }
+                cupomAviso={cupomAviso}
+                onOcultarCupomAviso={handleOcultarCupomAviso}
+                ctaLabel="Continuar para Pagamento"
+                onCtaClick={
+                  onContinuarParaPagamento
+                }
+                ctaDisabled={carrinhoVazio || nenhumSelecionado}
+              />
+            }
+          >
+            {carrinhoVazio ? (
+              <CarrinhoVazio
+                onConferirProdutos={
+                  onConferirProdutos
+                }
+              />
+            ) : (
+              <>
+                <div className={styles.selecionarTodosCard}>
+                  <label className={styles.selecionarTodos}>
+                    <input
+                      type="checkbox"
+                      checked={todosSelecionados}
+                      onChange={(e) =>
+                        handleSelecionarTodos(e.target.checked)
+                      }
+                    />
+                    Selecionar todos
+                  </label>
+                </div>
 
-              {lojas.map((loja) => (
-                <LojaGroup
-                  key={loja.id}
-                  loja={loja}
-                  onQuantidadeChange={
-                    handleQuantidadeChange
-                  }
-                  onDiasChange={
-                    handleDiasChange
-                  }
-                  onRemoveItem={
-                    handleRemoveItem
-                  }
-                  onSelecionarItem={
-                    handleSelecionarItem
-                  }
-                  onSelecionarLoja={handleSelecionarLoja}
-                />
-              ))}
-            </>
-          )}
-        </CheckoutLayout>
+                {lojas.map((loja) => (
+                  <LojaGroup
+                    key={loja.id}
+                    loja={loja}
+                    onQuantidadeChange={
+                      handleQuantidadeChange
+                    }
+                    onDiasChange={
+                      handleDiasChange
+                    }
+                    onRemoveItem={
+                      handleRemoveItem
+                    }
+                    onSelecionarItem={
+                      handleSelecionarItem
+                    }
+                    onSelecionarLoja={handleSelecionarLoja}
+                  />
+                ))}
+              </>
+            )}
+          </CheckoutLayout>
         </div>
       </main>
     </>

@@ -13,7 +13,7 @@ interface ProdutoInfoProps {
   brand: string;
   estoqueDisponivel: number;
   onAlugar?: () => void;
-  onReservar?: () => void;
+  onLocar?: () => void;
   onAddCarrinho?: () => void;
 
   /**
@@ -39,7 +39,7 @@ export function ProdutoInfo({
   brand,
   estoqueDisponivel,
   onAlugar,
-  // onReservar,
+  // onLocar,
   onAddCarrinho,
   onSelecaoChange,
 }: ProdutoInfoProps) {
@@ -121,14 +121,14 @@ export function ProdutoInfo({
       {/* CTAs */}
       <div className={styles.ctasContainer}>
         <button className={styles.btnLocar} onClick={onAlugar}>
-          Locar
+          Locar Agora
         </button>
         <div className={styles.linhaSecundaria}>
           <button className={styles.btnCarrinho} onClick={onAddCarrinho}>
             Adicionar ao carrinho
           </button>
-          {/*<button className={styles.btnReservar} onClick={onReservar}>
-            Reservar
+          {/*<button className={styles.btnLocar} onClick={onLocar}>
+            Locar
           </button>*/}
         </div>
       </div>

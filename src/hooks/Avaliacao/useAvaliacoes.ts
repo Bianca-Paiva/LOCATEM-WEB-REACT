@@ -2,23 +2,23 @@ import { useMemo, useState } from 'react';
 import type { ChaveSubAvaliacao, ProdutoAvaliacao } from '../../pages/Avaliacao/Avaliacao.types';
 import { produtosAvaliacaoMock } from '../../pages/Avaliacao/Avaliacao.mock';
 import { obterLogoLocador } from '../../pages/Avaliacao/logoLocador';
-import type { ReservaData } from '../../pages/Reservas/MinhasReservas/MinhasReservas.types';
+import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 
 const DURACAO_TOAST_MS = 3000;
 
-/** Converte a reserva finalizada (vinda de "Detalhes da Reserva") no formato
+/** Converte a locacao finalizada (vinda de "Detalhes da Locacao") no formato
  *  usado pela tela de avaliação, já pronta para ser avaliada. */
-function criarProdutoAvaliacaoAPartirDaReserva(reserva: ReservaData): ProdutoAvaliacao {
+function criarProdutoAvaliacaoAPartirDaLocacao(locacao: LocacaoData): ProdutoAvaliacao {
     return {
-        id: reserva.id,
-        nome: reserva.produto,
-        dataLocacao: `Locado em ${reserva.periodo}`,
-        imagem: reserva.imagem,
+        id: locacao.id,
+        nome: locacao.produto,
+        dataLocacao: `Locado em ${locacao.periodo}`,
+        imagem: locacao.imagem,
         status: 'pendente',
         notaGlobal: 0,
         subAvaliacoes: { locador: 0, entrega: 0, produto: 0 },
         observacao: '',
-        loja: { nome: reserva.locador, logo: obterLogoLocador(reserva.locador) },
+        loja: { nome: locacao.locador, logo: obterLogoLocador(locacao.locador) },
     };
 }
 
@@ -73,17 +73,17 @@ export function useAvaliacoes() {
 
     /**
      * Chamada ao chegar na página de avaliação vindo do botão "Avaliar Locação"
-     * (tela de Detalhes da Reserva, status "finalizada"). Garante que exista um
-     * item na lista para aquela reserva — criando-o a partir dos dados dela caso
+     * (tela de Detalhes da Locacao, status "finalizada"). Garante que exista um
+     * item na lista para aquela locacao — criando-o a partir dos dados dela caso
      * ainda não exista — e já abre o modal de avaliação direto nele.
      */
-    function iniciarAvaliacaoDaReserva(reserva: ReservaData) {
+    function iniciarAvaliacaoDaLocacao(locacao: LocacaoData) {
         setProdutos((atual) => {
-            const jaExiste = atual.some((p) => p.id === reserva.id);
-            return jaExiste ? atual : [criarProdutoAvaliacaoAPartirDaReserva(reserva), ...atual];
+            const jaExiste = atual.some((p) => p.id === locacao.id);
+            return jaExiste ? atual : [criarProdutoAvaliacaoAPartirDaLocacao(locacao), ...atual];
         });
 
-        abrirModal(reserva.id);
+        abrirModal(locacao.id);
     }
 
     function fecharModal() {
@@ -169,7 +169,7 @@ export function useAvaliacoes() {
         toastVisivel,
         setObservacaoRascunho,
         abrirModal,
-        iniciarAvaliacaoDaReserva,
+        iniciarAvaliacaoDaLocacao,
         fecharModal,
         selecionarNotaGlobalEAbrir,
         selecionarSubNota,

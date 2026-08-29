@@ -19,7 +19,7 @@ export interface Produto {
     locador: string; /** Nome do locador/anunciante do produto */
     localizacao: string; /** Localização do locador, ex: "São Paulo - SP" */
     categoria: string; /** Categoria da ferramenta, ex: "Elétrica • Parafusadeira/Furadeira" */
-    estoqueDisponivel: number; /** Quantidade máxima disponível para reserva */
+    estoqueDisponivel: number; /** Quantidade máxima disponível para locacao */
     paymentMethods: string[]; /** Formas de pagamento aceitas, ex: ["Pix", "Cartão de Crédito"] */
     available: boolean; /** Se está disponível para locação no momento */
     meuAnuncio?: boolean; /** Marca ferramentas publicadas pelo usuário atual (fluxo de Cadastro de Ferramenta) */
@@ -29,5 +29,4 @@ export interface Produto {
     caucao?: string; /** Valor de caução (opcional), devolvido após a locação */
     diasIndisponiveis?: string[]; /** Datas ("yyyy-mm-dd") em que a ferramenta não está disponível */
     tipoAprovacao?: 'manual' | 'automatica'; /** Forma como as solicitações de locação são aprovadas */
-    voltagem?: string; /** Voltagem/fonte de alimentação, ex: "220V", "127V", "Bivolt", "À bateria", "Manual". Reflete as opções do formulário de cadastro. */
 }
