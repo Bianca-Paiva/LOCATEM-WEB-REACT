@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import type { ReactNode, FormEvent } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
-import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
+import { Icon } from "@iconify/react"; 
 import { X } from "lucide-react";
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
 import { useAuth } from '../../hooks/useAuth'
@@ -30,8 +30,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const { usuario, isAuthenticated } = useAuth()
 
     // Busca global: funciona a partir de qualquer tela que renderize o Header.
-    // O termo digitado é centralizado no BuscaContext para que a página de
-    // Busca consiga ler o valor mais recente assim que for montada.
+    // O termo digitado é centralizado no BuscaContext para que a página de Busca consiga ler o valor mais recente assim que for montada.
     const { termoBusca, setTermoBusca } = useBuscaStore()
     const [termoPesquisado, setTermoPesquisado] = useState(termoBusca)
 
@@ -41,8 +40,12 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         navigate('busca')
     }
 
-    // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o
-    // comportamento atual (leva para o Login).
+    // Substitui o "x" nativo do input type="search" (escondido via CSS) por um botão próprio com o ícone X do lucide-react.
+    const handleLimparBusca = () => {
+        setTermoPesquisado('')
+    }
+
+    // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o comportamento atual (leva para o Login).
     const rotaConta: Route = isAuthenticated ? 'perfil' : 'login'
 
     // lock scroll when menu open
@@ -214,6 +217,16 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         value={termoPesquisado}
                         onChange={e => setTermoPesquisado(e.target.value)}
                     />
+                    {termoPesquisado.length > 0 && (
+                        <button
+                            type="button"
+                            className={styles.limparBuscaBtn}
+                            onClick={handleLimparBusca}
+                            aria-label="Limpar busca"
+                        >
+                            <X size={16} strokeWidth={2.5} />
+                        </button>
+                    )}
                 </form>
             </header>
 
@@ -294,6 +307,16 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             value={termoPesquisado}
                             onChange={e => setTermoPesquisado(e.target.value)}
                         />
+                        {termoPesquisado.length > 0 && (
+                            <button
+                                type="button"
+                                className={styles.limparBuscaBtn}
+                                onClick={handleLimparBusca}
+                                aria-label="Limpar busca"
+                            >
+                                <X size={16} strokeWidth={2.5} />
+                            </button>
+                        )}
                     </form>
                     <a
                         href="#"
