@@ -11,9 +11,7 @@ interface BuscaContextType {
 export const BuscaContext = createContext<BuscaContextType | null>(null);
 
 export function BuscaProvider({ children }: { children: ReactNode }) {
-  // Fonte única do termo pesquisado — permite que a barra de busca do Header
-  // funcione a partir de qualquer tela e que a página de Busca leia o termo
-  // mais recente assim que for montada.
+  // Fonte única do termo pesquisado — permite que a barra de busca do Header funcione a partir de qualquer tela e que a página de Busca leia o termo mais recente assim que for montada.
   const [termoBusca, setTermoBusca] = useState('');
 
   return (

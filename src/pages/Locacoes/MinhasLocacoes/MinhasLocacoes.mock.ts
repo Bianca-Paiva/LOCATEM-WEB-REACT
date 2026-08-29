@@ -68,7 +68,7 @@ function criarLocacao(id: string, dados: DadosSolicitacao): LocacaoData {
   const diarias = calcularDiarias(dados.dataInicio, dados.dataFim);
   const valorTotal = paraNumero(produto.price) * dados.quantidade * diarias;
 
-  // Só locacoes aguardando pagamento têm prazo — usado para o cancelamento automático
+  // Só locações aguardando pagamento têm prazo — usado para o cancelamento automático
   const prazoPagamento =
     dados.status === 'aguardandoPagamento'
       ? new Date(
@@ -94,9 +94,7 @@ function criarLocacao(id: string, dados: DadosSolicitacao): LocacaoData {
   };
 }
 
-// Mock de locacoes: cada uma referencia um produto real de PRODUTOS_MOCK
-// (ferramenta, imagem, categoria, avaliações, localização e locador vêm de lá)
-// e acrescenta os dados da própria solicitação de locacao.
+// Mock de locacções: cada uma referencia um produto real de PRODUTOS_MOCK (ferramenta, imagem, categoria, avaliações, localização e locador vêm de lá) e acrescenta os dados da própria solicitação de locacao.
 export const mockLocacoes: LocacaoData[] = [
   criarLocacao('1', {
     produtoId: 1, // Furadeira Parafusadeira Sem Fio... The Black Tools (MS Ferramentas)

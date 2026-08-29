@@ -22,12 +22,13 @@ export default function Home({ navigate }: HomeProps) {
   const { setProdutoSelecionado } = useProdutoStore();
   const { produtos } = useCatalogoStore();
 
-  // Catálogo principal da Home (ids 1-8) + ferramentas recém-publicadas pelo usuário,
-  // sempre em primeiro. Vem do CatalogoContext (reativo), não mais de um mock estático.
+  // Catálogo completo da Home: todos os produtos disponíveis + ferramentas
+  // recém-publicadas pelo usuário, sempre em primeiro. Vem do CatalogoContext
+  // (reativo), não mais de um recorte fixo de ids.
   const produtosHome = useMemo(
     () =>
-      produtos
-        .filter((p) => p.meuAnuncio || (p.id >= 1 && p.id <= 8))
+      [...produtos]
+        .sort((a, b) => (b.meuAnuncio ? 1 : 0) - (a.meuAnuncio ? 1 : 0))
         .map(toProdutoHome),
     [produtos],
   );
@@ -59,7 +60,7 @@ export default function Home({ navigate }: HomeProps) {
             <ProductCard
               key={product.id}
               title={product.title}
-              brand={product.brand}
+              brand={product.marca}
               price={product.price}
               images={product.images}
               imageVerificado={product.imageVerificado}

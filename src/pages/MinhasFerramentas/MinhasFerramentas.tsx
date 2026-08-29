@@ -67,7 +67,7 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
               <ProductCard
                 key={produto.id}
                 title={produto.title}
-                brand={produto.brand}
+                brand={produto.marca}
                 price={produto.price}
                 images={produto.images}
                 imageVerificado={produto.imageVerificado}

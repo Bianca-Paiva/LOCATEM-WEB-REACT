@@ -6,17 +6,15 @@ import type { ProdutoSelecionado } from '../context/ProdutoContext';
 import type { LocacaoData } from '../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 
 /**
- * Adapters: convertem o Produto central (com todos os campos) para o
- * formato "recortado" que cada página/componente realmente usa.
+ * Adapters: convertem o Produto central (com todos os campos) para o formato "recortado" que cada página/componente realmente usa.
  *
- * Isso mantém cada tela recebendo só os dados que exibe, sem duplicar
- * o mock em si — a fonte dos dados continua sendo `produtos.mock.ts`.
+ * Isso mantém cada tela recebendo só os dados que exibe, sem duplicar o mock em si — a fonte dos dados continua sendo `produtos.mock.ts`.
  */
 
 export const toProdutoHome = (p: Produto): ProdutoHome => ({
     id: p.id,
     title: p.title,
-    brand: p.brand,
+    marca: p.marca,
     price: p.price,
     images: p.images,
     imageVerificado: p.imageVerificado,
@@ -29,7 +27,7 @@ export const toProdutoHome = (p: Produto): ProdutoHome => ({
 export const toProdutoBusca = (p: Produto): ProdutoBusca => ({
     id: p.id,
     title: p.title,
-    brand: p.brand,
+    marca: p.marca,
     category: p.categoria,
     price: p.price,
     images: p.images,
@@ -42,12 +40,13 @@ export const toProdutoBusca = (p: Produto): ProdutoBusca => ({
     locador: p.locador,
     localizacao: p.localizacao,
     estoqueDisponivel: p.estoqueDisponivel,
+    voltagem: p.voltagem,
 });
 
 export const toProdutoSemelhante = (p: Produto): ProdutoSemelhante => ({
     id: p.id,
     title: p.title,
-    brand: p.brand,
+    marca: p.marca,
     price: p.price,
     images: p.images,
     image: p.images[0],
@@ -64,7 +63,7 @@ export const toProdutoSemelhante = (p: Produto): ProdutoSemelhante => ({
 export const toProdutoSelecionado = (p: Produto): ProdutoSelecionado => ({
     id: p.id,
     title: p.title,
-    brand: p.brand,
+    marca: p.marca,
     price: p.price,
     images: p.images,
     imageVerificado: p.imageVerificado,
@@ -78,10 +77,8 @@ export const toProdutoSelecionado = (p: Produto): ProdutoSelecionado => ({
 });
 
 /**
- * Subconjunto de campos de uma Locacao que vêm diretamente do produto
- * (ferramenta, imagem, categoria, avaliações, localização e locador).
- * Os demais campos de `LocacaoData` (período, status, datas, quantidade,
- * valor etc.) são específicos da solicitação de locacao em si.
+ * Subconjunto de campos de uma Locacao que vêm diretamente do produto (ferramenta, imagem, categoria, avaliações, localização e locador).
+ * Os demais campos de `LocacaoData` (período, status, datas, quantidade, valor etc.) são específicos da solicitação de locacao em si.
  */
 export type LocacaoProdutoBase = Pick<
     LocacaoData,

@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 export interface ProdutoSelecionado {
   id?: number;
   title: string;
-  brand: string;
+  marca: string;
   price: string;
   images: string[];
   imageVerificado: string;
@@ -13,7 +13,7 @@ export interface ProdutoSelecionado {
   locador: string; /** Nome do locador/anunciante do produto */
   localizacao: string; /** Localização do locador, ex: "São Paulo - SP" */
   categoria: string; /** Categoria da ferramenta, ex: "Elétrica • Parafusadeira/Furadeira" */
-  estoqueDisponivel: number; /** Quantidade máxima disponível para locacao */
+  estoqueDisponivel: number; /** Quantidade máxima disponível para reserva */
   diasIndisponiveis?: string[]; /** Datas ("yyyy-mm-dd") em que a ferramenta não está disponível */
   tipoAprovacao?: 'manual' | 'automatica'; /** Forma como as solicitações de locação são aprovadas por este locador */
 }

@@ -6,7 +6,7 @@
 export interface ProdutoBusca {
     id: number;
     title: string;
-    brand: string;
+    marca: string;
     category: string;
     price: string;
     images: string[];

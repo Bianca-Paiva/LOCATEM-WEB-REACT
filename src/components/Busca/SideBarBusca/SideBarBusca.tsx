@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import type { FilterState } from '../../../pages/Busca/Busca.types';
-import { OPCOES_FONTE_ALIMENTACAO } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
+import { OPCOES_FONTE_ALIMENTACAO, CATEGORIAS_FERRAMENTA } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './SideBarBusca.module.css';
 
 
@@ -137,7 +137,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
           <div className={styles.pillsContainer}>
 
-            {['Ferramentas Elétricas', 'Ferramentas Manuais', 'Equipamentos de Jardinagem', 'Máquinas Pesadas'].map((cat) => (
+            {CATEGORIAS_FERRAMENTA.map((cat) => (
 
               <button
                 key={cat}
@@ -175,7 +175,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
           <div className={styles.pillsContainer}>
 
-            {['MS Ferramentas', 'WZ Ferramentas', 'JB Ferramentas', 'João Ferramentas'].map((brand) => (
+            {['DeWalt', 'Bosch', 'Makita', 'Hanabi', 'WAP', 'Black+Decker', 'Tramontina', 'Vonder'].map((brand) => (
 
               <button
                 key={brand}

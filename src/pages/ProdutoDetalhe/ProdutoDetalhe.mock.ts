@@ -1,24 +1,20 @@
 import type { EspecificacaoTecnica, AvaliacaoProduto } from './ProdutoDetalhe.types';
 import { PRODUTOS_MOCK } from '../../mocks/produtos.mock';
-import { toProdutoSelecionado, toProdutoSemelhante } from '../../mocks/produtos.adapters';
+import { toProdutoSelecionado } from '../../mocks/produtos.adapters';
 
 /**
  * Mock temporário para testes de layout e fluxo da página de detalhe do produto.
  * Os dados de produto vêm do catálogo central (`src/mocks/produtos.mock.ts`);
  * aqui só selecionamos os itens e recortamos os campos que esta página usa.
  * Especificações técnicas e avaliações continuam locais, pois não fazem
- * parte do catálogo de produtos.
+ * parte do catálogo de produtos. As ferramentas semelhantes NÃO ficam aqui —
+ * são calculadas dinamicamente em `ProdutoDetalhe.tsx`, por categoria.
  */
 
 // ── Produto de fallback (exibido quando não há produto selecionado no store) ──
 export const FALLBACK_PRODUTO = toProdutoSelecionado(
     PRODUTOS_MOCK.find((p) => p.id === 1)!,
 );
-
-// ── Produtos semelhantes exibidos no carrossel ──────────────────────────────
-export const MOCK_SEMELHANTES = PRODUTOS_MOCK
-    .filter((p) => p.id >= 10 && p.id <= 14)
-    .map(toProdutoSemelhante);
 
 export const MOCK_ESPECIFICACOES: EspecificacaoTecnica[] = [
     { label: 'Potência de saída', valor: 'Bateria de Íon-lítio de 18V máx' },
