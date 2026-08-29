@@ -21,6 +21,8 @@ import { CatalogoProvider } from "./context/CatalogoContext";
 import { NotificationProvider } from "./context/NotificationContext";
 import { CarrinhoProvider } from "./context/CarrinhoContext";
 import { AuthProvider } from "./context/AuthContext";
+// Nova importação do contexto de busca
+import { BuscaProvider } from "./context/BuscaContext"; 
 
 export default function App() {
   const { route, navigate } = useRouter();
@@ -32,37 +34,40 @@ export default function App() {
           <LocacaoProvider>
             <NotificationProvider>
               <CarrinhoProvider>
-                {route === "home" && <Home navigate={navigate} />}
+                {/* Envolvendo as rotas com o BuscaProvider */}
+                <BuscaProvider>
+                  {route === "home" && <Home navigate={navigate} />}
 
-                {route === "busca" && <Busca navigate={navigate} />}
+                  {route === "busca" && <Busca navigate={navigate} />}
 
-                {route === "login" && <Login navigate={navigate} />}
+                  {route === "login" && <Login navigate={navigate} />}
 
-                {route === "cadastro" && <Cadastro navigate={navigate} />}
+                  {route === "cadastro" && <Cadastro navigate={navigate} />}
 
-                {route === "recuperarSenha" && <RecuperarSenha navigate={navigate} />}
+                  {route === "recuperarSenha" && <RecuperarSenha navigate={navigate} />}
 
-                {route === "informeToken" && <InformeToken navigate={navigate} />}
+                  {route === "informeToken" && <InformeToken navigate={navigate} />}
 
-                {route === "informeNovaSenha" && <InformeNovaSenha navigate={navigate} />}
+                  {route === "informeNovaSenha" && <InformeNovaSenha navigate={navigate} />}
 
-                {route === "notificacoes" && <Notificacoes navigate={navigate} />}
+                  {route === "notificacoes" && <Notificacoes navigate={navigate} />}
 
-                {route === "avaliacao" && <Avaliacao navigate={navigate} />}
+                  {route === "avaliacao" && <Avaliacao navigate={navigate} />}
 
-                {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
+                  {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
 
-                {route === "minhasLocacoes" && <MinhasLocacoes navigate={navigate} />}
+                  {route === "minhasLocacoes" && <MinhasLocacoes navigate={navigate} />}
 
-                {route === "detalhesLocacao" && <DetalhesLocacao navigate={navigate} />}
+                  {route === "detalhesLocacao" && <DetalhesLocacao navigate={navigate} />}
 
-                {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
+                  {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
 
-                {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
+                  {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
 
-                {route === "carrinho" && <Carrinho navigate={navigate} />}
+                  {route === "carrinho" && <Carrinho navigate={navigate} />}
 
-                {route === "perfil" && <Perfil navigate={navigate} />}
+                  {route === "perfil" && <Perfil navigate={navigate} />}
+                </BuscaProvider>
               </CarrinhoProvider>
             </NotificationProvider>
           </LocacaoProvider>

@@ -8,7 +8,9 @@ import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import styles from './MinhasLocacoes.module.css';
 
 import type { Route } from '../../../router/useRouter';
-import type { FiltroLocacao } from './MinhasLocacoes.types';
+// Certifique--se de importar LocacaoData aqui:
+import type { FiltroLocacao, LocacaoData } from './MinhasLocacoes.types';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface MinhasLocacoesProps {
   navigate: (route: Route) => void;
@@ -69,10 +71,12 @@ const ESTADO_VAZIO_TEXTO: Record<FiltroLocacao, { titulo: string; descricao: str
 export default function MinhasLocacoes({ navigate }: MinhasLocacoesProps) {
   const { locacoesFiltradas, filtro, setFiltro, contagem } = useMinhasLocacoes();
 
-  const { setLocacaoSelecionada } = useLocacaoStore();
+  const { setLocacaoSelecionada } = useLocacaoStore() as { 
+    setLocacaoSelecionada: Dispatch<SetStateAction<LocacaoData | null>> 
+  };
 
   const handleVerDetalhes = (id: string) => {
-    const locacaoClicada = locacoesFiltradas.find((locacao) => locacao.id === id);
+    const locacaoClicada = locacoesFiltradas.find((locacao: LocacaoData) => locacao.id === id);
 
     if (locacaoClicada) {
       setLocacaoSelecionada(locacaoClicada);
@@ -98,7 +102,7 @@ export default function MinhasLocacoes({ navigate }: MinhasLocacoesProps) {
           <EstadoVazio titulo={estadoVazio.titulo} descricao={estadoVazio.descricao} />
         ) : (
           <div className={styles.lista}>
-            {locacoesFiltradas.map((locacao) => (
+            {locacoesFiltradas.map((locacao: LocacaoData) => (
               <LocacaoCard key={locacao.id} locacao={locacao} onVerDetalhes={handleVerDetalhes} />
             ))}
           </div>

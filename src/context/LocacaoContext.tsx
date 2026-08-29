@@ -1,12 +1,13 @@
 import { createContext, useEffect, useState } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactNode, Dispatch, SetStateAction } from 'react';
 import type { LocacaoData } from '../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import { mockLocacoes } from '../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.mock';
 
 interface LocacaoContextType {
   locacoes: LocacaoData[];
   locacaoSelecionada: LocacaoData | null;
-  setLocacaoSelecionada: (locacao: LocacaoData) => void;
+  // Ajuste: Tipagem nativa do React para funções de atualização de estado
+  setLocacaoSelecionada: Dispatch<SetStateAction<LocacaoData | null>>;
   atualizarLocacao: (id: string, dadosAtualizados: Partial<LocacaoData>) => void;
   adicionarLocacao: (dadosLocacao: Omit<LocacaoData, 'id'>) => LocacaoData;
 }

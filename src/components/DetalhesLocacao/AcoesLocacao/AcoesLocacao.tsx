@@ -20,6 +20,7 @@ export default function AcoesLocacao({
   onVoltarLocacoes,
   onSolicitarNovaLocacao,
 }: AcoesLocacaoProps) {
+
   // Aguardando aprovação: única ação possível é cancelar a solicitação
   if (status === 'pendente') {
     return (
@@ -29,7 +30,7 @@ export default function AcoesLocacao({
           className={styles.botaoSecundario}
           onClick={onVoltarLocacoes}
         >
-          Voltar para minhas locacoes
+          Voltar para Minhas Locações
         </button>
 
         <button
@@ -52,8 +53,9 @@ export default function AcoesLocacao({
           className={styles.botaoSecundario}
           onClick={onVerLocacoes}
         >
-          Ver minhas ferramentas
+          Ver minhas locações
         </button>
+
         <button
           type="button"
           className={styles.botaoPrimario}
@@ -75,8 +77,12 @@ export default function AcoesLocacao({
     status === 'devolucaoEmTransporte'
   ) {
     return (
-      <button type="button" className={styles.botaoSecundario} onClick={onVerLocacoes}>
-        Ver minhas ferramentas
+      <button
+        type="button"
+        className={styles.botaoSecundario}
+        onClick={onVerLocacoes}
+      >
+        Ver minhas locações
       </button>
     );
   }
@@ -86,10 +92,19 @@ export default function AcoesLocacao({
   ) {
     return (
       <div className={styles.grupoBotoes}>
-        <button type="button" className={styles.botaoSecundario} onClick={onVoltarLocacoes}>
-          Voltar para minhas locacoes
+        <button
+          type="button"
+          className={styles.botaoSecundario}
+          onClick={onVoltarLocacoes}
+        >
+          Voltar para Minhas Locações
         </button>
-        <button type="button" className={styles.botaoPrimario} onClick={onAvaliacao}>
+
+        <button
+          type="button"
+          className={styles.botaoPrimario}
+          onClick={onAvaliacao}
+        >
           Avaliar Locação
         </button>
       </div>
@@ -99,10 +114,19 @@ export default function AcoesLocacao({
   // Recusada e cancelada compartilham o mesmo par de ações
   return (
     <div className={styles.grupoBotoes}>
-      <button type="button" className={styles.botaoSecundario} onClick={onVoltarLocacoes}>
-        Voltar para minhas locacoes
+      <button
+        type="button"
+        className={styles.botaoSecundario}
+        onClick={onVoltarLocacoes}
+      >
+        Voltar para Minhas Locações
       </button>
-      <button type="button" className={styles.botaoPrimario} onClick={onSolicitarNovaLocacao}>
+
+      <button
+        type="button"
+        className={styles.botaoPrimario}
+        onClick={onSolicitarNovaLocacao}
+      >
         Solicitar nova locação
       </button>
     </div>
