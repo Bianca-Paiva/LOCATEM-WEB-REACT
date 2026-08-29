@@ -42,6 +42,7 @@ export const toProdutoBusca = (p: Produto): ProdutoBusca => ({
     locador: p.locador,
     localizacao: p.localizacao,
     estoqueDisponivel: p.estoqueDisponivel,
+    voltagem: p.voltagem,
 });
 
 export const toProdutoSemelhante = (p: Produto): ProdutoSemelhante => ({

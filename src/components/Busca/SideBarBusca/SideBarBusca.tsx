@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Icon } from "@iconify/react";
 
 import type { FilterState } from '../../../pages/Busca/Busca.types';
+import { OPCOES_FONTE_ALIMENTACAO } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './SideBarBusca.module.css';
 
 
@@ -19,6 +19,8 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
   const [brandSearch, setBrandSearch] = useState<string>('');
 
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+
+  const [selectedVoltagens, setSelectedVoltagens] = useState<string[]>([]);
 
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
 
@@ -44,6 +46,13 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
     );
   };
 
+  const toggleVoltagem = (voltagem: string) => {
+
+    setSelectedVoltagens(prev =>
+      prev.includes(voltagem) ? prev.filter(v => v !== voltagem) : [...prev, voltagem]
+    );
+  };
+
   const togglePriceRange = (range: string) => {
 
     setSelectedPriceRanges(prev =>
@@ -64,6 +73,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
       categories: selectedCategories,
       brands: selectedBrands,
       brandSearch: brandSearch,
+      voltagens: selectedVoltagens,
       priceRanges: selectedPriceRanges,
       paymentMethods: selectedPayments,
       availability: selectedAvailability,
@@ -77,6 +87,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
     setSelectedCategories([]);
     setBrandSearch('');
     setSelectedBrands([]);
+    setSelectedVoltagens([]);
     setSelectedPriceRanges([]);
     setSelectedPayments([]);
     setSelectedAvailability(null);
@@ -86,6 +97,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
       categories: [],
       brands: [],
       brandSearch: '',
+      voltagens: [],
       priceRanges: [],
       paymentMethods: [],
       availability: null,
@@ -157,9 +169,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
               className={styles.brandSearchInput}
             />
 
-            <span className={styles.searchIcon}>
-              <Icon icon="mdi:magnify" width={20} height={20} opacity={0.7} />
-            </span>
+            <span className={styles.searchIcon}>🔍</span>
 
           </div>
 
@@ -173,6 +183,29 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
                 onClick={() => toggleBrand(brand)}
               >
                 {brand}
+              </button>
+            ))}
+          </div>
+
+        </div>
+
+        <hr className={styles.sidebarDivider} />
+
+        {/* Voltagem */}
+        <div className={styles.filterSection}>
+
+          <h3 className={styles.filterTitle}>Voltagem</h3>
+
+          <div className={styles.pillsContainer}>
+
+            {OPCOES_FONTE_ALIMENTACAO.map((voltagem) => (
+
+              <button
+                key={voltagem}
+                className={`${styles.filterPill} ${selectedVoltagens.includes(voltagem) ? styles.active : ''}`}
+                onClick={() => toggleVoltagem(voltagem)}
+              >
+                {voltagem}
               </button>
             ))}
           </div>

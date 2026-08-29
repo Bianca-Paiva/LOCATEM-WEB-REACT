@@ -19,12 +19,15 @@ export interface ProdutoBusca {
     locador: string;
     localizacao: string;
     estoqueDisponivel: number;
+    /** Voltagem/fonte de alimentação, ex: "220V", "127V", "Bivolt", "À bateria", "Manual". Reflete as opções do cadastro de ferramenta. */
+    voltagem?: string;
 }
 
 export interface FilterState {
     categories: string[];
     brands: string[];
     brandSearch: string;
+    voltagens: string[];
     priceRanges: string[];
     paymentMethods: string[];
     availability: string | null;

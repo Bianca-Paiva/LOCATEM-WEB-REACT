@@ -35,6 +35,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 5,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: 'À bateria',
     },
     {
         id: 2,
@@ -55,6 +56,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 4,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 3,
@@ -75,6 +77,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 3,
         paymentMethods: ['Pix'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 4,
@@ -95,6 +98,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 6,
         paymentMethods: ['Cartão de Crédito'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 5,
@@ -115,6 +119,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 5,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: 'À bateria',
     },
     {
         id: 6,
@@ -135,6 +140,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 2,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 7,
@@ -155,6 +161,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 5,
         paymentMethods: ['Pix'],
         available: true,
+        voltagem: 'À bateria',
     },
 
     // ── Produtos semelhantes (ProdutoDetalhe) ───────────────────────────
@@ -177,6 +184,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 6,
         paymentMethods: ['Cartão de Crédito'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 11,
@@ -197,6 +205,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 4,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 12,
@@ -217,6 +226,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 3,
         paymentMethods: ['Pix'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 13,
@@ -237,6 +247,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 2,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 14,
@@ -257,6 +268,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 5,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: 'À bateria',
     },
 
     // ── Catálogo de busca (Busca) ───────────────────────────────────────
@@ -276,6 +288,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 16,
@@ -293,6 +306,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: '127V',
     },
     {
         id: 17,
@@ -310,6 +324,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Pix'],
         available: false,
+        voltagem: 'Manual',
     },
     {
         id: 18,
@@ -327,6 +342,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Cartão de Crédito'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 19,
@@ -344,6 +360,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: '127V',
     },
     {
         id: 20,
@@ -361,6 +378,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: false,
+        voltagem: 'Manual',
     },
     {
         id: 21,
@@ -395,6 +413,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Pix'],
         available: true,
+        voltagem: '220V',
     },
     {
         id: 23,
@@ -412,6 +431,7 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        voltagem: 'À bateria',
     },
     {
         id: 24,
@@ -429,5 +449,6 @@ export const PRODUTOS_MOCK: Produto[] = [
         estoqueDisponivel: 10,
         paymentMethods: ['Cartão de Crédito'],
         available: true,
+        voltagem: 'À bateria',
     },
 ];

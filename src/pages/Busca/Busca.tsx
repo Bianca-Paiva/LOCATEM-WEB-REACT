@@ -49,6 +49,7 @@ export default function Busca({ navigate }: BuscaProps) {
     categories: [],
     brands: [],
     brandSearch: '',
+    voltagens: [],
     priceRanges: [],
     paymentMethods: [],
     availability: null,
@@ -90,6 +91,10 @@ export default function Busca({ navigate }: BuscaProps) {
     if (activeFilters.categories.length > 0 && !activeFilters.categories.includes(product.category)) return false;
     if (activeFilters.brands.length > 0 && !activeFilters.brands.includes(product.brand)) return false;
     if (activeFilters.brandSearch && !product.brand.toLowerCase().includes(activeFilters.brandSearch.toLowerCase())) return false;
+
+    if (activeFilters.voltagens.length > 0) {
+      if (!product.voltagem || !activeFilters.voltagens.includes(product.voltagem)) return false;
+    }
 
     if (activeFilters.priceRanges.length > 0) {
       const matchRange = activeFilters.priceRanges.some((range) => {

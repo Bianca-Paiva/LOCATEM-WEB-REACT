@@ -29,4 +29,5 @@ export interface Produto {
     caucao?: string; /** Valor de caução (opcional), devolvido após a locação */
     diasIndisponiveis?: string[]; /** Datas ("yyyy-mm-dd") em que a ferramenta não está disponível */
     tipoAprovacao?: 'manual' | 'automatica'; /** Forma como as solicitações de locação são aprovadas */
+    voltagem?: string; /** Voltagem/fonte de alimentação, ex: "220V", "127V", "Bivolt", "À bateria", "Manual". Reflete as opções do formulário de cadastro. */
 }
