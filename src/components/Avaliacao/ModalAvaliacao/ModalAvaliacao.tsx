@@ -1,4 +1,4 @@
-import { ImageOff } from 'lucide-react';
+import { ImageOff, Truck, ChevronLeft, ChevronDown } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type {
   ChaveSubAvaliacao,
@@ -8,8 +8,6 @@ import { LABEL_SUB_AVALIACAO } from '../../../pages/Avaliacao/Avaliacao.types';
 import { EstrelasAvaliacao } from '../EstrelaAvaliacao/EstrelaAvaliacao';
 import { CarrosselAvaliacoesPendentes } from '../CarroselAvaliacoesPendentes/CarroselAvaliacoesPendentes';
 import styles from './ModalAvaliacao.module.css';
-
-import IconCaminhao from '../../../assets/IconCaminhao.png';
 
 interface ModalAvaliacaoProps {
   produto: ProdutoAvaliacao | null;
@@ -66,9 +64,10 @@ export function ModalAvaliacao({
 
   if (!produto) return null;
 
-  const iconesPorSub: Record<ChaveSubAvaliacao, string | null> = {
+  // Dicionário ajustado apenas para as imagens dinâmicas
+  const imagensPorSub: Record<ChaveSubAvaliacao, string | null> = {
     locador: produto.loja.logo,
-    entrega: IconCaminhao,
+    entrega: null, // A entrega agora usa o componente <Truck /> direto no JSX
     produto: produto.imagem,
   };
 
@@ -85,18 +84,7 @@ export function ModalAvaliacao({
       <div className={styles.modal}>
         <div className={styles.header}>
           <button className={styles.voltar} onClick={aoFechar} aria-label="Fechar modal">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+            <ChevronLeft size={16} strokeWidth={2.5} />
             Voltar
           </button>
         </div>
@@ -115,15 +103,19 @@ export function ModalAvaliacao({
               {(Object.keys(produto.subAvaliacoes) as ChaveSubAvaliacao[]).map((chave) => (
                 <div
                   key={chave}
-                  className={`${styles.subRating} ${camposComErro.includes(chave) ? styles.subRatingErro : ''
-                    }`}
+                  className={`${styles.subRating} ${
+                    camposComErro.includes(chave) ? styles.subRatingErro : ''
+                  }`}
                 >
                   <span className={styles.subRatingLabel}>{LABEL_SUB_AVALIACAO[chave]}</span>
 
                   <div className={styles.subRatingIcone}>
-                    {iconesPorSub[chave] ? (
+                    {/* Lógica de renderização adaptada para o Lucide */}
+                    {chave === 'entrega' ? (
+                      <Truck size={20} aria-label="Ícone de entrega" />
+                    ) : imagensPorSub[chave] ? (
                       <img
-                        src={iconesPorSub[chave] as string}
+                        src={imagensPorSub[chave] as string}
                         alt={chave}
                         loading="eager"
                       />
@@ -156,15 +148,7 @@ export function ModalAvaliacao({
           >
             Observações (opcional)
             <span className={`${styles.chevron} ${obsExpandida ? styles.chevronAberto : ''}`}>
-              <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1.00009 1L7.16118 6.25L13.3223 1"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronDown size={16} strokeWidth={2} />
             </span>
           </button>
 

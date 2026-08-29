@@ -1,7 +1,6 @@
 import type { LocacaoData } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import StatusBadge from '../EtiquetaStatus/EtiquetaStatus';
-import calendarioIcon from '../../../assets/iconCalendarioLocacoes.png';
-import userIcon from '../../../assets/IconUser.png';
+import { Calendar, User } from 'lucide-react';
 import styles from './LocacaoCard.module.css';
 
 interface LocacaoCardProps {
@@ -28,12 +27,12 @@ export default function LocacaoCard({ locacao, onVerDetalhes }: LocacaoCardProps
 
           <div className={styles.linhaInformacoes}>
             <span className={styles.itemInformacao}>
-              <img src={calendarioIcon} alt="" className={styles.iconeInformacao} />
+              <Calendar className={styles.iconeInformacao} aria-hidden="true" strokeWidth={2} />
               {periodo}
             </span>
 
             <span className={styles.itemInformacao}>
-              <img src={userIcon} alt="" className={styles.iconeInformacao} />
+              <User className={styles.iconeInformacao} aria-hidden="true" strokeWidth={2} />
               Locador: {locador}
             </span>
           </div>

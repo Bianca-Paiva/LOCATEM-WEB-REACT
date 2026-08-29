@@ -3,9 +3,7 @@ import type { ReactNode } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
-import {
-    X
-} from "lucide-react";
+import { X } from "lucide-react";
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
 import { useAuth } from '../../hooks/useAuth'
 import Avatar from '../Avatar/Avatar'
@@ -30,8 +28,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const quantidadeCarrinho = itensCarrinho.length
     const { usuario, isAuthenticated } = useAuth()
 
-    // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o
-    // comportamento atual (leva para o Login).
+    // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o comportamento atual (leva para o Login).
     const rotaConta: Route = isAuthenticated ? 'perfil' : 'login'
 
     // lock scroll when menu open
@@ -50,7 +47,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const navItems: NavItem[] = [
         {
             label: "Início",
-            route: "home",
+            route: "home", // aparece para: locador e locatário
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:home" : "mdi:home-outline"}
@@ -61,7 +58,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Carrinho",
-            route: "carrinho",
+            route: "carrinho", // aparece para: locatário
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:cart" : "mdi:cart-outline"}
@@ -72,7 +69,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Minhas Locacoes",
-            route: "minhasLocacoes",
+            route: "minhasLocacoes", // aparece para: locatário
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:calendar-blank" : "mdi:calendar-blank-outline"}
@@ -83,7 +80,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Minhas Ferramentas",
-            route: "minhasFerramentas",
+            route: "minhasFerramentas", // aparece para: locador
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "material-symbols:package-2" : "material-symbols:package-2-outline"}
@@ -93,7 +90,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Histórico",
+            label: "Histórico", // aparece para: locatário
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:clock" : "mdi:clock-outline"}
@@ -104,7 +101,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Avaliações",
-            route: "avaliacao",
+            route: "avaliacao", // aparece para: locador (avalia locatário, processo de entrega/despache e receber devolta, plataforma) e locatário (avalia locador, entrega e devoulução, produto, plataforma)
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:star" : "mdi:star-outline"}
@@ -115,7 +112,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Notificações",
-            route: "notificacoes",
+            route: "notificacoes", // aparece para: locador e locatário
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:bell" : "mdi:bell-outline"}
@@ -136,7 +133,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         //     ),
         // },
         {
-            label: "Suporte",
+            label: "Suporte", // aparece para: locador e locatário
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "material-symbols:headset-mic" : "material-symbols:headset-mic-outline"}

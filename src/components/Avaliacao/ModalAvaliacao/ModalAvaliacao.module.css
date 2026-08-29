@@ -195,8 +195,11 @@
 }
 
 .chevron {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: transform 0.2s;
+    margin-top: 1px; 
 }
 
 .chevronAberto {

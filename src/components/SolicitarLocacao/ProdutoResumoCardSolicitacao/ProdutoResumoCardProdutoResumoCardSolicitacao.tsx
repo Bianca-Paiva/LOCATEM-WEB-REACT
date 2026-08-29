@@ -1,8 +1,6 @@
+import { User, Star, MapPin } from 'lucide-react';
 import type { ProdutoSelecionado } from '../../../context/ProdutoContext';
-import userIcon from '../../../assets/IconUser.png';
-import starIcon from '../../../assets/StarFullYellow.png';
-import localizacaoIcon from '../../../assets/IconLocalizacao.png';
-import styles from './ProdutoResumoCard.module.css';
+import styles from './ProdutoResumoCardProdutoResumoCardSolicitacao.module.css';
 
 interface ProdutoResumoCardProps {
   produto: ProdutoSelecionado;
@@ -31,19 +29,19 @@ export default function ProdutoResumoCard({ produto }: ProdutoResumoCardProps) {
         <p className={styles.categoria}>{categoria}</p>
 
         <p className={styles.locador}>
-          <img src={userIcon} alt="" className={styles.iconePequeno} />
+          <User className={styles.iconePequeno} aria-hidden="true" strokeWidth={2} />
           Locador: <span>{locador}</span>
         </p>
 
         <div className={styles.linhaAvaliacaoLocalizacao}>
           <span className={styles.avaliacao}>
-            <img src={starIcon} alt="" className={styles.iconePequenoStar} />
+            <Star className={styles.iconePequenoStar} aria-hidden="true" fill="#FFCA00" color="#FFCA00" strokeWidth={0} />
             {rating.toFixed(1).replace('.', ',')}
             <span className={styles.numeroAvaliacoes}>({reviewCount} avaliações)</span>
           </span>
           <span className={styles.separador}>•</span>
           <span className={styles.localizacao}>
-            <img src={localizacaoIcon} alt="" className={styles.iconePequeno} />
+            <MapPin className={styles.iconePequeno} aria-hidden="true" strokeWidth={2} />
             {localizacao}
           </span>
         </div>

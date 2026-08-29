@@ -42,8 +42,8 @@
 }
 
 .chevron {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   object-fit: contain;
   transition: transform 0.25s ease-in-out;
   flex-shrink: 0;

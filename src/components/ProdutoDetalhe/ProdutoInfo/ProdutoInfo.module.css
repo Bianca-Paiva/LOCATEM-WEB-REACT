@@ -190,20 +190,6 @@
   transform: translateY(0);
 }
 
-.btnLocar {
-  flex: 1;
-  height: 46px;
-  background-color: #FFC327;
-  border: none;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #0A0A0A;
-  cursor: pointer;
-  transition: filter 0.15s, transform 0.1s;
-  padding: 0 8px;
-}
-
 .btnLocar:hover {
   filter: brightness(1.01);
   transform: translateY(-1px);

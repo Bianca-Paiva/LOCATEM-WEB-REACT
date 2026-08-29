@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './ProductCard.module.css';
 
 import { Icon } from "@iconify/react";
+import { Star } from 'lucide-react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -12,7 +13,7 @@ interface ProductCardProps {
   title: string;
   brand: string;
   price: string;
-  imageNota: string;
+  imageNota?: string;
   /** Selo de verificação do locador (não exibido no card hoje; aceito para compatibilidade com o mock). */
   imageVerificado?: string;
   rating: number;
@@ -28,7 +29,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   brand,
   price,
   rating,
-  imageNota,
   reviewCount,
   onNavigate,
   tipoAprovacao,
@@ -83,7 +83,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
 
           <div className={styles.productRating}>
-            <img src={imageNota} alt="Notas" className={styles.estrelaAvaliacao} />
+            <Star 
+              className={styles.estrelaAvaliacao} 
+              size={14} 
+              fill="#FFCA00" 
+              color="#FFCA00" 
+              strokeWidth={0} 
+            />
             <span className={styles.ratingValue}>{rating.toFixed(1)}</span>
             <span className={styles.ratingCount}>({reviewCount})</span>
           </div>

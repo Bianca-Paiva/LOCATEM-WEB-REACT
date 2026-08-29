@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import calendarioIcon from '../../../assets/iconCalendarioLocacoes.png';
+import { Calendar } from 'lucide-react';
 import CalendarioLocacao from '../CalendarioLocacao/CalendarioLocacao';
 import { formatarDataBr, parseDataIso } from '../../../utils/dataLocacao';
 import styles from './CampoData.module.css';
@@ -100,7 +100,7 @@ export default function CampoData({
             {value ? formatarDataBr(value) : 'dd/mm/aaaa'}
           </span>
         </button>
-        <img src={calendarioIcon} alt="" className={styles.icone} />
+        <Calendar className={styles.icone} aria-hidden="true" strokeWidth={2} />
 
         {aberto && (
           <div className={`${styles.popover} ${alinharPopover === 'direita' ? styles.popoverDireita : ''}`}>

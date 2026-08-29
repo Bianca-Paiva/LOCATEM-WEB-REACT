@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Star } from 'lucide-react';
 import PeriodoLocacaoDropdown from '../PeriodoLocacaoDropdown/PeriodoLocacaoDropdown';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import styles from './ProdutoInfo.module.css';
@@ -8,8 +9,8 @@ interface ProdutoInfoProps {
   price: string;
   rating: number;
   reviewCount: number;
-  imageVerificado: string;
-  imageNota: string;
+  imageVerificado?: string;
+  imageNota?: string;
   brand: string;
   estoqueDisponivel: number;
   onAlugar?: () => void;
@@ -18,7 +19,7 @@ interface ProdutoInfoProps {
 
   /**
    * Eleva quantidade, período (em diárias) e tensão selecionados aqui para a página de detalhe, que os repassa como valores iniciais do modal de Solicitação de Locação — assim o usuário não precisa escolher de novo.
-  */
+   */
   onSelecaoChange?: (selecao: { quantidade: number; diarias: number | null; tensao: string | null }) => void;
 }
 
@@ -35,11 +36,9 @@ export function ProdutoInfo({
   price,
   rating,
   reviewCount,
-  imageNota,
   brand,
   estoqueDisponivel,
   onAlugar,
-  // onLocar,
   onAddCarrinho,
   onSelecaoChange,
 }: ProdutoInfoProps) {
@@ -69,7 +68,7 @@ export function ProdutoInfo({
       <h1 className={styles.titulo}>{title}</h1>
 
       <div className={styles.ratingRow}>
-        <img src={imageNota} alt="Estrela" className={styles.starIcon} />
+        <Star className={styles.starIcon} size={14} fill="#FFCA00" color="#FFCA00" strokeWidth={0} />
         <span className={styles.ratingValor}>{rating.toFixed(1)}</span>
         <span className={styles.ratingCount}>({reviewCount} avaliações)</span>
         <span className={styles.brandTag}>{brand}</span>

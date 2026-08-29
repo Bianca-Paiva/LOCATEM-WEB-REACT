@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import IconSeta from '../../../assets/IconSeta.png';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 import { formatarIso, getHojeIso } from '../../../utils/dataLocacao';
 import styles from './CalendarioLocacao.module.css';
 
@@ -87,7 +87,7 @@ export default function CalendarioLocacao({
           disabled={prevDesabilitado}
           aria-label="Mês anterior"
         >
-          <img src={IconSeta} alt="" className={styles.setaEsquerda} />
+          <ChevronUp size={16} strokeWidth={2} className={styles.setaCima} />
         </button>
         <span className={styles.mesLabel}>
           {NOMES_MES[mesReferencia.getMonth()]} {mesReferencia.getFullYear()}
@@ -98,7 +98,7 @@ export default function CalendarioLocacao({
           onClick={irParaProximoMes}
           aria-label="Próximo mês"
         >
-          <img src={IconSeta} alt="" className={styles.setaDireita} />
+          <ChevronDown size={16} strokeWidth={2} className={styles.setaBaixo} />
         </button>
       </div>
 

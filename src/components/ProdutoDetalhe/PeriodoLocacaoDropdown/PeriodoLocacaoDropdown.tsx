@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import styles from './PeriodoLocacaoDropdown.module.css';
-import IconSeta from '../../../assets/IconSeta.png'; 
 
 const PERIODOLOCACAO_OPTIONS = [
     'Selecione',
@@ -45,10 +45,9 @@ export default function PeriodoLocacaoDropdown({ value, onChange }: PeriodoLocac
                 aria-expanded={isOpen}
             >
                 <span>{value}</span>
-                {/* Imagem substituindo o SVG antigo */}
-                <img 
-                    src={IconSeta} 
-                    alt="Seta de seleção" 
+                <ChevronDown 
+                    size={18} 
+                    strokeWidth={2}
                     className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`} 
                 />
             </button>

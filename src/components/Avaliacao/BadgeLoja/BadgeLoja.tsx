@@ -1,3 +1,4 @@
+import { Icon } from "@iconify/react";
 import { ImageOff } from 'lucide-react';
 import type { LojaProduto } from '../../../pages/Avaliacao/Avaliacao.types';
 import styles from './BadgeLoja.module.css';
@@ -24,8 +25,12 @@ export function BadgeLoja({ loja }: BadgeLojaProps) {
                     {loja.nome}
                 </a>
 
-                <span className={styles.verificado}>
-                    <img src="/src/assets/verificadoAzul.png" alt="Verificado" />
+                <span className={styles.verificado} title="Verificado">
+                    <Icon 
+                        icon="codicon:verified-filled" 
+                        color="#007BFF" 
+                        width="13" 
+                    />
                 </span>
             </div>
         </div>

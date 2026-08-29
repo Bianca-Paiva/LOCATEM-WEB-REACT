@@ -1,5 +1,5 @@
 import styles from './Etapas.module.css';
-import checkIcon from '../../../assets/checkIcon.png';
+import { Check } from 'lucide-react';
 
 interface RecoveryStepperProps {
     currentStep: 1 | 2 | 3
@@ -33,7 +33,7 @@ export default function RecoveryStepper({ currentStep }: RecoveryStepperProps) {
                                 {step.id}
                             </div>
 
-                            {/* Container da Palavra e do Check em Imagem */}
+                            {/* Container da Palavra e do Check */}
                             <div className={styles.labelContainer}>
                                 <span
                                     className={`
@@ -45,10 +45,10 @@ export default function RecoveryStepper({ currentStep }: RecoveryStepperProps) {
                                 </span>
                                 
                                 {isCompleted && (
-                                    <img 
-                                        src={checkIcon}
-                                        alt="Concluído" 
-                                        className={styles.checkImage} 
+                                    <Check 
+                                        size={16} 
+                                        strokeWidth={3} 
+                                        className={styles.checkIcon} 
                                     />
                                 )}
                             </div>

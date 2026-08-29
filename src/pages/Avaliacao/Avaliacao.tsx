@@ -11,6 +11,7 @@ import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
 
 import { useAvaliacoes } from '../../hooks/Avaliacao/useAvaliacoes';
 import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
+import type { LocacaoData } from '../Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import type { AbaAvaliacao } from './Avaliacao.types';
 import styles from './Avaliacao.module.css';
 
@@ -20,12 +21,11 @@ interface AvaliacaoProps {
 
 /**
  * Página "Minhas Avaliações".
- * Header, menu lateral e nav de navegação ficam fora daqui —
- * este componente cobre só o fluxo de avaliação em si.
+ * Header, menu lateral e nav de navegação ficam fora daqui — este componente cobre só o fluxo de avaliação em si.
  */
 export default function Avaliacao({ navigate }: AvaliacaoProps) {
     const [abaAtiva, setAbaAtiva] = useState<AbaAvaliacao>('pendentes');
-    const { locacaoSelecionada } = useLocacaoStore();
+    const { locacaoSelecionada } = useLocacaoStore() as { locacaoSelecionada: LocacaoData | null };
 
     const {
         produtosPendentes,

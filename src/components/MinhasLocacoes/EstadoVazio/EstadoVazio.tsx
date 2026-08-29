@@ -1,4 +1,4 @@
-import calendarioIcon from '../../../assets/iconCalendarioLocacoes.png';
+import { Calendar } from 'lucide-react';
 import styles from './EstadoVazio.module.css';
 
 interface EstadoVazioProps {
@@ -9,7 +9,7 @@ interface EstadoVazioProps {
 export default function EstadoVazio({ titulo, descricao }: EstadoVazioProps) {
   return (
     <div className={styles.estadoVazio}>
-      <img src={calendarioIcon} alt="" className={styles.iconeVazio} />
+      <Calendar className={styles.iconeVazio} aria-hidden="true" strokeWidth={1.5} />
       <p className={styles.tituloVazio}>{titulo}</p>
       <p className={styles.descricaoVazia}>{descricao}</p>
     </div>

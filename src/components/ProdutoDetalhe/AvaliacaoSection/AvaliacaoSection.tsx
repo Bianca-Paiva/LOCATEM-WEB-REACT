@@ -1,7 +1,6 @@
 import { useState } from 'react';
+import { Icon } from "@iconify/react";
 import styles from './AvaliacaoSection.module.css';
-import IconLike from '../../../assets/IconLike.png';
-import IconLikePreenchido from '../../../assets/IconLikePreenchido.png';
 import { getIniciais } from '../../../utils/iniciais';
 
 interface Avaliacao {
@@ -125,10 +124,11 @@ export function AvaliacaoSection({
                   className={`${styles.btnUtil} ${isCurtido ? styles.btnUtilAtivo : ''}`}
                   onClick={() => toggleCurtida(i)}
                 >
-                  <img
-                    src={isCurtido ? IconLikePreenchido : IconLike} // Troca o ícone
-                    alt="Like"
+                  <Icon
+                    icon={isCurtido ? "griddy-icons:thumbs-up-filled" : "griddy-icons:thumbs-up"}
                     className={styles.likeIcon}
+                    width={14}
+                    height={14}
                   />
                   Foi útil
                 </button>

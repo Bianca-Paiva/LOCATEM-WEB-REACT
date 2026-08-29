@@ -1,7 +1,6 @@
-import { Calendar, User, MapPin } from 'lucide-react';
+import { Calendar, User, MapPin, Star } from 'lucide-react';
 import type { LocacaoData } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import { formatarIntervaloHorario } from '../../../utils/horario';
-import starIcon from '../../../assets/StarFullYellow.png';
 import styles from './LocacaoResumoCard.module.css';
 
 interface LocacaoResumoCardProps {
@@ -43,7 +42,7 @@ export default function LocacaoResumoCard({ locacao }: LocacaoResumoCardProps) {
 
           <div className={styles.linhaAvaliacaoLocalizacao}>
             <span className={styles.avaliacao}>
-              <img src={starIcon} alt="" className={styles.iconePequenoStar} />
+              <Star className={styles.iconePequenoStar} aria-hidden="true" fill="currentColor" strokeWidth={0} />
               {avaliacaoLocador.toFixed(1).replace('.', ',')}
               <span className={styles.numeroAvaliacoes}>({numeroAvaliacoes} avaliações)</span>
             </span>

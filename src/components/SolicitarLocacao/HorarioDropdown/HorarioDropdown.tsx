@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import IconSeta from '../../../assets/IconSeta.png';
+import { ChevronDown } from 'lucide-react';
 import styles from './HorarioDropdown.module.css';
 
 // Horários disponíveis como faixas de 3 horas (ex: 06:00 - 09:00), incrementando de 1h em 1h, das 06:00 às 22:00
@@ -83,9 +83,9 @@ export default function HorarioDropdown({
           <span>
             {HORARIO_OPTIONS.find((option) => option.value === value)?.label}
           </span>
-          <img
-            src={IconSeta}
-            alt=""
+          <ChevronDown
+            size={16}
+            strokeWidth={2}
             className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}
           />
         </button>

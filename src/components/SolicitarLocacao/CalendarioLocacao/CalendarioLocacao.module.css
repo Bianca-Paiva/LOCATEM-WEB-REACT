@@ -41,20 +41,12 @@
   cursor: not-allowed;
 }
 
-.setaEsquerda,
-.setaDireita {
-  width: 10px;
-  height: 10px;
+.setaCima,
+.setaBaixo {
+  width: 15px;
+  height: 15px;
   object-fit: contain;
   opacity: 0.8;
-}
-
-.setaEsquerda {
-  transform: rotate(90deg);
-}
-
-.setaDireita {
-  transform: rotate(-90deg);
 }
 
 .semana {

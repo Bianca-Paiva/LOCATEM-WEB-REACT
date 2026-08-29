@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ProdutoSelecionado } from '../../../context/ProdutoContext';
-import ProdutoResumoCard from '../ProdutoResumoCard/ProdutoResumoCard';
+import ProdutoResumoCard from '../ProdutoResumoCardSolicitacao/ProdutoResumoCardProdutoResumoCardSolicitacao';
 import CampoData from '../CampoData/CampoData';
 import HorarioDropdown from '../HorarioDropdown/HorarioDropdown';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';

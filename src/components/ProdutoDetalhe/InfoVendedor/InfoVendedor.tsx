@@ -1,5 +1,6 @@
+import { Icon } from "@iconify/react";
+import { Star } from 'lucide-react';
 import styles from './InfoVendedor.module.css';
-import verificadoImg from '../../../assets/verificadoAzul.png';
 import { getIniciais } from '../../../utils/iniciais';
 
 interface InfoVendedorProps {
@@ -9,7 +10,7 @@ interface InfoVendedorProps {
   reviewCount: number;
   locacoes: number;
   verificado: boolean;
-  imageNota: string;
+  imageNota?: string;
 }
 
 export function InfoVendedor({
@@ -19,7 +20,6 @@ export function InfoVendedor({
   reviewCount,
   locacoes,
   verificado,
-  imageNota,
 }: InfoVendedorProps) {
   // Usa o mesmo utilitário de iniciais do resto do projeto (Avatar, AvaliacaoSection),
   // em vez da lógica local que existia aqui antes (slice das 2 primeiras letras).
@@ -27,7 +27,6 @@ export function InfoVendedor({
 
   return (
     <div className={styles.vendedorCard}>
-
 
       <div className={styles.vendedorHeader}>
         <div className={styles.avatar}>
@@ -40,18 +39,18 @@ export function InfoVendedor({
         <div className={styles.vendedorInfo}>
           <p className={styles.vendedorNome}>{nome}</p>
           <div className={styles.ratingRow}>
-            <img src={imageNota} alt="estrela" className={styles.starIcon} />
+            <Star className={styles.starIcon} size={14} fill="#FFCA00" color="#FFCA00" strokeWidth={0} />
             <span className={styles.ratingValor}>{rating.toFixed(1)}</span>
             <span className={styles.ratingCount}>({reviewCount})</span>
           </div>
           <p className={styles.locacoes}>+{locacoes} locações</p>
         </div>
         {verificado && (
-          <div className={styles.verificadoBadge}>
-            <img
-              src={verificadoImg}
-              alt="Verificado"
+          <div className={styles.verificadoBadge} title="Loja Verificada">
+            <Icon 
+              icon="codicon:verified-filled" 
               className={styles.verificadoIcon}
+              color="#007BFF"
             />
           </div>
         )}
