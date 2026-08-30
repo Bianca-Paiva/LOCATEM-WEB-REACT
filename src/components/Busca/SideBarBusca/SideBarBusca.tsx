@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Search } from 'lucide-react';
 
 import type { FilterState } from '../../../pages/Busca/Busca.types';
 import { OPCOES_FONTE_ALIMENTACAO, CATEGORIAS_FERRAMENTA } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
@@ -169,7 +170,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
               className={styles.brandSearchInput}
             />
 
-            <span className={styles.searchIcon}>🔍</span>
+            <Search className={styles.searchIcon} size={14} strokeWidth={2} />
 
           </div>
 

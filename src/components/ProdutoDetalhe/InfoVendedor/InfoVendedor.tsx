@@ -21,13 +21,11 @@ export function InfoVendedor({
   locacoes,
   verificado,
 }: InfoVendedorProps) {
-  // Usa o mesmo utilitário de iniciais do resto do projeto (Avatar, AvaliacaoSection),
-  // em vez da lógica local que existia aqui antes (slice das 2 primeiras letras).
+  // Usa o mesmo utilitário de iniciais do resto do projeto (Avatar, AvaliacaoSection), em vez da lógica local que existia aqui antes (slice das 2 primeiras letras).
   const initials = getIniciais(nome);
 
   return (
     <div className={styles.vendedorCard}>
-
       <div className={styles.vendedorHeader}>
         <div className={styles.avatar}>
           {logoUrl ? (
@@ -36,8 +34,22 @@ export function InfoVendedor({
             <span className={styles.avatarInitials}>{initials}</span>
           )}
         </div>
+
         <div className={styles.vendedorInfo}>
-          <p className={styles.vendedorNome}>{nome}</p>
+          {/* Novo wrapper agrupando o nome e o selo verificado */}
+          <div className={styles.nomeWrapper}>
+            <p className={styles.vendedorNome}>{nome}</p>
+            {verificado && (
+              <div className={styles.verificadoBadge} title="Loja Verificada">
+                <Icon
+                  icon="codicon:verified-filled"
+                  className={styles.verificadoIcon}
+                  color="#007BFF"
+                />
+              </div>
+            )}
+          </div>
+
           <div className={styles.ratingRow}>
             <Star className={styles.starIcon} size={14} fill="#FFCA00" color="#FFCA00" strokeWidth={0} />
             <span className={styles.ratingValor}>{rating.toFixed(1)}</span>
@@ -45,15 +57,6 @@ export function InfoVendedor({
           </div>
           <p className={styles.locacoes}>+{locacoes} locações</p>
         </div>
-        {verificado && (
-          <div className={styles.verificadoBadge} title="Loja Verificada">
-            <Icon 
-              icon="codicon:verified-filled" 
-              className={styles.verificadoIcon}
-              color="#007BFF"
-            />
-          </div>
-        )}
       </div>
 
       <button className={styles.btnVerPerfil}>

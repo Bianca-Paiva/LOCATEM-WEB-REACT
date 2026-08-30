@@ -5,6 +5,7 @@ import { ProdutoInfo } from '../../components/ProdutoDetalhe/ProdutoInfo/Produto
 import { ProdutosSemelhantes } from '../../components/ProdutoDetalhe/ProdutosSemelhantes/ProdutosSemelhantes';
 import { Descricao } from '../../components/ProdutoDetalhe/Descricao/Descricao';
 import { EspecificacoesTecnicas } from '../../components/ProdutoDetalhe/EspecificacoesTecnicas/EspecificacoesTecnicas';
+import { Acessorios } from '../../components/ProdutoDetalhe/Acessorios/Acessorios';
 import { InfoVendedor } from '../../components/ProdutoDetalhe/InfoVendedor/InfoVendedor';
 import { AvaliacaoSection } from '../../components/ProdutoDetalhe/AvaliacaoSection/AvaliacaoSection';
 import { BannerLateral } from '../../components/ProdutoDetalhe/BannerLateral/BannerLateral';
@@ -16,16 +17,12 @@ import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import { useNotificationStore } from '../../hooks/Locacoes/useNotificationStore';
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
-import { toProdutoSemelhante } from '../../mocks/produtos.adapters';
+import { toProdutoSemelhante, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/montarLocacaoData';
 import type { ProdutoSelecionado } from '../../context/ProdutoContext';
 import type { Route } from '../../router/useRouter';
 import type { DadosLocacaoModal, ModoAberturaModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
-import {
-  FALLBACK_PRODUTO,
-  MOCK_ESPECIFICACOES,
-  MOCK_AVALIACOES
-} from './ProdutoDetalhe.mock';
+import { FALLBACK_PRODUTO } from './ProdutoDetalhe.mock';
 import styles from './ProdutoDetalhe.module.css';
 
 interface ProdutoDetalheProps {
@@ -51,9 +48,13 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
     [produtos, produto.categoria, produto.id],
   );
 
-  // Ao clicar num card semelhante: salva no store e força re-render no topo
+  // Ao clicar num card semelhante: o card só carrega um recorte do produto
+  // (ProdutoSemelhante), então buscamos o produto completo no catálogo pra
+  // levar adiante os dados reais da ferramenta (descrição, especificações,
+  // acessórios, avaliações etc.), salvamos no store e forçamos re-render no topo.
   const handleSemelhante = (p: ProdutoSelecionado) => {
-    setProdutoSelecionado(p);
+    const produtoCompleto = produtos.find((item) => item.id === p.id);
+    setProdutoSelecionado(produtoCompleto ? toProdutoSelecionado(produtoCompleto) : p);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -172,7 +173,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
               <div className={styles.produtoDescVendedorRow}>
                 <div className={styles.produtoDescCol}>
                   <Descricao
-                    texto="Ideal para uso doméstico e profissional leve. Perfeita para montagem de móveis, instalações e pequenos reparos. Compacta, potente e fácil de manusear — resolve o problema sem complicação."
+                    texto={produto.descricao ?? 'Descrição não informada pelo locador.'}
                   />
                 </div>
                 <div className={styles.produtoVendedorCol}>
@@ -188,13 +189,19 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                 </div>
               </div>
 
-              <EspecificacoesTecnicas especificacoes={MOCK_ESPECIFICACOES} />
+              {produto.especificacoes && produto.especificacoes.length > 0 && (
+                <EspecificacoesTecnicas especificacoes={produto.especificacoes} />
+              )}
+
+              {produto.acessorios && produto.acessorios.length > 0 && (
+                <Acessorios itens={produto.acessorios} />
+              )}
 
               <AvaliacaoSection
                 mediaGeral={produto.rating}
                 totalAvaliacoes={produto.reviewCount}
-                distribuicao={[72, 18, 6, 2, 2]}
-                avaliacoes={MOCK_AVALIACOES}
+                distribuicao={produto.distribuicaoAvaliacoes ?? [0, 0, 0, 0, 0]}
+                avaliacoes={produto.avaliacoes ?? []}
                 imageNota={produto.imageNota}
               />
             </div>

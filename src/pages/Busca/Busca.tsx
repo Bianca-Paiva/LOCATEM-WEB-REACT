@@ -8,7 +8,7 @@ import { useMemo, useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';
 import { SideBarBusca } from '../../components/Busca/SideBarBusca/SideBarBusca';
 import Paginacao from '../../components/Busca/Paginacao/Paginacao';
-import { toProdutoBusca } from '../../mocks/produtos.adapters';
+import { toProdutoBusca, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import type { ProdutoBusca, FilterState } from './Busca.types';
 import styles from './Busca.module.css';
 
@@ -67,21 +67,16 @@ export default function Busca({ navigate }: BuscaProps) {
 
 
   const handleCardClick = (product: ProdutoBusca) => {
-    setProdutoSelecionado({
-      id: product.id,
-      title: product.title,
-      marca: product.marca,
-      price: product.price,
-      images: product.images,
-      imageVerificado: product.imageVerificado,
-      imageNota: product.imageNota,
-      rating: product.rating,
-      reviewCount: product.reviewCount,
-      locador: product.locador,
-      localizacao: product.localizacao,
-      categoria: product.category,
-      estoqueDisponivel: product.estoqueDisponivel,
-    });
+    // O card da Busca só carrega um recorte do produto (ProdutoBusca).
+    // Buscamos o produto completo no catálogo central para levar pra frente
+    // os dados reais da ferramenta (descrição, especificações, acessórios,
+    // avaliações etc.), assim como já é feito na Home.
+    const produtoCompleto = produtos.find((p) => p.id === product.id);
+
+    if (!produtoCompleto) return;
+
+    setProdutoSelecionado(toProdutoSelecionado(produtoCompleto));
+
     navigate('produtoDetalhe');
   };
 

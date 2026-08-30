@@ -53,11 +53,18 @@
   min-width: 0;
 }
 
+.nomeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
 .vendedorNome {
   font-size: 14px;
   font-weight: 700;
   color: #0a0a0a;
-  margin: 0 0 4px;
+  margin: 0;
 }
 
 .ratingRow {
@@ -98,9 +105,9 @@
 }
 
 .verificadoIcon {
-  width: 20px;
-  height: 20px;
-  margin-bottom: 10px;
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .btnVerPerfil {

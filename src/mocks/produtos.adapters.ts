@@ -75,6 +75,14 @@ export const toProdutoSelecionado = (p: Produto): ProdutoSelecionado => ({
     localizacao: p.localizacao,
     categoria: p.categoria,
     estoqueDisponivel: p.estoqueDisponivel,
+    diasIndisponiveis: p.diasIndisponiveis,
+    tipoAprovacao: p.tipoAprovacao,
+    voltagem: p.voltagem,
+    descricao: p.descricao,
+    especificacoes: p.especificacoes,
+    acessorios: p.acessorios,
+    avaliacoes: p.avaliacoes,
+    distribuicaoAvaliacoes: p.distribuicaoAvaliacoes,
 });
 
 /**
