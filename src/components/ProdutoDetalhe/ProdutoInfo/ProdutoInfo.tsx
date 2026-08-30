@@ -98,10 +98,10 @@ export function ProdutoInfo({
 
       <div className={styles.seletoresRow}>
 
-        {/* Periodo da Locação */}
+        {/* Período da Locação */}
         <div className={styles.opcaoGrupo}>
-          <p className={styles.opcaoLabel}>Periodo da Locação</p>
-          <PeriodoLocacaoDropdown value={periodoLocacao} onChange={setPeriodoLocacao} /> 
+          <p className={styles.opcaoLabel}>Período da Locação</p>
+          <PeriodoLocacaoDropdown value={periodoLocacao} onChange={setPeriodoLocacao} />
         </div>
 
         {/* Quantidade */}

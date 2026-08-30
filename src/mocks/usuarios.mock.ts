@@ -3,8 +3,7 @@ import type { Usuario } from '../types/usuario.types';
 /**
  * Catálogo mockado de usuários, no mesmo espírito de mocks/locadores.mock.ts:
  * fonte única de verdade enquanto não existe uma API de autenticação real
- * (services/authService.ts já está pronto para receber essa integração, mas
- * os endpoints estão comentados nas telas de Login/Cadastro).
+ * (services/authService.ts já está pronto para receber essa integração, mas os endpoints estão comentados nas telas de Login/Cadastro).
  *
  * Cobre os cenários pedidos para teste manual da tela de Perfil:
  * - Locador sem foto, com dados quase completos (perfil incompleto)

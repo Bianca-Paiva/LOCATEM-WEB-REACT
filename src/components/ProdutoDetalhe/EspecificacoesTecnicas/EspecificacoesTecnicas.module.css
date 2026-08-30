@@ -6,7 +6,7 @@
 }
 
 .titulo {
-  font-size: clamp(14px, 1.8vw, 17px);
+  font-size: clamp(15px, 1.8vw, 18px);
   font-weight: 700;
   color: #0a0a0a;
   margin: 0 0 14px;

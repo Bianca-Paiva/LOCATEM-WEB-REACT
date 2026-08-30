@@ -48,10 +48,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
     [produtos, produto.categoria, produto.id],
   );
 
-  // Ao clicar num card semelhante: o card só carrega um recorte do produto
-  // (ProdutoSemelhante), então buscamos o produto completo no catálogo pra
-  // levar adiante os dados reais da ferramenta (descrição, especificações,
-  // acessórios, avaliações etc.), salvamos no store e forçamos re-render no topo.
+  // Ao clicar num card semelhante: o card só carrega um recorte do produto (ProdutoSemelhante), então buscamos o produto completo no catálogo pra levar adiante os dados reais da ferramenta (descrição, especificações, acessórios, avaliações etc.), salvamos no store e forçamos re-render no topo.
   const handleSemelhante = (p: ProdutoSelecionado) => {
     const produtoCompleto = produtos.find((item) => item.id === p.id);
     setProdutoSelecionado(produtoCompleto ? toProdutoSelecionado(produtoCompleto) : p);
@@ -176,7 +173,8 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     texto={produto.descricao ?? 'Descrição não informada pelo locador.'}
                   />
                 </div>
-                <div className={styles.produtoVendedorCol}>
+                {/* Oculto no Mobile/Tablet, Visível no Desktop */}
+                <div className={`${styles.produtoVendedorCol} ${styles.vendedorDesktop}`}>
                   <InfoVendedor
                     nome={locador.nome}
                     logoUrl={locador.logoUrl}
@@ -196,6 +194,19 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
               {produto.acessorios && produto.acessorios.length > 0 && (
                 <Acessorios itens={produto.acessorios} />
               )}
+
+              {/* Visível no Mobile/Tablet (depois de Acessórios), Oculto no Desktop */}
+              <div className={styles.vendedorMobile}>
+                <InfoVendedor
+                  nome={locador.nome}
+                  logoUrl={locador.logoUrl}
+                  rating={locador.rating}
+                  reviewCount={locador.reviewCount}
+                  locacoes={locador.locacoes}
+                  verificado={locador.verificado}
+                  imageNota={produto.imageNota}
+                />
+              </div>
 
               <AvaliacaoSection
                 mediaGeral={produto.rating}

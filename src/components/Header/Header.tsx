@@ -68,7 +68,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Minhas Locacoes",
+            label: "Minhas Locações",
             route: "minhasLocacoes", // aparece para: locatário
             renderIcon: (active) => (
                 <Icon
@@ -101,7 +101,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Avaliações",
-            route: "avaliacao", // aparece para: locador (avalia locatário, processo de entrega/despache e receber devolta, plataforma) e locatário (avalia locador, entrega e devoulução, produto, plataforma)
+            route: "avaliacao", // aparece para: locador (avalia locatário, processo de entrega/despache e receber devolta, plataforma) e locatário (avalia locador, entrega e devolução, produto, plataforma)
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:star" : "mdi:star-outline"}

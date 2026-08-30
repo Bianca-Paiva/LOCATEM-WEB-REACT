@@ -3,19 +3,13 @@ import type { Produto } from '../types/produto.types';
 /**
  * Catálogo central de produtos (ferramentas) mockados.
  *
- * Fonte única de verdade para os dados de ferramenta usados pelo app —
- * um único catálogo, sem separação por página/seção. Cada página NÃO deve
- * declarar seus próprios dados de produto — em vez disso, ela lê este
- * catálogo inteiro (via CatalogoContext) e usa um adapter
- * (`produtos.adapters.ts`) pra recortar só os campos que sua tela exibe:
+ * Fonte única de verdade para os dados de ferramenta usados pelo app — um único catálogo, sem separação por página/seção. Cada página NÃO deve declarar seus próprios dados de produto — em vez disso, ela lê este catálogo inteiro (via CatalogoContext) e usa um adapter (`produtos.adapters.ts`) pra recortar só os campos que sua tela exibe:
  *  - Home: exibe todos os produtos do catálogo.
  *  - Busca: pesquisa e filtra sobre todos os produtos do catálogo.
  *  - ProdutoDetalhe (Produtos Semelhantes): filtra dinamicamente por
  *    `categoria`, sem lista fixa por produto.
  *
- * Cada ferramenta possui descrição, especificações técnicas, acessórios
- * inclusos e avaliações próprias — baseadas em modelos reais de mercado —
- * para evitar dados genéricos ou repetidos entre os produtos.
+ * Cada ferramenta possui descrição, especificações técnicas, acessórios inclusos e avaliações próprias — baseadas em modelos reais de mercado — para evitar dados genéricos ou repetidos entre os produtos.
  */
 export const PRODUTOS_MOCK: Produto[] = [
     {

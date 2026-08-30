@@ -6,7 +6,6 @@ interface ProdutoSemelhante {
   id?: number;
   title: string;
   marca: string;
-  /** Nome do locador/anunciante — é o que o card exibe hoje (a marca ainda não é usada na UI). */
   locador: string;
   price: string;
   images: string[];

@@ -53,7 +53,7 @@ export function InfoVendedor({
           <div className={styles.ratingRow}>
             <Star className={styles.starIcon} size={14} fill="#FFCA00" color="#FFCA00" strokeWidth={0} />
             <span className={styles.ratingValor}>{rating.toFixed(1)}</span>
-            <span className={styles.ratingCount}>({reviewCount})</span>
+            <span className={styles.ratingCount}>({reviewCount} avaliações)</span>
           </div>
           <p className={styles.locacoes}>+{locacoes} locações</p>
         </div>

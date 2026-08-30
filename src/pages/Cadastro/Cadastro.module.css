@@ -20,6 +20,21 @@ main {
     flex-direction: column;
 }
 
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Padrão de 25px do login */
+    margin-bottom: 32px; 
+}
+
+/* Zera o espaçamento interno apenas entre os campos de senha */
+.senhaGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+
 /* ============================= */
 /* TIPO DE CONTA */
 /* ============================= */

@@ -5,7 +5,7 @@
 }
 
 .titulo {
-  font-size: clamp(15px, 2.5vw, 20px);
+  font-size: 19px;
   font-weight: 700;
   color: #0a0a0a;
   line-height: 1.35;
@@ -78,7 +78,7 @@
 }
 
 .opcaoLabel {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: #141D23;
   margin: 0;
