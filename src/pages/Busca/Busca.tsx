@@ -70,7 +70,7 @@ export default function Busca({ navigate }: BuscaProps) {
     setProdutoSelecionado({
       id: product.id,
       title: product.title,
-      brand: product.brand,
+      marca: product.marca,
       price: product.price,
       images: product.images,
       imageVerificado: product.imageVerificado,
@@ -89,8 +89,8 @@ export default function Busca({ navigate }: BuscaProps) {
     const productPrice = parseFloat(product.price.replace(',', '.'));
 
     if (activeFilters.categories.length > 0 && !activeFilters.categories.includes(product.category)) return false;
-    if (activeFilters.brands.length > 0 && !activeFilters.brands.includes(product.brand)) return false;
-    if (activeFilters.brandSearch && !product.brand.toLowerCase().includes(activeFilters.brandSearch.toLowerCase())) return false;
+    if (activeFilters.brands.length > 0 && !activeFilters.brands.includes(product.marca)) return false;
+    if (activeFilters.brandSearch && !product.marca.toLowerCase().includes(activeFilters.brandSearch.toLowerCase())) return false;
 
     if (activeFilters.voltagens.length > 0) {
       if (!product.voltagem || !activeFilters.voltagens.includes(product.voltagem)) return false;
@@ -123,7 +123,7 @@ export default function Busca({ navigate }: BuscaProps) {
       const termo = termoBusca.toLowerCase();
       const correspondeTermo =
         product.title.toLowerCase().includes(termo) ||
-        product.brand.toLowerCase().includes(termo) ||
+        product.marca.toLowerCase().includes(termo) ||
         product.category.toLowerCase().includes(termo);
       if (!correspondeTermo) return false;
     }
@@ -179,7 +179,7 @@ export default function Busca({ navigate }: BuscaProps) {
                   <ProductCard
                     key={product.id}
                     title={product.title}
-                    brand={product.brand}
+                    brand={product.locador}
                     price={product.price}
                     images={product.images}
                     imageVerificado={product.imageVerificado}

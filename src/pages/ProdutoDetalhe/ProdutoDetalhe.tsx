@@ -16,6 +16,7 @@ import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import { useNotificationStore } from '../../hooks/Locacoes/useNotificationStore';
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
+import { toProdutoSemelhante } from '../../mocks/produtos.adapters';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/montarLocacaoData';
 import type { ProdutoSelecionado } from '../../context/ProdutoContext';
 import type { Route } from '../../router/useRouter';
@@ -143,7 +144,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     price={produto.price}
                     rating={produto.rating}
                     reviewCount={produto.reviewCount}
-                    brand={produto.marca}
+                    brand={produto.locador}
                     imageVerificado={produto.imageVerificado}
                     imageNota={produto.imageNota}
                     estoqueDisponivel={produto.estoqueDisponivel}

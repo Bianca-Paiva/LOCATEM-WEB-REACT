@@ -49,7 +49,6 @@
 .precoBox {
   display: flex;
   align-items: baseline;
-  gap: 3px;
   padding: 10px 0 6px;
   border-top: 1px solid #f3f4f6;
 }
@@ -70,7 +69,6 @@
 .precoDia {
   font-size: 13px;
   color: #6b7280;
-  margin-left: 2px;
 }
 
 .opcaoGrupo {

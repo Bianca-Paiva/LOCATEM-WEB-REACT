@@ -60,7 +60,7 @@ export default function Home({ navigate }: HomeProps) {
             <ProductCard
               key={product.id}
               title={product.title}
-              brand={product.marca}
+              brand={product.locador}
               price={product.price}
               images={product.images}
               imageVerificado={product.imageVerificado}

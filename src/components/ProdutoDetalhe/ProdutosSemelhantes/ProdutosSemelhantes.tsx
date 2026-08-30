@@ -6,6 +6,8 @@ interface ProdutoSemelhante {
   id?: number;
   title: string;
   marca: string;
+  /** Nome do locador/anunciante — é o que o card exibe hoje (a marca ainda não é usada na UI). */
+  locador: string;
   price: string;
   images: string[];
   imageVerificado: string;
@@ -45,7 +47,7 @@ export function ProdutosSemelhantes({ produtos, onCardClick }: ProdutosSemelhant
             <div key={i} className={styles.cardWrapper}>
               <ProductCard
                 title={p.title}
-                brand={p.marca}
+                brand={p.locador}
                 price={p.price}
                 images={p.images}
                 imageVerificado={p.imageVerificado}

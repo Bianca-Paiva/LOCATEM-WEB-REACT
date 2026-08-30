@@ -15,6 +15,7 @@ export const toProdutoHome = (p: Produto): ProdutoHome => ({
     id: p.id,
     title: p.title,
     marca: p.marca,
+    locador: p.locador,
     price: p.price,
     images: p.images,
     imageVerificado: p.imageVerificado,
