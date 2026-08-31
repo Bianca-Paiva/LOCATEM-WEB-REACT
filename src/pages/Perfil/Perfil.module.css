@@ -1,6 +1,5 @@
 .pagina {
     width: 100%;
-    max-width: 1428px;
     margin: 0 auto;
     padding: 20px 16px 56px;
     box-sizing: border-box;
@@ -9,7 +8,15 @@
     gap: 20px;
 }
 
+.linhaPerfil {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .colunas {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
@@ -64,7 +71,7 @@
     }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
     .colunas {
         grid-template-columns: 2fr 1fr;
     }

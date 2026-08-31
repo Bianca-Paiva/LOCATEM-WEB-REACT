@@ -77,3 +77,9 @@
 .btnFoto:hover {
     background: var(--color-primary-light);
 }
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}

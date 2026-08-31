@@ -31,7 +31,7 @@ interface OpcaoPainel {
 // Opções comuns às duas variantes do protótipo (Locatário e Locador).
 const OPCOES_BASE: OpcaoPainel[] = [
   { icone: <Wrench size={20} />, titulo: 'Aluguéis Ativos', descricao: 'Visualize seus equipamentos alugados atualmente.', route: 'minhasLocacoes' },
-  { icone: <Clock size={20} />, titulo: 'Histórico de Locações', descricao: 'Consulte todas as suas locações anteriores.', route: 'minhasLocacoes' },
+  { icone: <Clock size={20} />, titulo: 'Histórico de Locações', descricao: 'Consulte todas as suas locações anteriores.'},
   { icone: <Heart size={20} />, titulo: 'Favoritos', descricao: 'Ferramentas e equipamentos salvos.' },
   { icone: <Wallet size={20} />, titulo: 'Pagamentos', descricao: 'Visualize pagamentos, cauções e reembolsos.' },
   { icone: <FileText size={20} />, titulo: 'Contratos', descricao: 'Acesse todos os contratos digitais.' },
@@ -42,10 +42,7 @@ const OPCOES_BASE: OpcaoPainel[] = [
 ];
 
 /**
- * Painel de Controle. As opções são as mesmas nos dois protótipos (Locatário e
- * Locador), então mantemos uma única lista em vez de duas implementações
- * paralelas — só o parâmetro `tipo` fica disponível para o dia em que Locador
- * precisar de uma opção exclusiva (ex: "Meus Anúncios").
+ * Painel de Controle. As opções são as mesmas nos dois protótipos (Locatário e Locador), então mantemos uma única lista em vez de duas implementações paralelas — só o parâmetro `tipo` fica disponível para o dia em que Locador precisar de uma opção exclusiva (ex: "Meus Anúncios").
  */
 export default function PainelControle({ navigate }: PainelControleProps) {
   return (

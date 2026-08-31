@@ -6,14 +6,12 @@ import styles from './ReputacaoCard.module.css';
 interface ReputacaoCardProps {
   reputacao: ReputacaoUsuario;
   tipo: TipoUsuario;
-  onVerAvaliacoes: () => void;
 }
 
 /**
- * Card "Reputação". A lista de métricas muda conforme o tipo de usuário: Locador
- * mostra "entregas no prazo" (indicador do protótipo de Locador), Locatário não.
+ * Card "Reputação". A lista de métricas muda conforme o tipo de usuário: Locador mostra "entregas no prazo" (indicador do protótipo de Locador), Locatário não.
  */
-export default function ReputacaoCard({ reputacao, tipo, onVerAvaliacoes }: ReputacaoCardProps) {
+export default function ReputacaoCard({ reputacao, tipo }: ReputacaoCardProps) {
   return (
     <section className={styles.card}>
       <h2 className={styles.titulo}>Reputação</h2>
@@ -37,7 +35,7 @@ export default function ReputacaoCard({ reputacao, tipo, onVerAvaliacoes }: Repu
         )}
       </div>
 
-      <button type="button" className={styles.btnVerAvaliacoes} onClick={onVerAvaliacoes}>
+      <button type="button" className={styles.btnVerAvaliacoes}>
         Ver avaliações
       </button>
     </section>

@@ -17,20 +17,14 @@ interface PerfilProps {
 }
 
 /**
- * Tela de Perfil — compartilhada entre Locatário e Locador. A estrutura é a
- * mesma nos dois protótipos; o que muda (rótulo do documento, indicador de
- * entregas no prazo, badge "desde") é resolvido a partir de `usuario.tipo`
- * dentro de cada subcomponente, então não existem duas implementações
- * paralelas de tela — só este ponto único que decide o que exibir.
+ * Tela de Perfil — compartilhada entre Locatário e Locador. A estrutura é a mesma nos dois protótipos; o que muda (rótulo do documento, indicador de entregas no prazo, badge "desde") é resolvido a partir de `usuario.tipo` dentro de cada subcomponente, então não existem duas implementações paralelas de tela — só este ponto único que decide o que exibir.
  */
 export default function Perfil({ navigate }: PerfilProps) {
   const { usuario, logout, atualizarUsuario } = useAuth();
   const { percentual, mensagemDica } = useCompletudePerfil(usuario);
   const [editando, setEditando] = useState(false);
 
-  // Sem sessão: não há o que exibir nesta tela (o Header já direciona o clique
-  // no avatar para o login quando não autenticado, mas cobrimos o acesso direto
-  // à rota também).
+  // Sem sessão: não há o que exibir nesta tela (o Header já direciona o clique no avatar para o login quando não autenticado, mas cobrimos o acesso direto à rota também).
   if (!usuario) {
     return (
       <>
@@ -39,7 +33,7 @@ export default function Perfil({ navigate }: PerfilProps) {
           <div className={styles.semSessao}>
             <p>Você precisa entrar na sua conta para ver o perfil.</p>
             <button type="button" className={styles.btnLogin} onClick={() => navigate('login')}>
-              Ir para o login
+              Entrar na conta
             </button>
           </div>
         </main>
@@ -57,13 +51,15 @@ export default function Perfil({ navigate }: PerfilProps) {
       <Header navigate={navigate} currentRoute="perfil" />
 
       <main className={styles.pagina}>
-        <PerfilHeader usuario={usuario} onEditar={() => setEditando(true)} />
+        <div className={styles.linhaPerfil}>
+          <PerfilHeader usuario={usuario} onEditar={() => setEditando(true)} />
 
-        <CompletarPerfil percentual={percentual} mensagemDica={mensagemDica} />
+          <CompletarPerfil percentual={percentual} mensagemDica={mensagemDica} />
+        </div>
 
         <div className={styles.colunas}>
           <InformacoesPessoais usuario={usuario} onEditar={() => setEditando(true)} />
-          <ReputacaoCard reputacao={usuario.reputacao} tipo={usuario.tipo} onVerAvaliacoes={() => navigate('avaliacao')} />
+          <ReputacaoCard reputacao={usuario.reputacao} tipo={usuario.tipo}/>
         </div>
 
         <PainelControle tipo={usuario.tipo} navigate={navigate} />

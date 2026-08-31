@@ -17,10 +17,7 @@ interface EditarPerfilModalProps {
 /**
  * Modal de edição das Informações Pessoais + foto do perfil.
  *
- * Não existe endpoint de upload no projeto ainda, então a foto escolhida vira uma
- * object URL local (só pra pré-visualização em tela) — nada é enviado a um backend
- * inexistente, mas dá pra testar de verdade o cenário "usuário com foto" pedido na
- * checklist de QA da tarefa.
+ * Não existe endpoint de upload no projeto ainda, então a foto escolhida vira uma object URL local (só pra pré-visualização em tela) — nada é enviado a um backend inexistente, mas dá pra testar de verdade o cenário "usuário com foto" pedido na checklist de QA da tarefa.
  */
 export default function EditarPerfilModal({ usuario, onClose, onSalvar }: EditarPerfilModalProps) {
   const [nome, setNome] = useState(usuario.nome);
@@ -62,7 +59,7 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
           </label>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate>
+        <form className={styles.inputs} onSubmit={handleSubmit} noValidate>
           <FormInput
             id="perfil-nome"
             label="Nome completo"
