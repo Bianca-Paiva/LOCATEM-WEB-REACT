@@ -1,3 +1,5 @@
+import type { RegistroAvaliacao } from '../../Avaliacao/Avaliacao.types';
+
 /** Status possíveis de uma solicitação de locacao */
 export type StatusLocacao =
   | 'pendente' // Aguardando aprovação do locador
@@ -49,4 +51,10 @@ export interface LocacaoData {
   };
   nomeContato?: string;
   telefoneContato?: string;
+
+  // ── Fluxo de avaliação (liberado quando status === 'finalizada') ─────────
+  /** Preenchido quando o locatário avalia esta locação — também evita reavaliação duplicada. */
+  avaliacaoDoLocatario?: RegistroAvaliacao;
+  /** Preenchido quando o locador avalia esta locação — também evita reavaliação duplicada. */
+  avaliacaoDoLocador?: RegistroAvaliacao;
 }

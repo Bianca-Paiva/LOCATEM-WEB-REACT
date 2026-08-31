@@ -129,6 +129,23 @@
   font-weight: 600;
 }
 
+.categoriaVoltarBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+}
+
+.categoriaVoltarBtn:hover {
+  text-decoration: underline;
+}
+
 .brandSearchWrapper {
   position: relative;
   margin-bottom: 10px;

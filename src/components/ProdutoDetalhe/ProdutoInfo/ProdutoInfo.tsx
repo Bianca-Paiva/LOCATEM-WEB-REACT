@@ -13,6 +13,8 @@ interface ProdutoInfoProps {
   imageNota?: string;
   brand: string;
   estoqueDisponivel: number;
+  /** Voltagem/fonte de alimentação da ferramenta atual, vinda de `Produto.voltagem` (produtos.mock.ts). Ausente = ferramenta sem essa informação cadastrada. */
+  voltagem?: string;
   onAlugar?: () => void;
   onLocar?: () => void;
   onAddCarrinho?: () => void;
@@ -22,8 +24,6 @@ interface ProdutoInfoProps {
    */
   onSelecaoChange?: (selecao: { quantidade: number; diarias: number | null; tensao: string | null }) => void;
 }
-
-const TENSAO_OPTIONS = ['127V', '220V', 'Bivolt'];
 
 // Extrai o número de diárias de um valor do PeriodoLocacaoDropdown (ex: "2 dias" -> 2)
 function extrairDiarias(periodo: string): number | null {
@@ -38,12 +38,14 @@ export function ProdutoInfo({
   reviewCount,
   brand,
   estoqueDisponivel,
+  voltagem,
   onAlugar,
   onAddCarrinho,
   onSelecaoChange,
 }: ProdutoInfoProps) {
 
-  const [tensaoSelecionada, setTensaoSelecionada] = useState<string | null>(null);
+  // Inicializa com a voltagem real desta ferramenta (mesmo padrão de inicialização já usado para quantidade/periodoLocacao neste componente, sem reset via efeito).
+  const [tensaoSelecionada, setTensaoSelecionada] = useState<string | null>(voltagem ?? null);
   const [periodoLocacao, setPeriodoLocacao] = useState('Selecione');
   const [quantidade, setQuantidade] = useState(1);
 
@@ -80,21 +82,20 @@ export function ProdutoInfo({
         <span className={styles.precoDia}>/dia</span>
       </div>
 
-      {/* Tensão */}
-      <div className={styles.opcaoGrupo}>
-        <p className={styles.opcaoLabel}>Tensão</p>
-        <div className={styles.botoesOpcao}>
-          {TENSAO_OPTIONS.map(t => (
+      {/* Tensão — exibe somente a fonte de alimentação real desta ferramenta (produtos.mock.ts), nunca uma lista fixa: cada ferramenta tem um único valor de voltagem. */}
+      {voltagem && (
+        <div className={styles.opcaoGrupo}>
+          <p className={styles.opcaoLabel}>Tensão</p>
+          <div className={styles.botoesOpcao}>
             <button
-              key={t}
-              className={`${styles.btnOpcao} ${tensaoSelecionada === t ? styles.btnOpcaoAtivo : ''}`}
-              onClick={() => setTensaoSelecionada(t)}
+              className={`${styles.btnOpcao} ${tensaoSelecionada === voltagem ? styles.btnOpcaoAtivo : ''}`}
+              onClick={() => setTensaoSelecionada(voltagem)}
             >
-              {t}
+              {voltagem}
             </button>
-          ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className={styles.seletoresRow}>
 

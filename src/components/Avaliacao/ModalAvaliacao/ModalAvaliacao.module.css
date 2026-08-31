@@ -123,6 +123,7 @@
     align-items: center;
     gap: 6px;
     min-width: 0;
+    justify-content: flex-end;
 }
 
 .subRatingLabel {
@@ -132,6 +133,14 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     text-align: center;
+    min-height: 2.8em; 
+    display: flex;
+    align-items: flex-end; 
+    justify-content: center;
+    flex-grow: 1;
+    
+    /* Força a largura da caixa ser igual à maior palavra, causando a quebra perfeita em 2 linhas */
+    width: min-content;
 }
 
 .subRatingIcone {
@@ -278,6 +287,31 @@
     animation: shake 0.4s ease;
 }
 
+
+@media (min-width: 1024px) {
+    .modal {
+        max-width: 680px;
+    }
+
+    .subRatingLabel {
+        width: auto;
+        white-space: nowrap; /* Impede a quebra do texto */
+    }
+}
+
+/* Quebra o layout das avaliações para 2x2 em telas menores */
+@media (max-width: 520px) {
+    .subRatings {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px 8px; 
+    }
+
+    .subRating {
+        width: 100%; 
+    }
+}
+
 /* Breakpoints — mesmos limites do CSS original */
 @media (max-width: 425px) {
     .produto {
@@ -329,11 +363,5 @@
 
     .subRatingLabel {
         font-size: 0.52rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .modal {
-        max-width: 680px;
     }
 }

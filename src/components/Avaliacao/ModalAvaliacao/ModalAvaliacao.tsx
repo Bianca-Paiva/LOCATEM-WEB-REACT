@@ -1,4 +1,4 @@
-import { ImageOff, Truck, ChevronLeft, ChevronDown } from 'lucide-react';
+import { ImageOff, Truck, ChevronLeft, ChevronDown, MonitorSmartphone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type {
   ChaveSubAvaliacao,
@@ -23,8 +23,7 @@ interface ModalAvaliacaoProps {
 }
 
 /**
- * Modal completo de avaliação: produto + 3 sub-notas obrigatórias
- * o useState local do painel de observações (obsExpandida abaixo).
+ * Modal completo de avaliação: produto + sub-notas obrigatórias (a quantidade e os aspectos variam por perspectiva — locatário avalia 4, locador avalia 3; ver CHAVES_SUB_AVALIACAO) + o useState local do painel de observações (obsExpandida abaixo).
  */
 export function ModalAvaliacao({
   produto,
@@ -67,9 +66,20 @@ export function ModalAvaliacao({
   // Dicionário ajustado apenas para as imagens dinâmicas
   const imagensPorSub: Record<ChaveSubAvaliacao, string | null> = {
     locador: produto.loja.logo,
-    entrega: null, // A entrega agora usa o componente <Truck /> direto no JSX
+    locatario: null, // sem foto de perfil do locatário no modelo atual — cai no ícone de fallback
+    entrega: null,
     produto: produto.imagem,
+    plataforma: null,
   };
+
+  // Mensagem de erro monta a lista de aspectos de acordo com os que essa avaliação realmente exige (varia por perspectiva — locatário avalia 4 aspectos, locador avalia 3).
+  const aspectosObrigatorios = (Object.keys(produto.subAvaliacoes) as ChaveSubAvaliacao[]).map(
+    (chave) => LABEL_SUB_AVALIACAO[chave].replace('Avaliação ', ''),
+  );
+  const mensagemErro =
+    aspectosObrigatorios.length > 1
+      ? `Avalie ${aspectosObrigatorios.slice(0, -1).join(', ')} e ${aspectosObrigatorios.at(-1)} antes de enviar.`
+      : `Avalie ${aspectosObrigatorios[0] ?? ''} antes de enviar.`;
 
   return (
     <div
@@ -103,9 +113,8 @@ export function ModalAvaliacao({
               {(Object.keys(produto.subAvaliacoes) as ChaveSubAvaliacao[]).map((chave) => (
                 <div
                   key={chave}
-                  className={`${styles.subRating} ${
-                    camposComErro.includes(chave) ? styles.subRatingErro : ''
-                  }`}
+                  className={`${styles.subRating} ${camposComErro.includes(chave) ? styles.subRatingErro : ''
+                    }`}
                 >
                   <span className={styles.subRatingLabel}>{LABEL_SUB_AVALIACAO[chave]}</span>
 
@@ -113,6 +122,8 @@ export function ModalAvaliacao({
                     {/* Lógica de renderização adaptada para o Lucide */}
                     {chave === 'entrega' ? (
                       <Truck size={20} aria-label="Ícone de entrega" />
+                    ) : chave === 'plataforma' ? (
+                      <MonitorSmartphone size={20} aria-label="Ícone da plataforma" />
                     ) : imagensPorSub[chave] ? (
                       <img
                         src={imagensPorSub[chave] as string}
@@ -120,12 +131,12 @@ export function ModalAvaliacao({
                         loading="eager"
                       />
                     ) : (
-                      <ImageOff size={20} aria-label="Loja sem logo cadastrada" />
+                      <ImageOff size={20} aria-label="Sem logo cadastrada" />
                     )}
                   </div>
 
                   <EstrelasAvaliacao
-                    notaAtual={produto.subAvaliacoes[chave]}
+                    notaAtual={produto.subAvaliacoes[chave] ?? 0}
                     variante="modal"
                     descricaoContexto={LABEL_SUB_AVALIACAO[chave]}
                     aoSelecionar={(valor) => aoSelecionarSubNota(chave, valor)}
@@ -135,7 +146,7 @@ export function ModalAvaliacao({
             </div>
 
             <p className={`${styles.erro} ${erroVisivel ? styles.erroVisivel : ''}`}>
-              Avalie o locador, a entrega e o produto antes de enviar.
+              {mensagemErro}
             </p>
           </div>
         </div>

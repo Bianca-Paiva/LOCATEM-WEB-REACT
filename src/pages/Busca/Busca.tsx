@@ -22,12 +22,9 @@ export default function Busca({ navigate }: BuscaProps) {
   // Termo pesquisado na barra de busca do Header (funciona em qualquer tela).
   const { termoBusca } = useBuscaStore();
 
-  // Catálogo de busca (ids 15-24) + ferramentas recém-publicadas pelo usuário.
+  // Catálogo de busca: todo o catálogo real (mesma fonte usada pela Home), não um recorte fixo de ids — um recorte fixo ficaria dessincronizado assim que o catálogo mudasse e faria a busca nunca encontrar nada.
   const produtosBuscaMock = useMemo(
-    () =>
-      produtos
-        .filter((p) => p.meuAnuncio || (p.id >= 15 && p.id <= 24))
-        .map(toProdutoBusca),
+    () => produtos.map(toProdutoBusca),
     [produtos],
   );
 
@@ -36,8 +33,7 @@ export default function Busca({ navigate }: BuscaProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 18;
 
-  // Sempre que o usuário pesquisar um novo termo (a partir de qualquer tela),
-  // volta pra primeira página pra não deixar a paginação "presa" fora do range.
+  // Sempre que o usuário pesquisar um novo termo (a partir de qualquer tela), volta pra primeira página pra não deixar a paginação "presa" fora do range.
   // Ajustado durante a renderização (em vez de um useEffect) pra evitar re-render em cascata.
   const [termoBuscaAnterior, setTermoBuscaAnterior] = useState(termoBusca);
   if (termoBusca !== termoBuscaAnterior) {
@@ -65,12 +61,9 @@ export default function Busca({ navigate }: BuscaProps) {
   ];
 
 
-
   const handleCardClick = (product: ProdutoBusca) => {
     // O card da Busca só carrega um recorte do produto (ProdutoBusca).
-    // Buscamos o produto completo no catálogo central para levar pra frente
-    // os dados reais da ferramenta (descrição, especificações, acessórios,
-    // avaliações etc.), assim como já é feito na Home.
+    // Buscamos o produto completo no catálogo central para levar pra frente os dados reais da ferramenta (descrição, especificações, acessórios, avaliações etc.), assim como já é feito na Home.
     const produtoCompleto = produtos.find((p) => p.id === product.id);
 
     if (!produtoCompleto) return;

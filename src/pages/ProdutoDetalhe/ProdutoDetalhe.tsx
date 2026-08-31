@@ -146,6 +146,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     imageVerificado={produto.imageVerificado}
                     imageNota={produto.imageNota}
                     estoqueDisponivel={produto.estoqueDisponivel}
+                    voltagem={produto.voltagem}
                     onAlugar={handleAlugar}                          // <-- abre o modal em modo "locar"
                     onLocar={handleAlugar}                        // <-- mantido por compatibilidade; use handleAlugar
                     onAddCarrinho={handleAdicionarCarrinho}          // <-- abre o modal em modo "carrinho"

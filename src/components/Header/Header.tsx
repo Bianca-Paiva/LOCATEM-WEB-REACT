@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-import type { ReactNode } from "react";
+import type { ReactNode, FormEvent } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
 import { X } from "lucide-react";
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
 import { useAuth } from '../../hooks/useAuth'
+import { useBuscaStore } from '../../hooks/useBuscaStore'
+import type { TipoUsuario } from '../../types/usuario.types'
 import Avatar from '../Avatar/Avatar'
 import styles from './Header.module.css'
 
@@ -20,6 +22,8 @@ interface NavItem {
     route?: Route;
     href?: string;
     renderIcon: (active: boolean) => ReactNode;
+    /** Restringe o item a este(s) tipo(s) de usuário. Ausente = visível para locador, locatário e visitante não autenticado. */
+    perfis?: TipoUsuario[];
 }
 
 export default function Header({ navigate, currentRoute }: HeaderProps) {
@@ -27,9 +31,17 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const { itens: itensCarrinho } = useCarrinhoStore()
     const quantidadeCarrinho = itensCarrinho.length
     const { usuario, isAuthenticated } = useAuth()
+    const { termoBusca, setTermoBusca } = useBuscaStore()
 
     // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o comportamento atual (leva para o Login).
     const rotaConta: Route = isAuthenticated ? 'perfil' : 'login'
+
+    // Submit da barra de busca (desktop e mobile): o termo já fica salvo no BuscaContext a
+    // cada digitação (onChange), então aqui só falta navegar pra página de Busca lê-lo.
+    const handleSubmitBusca = (e: FormEvent) => {
+        e.preventDefault()
+        navigate('busca')
+    }
 
     // lock scroll when menu open
     useEffect(() => {
@@ -59,6 +71,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         {
             label: "Carrinho",
             route: "carrinho", // aparece para: locatário
+            perfis: ['locatario'],
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:cart" : "mdi:cart-outline"}
@@ -70,6 +83,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         {
             label: "Minhas Locações",
             route: "minhasLocacoes", // aparece para: locatário
+            perfis: ['locatario'],
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:calendar-blank" : "mdi:calendar-blank-outline"}
@@ -81,6 +95,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         {
             label: "Minhas Ferramentas",
             route: "minhasFerramentas", // aparece para: locador
+            perfis: ['locador'],
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "material-symbols:package-2" : "material-symbols:package-2-outline"}
@@ -91,6 +106,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Histórico", // aparece para: locatário
+            perfis: ['locatario'],
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:clock" : "mdi:clock-outline"}
@@ -144,6 +160,14 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
     ];
 
+    // Monta a navegação de fato exibida a partir do tipo do usuário autenticado (mesma fonte
+    // usada em todo o app via useAuth) — desktop e mobile usam esta mesma lista filtrada,
+    // então nunca ficam com regras diferentes entre si. Sem sessão, mantém o comportamento
+    // atual (todos os itens visíveis).
+    const navItemsVisiveis = navItems.filter(
+        (item) => !item.perfis || !usuario || item.perfis.includes(usuario.tipo),
+    );
+
     return (
         <>
             {/* ── MOBILE HEADER ── */}
@@ -192,9 +216,24 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         </a>
                     </div>
                 </div>
-                <form className={styles.barraPesquisaMobile} onSubmit={e => e.preventDefault()}>
+                <form className={styles.barraPesquisaMobile} onSubmit={handleSubmitBusca}>
                     <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
-                    <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
+                    <input
+                        type="search"
+                        placeholder="Qual ferramenta você precisa hoje?"
+                        value={termoBusca}
+                        onChange={e => setTermoBusca(e.target.value)}
+                    />
+                    {termoBusca && (
+                        <button
+                            type="button"
+                            className={styles.limparBuscaBtn}
+                            aria-label="Limpar busca"
+                            onClick={() => setTermoBusca('')}
+                        >
+                            <X size={18} />
+                        </button>
+                    )}
                 </form>
             </header>
 
@@ -231,7 +270,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
 
                 <div className={styles.menuLateralConteudo}>
                     <nav className={styles.menuLateralNav}>
-                        {navItems.map(item => {
+                        {navItemsVisiveis.map(item => {
                             const active = item.route === currentRoute;
 
                             return (
@@ -265,11 +304,16 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         <img src={logoIcon} alt="Logo LOCATEM" />
                         LOCATEM
                     </a>
-                    <form className={styles.barraPesquisa} onSubmit={e => e.preventDefault()}>
+                    <form className={styles.barraPesquisa} onSubmit={handleSubmitBusca}>
                         <button type="submit" className={styles.lupaBtn}>
                             <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
                         </button>
-                        <input type="search" placeholder="Qual ferramenta você precisa hoje?" />
+                        <input
+                            type="search"
+                            placeholder="Qual ferramenta você precisa hoje?"
+                            value={termoBusca}
+                            onChange={e => setTermoBusca(e.target.value)}
+                        />
                     </form>
                     <a
                         href="#"
@@ -290,7 +334,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
 
                 {/* ── DESKTOP NAV MOVIDO PARA DENTRO DO HEADER ── */}
                 <nav className={styles.menuNavDesktop}>
-                    {navItems.map(item => {
+                    {navItemsVisiveis.map(item => {
                         const active = item.route === currentRoute;
 
                         return (

@@ -1,8 +1,5 @@
 /**
- * Helpers de data compartilhados pelo fluxo de locacao (modal de solicitação
- * e o calendário de seleção de período). Todas as datas circulam como string
- * "yyyy-mm-dd" (mesmo formato do input nativo type="date"), convertidas para
- * `Date` "pura" (sem fuso horário) apenas para cálculos.
+ * Helpers de data compartilhados pelo fluxo de locacao (modal de solicitação e o calendário de seleção de período). Todas as datas circulam como string "yyyy-mm-dd" (mesmo formato do input nativo type="date"), convertidas para `Date` "pura" (sem fuso horário) apenas para cálculos.
  */
 
 /** Converte "yyyy-mm-dd" em Date "pura", sem fuso horário. */
@@ -51,9 +48,7 @@ export function adicionarDias(dataIso: string, dias: number): string {
 }
 
 /**
- * Compara duas datas ISO ("yyyy-mm-dd"). Como o formato é sempre
- * zero-padded, a comparação de strings já reflete a ordem cronológica —
- * função existe só para deixar as chamadas mais legíveis.
+ * Compara duas datas ISO ("yyyy-mm-dd"). Como o formato é sempre zero-padded, a comparação de strings já reflete a ordem cronológica — função existe só para deixar as chamadas mais legíveis.
  */
 export function compararDatasIso(a: string, b: string): number {
   if (a < b) return -1;
