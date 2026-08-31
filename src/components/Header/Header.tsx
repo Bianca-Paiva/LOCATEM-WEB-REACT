@@ -3,7 +3,7 @@ import type { ReactNode, FormEvent } from "react";
 import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
-import { X } from "lucide-react";
+import { X, LogOut } from "lucide-react";
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
 import { useAuth } from '../../hooks/useAuth'
 import { useBuscaStore } from '../../hooks/useBuscaStore'
@@ -30,11 +30,18 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
     const { itens: itensCarrinho } = useCarrinhoStore()
     const quantidadeCarrinho = itensCarrinho.length
-    const { usuario, isAuthenticated } = useAuth()
+    const { usuario, isAuthenticated, logout } = useAuth()
     const { termoBusca, setTermoBusca } = useBuscaStore()
 
     // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o comportamento atual (leva para o Login).
     const rotaConta: Route = isAuthenticated ? 'perfil' : 'login'
+
+    // Mesmo comportamento do botão "Sair da Conta" já existente no Perfil: encerra a sessão e volta pra Home.
+    const handleLogout = () => {
+        logout()
+        setMenuOpen(false)
+        navigate('home')
+    }
 
     // Submit da barra de busca (desktop e mobile): o termo já fica salvo no BuscaContext a
     // cada digitação (onChange), então aqui só falta navegar pra página de Busca lê-lo.
@@ -290,6 +297,13 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             );
                         })}
                     </nav>
+
+                    {isAuthenticated && (
+                        <button type="button" className={styles.menuLateralBtnSair} onClick={handleLogout}>
+                            <LogOut size={16} />
+                            Sair da Conta
+                        </button>
+                    )}
                 </div>
             </aside>
 
@@ -314,6 +328,16 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             value={termoBusca}
                             onChange={e => setTermoBusca(e.target.value)}
                         />
+                        {termoBusca && (
+                            <button
+                                type="button"
+                                className={styles.limparBuscaBtn}
+                                aria-label="Limpar busca"
+                                onClick={() => setTermoBusca('')}
+                            >
+                                <X size={18} />
+                            </button>
+                        )}
                     </form>
                     <a
                         href="#"

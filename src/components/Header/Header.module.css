@@ -218,6 +218,8 @@
 .menuLateralConteudo {
     flex: 1;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .menuLateralNav {
@@ -254,6 +256,32 @@
     object-fit: contain;
     opacity: 0.75;
     flex-shrink: 0;
+}
+
+/* Mesmo padrão visual do botão "Sair da Conta" já usado em Perfil.module.css (.btnSair). */
+.menuLateralBtnSair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    align-self: flex-end;
+    margin: 12px 20px 20px;
+    align-self: flex-start; 
+    margin: auto 20px 20px; /* O 'auto' no primeiro valor empurra o botão para o final da tela */
+    height: 42px;
+    padding: 0 18px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid #f3c2c2;
+    background: #fff;
+    color: #d33;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.menuLateralBtnSair:hover {
+    background: #fff5f5;
 }
 
 /* ============================= */
