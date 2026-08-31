@@ -33,6 +33,12 @@
     line-height: 1;
 }
 
+@media (min-width: 1024px) {
+    .nota {
+        font-size: 46px;
+    }
+}
+
 .metricas {
     width: 100%;
     padding-top: 14px;

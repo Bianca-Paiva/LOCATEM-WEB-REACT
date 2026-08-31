@@ -1,6 +1,7 @@
 // src/hooks/formValidations.ts
 import { z } from 'zod'
 import { cpf, cnpj } from 'cpf-cnpj-validator'
+import { validatePhone } from './masks'
 
 export const cadastroSchema = z.object({
     tipo: z.enum(['locatario', 'locador']),
@@ -17,8 +18,10 @@ export const cadastroSchema = z.object({
         
     telefone: z.string()
         .min(1, 'O telefone é obrigatório')
-        .transform(val => val.replace(/\D/g, ''))
-        .refine(val => val.length === 10 || val.length === 11, 'Digite um telefone válido com DDD'),
+        // Validação delegada à libphonenumber-js (DDD, prefixo, quantidade de dígitos, etc.)
+        .refine(validatePhone, 'Digite um telefone válido com DDD')
+        // Mantém apenas os dígitos ao final, para envio à API
+        .transform(val => val.replace(/\D/g, '')),
         
     documento: z.string().min(1, 'O documento é obrigatório'),
     endereco: z.string().min(1, 'O endereço é obrigatório'),

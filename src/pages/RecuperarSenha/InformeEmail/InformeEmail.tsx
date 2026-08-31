@@ -32,6 +32,20 @@ export default function RecuperarSenha({ navigate }: RecuperarSenhaProps) {
         // Se passou na validação:
         setShowError(false);
 
+        // --- LÓGICA DE SIMULAÇÃO DE E-MAIL ---
+        // Gera um código aleatório de 5 dígitos (entre 10000 e 99999)
+        const tokenGerado = Math.floor(10000 + Math.random() * 90000).toString();
+
+        // SALVA O TOKEN NO NAVEGADOR (Adicione esta linha!)
+        localStorage.setItem("codigo_recuperacao", tokenGerado);        
+        
+        // Exibe no terminal/console do navegador
+        console.log("=====================================");
+        console.log("E-MAIL ENVIADO COM SUCESSO!");
+        console.log(`Destinatário: ${email}`);
+        console.log(`Código de verificação: ${tokenGerado}`);
+        console.log("=====================================");
+
         // Redireciona o usuário para a tela do token
         navigate("informeToken");
     };
@@ -48,7 +62,7 @@ export default function RecuperarSenha({ navigate }: RecuperarSenhaProps) {
                     subtitle="Digite o e-mail associado à sua conta. Enviaremos um token para recuperação da senha."
                 />
 
-                <div className={styles.btnInput}>
+                <div className={styles.Input}>
                     <FormInput
                         id="email"
                         label="E-mail"
@@ -66,11 +80,13 @@ export default function RecuperarSenha({ navigate }: RecuperarSenhaProps) {
                         } // Mostra o texto do erro
                     />
 
-                    <BtnPrincipal
+                    <div className={styles.btnEnviar}>
+                        <BtnPrincipal
                         text="Enviar e-mail"
                         onClick={handleSendEmail}
                         type="button"
                     />
+                    </div>
                 </div>
 
                 {/* CONTAINER DO RODAPÉ */}

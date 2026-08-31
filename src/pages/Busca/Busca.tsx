@@ -1,3 +1,5 @@
+import { SlidersHorizontal } from 'lucide-react';
+
 import Header from '../../components/Header/Header';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { useProdutoStore } from '../../hooks/useProdutoStore';
@@ -157,6 +159,7 @@ export default function Busca({ navigate }: BuscaProps) {
                 className={styles.mobileFilterTriggerBtn}
                 onClick={() => setIsFilterMobileOpen(true)}
               >
+                <SlidersHorizontal size={18} /> 
                 <span>Filtrar</span>
               </button>
             </div>

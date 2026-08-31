@@ -28,6 +28,15 @@
     padding: 0;
 }
 
+.errorMessage {
+    color: #e53935;
+    font-size: 14px;
+    margin-top: -25px; 
+    margin-bottom: 30px;
+    text-align: center;
+    display: block;
+}
+
 @media (max-width: 800px) {
     .reenviar {
         margin-left: auto;

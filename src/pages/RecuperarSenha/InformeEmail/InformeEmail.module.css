@@ -6,11 +6,15 @@
   padding: 0 40px 40px;
 }
 
-.btnInput {
+.Input {
   display: flex;
   flex-direction: column;
   width: 100%; 
   max-width: 1000px; 
+}
+
+.btnEnviar {
+  margin-top: 20px;
 }
 
 /* Container que envolve toda a área de links do rodapé */
@@ -77,7 +81,7 @@
     padding: 0 80px 80px; 
   }
 
-  .btnInput {
+  .Input {
     max-width: 500px; 
   }
 

@@ -134,6 +134,9 @@ export function ResumoPedido({
               <button
                 className={styles.linkTexto}
                 type="button"
+
+                // API dos Correios para buscar um cep
+                onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
               >
                 Não sei o meu CEP
               </button>

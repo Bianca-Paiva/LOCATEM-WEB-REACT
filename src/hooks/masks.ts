@@ -1,3 +1,11 @@
+import { AsYouType, isValidPhoneNumber, parsePhoneNumberFromString } from 'libphonenumber-js'
+
+/**
+ * País padrão assumido para números de telefone.
+ * Usado sempre que o formulário não possuir um seletor de DDI (código do país).
+ */
+const PAIS_PADRAO = 'BR'
+
 /**
  * Aplica a máscara de CPF (999.999.999-99) em tempo de digitação.
  * value String bruta contendo o texto digitado pelo usuário.
@@ -30,17 +38,28 @@ export function maskCNPJ(value: string): string {
 }
 
 /**
- * Aplica a máscara de Telefone fixo ou celular: (99) 99999-9999.
+ * Aplica a máscara de Telefone (fixo ou celular) em tempo de digitação,
+ * usando o formatador progressivo (AsYouType) da libphonenumber-js.
+ * País assumido: PAIS_PADRAO ('BR'), já que não há seletor de DDI no formulário.
  * value String bruta contendo o texto digitado pelo usuário.
  */
 export function maskPhone(value: string): string {
     // 1. Remove tudo que não for número e limita a 11 dígitos (DDD + 9 dígitos)
     const digits = value.replace(/\D/g, '').substring(0, 11)
-    
-    // 2. Formata com parênteses e hífen dinamicamente
-    return digits
-        .replace(/^(\d{2})(\d)/g, '($1) $2') // Coloca o DDD entre parênteses: (11) 9
-        .replace(/(\d{5})(\d)/, '$1-$2')     // Coloca o hífen após o 5º dígito do número (para celular): (11) 99999-9999
+
+    // 2. Delega a formatação progressiva (parênteses, espaço e hífen) à lib
+    return new AsYouType(PAIS_PADRAO).input(digits)
+}
+
+/**
+ * Formata um telefone já completo para o padrão nacional de exibição,
+ * ex.: "11987654321" -> "(11) 98765-4321".
+ * Usado tipicamente no onBlur do campo, para "fechar" a formatação.
+ * Se o valor não for um telefone válido, retorna o valor original sem alterações.
+ */
+export function formatPhone(value: string): string {
+    const numero = parsePhoneNumberFromString(value, PAIS_PADRAO)
+    return numero?.isValid() ? numero.formatNational() : value
 }
 
 /**
@@ -77,15 +96,14 @@ export function validateFullName(value: string): boolean {
 }
 
 /**
- * Valida o tamanho numérico de um telefone.
- * Critério: Deve conter exatamente 10 dígitos (fixo com DDD) ou 11 dígitos (celular com DDD).
+ * Valida se um telefone é válido, delegando a checagem (código de área,
+ * quantidade de dígitos, prefixos válidos, etc.) para a libphonenumber-js.
+ * País assumido: PAIS_PADRAO ('BR'), já que não há seletor de DDI no formulário.
+ * value O telefone com ou sem máscara.
  */
 export function validatePhone(value: string): boolean {
-    // Remove qualquer máscara (parênteses, hífens, espaços) sobrando só os números
-    const digits = value.replace(/\D/g, '')
-    
-    // Retorna true se o tamanho for válido para o padrão brasileiro
-    return digits.length === 10 || digits.length === 11
+    if (!value) return false
+    return isValidPhoneNumber(value, PAIS_PADRAO)
 }
 
 /**

@@ -77,3 +77,64 @@
 .btnFoto:hover {
     background: var(--color-primary-light);
 }
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.endereco {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+    width: 100%;
+}
+
+.endereco p {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #0a0a0a; 
+}
+
+/* --- LINHA 1: CEP E BOTÃO --- */
+.linhaCep {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.btnNaoSeiCep {
+    background: transparent;
+    border: none;
+    color: #007bff; 
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 22px; 
+    padding: 0;
+}
+
+.btnNaoSeiCep:hover {
+    color: #0056b3;
+}
+
+/* --- LINHA 2: RUA E NÚMERO --- */
+.linhaRuaNumero {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+}
+
+.inputRua {
+    flex: 3; /* Faz o input da Rua ocupar a maior parte do espaço (75%) */
+}
+
+.inputNumero {
+    flex: 1; /* Faz o input do Número ocupar um espaço menor (25%) */
+}
