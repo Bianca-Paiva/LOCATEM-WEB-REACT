@@ -111,6 +111,26 @@
     font-family: inherit;
 }
 
+/* Remove o "x" nativo do input type="search" (Chrome/Safari/Edge) — ele é substituído pelo botão .limparBuscaBtn com o ícone X do lucide-react. */
+.barraPesquisaMobile input::-webkit-search-cancel-button,
+.barraPesquisaMobile input::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+}
+
+.limparBuscaBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
 /* ============================= */
 /* OVERLAY */
 /* ============================= */
@@ -198,6 +218,8 @@
 .menuLateralConteudo {
     flex: 1;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .menuLateralNav {
@@ -234,6 +256,32 @@
     object-fit: contain;
     opacity: 0.75;
     flex-shrink: 0;
+}
+
+/* Mesmo padrão visual do botão "Sair da Conta" já usado em Perfil.module.css (.btnSair). */
+.menuLateralBtnSair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    align-self: flex-end;
+    margin: 12px 20px 20px;
+    align-self: flex-start; 
+    margin: auto 20px 20px; /* O 'auto' no primeiro valor empurra o botão para o final da tela */
+    height: 42px;
+    padding: 0 18px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid #f3c2c2;
+    background: #fff;
+    color: #d33;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.menuLateralBtnSair:hover {
+    background: #fff5f5;
 }
 
 /* ============================= */
@@ -323,7 +371,6 @@
         font-size: clamp(20px, 1.5vw, 26px);
         font-weight: 800;
         justify-self: start;
-        /* Prende a Logo na extrema esquerda */
     }
 
     .logo img {
@@ -333,7 +380,6 @@
     /* CLASSE UNIFICADA (Sem repetições) */
     .barraPesquisa {
         width: 100%;
-        /* Força a barra a preencher a coluna do meio */
         height: 45px;
         display: flex;
         align-items: center;
@@ -344,7 +390,6 @@
         box-shadow: var(--shadow-search);
         transition: box-shadow var(--transition-fast);
         justify-self: center;
-        /* Centraliza a barra perfeitamente no Grid */
     }
 
     .lupaBtn {
@@ -365,6 +410,13 @@
         font-size: clamp(14px, 1vw, 16px);
         color: var(--color-text-dark);
         font-family: inherit;
+    }
+
+    .barraPesquisa input::-webkit-search-cancel-button,
+    .barraPesquisa input::-webkit-search-decoration {
+        -webkit-appearance: none;
+        appearance: none;
+        display: none;
     }
 
     .barraPesquisa input::placeholder {
@@ -388,7 +440,7 @@
     /* Desktop Nav */
     .menuNavDesktop {
         display: flex;
-        flex-wrap: nowrap; /* Evita que os itens quebrem para a linha de baixo */
+        flex-wrap: nowrap;
         justify-content: center;
         align-items: center;
         gap: clamp(15px, 3vw, 45px);

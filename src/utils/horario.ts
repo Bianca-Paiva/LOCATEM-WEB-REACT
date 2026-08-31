@@ -2,7 +2,7 @@
  * Converte um horário de início (ex: "09:00") no intervalo de 3 horas usado
  * como janela de entrega/coleta da ferramenta (ex: "09:00 às 12:00").
  *
- * Usado tanto no resumo da solicitação de reserva quanto nos avisos de status
+ * Usado tanto no resumo da solicitação de locação quanto nos avisos de status
  * (em transporte / aguardando devolução), garantindo que o mesmo horário
  * escolhido gere sempre a mesma janela de 3h em qualquer tela.
  */

@@ -1,3 +1,5 @@
+import type { AvaliacaoProduto } from '../pages/ProdutoDetalhe/ProdutoDetalhe.types';
+
 /**
  * Tipo mestre de Produto (ferramenta).
  * Reúne TODOS os campos que qualquer página do app pode precisar exibir.
@@ -9,7 +11,7 @@
 export interface Produto {
     id: number;
     title: string;
-    brand: string;
+    marca: string;
     price: string;
     images: string[];
     imageVerificado: string;
@@ -29,4 +31,7 @@ export interface Produto {
     caucao?: string; /** Valor de caução (opcional), devolvido após a locação */
     diasIndisponiveis?: string[]; /** Datas ("yyyy-mm-dd") em que a ferramenta não está disponível */
     tipoAprovacao?: 'manual' | 'automatica'; /** Forma como as solicitações de locação são aprovadas */
+    voltagem?: string; /** Voltagem/fonte de alimentação, ex: "220V", "127V", "Bivolt", "À bateria", "Manual". Reflete as opções do formulário de cadastro. */
+    avaliacoes?: AvaliacaoProduto[]; /** Avaliações específicas desta ferramenta, exibidas na página de detalhe */
+    distribuicaoAvaliacoes?: number[]; /** Distribuição percentual das notas [5,4,3,2,1] estrelas, deve somar ~100 */
 }

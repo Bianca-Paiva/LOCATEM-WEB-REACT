@@ -1,5 +1,5 @@
 /* =========================================
-   CONTAINER PRINCIPAL
+    CONTAINER PRINCIPAL
 ========================================= */
 
 .stepper {
@@ -12,7 +12,7 @@
 }
 
 /* =========================================
-   BLOCO DE CADA ETAPA
+    BLOCO DE CADA ETAPA
 ========================================= */
 
 .stepContainer {
@@ -33,7 +33,7 @@
 }
 
 /* =========================================
-   TEXTO E IMAGEM DE CHECK
+    TEXTO E ÍCONE DE CHECK
 ========================================= */
 
 .labelContainer {
@@ -53,14 +53,12 @@
     font-weight: 500;
 }
 
-.checkImage {
-    width: 16px;
-    height: 16px;
-    object-fit: contain;
+.checkIcon {
+    color: #22c55e; /* Verde padrão do ícone */
 }
 
 /* =========================================
-   CÍRCULO / QUADRADO DA ETAPA
+    CÍRCULO / QUADRADO DA ETAPA
 ========================================= */
 
 .step {
@@ -92,7 +90,7 @@
 
 
 /* =========================================
-   LINHA ENTRE ETAPAS
+    LINHA ENTRE ETAPAS
 ========================================= */
 
 .line {

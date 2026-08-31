@@ -28,7 +28,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #e5e7eb;
+  background: #FFF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,7 @@
 .avatarImg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .avatarInitials {
@@ -53,11 +53,18 @@
   min-width: 0;
 }
 
+.nomeWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
 .vendedorNome {
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   color: #0a0a0a;
-  margin: 0 0 4px;
+  margin: 0;
 }
 
 .ratingRow {
@@ -98,9 +105,9 @@
 }
 
 .verificadoIcon {
-  width: 20px;
-  height: 20px;
-  margin-bottom: 10px;
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 
 .btnVerPerfil {

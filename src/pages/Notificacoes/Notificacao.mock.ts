@@ -1,20 +1,20 @@
 import type { NotificationData } from './Notificacoes.types';
 
 // Mock de notificações. "details" contém dados fictícios até integração com API real.
-// `statusReserva` e `reservaId` conectam a notificação a uma reserva real de
-// `mockReservas` (MinhasReservas.mock.ts), garantindo que ícone/cor sigam o mesmo
-// padrão de `STATUS_CONFIG` e que os botões do modal levem à reserva correta.
+// `statusLocacao` e `locacaoId` conectam a notificação a uma locacao real de
+// `mockLocacoes` (MinhasLocacoes.mock.ts), garantindo que ícone/cor sigam o mesmo
+// padrão de `STATUS_CONFIG` e que os botões do modal levem à locacao correta.
 export const mockNotifications: NotificationData[] = [
   {
     id: '1',
     type: 'success',
-    category: 'reserva-confirmada',
-    title: 'Reserva Confirmada',
-    description: 'Sua reserva da Pistola de Pintura The Black Tools foi confirmada.',
+    category: 'locacao-confirmada',
+    title: 'Locação Confirmada',
+    description: 'Sua locação da Pistola de Pintura The Black Tools foi confirmada.',
     timestamp: '04/07/2026 às 10h15',
     date: '2026-07-04T10:15:00',
-    statusReserva: 'preparandoEntrega',
-    reservaId: '3',
+    statusLocacao: 'preparandoEntrega',
+    locacaoId: '3',
     details: {
       equipamento: 'Pistola de Pintura The Black Tools',
       status: 'Confirmada',
@@ -33,8 +33,8 @@ export const mockNotifications: NotificationData[] = [
     timestamp: '03/07/2026 às 17h00',
     date: '2026-07-03T17:00:00',
     showRenovar: true,
-    statusReserva: 'aguardandoDevolucao',
-    reservaId: '6',
+    statusLocacao: 'aguardandoDevolucao',
+    locacaoId: '6',
     details: {
       equipamento: 'Aparador De Grama Bipartido Tramontina',
       status: 'Pendente',
@@ -50,8 +50,8 @@ export const mockNotifications: NotificationData[] = [
     timestamp: '',
     date: '2026-07-04T13:00:00',
     extraInfo: 'Tempo estimado de chegada: Hoje às 15:00',
-    statusReserva: 'emTransporte',
-    reservaId: '4',
+    statusLocacao: 'emTransporte',
+    locacaoId: '4',
     details: {
       equipamento: 'Serra Circular Profissional DESOON 24 Dentes',
       statusEntrega: 'Saiu para entrega',
@@ -66,8 +66,8 @@ export const mockNotifications: NotificationData[] = [
     description: 'A devolução da Parafusadeira Furadeira de Impacto Hanabi foi registrada.',
     timestamp: '01/07/2026 às 09h40',
     date: '2026-07-01T09:40:00',
-    statusReserva: 'finalizada',
-    reservaId: '10',
+    statusLocacao: 'finalizada',
+    locacaoId: '10',
     details: {
       equipamento: 'Parafusadeira Furadeira de Impacto Hanabi',
       status: 'Devolvida sem avarias',
@@ -83,8 +83,8 @@ export const mockNotifications: NotificationData[] = [
     timestamp: '20/06/2026 às 14h20',
     date: '2026-06-20T14:20:00',
     showRenovar: true,
-    statusReserva: 'aguardandoPagamento',
-    reservaId: '2',
+    statusLocacao: 'aguardandoPagamento',
+    locacaoId: '2',
     details: {
       equipamento: 'Parafusadeira e Furadeira WAP 12V',
       statusPagamento: 'Aguardando confirmação',
@@ -94,13 +94,13 @@ export const mockNotifications: NotificationData[] = [
   {
     id: '6',
     type: 'error',
-    category: 'reserva-cancelada',
-    title: 'Reserva Cancelada',
-    description: 'Sua reserva da Furadeira Parafusadeira Sem Fio A Bateria Tb-12e 12v 3/8 10mm Com Maleta E Acessórios The Black Tools foi cancelada.',
+    category: 'locacao-cancelada',
+    title: 'Locação Cancelada',
+    description: 'Sua locação da Furadeira Parafusadeira Sem Fio A Bateria Tb-12e 12v 3/8 10mm Com Maleta E Acessórios The Black Tools foi cancelada.',
     timestamp: '19/06/2026 às 11h05',
     date: '2026-06-19T11:05:00',
-    statusReserva: 'cancelada',
-    reservaId: '9',
+    statusLocacao: 'cancelada',
+    locacaoId: '9',
     details: {
       equipamento: 'Furadeira Parafusadeira Sem Fio A Bateria Tb-12e 12v 3/8 10mm Com Maleta E Acessórios The Black Tools',
       motivoCancelamento: 'Equipamento indisponível na data solicitada',
@@ -117,7 +117,7 @@ export const mockNotifications: NotificationData[] = [
     timestamp: '18/06/2026 às 09h00',
     date: '2026-06-18T09:00:00',
     showRenovar: true,
-    reservaId: '6',
+    locacaoId: '6',
     details: {
       equipamento: 'Betoneira 400L CSM',
       dataLimite: '17/06/2026 às 18h00',
@@ -133,8 +133,8 @@ export const mockNotifications: NotificationData[] = [
     description: 'A Serra Circular Makita foi entregue com sucesso.',
     timestamp: '17/06/2026 às 15h20',
     date: '2026-06-17T15:20:00',
-    statusReserva: 'emAndamento',
-    reservaId: '5',
+    statusLocacao: 'emAndamento',
+    locacaoId: '5',
     details: {
       equipamento: 'Serra Circular Makita 5007NB',
       dataEntrega: '17/06/2026 às 15h20',
@@ -149,8 +149,8 @@ export const mockNotifications: NotificationData[] = [
     description: 'O pagamento da locação da Lixadeira Bosch foi aprovado.',
     timestamp: '16/06/2026 às 10h30',
     date: '2026-06-16T10:30:00',
-    statusReserva: 'preparandoEntrega',
-    reservaId: '3',
+    statusLocacao: 'preparandoEntrega',
+    locacaoId: '3',
     details: {
       valor: 'R$ 89,90',
       formaPagamento: 'Cartão de crédito •••• 4521',
@@ -162,11 +162,11 @@ export const mockNotifications: NotificationData[] = [
     type: 'error',
     category: 'pagamento-recusado',
     title: 'Pagamento Recusado',
-    description: 'Não conseguimos aprovar o pagamento da sua reserva.',
+    description: 'Não conseguimos aprovar o pagamento da sua locação.',
     timestamp: '15/06/2026 às 08h45',
     date: '2026-06-15T08:45:00',
-    statusReserva: 'aguardandoPagamento',
-    reservaId: '2',
+    statusLocacao: 'aguardandoPagamento',
+    locacaoId: '2',
     details: {
       valor: 'R$ 145,00',
       formaPagamento: 'Cartão de crédito •••• 1187',
@@ -196,8 +196,8 @@ export const mockNotifications: NotificationData[] = [
     description: 'Conte pra gente como foi alugar a Parafusadeira Dewalt.',
     timestamp: '13/06/2026 às 12h00',
     date: '2026-06-13T12:00:00',
-    statusReserva: 'finalizada',
-    reservaId: '10',
+    statusLocacao: 'finalizada',
+    locacaoId: '10',
     details: {
       equipamento: 'Parafusadeira Dewalt DCF680N',
       dataDevolucao: '01/07/2026 às 09h40',
@@ -214,7 +214,7 @@ export const mockNotifications: NotificationData[] = [
     date: '2026-06-12T17:10:00',
     details: {
       remetente: 'Suporte Locatem',
-      assunto: 'Sobre sua reserva',
+      assunto: 'Sobre sua locação',
       mensagem: 'Olá! Confirmamos que seu equipamento já está separado para devolução.',
     },
   },

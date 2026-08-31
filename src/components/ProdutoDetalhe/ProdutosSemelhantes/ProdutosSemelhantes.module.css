@@ -3,10 +3,10 @@
 }
 
 .titulo {
-  font-size: clamp(15px, 2vw, 18px);
+  font-size: 17px;
   font-weight: 700;
   color: #0a0a0a;
-  margin: 0 0 14px;
+  margin: 0 0 10px;
 }
 
 .carrosselContainer {

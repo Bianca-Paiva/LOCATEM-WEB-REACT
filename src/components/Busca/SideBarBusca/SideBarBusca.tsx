@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { Search, ChevronLeft } from 'lucide-react';
 
-import type { FilterState } from '../../../pages/Busca/Busca';
-
-import './SideBarBusca.module.css';
+import type { FilterState } from '../../../pages/Busca/Busca.types';
+import { OPCOES_FONTE_ALIMENTACAO } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
+import { useCatalogoStore } from '../../../hooks/useCatalogoStore';
+import { derivarCategorias, extrairNomeSubcategoria } from '../../../utils/categorias';
+import styles from './SideBarBusca.module.css';
 
 
 interface SideBarBuscaProps {
@@ -14,11 +17,23 @@ interface SideBarBuscaProps {
 
 export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaProps) {
 
+  const { produtos } = useCatalogoStore();
+
+  // Categorias/subcategorias derivadas do catálogo real — única fonte também usada
+  // pelo CategoryFilter da Home, para os filtros nunca divergirem dos dados reais.
+  const categoriasComSubcategorias = useMemo(() => derivarCategorias(produtos), [produtos]);
+
+  // Categoria de topo atualmente "aberta" no filtro (exibindo suas subcategorias).
+  // null = exibindo a lista de categorias principais.
+  const [categoriaExpandida, setCategoriaExpandida] = useState<string | null>(null);
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const [brandSearch, setBrandSearch] = useState<string>('');
 
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+
+  const [selectedVoltagens, setSelectedVoltagens] = useState<string[]>([]);
 
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
 
@@ -44,6 +59,13 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
     );
   };
 
+  const toggleVoltagem = (voltagem: string) => {
+
+    setSelectedVoltagens(prev =>
+      prev.includes(voltagem) ? prev.filter(v => v !== voltagem) : [...prev, voltagem]
+    );
+  };
+
   const togglePriceRange = (range: string) => {
 
     setSelectedPriceRanges(prev =>
@@ -64,6 +86,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
       categories: selectedCategories,
       brands: selectedBrands,
       brandSearch: brandSearch,
+      voltagens: selectedVoltagens,
       priceRanges: selectedPriceRanges,
       paymentMethods: selectedPayments,
       availability: selectedAvailability,
@@ -75,8 +98,10 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
   const handleClear = () => {
 
     setSelectedCategories([]);
+    setCategoriaExpandida(null);
     setBrandSearch('');
     setSelectedBrands([]);
+    setSelectedVoltagens([]);
     setSelectedPriceRanges([]);
     setSelectedPayments([]);
     setSelectedAvailability(null);
@@ -86,6 +111,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
       categories: [],
       brands: [],
       brandSearch: '',
+      voltagens: [],
       priceRanges: [],
       paymentMethods: [],
       availability: null,
@@ -99,75 +125,107 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
       {/* Fundo escurecido que fecha o menu ao ser clicado */}
       <div
-        className={`sidebar-overlay-backdrop ${isOpen ? 'visible-active' : ''}`}
+        className={`${styles.sidebarOverlayBackdrop} ${isOpen ? styles.visibleActive : ''}`}
         onClick={onClose}
       />
 
-      <aside className={`sidebar-container ${isOpen ? 'drawer-open' : ''}`}>
+      <aside className={`${styles.sidebarContainer} ${isOpen ? styles.drawerOpen : ''}`}>
 
-        <div className="sidebar-header">
+        <div className={styles.sidebarHeader}>
 
           <h2>Filtros</h2>
 
           {/* Botão de Fechar X exclusivo do mobile/tablet */}
-          <button className="sidebar-close-drawer-btn" onClick={onClose}>
+          <button className={styles.sidebarCloseDrawerBtn} onClick={onClose}>
             &times;
           </button>
 
         </div>
 
-        <hr className="sidebar-divider" />
+        <hr className={styles.sidebarDivider} />
 
         {/* Categoria */}
-        <div className="filter-section">
+        <div className={styles.filterSection}>
 
-          <h3 className="filter-title">Categoria</h3>
+          <h3 className={styles.filterTitle}>Categoria</h3>
 
-          <div className="pills-container">
-
-            {['Ferramentas Elétricas', 'Ferramentas Manuais', 'Equipamentos de Jardinagem', 'Máquinas Pesadas'].map((cat) => (
-
+          {categoriaExpandida ? (
+            <>
+              {/* Indica qual categoria está selecionada e permite voltar ao nível anterior,
+                  em vez de misturar categorias e subcategorias na mesma lista. */}
               <button
-                key={cat}
-                className={`filter-pill ${selectedCategories.includes(cat) ? 'active' : ''}`}
-                onClick={() => toggleCategory(cat)}
+                type="button"
+                className={styles.categoriaVoltarBtn}
+                onClick={() => setCategoriaExpandida(null)}
               >
-                {cat}
+                <ChevronLeft size={16} />
+                {categoriaExpandida}
               </button>
-            ))}
 
-          </div>
+              <div className={styles.pillsContainer}>
+                {(categoriasComSubcategorias.find((c) => c.categoria === categoriaExpandida)?.subcategorias ?? []).map((subcategoria) => (
+                  <button
+                    key={subcategoria}
+                    className={`${styles.filterPill} ${selectedCategories.includes(subcategoria) ? styles.active : ''}`}
+                    onClick={() => toggleCategory(subcategoria)}
+                  >
+                    {extrairNomeSubcategoria(subcategoria)}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className={styles.pillsContainer}>
+              {categoriasComSubcategorias.map(({ categoria, subcategorias }) => (
+                <button
+                  key={categoria}
+                  className={`${styles.filterPill} ${selectedCategories.includes(categoria) ? styles.active : ''}`}
+                  onClick={() => {
+                    // Categorias com subcategorias abrem o próximo nível em vez de
+                    // serem aplicadas diretamente como filtro.
+                    if (subcategorias.length > 0) {
+                      setCategoriaExpandida(categoria);
+                    } else {
+                      toggleCategory(categoria);
+                    }
+                  }}
+                >
+                  {categoria}
+                </button>
+              ))}
+            </div>
+          )}
 
         </div>
 
-        <hr className="sidebar-divider" />
+        <hr className={styles.sidebarDivider} />
 
         {/* Marca */}
-        <div className="filter-section">
+        <div className={styles.filterSection}>
 
-          <h3 className="filter-title">Marca</h3>
+          <h3 className={styles.filterTitle}>Marca</h3>
 
-          <div className="brand-search-wrapper">
+          <div className={styles.brandSearchWrapper}>
 
             <input
               type="text"
               placeholder="Marca"
               value={brandSearch}
               onChange={(e) => setBrandSearch(e.target.value)}
-              className="brand-search-input"
+              className={styles.brandSearchInput}
             />
 
-            <span className="search-icon">🔍</span>
+            <Search className={styles.searchIcon} size={14} strokeWidth={2} />
 
           </div>
 
-          <div className="pills-container">
+          <div className={styles.pillsContainer}>
 
-            {['MS Ferramentas', 'WZ Ferramentas', 'JB Ferramentas', 'João Ferramentas'].map((brand) => (
+            {['DeWalt', 'Bosch', 'Makita', 'Hanabi', 'WAP', 'Black+Decker', 'Tramontina', 'Vonder'].map((brand) => (
 
               <button
                 key={brand}
-                className={`filter-pill ${selectedBrands.includes(brand) ? 'active' : ''}`}
+                className={`${styles.filterPill} ${selectedBrands.includes(brand) ? styles.active : ''}`}
                 onClick={() => toggleBrand(brand)}
               >
                 {brand}
@@ -177,21 +235,44 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
         </div>
 
-        <hr className="sidebar-divider" />
+        <hr className={styles.sidebarDivider} />
+
+        {/* Voltagem */}
+        <div className={styles.filterSection}>
+
+          <h3 className={styles.filterTitle}>Voltagem</h3>
+
+          <div className={styles.pillsContainer}>
+
+            {OPCOES_FONTE_ALIMENTACAO.map((voltagem) => (
+
+              <button
+                key={voltagem}
+                className={`${styles.filterPill} ${selectedVoltagens.includes(voltagem) ? styles.active : ''}`}
+                onClick={() => toggleVoltagem(voltagem)}
+              >
+                {voltagem}
+              </button>
+            ))}
+          </div>
+
+        </div>
+
+        <hr className={styles.sidebarDivider} />
 
 
         {/* Faixa de Preço */}
-        <div className="filter-section">
+        <div className={styles.filterSection}>
 
-          <h3 className="filter-title">Faixa de Preço</h3>
+          <h3 className={styles.filterTitle}>Faixa de Preço</h3>
 
-          <div className="pills-container">
+          <div className={styles.pillsContainer}>
 
             {['R$0 - R$50', 'R$51 - R$100', 'R$101 - R$200', 'R$201+'].map((range) => (
 
               <button
                 key={range}
-                className={`filter-pill ${selectedPriceRanges.includes(range) ? 'active' : ''}`}
+                className={`${styles.filterPill} ${selectedPriceRanges.includes(range) ? styles.active : ''}`}
                 onClick={() => togglePriceRange(range)}
               >
                 {range}
@@ -202,21 +283,21 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
         </div>
 
-        <hr className="sidebar-divider" />
+        <hr className={styles.sidebarDivider} />
 
 
         {/* Formas de Pagamento */}
-        <div className="filter-section">
+        <div className={styles.filterSection}>
 
-          <h3 className="filter-title">Formas de Pagamento</h3>
+          <h3 className={styles.filterTitle}>Formas de Pagamento</h3>
 
-          <div className="pills-container">
+          <div className={styles.pillsContainer}>
 
             {['Cartão de Crédito', 'Cartão de Débito', 'Pix'].map((method) => (
 
               <button
                 key={method}
-                className={`filter-pill ${selectedPayments.includes(method) ? 'active' : ''}`}
+                className={`${styles.filterPill} ${selectedPayments.includes(method) ? styles.active : ''}`}
                 onClick={() => togglePayment(method)}
               >
                 {method}
@@ -226,21 +307,21 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
         </div>
 
-        <hr className="sidebar-divider" />
+        <hr className={styles.sidebarDivider} />
 
 
         {/* Disponibilidade */}
-        <div className="filter-section">
+        <div className={styles.filterSection}>
 
-          <h3 className="filter-title">Disponibilidade</h3>
+          <h3 className={styles.filterTitle}>Disponibilidade</h3>
 
-          <div className="pills-container">
+          <div className={styles.pillsContainer}>
 
             {['Disponível para Aluguel', 'Indisponível para Aluguel'].map((status) => (
 
               <button
                 key={status}
-                className={`filter-pill ${selectedAvailability === status ? 'active' : ''}`}
+                className={`${styles.filterPill} ${selectedAvailability === status ? styles.active : ''}`}
                 onClick={() => setSelectedAvailability(selectedAvailability === status ? null : status)}
               >
                 {status}
@@ -250,15 +331,15 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
         </div>
 
-        <hr className="sidebar-divider" />
+        <hr className={styles.sidebarDivider} />
 
 
         {/* Avaliação */}
-        <div className="filter-section">
+        <div className={styles.filterSection}>
 
-          <h3 className="filter-title">Avaliação</h3>
+          <h3 className={styles.filterTitle}>Avaliação</h3>
 
-          <div className="pills-container">
+          <div className={styles.pillsContainer}>
 
             {[
               { label: '4 estrelas ou mais', value: 4 },
@@ -269,7 +350,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
               <button
                 key={ratingItem.value}
-                className={`filter-pill ${selectedRating === ratingItem.value ? 'active' : ''}`}
+                className={`${styles.filterPill} ${selectedRating === ratingItem.value ? styles.active : ''}`}
                 onClick={() => setSelectedRating(selectedRating === ratingItem.value ? null : ratingItem.value)}
               >
                 {ratingItem.label}
@@ -279,13 +360,13 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
         </div>
 
-        <div className="sidebar-actions">
+        <div className={styles.sidebarActions}>
 
-          <button className="sidebar-btn-primary" onClick={handleApply}>
-            Filtrar
+          <button className={styles.sidebarBtnPrimary} onClick={handleApply}>
+            Pesquisar
           </button>
 
-          <button className="sidebar-btn-secondary" onClick={handleClear}>
+          <button className={styles.sidebarBtnSecondary} onClick={handleClear}>
             Limpar Filtros
           </button>
 
@@ -293,4 +374,4 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
       </aside>
     </>
   );
-} 
+}

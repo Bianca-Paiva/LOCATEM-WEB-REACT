@@ -1,9 +1,9 @@
 import styles from './ResumoSolicitacaoCard.module.css';
 
-import type { ReservaData } from '../../../pages/Reservas/MinhasReservas/MinhasReservas.types';
+import type { LocacaoData } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 
 interface ResumoSolicitacaoCardProps {
-  reserva: ReservaData;
+  locacao: LocacaoData;
 }
 
 // Converte "dd/mm/yyyy" em Date "pura", sem fuso horário
@@ -24,8 +24,8 @@ function calcularDiarias(dataInicio: string, dataFim: string): number {
   return Math.max(0, Math.round(diffMs / (1000 * 60 * 60 * 24)));
 }
 
-export default function ResumoSolicitacaoCard({ reserva }: ResumoSolicitacaoCardProps) {
-  const { produto, dataInicio, dataFim, valor } = reserva;
+export default function ResumoSolicitacaoCard({ locacao }: ResumoSolicitacaoCardProps) {
+  const { produto, dataInicio, dataFim, valor } = locacao;
   const diarias = calcularDiarias(dataInicio, dataFim);
 
   return (

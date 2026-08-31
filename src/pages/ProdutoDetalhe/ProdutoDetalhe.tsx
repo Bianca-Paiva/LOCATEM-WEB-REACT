@@ -1,30 +1,28 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Header from '../../components/Header/Header';
 import { ImagemCarrossel } from '../../components/ProdutoDetalhe/ImagemCarrossel/ImagemCarrossel';
 import { ProdutoInfo } from '../../components/ProdutoDetalhe/ProdutoInfo/ProdutoInfo';
 import { ProdutosSemelhantes } from '../../components/ProdutoDetalhe/ProdutosSemelhantes/ProdutosSemelhantes';
 import { Descricao } from '../../components/ProdutoDetalhe/Descricao/Descricao';
 import { EspecificacoesTecnicas } from '../../components/ProdutoDetalhe/EspecificacoesTecnicas/EspecificacoesTecnicas';
+import { Acessorios } from '../../components/ProdutoDetalhe/Acessorios/Acessorios';
 import { InfoVendedor } from '../../components/ProdutoDetalhe/InfoVendedor/InfoVendedor';
 import { AvaliacaoSection } from '../../components/ProdutoDetalhe/AvaliacaoSection/AvaliacaoSection';
 import { BannerLateral } from '../../components/ProdutoDetalhe/BannerLateral/BannerLateral';
-import SolicitarReservaModal from '../../components/SolicitarReserva/SolicitarReservaModal/SolicitarReservaModal';
+import SolicitarLocacaoModal from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal';
 import SuccessModal from '../../components/SuccessModal/SucessesModal';
 import { useProdutoStore } from '../../hooks/useProdutoStore';
-import { useReservaStore } from '../../hooks/Reservas/useReservaStore';
-import { useNotificationStore } from '../../hooks/Reservas/useNotificationStore';
+import { useCatalogoStore } from '../../hooks/useCatalogoStore';
+import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
+import { useNotificationStore } from '../../hooks/Locacoes/useNotificationStore';
 import { useCarrinhoStore } from '../../hooks/useCarrinhoStore';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
-import { montarReservaPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/montarReservaData';
+import { toProdutoSemelhante, toProdutoSelecionado } from '../../mocks/produtos.adapters';
+import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/montarLocacaoData';
 import type { ProdutoSelecionado } from '../../context/ProdutoContext';
 import type { Route } from '../../router/useRouter';
-import type { DadosReservaModal, ModoAberturaModal } from '../../components/SolicitarReserva/SolicitarReservaModal/SolicitarReservaModal.types';
-import {
-  FALLBACK_PRODUTO,
-  MOCK_SEMELHANTES,
-  MOCK_ESPECIFICACOES,
-  MOCK_AVALIACOES
-} from './ProdutoDetalhe.mock';
+import type { DadosLocacaoModal, ModoAberturaModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+import { FALLBACK_PRODUTO } from './ProdutoDetalhe.mock';
 import styles from './ProdutoDetalhe.module.css';
 
 interface ProdutoDetalheProps {
@@ -33,16 +31,27 @@ interface ProdutoDetalheProps {
 
 export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const { produtoSelecionado, setProdutoSelecionado } = useProdutoStore();
-  const { adicionarReserva } = useReservaStore();
+  const { produtos } = useCatalogoStore();
+  const { adicionarLocacao } = useLocacaoStore();
   const { adicionarNotificacao } = useNotificationStore();
   const { adicionarItem } = useCarrinhoStore();
 
   // Usa os dados do produto clicado; caso acesse direto via hash, usa fallback
   const produto: ProdutoSelecionado = produtoSelecionado ?? FALLBACK_PRODUTO;
 
-  // Ao clicar num card semelhante: salva no store e força re-render no topo
+  // Ferramentas semelhantes: calculadas dinamicamente a partir da categoria do produto atual (ex: furadeira → outras furadeiras/parafusadeiras), sempre sobre o catálogo completo — nunca uma lista fixa por produto.
+  const produtosSemelhantes = useMemo(
+    () =>
+      produtos
+        .filter((p) => p.categoria === produto.categoria && p.id !== produto.id)
+        .map(toProdutoSemelhante),
+    [produtos, produto.categoria, produto.id],
+  );
+
+  // Ao clicar num card semelhante: o card só carrega um recorte do produto (ProdutoSemelhante), então buscamos o produto completo no catálogo pra levar adiante os dados reais da ferramenta (descrição, especificações, acessórios, avaliações etc.), salvamos no store e forçamos re-render no topo.
   const handleSemelhante = (p: ProdutoSelecionado) => {
-    setProdutoSelecionado(p);
+    const produtoCompleto = produtos.find((item) => item.id === p.id);
+    setProdutoSelecionado(produtoCompleto ? toProdutoSelecionado(produtoCompleto) : p);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -50,18 +59,14 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const locador = getLocadorByNome(produto.locador);
 
   // ── Modal de Solicitação de Locação ──────────────────────────────────────
-  // Aberto tanto por "Locar" quanto por "Adicionar ao carrinho"; o `modo`
-  // controla o rótulo/ação do botão de confirmação dentro do modal.
+  // Aberto tanto por "Locar" quanto por "Adicionar ao carrinho"; o `modo` controla o rótulo/ação do botão de confirmação dentro do modal.
   const [modalAberto, setModalAberto] = useState(false);
   const [modoModal, setModoModal] = useState<ModoAberturaModal>('locar');
 
-  // Mensagem de sucesso exibida quando a locação exige aprovação manual do
-  // locador (fluxo: Locar → Modal → Modal de sucesso → Minhas Locações).
+  // Mensagem de sucesso exibida quando a locação exige aprovação manual do locador (fluxo: Locar → Modal → Modal de sucesso → Minhas Locações).
   const [successAberto, setSuccessAberto] = useState(false);
 
-  // Quantidade/diárias/tensão já escolhidos pelo usuário na própria página do
-  // produto (via ProdutoInfo), usados para pré-preencher o modal — ex:
-  // "3 unidades + 2 diárias" já entra pronto no modal.
+  // Quantidade/diárias/tensão já escolhidos pelo usuário na própria página do produto (via ProdutoInfo), usados para pré-preencher o modal — ex: "3 unidades + 2 diárias" já entra pronto no modal.
   const [selecaoProduto, setSelecaoProduto] = useState<{
     quantidade: number;
     diarias: number | null;
@@ -80,22 +85,19 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
 
   const handleFecharModal = () => setModalAberto(false);
 
-  const handleContinuar = (dados: DadosReservaModal) => {
+  const handleContinuar = (dados: DadosLocacaoModal) => {
     setProdutoSelecionado(produto);
     setModalAberto(false);
 
     if (produto.tipoAprovacao === 'manual') {
-      // Aprovação manual: cria a solicitação como "Aguardando aprovação",
-      // notifica o locatário do prazo de 24h e mostra o modal de sucesso —
-      // nada de pagamento nem confirmação automática aqui.
-      const novaReserva = adicionarReserva(montarReservaPendente(produto, dados));
+      // Aprovação manual: cria a solicitação como "Aguardando aprovação", notifica o locatário do prazo de 24h e mostra o modal de sucesso — nada de pagamento nem confirmação automática aqui.
+      const novaLocacao = adicionarLocacao(montarLocacaoPendente(produto, dados));
       adicionarNotificacao(
-        montarNotificacaoSolicitacaoEnviada(produto, novaReserva.id, novaReserva.periodo),
+        montarNotificacaoSolicitacaoEnviada(produto, novaLocacao.id, novaLocacao.periodo),
       );
       setSuccessAberto(true);
     } else {
-      // Aprovação automática: não cria solicitação pendente nem notificação
-      // de aprovação — segue direto para o pagamento.
+      // Aprovação automática: não cria solicitação pendente nem notificação de aprovação — segue direto para o pagamento.
       // TODO: integrar com a etapa de pagamento assim que existir no projeto.
       // navigate('pagamento');
     }
@@ -103,13 +105,11 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
 
   const handleFecharSuccess = () => {
     setSuccessAberto(false);
-    navigate('minhasReservas');
+    navigate('minhasLocacoes');
   };
 
-  const handleAdicionarAoCarrinhoConfirmado = (dados: DadosReservaModal) => {
-    // Apenas adiciona a ferramenta ao carrinho (datas, horários e
-    // quantidade) — não cria solicitação, notificação nem dispara
-    // fluxo de aprovação/pagamento algum.
+  const handleAdicionarAoCarrinhoConfirmado = (dados: DadosLocacaoModal) => {
+    // Apenas adiciona a ferramenta ao carrinho (datas, horários e quantidade) — não cria solicitação, notificação nem dispara fluxo de aprovação/pagamento algum.
     adicionarItem(produto, dados);
     setModalAberto(false);
   };
@@ -142,12 +142,13 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     price={produto.price}
                     rating={produto.rating}
                     reviewCount={produto.reviewCount}
-                    brand={produto.brand}
+                    brand={produto.locador}
                     imageVerificado={produto.imageVerificado}
                     imageNota={produto.imageNota}
                     estoqueDisponivel={produto.estoqueDisponivel}
+                    voltagem={produto.voltagem}
                     onAlugar={handleAlugar}                          // <-- abre o modal em modo "locar"
-                    onReservar={handleAlugar}                        // <-- mantido por compatibilidade; use handleAlugar
+                    onLocar={handleAlugar}                        // <-- mantido por compatibilidade; use handleAlugar
                     onAddCarrinho={handleAdicionarCarrinho}          // <-- abre o modal em modo "carrinho"
                     onSelecaoChange={setSelecaoProduto}              // <-- eleva quantidade/diárias/tensão para o modal
                   />
@@ -159,7 +160,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
             {/* ── PRODUTOS SEMELHANTES ── */}
             <section className={styles.produtoSectionPadded}>
               <ProdutosSemelhantes
-                produtos={MOCK_SEMELHANTES}
+                produtos={produtosSemelhantes}
                 onCardClick={(p) => handleSemelhante(p as unknown as ProdutoSelecionado)}
               />
             </section>
@@ -170,12 +171,14 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
               <div className={styles.produtoDescVendedorRow}>
                 <div className={styles.produtoDescCol}>
                   <Descricao
-                    texto="Ideal para uso doméstico e profissional leve. Perfeita para montagem de móveis, instalações e pequenos reparos. Compacta, potente e fácil de manusear — resolve o problema sem complicação."
+                    texto={produto.descricao ?? 'Descrição não informada pelo locador.'}
                   />
                 </div>
-                <div className={styles.produtoVendedorCol}>
+                {/* Oculto no Mobile/Tablet, Visível no Desktop */}
+                <div className={`${styles.produtoVendedorCol} ${styles.vendedorDesktop}`}>
                   <InfoVendedor
                     nome={locador.nome}
+                    logoUrl={locador.logoUrl}
                     rating={locador.rating}
                     reviewCount={locador.reviewCount}
                     locacoes={locador.locacoes}
@@ -185,13 +188,32 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                 </div>
               </div>
 
-              <EspecificacoesTecnicas especificacoes={MOCK_ESPECIFICACOES} />
+              {produto.especificacoes && produto.especificacoes.length > 0 && (
+                <EspecificacoesTecnicas especificacoes={produto.especificacoes} />
+              )}
+
+              {produto.acessorios && produto.acessorios.length > 0 && (
+                <Acessorios itens={produto.acessorios} />
+              )}
+
+              {/* Visível no Mobile/Tablet (depois de Acessórios), Oculto no Desktop */}
+              <div className={styles.vendedorMobile}>
+                <InfoVendedor
+                  nome={locador.nome}
+                  logoUrl={locador.logoUrl}
+                  rating={locador.rating}
+                  reviewCount={locador.reviewCount}
+                  locacoes={locador.locacoes}
+                  verificado={locador.verificado}
+                  imageNota={produto.imageNota}
+                />
+              </div>
 
               <AvaliacaoSection
                 mediaGeral={produto.rating}
                 totalAvaliacoes={produto.reviewCount}
-                distribuicao={[72, 18, 6, 2, 2]}
-                avaliacoes={MOCK_AVALIACOES}
+                distribuicao={produto.distribuicaoAvaliacoes ?? [0, 0, 0, 0, 0]}
+                avaliacoes={produto.avaliacoes ?? []}
                 imageNota={produto.imageNota}
               />
             </div>
@@ -206,7 +228,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
         </div>
       </main>
 
-      <SolicitarReservaModal
+      <SolicitarLocacaoModal
         aberto={modalAberto}
         produto={produto}
         modo={modoModal}

@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 
 import Header from '../../components/Header/Header';
 import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
-import EstadoVazio from '../../components/MinhasReservas/EstadoVazio/EstadoVazio';
+import EstadoVazio from '../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 
 import { useCatalogoStore } from '../../hooks/useCatalogoStore';
@@ -67,7 +67,7 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
               <ProductCard
                 key={produto.id}
                 title={produto.title}
-                brand={produto.brand}
+                brand={produto.locador}
                 price={produto.price}
                 images={produto.images}
                 imageVerificado={produto.imageVerificado}

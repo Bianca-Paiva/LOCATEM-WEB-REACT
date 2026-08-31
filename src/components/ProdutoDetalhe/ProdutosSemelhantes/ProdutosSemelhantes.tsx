@@ -5,7 +5,8 @@ import styles from './ProdutosSemelhantes.module.css';
 interface ProdutoSemelhante {
   id?: number;
   title: string;
-  brand: string;
+  marca: string;
+  locador: string;
   price: string;
   images: string[];
   imageVerificado: string;
@@ -45,7 +46,7 @@ export function ProdutosSemelhantes({ produtos, onCardClick }: ProdutosSemelhant
             <div key={i} className={styles.cardWrapper}>
               <ProductCard
                 title={p.title}
-                brand={p.brand}
+                brand={p.locador}
                 price={p.price}
                 images={p.images}
                 imageVerificado={p.imageVerificado}

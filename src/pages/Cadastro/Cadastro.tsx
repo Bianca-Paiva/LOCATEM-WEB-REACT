@@ -68,141 +68,148 @@ export default function Cadastro({ navigate }: CadastroProps) {
 
                     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} noValidate>
 
-                        {/* CAMPO NOME */}
-                        <Controller
-                            control={control} name="nome"
-                            render={({ field: { onChange, value } }) => (
-                                <FormInput
-                                    // Usando o objeto inteiro na key para forçar o React a reiniciar a animação do zero a cada clique
-                                    key={`nome-shake-${JSON.stringify(shakes.nome)}`}
-                                    id="nome"
-                                    label="Nome completo"
-                                    type="text"
-                                    placeholder="Digite seu nome completo"
-                                    value={value}
-                                    required
-                                    shake={shakes.nome.shake}
-                                    onBlur={() => trigger('nome')}
-                                    onChange={(e) => { onChange(e.target.value); clearShake('nome'); }}
-                                    // Fica vermelho fixo se houver erro ou se o shake estiver ativo
-                                    status={errors.nome || shakes.nome.active ? 'erro' : touchedFields.nome ? 'sucesso' : ''}
-                                    // Exibe a mensagem de erro direto do hook-form sem sumir textualmente
-                                    error={errors.nome?.message || ''}
+                        <div className={styles.inputGroup}>
+
+                            {/* CAMPO NOME */}
+                            <Controller
+                                control={control} name="nome"
+                                render={({ field: { onChange, value } }) => (
+                                    <FormInput
+                                        // Usando o objeto inteiro na key para forçar o React a reiniciar a animação do zero a cada clique
+                                        key={`nome-shake-${JSON.stringify(shakes.nome)}`}
+                                        id="nome"
+                                        label="Nome completo"
+                                        type="text"
+                                        placeholder="Digite seu nome completo"
+                                        value={value}
+                                        required
+                                        shake={shakes.nome.shake}
+                                        onBlur={() => trigger('nome')}
+                                        onChange={(e) => { onChange(e.target.value); clearShake('nome'); }}
+                                        // Fica vermelho fixo se houver erro ou se o shake estiver ativo
+                                        status={errors.nome || shakes.nome.active ? 'erro' : touchedFields.nome ? 'sucesso' : ''}
+                                        // Exibe a mensagem de erro direto do hook-form sem sumir textualmente
+                                        error={errors.nome?.message || ''}
+                                    />
+                                )}
+                            />
+
+                            {/* CAMPO EMAIL */}
+                            <Controller
+                                control={control}
+                                name="email"
+                                render={({ field: { onChange, value } }) => (
+                                    <FormInput
+                                        key={`email-shake-${JSON.stringify(shakes.email)}`}
+                                        id="email"
+                                        label="E-mail"
+                                        type="email"
+                                        placeholder="seu@email.com"
+                                        value={value}
+                                        required
+                                        shake={shakes.email.shake}
+                                        onChange={(e) => { onChange(e.target.value); clearShake('email'); }}
+                                        onBlur={() => trigger('email')}
+                                        status={errors.email || shakes.email.active ? 'erro' : touchedFields.email ? 'sucesso' : ''}
+                                        error={errors.email?.message || ''}
+                                    />
+                                )}
+                            />
+
+                            {/* CAMPO TELEFONE */}
+                            <Controller
+                                control={control} name="telefone"
+                                render={({ field: { onChange, value } }) => (
+                                    <FormInput
+                                        key={`tel-shake-${JSON.stringify(shakes.telefone)}`}
+                                        id="telefone"
+                                        label="Telefone"
+                                        type="tel"
+                                        inputMode="numeric"
+                                        placeholder="(11) 91234-5678"
+                                        value={value}
+                                        required
+                                        shake={shakes.telefone.shake}
+                                        onBlur={() => trigger('telefone')}
+                                        onChange={(e) => { onChange(maskPhone(e.target.value)); clearShake('telefone'); }}
+                                        status={errors.telefone || shakes.telefone.active ? 'erro' : touchedFields.telefone ? 'sucesso' : ''}
+                                        error={errors.telefone?.message || ''}
+                                    />
+                                )}
+                            />
+
+                            <div className={styles.senhaGroup}>
+                                {/* CAMPO SENHA */}
+                                <Controller
+                                    control={control} name="senha"
+                                    render={({ field: { onChange, value } }) => (
+                                        <PasswordInput
+                                            key={`senha-shake-${JSON.stringify(shakes.senha)}`}
+                                            id="senha" label="Senha" placeholder="Crie uma senha segura"
+                                            value={value} required shake={shakes.senha.shake}
+                                            onChange={(e) => { onChange(e.target.value); clearShake('senha'); }}
+                                            status={errors.senha || shakes.senha.active ? 'erro' : ''}
+                                            error={errors.senha?.message || ''}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
 
-                        {/* CAMPO EMAIL */}
-                        <Controller
-                            control={control}
-                            name="email"
-                            render={({ field: { onChange, value } }) => (
-                                <FormInput
-                                    key={`email-shake-${JSON.stringify(shakes.email)}`}
-                                    id="email"
-                                    label="E-mail"
-                                    type="email"
-                                    placeholder="seu@email.com"
-                                    value={value}
-                                    required
-                                    shake={shakes.email.shake}
-                                    onChange={(e) => { onChange(e.target.value); clearShake('email'); }}
-                                    onBlur={() => trigger('email')}
-                                    status={errors.email || shakes.email.active ? 'erro' : touchedFields.email ? 'sucesso' : ''}
-                                    error={errors.email?.message || ''}
+                                {senha.length > 0 && (
+                                    <>
+                                        <PasswordStrengthMeter strength={strengthResult.strength} visible={true} />
+                                        <PasswordValidationList title="Dicas de segurança" items={getPasswordValidations(senha)} />
+                                    </>
+                                )}
+
+                                {/* CAMPO CONFIRMAR SENHA */}
+                                <Controller
+                                    control={control} name="confirmarSenha"
+                                    render={({ field: { onChange, value } }) => (
+                                        <PasswordInput
+                                            key={`confirmar-shake-${JSON.stringify(shakes.confirmarSenha)}`}
+                                            id="confirmarSenha" label="Confirmar senha" placeholder="Digite a senha novamente"
+                                            value={value} required shake={shakes.confirmarSenha.shake}
+                                            onChange={(e) => { onChange(e.target.value); clearShake('confirmarSenha'); }}
+                                            status={errors.confirmarSenha || shakes.confirmarSenha.active ? 'erro' : getConfirmPasswordStatus(senha, confirmarSenha)}
+                                            error={errors.confirmarSenha?.message || ''}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
 
-                        {/* CAMPO TELEFONE */}
-                        <Controller
-                            control={control} name="telefone"
-                            render={({ field: { onChange, value } }) => (
-                                <FormInput
-                                    key={`tel-shake-${JSON.stringify(shakes.telefone)}`}
-                                    id="telefone"
-                                    label="Telefone"
-                                    type="tel"
-                                    inputMode="numeric"
-                                    placeholder="(11) 91234-5678"
-                                    value={value}
-                                    required
-                                    shake={shakes.telefone.shake}
-                                    onBlur={() => trigger('telefone')}
-                                    onChange={(e) => { onChange(maskPhone(e.target.value)); clearShake('telefone'); }}
-                                    status={errors.telefone || shakes.telefone.active ? 'erro' : touchedFields.telefone ? 'sucesso' : ''}
-                                    error={errors.telefone?.message || ''}
+
+                                {/* CAMPO DOCUMENTO */}
+                                <Controller
+                                    control={control} name="documento"
+                                    render={({ field: { onChange, value } }) => (
+                                        <FormInput
+                                            key={`doc-shake-${JSON.stringify(shakes.documento)}`}
+                                            id="documento" label={isCNPJ ? 'CNPJ' : 'CPF'} type="text" inputMode="numeric"
+                                            placeholder={isCNPJ ? '00.000.000/0000-00' : '000.000.000-00'}
+                                            value={value} required shake={shakes.documento.shake}
+                                            onBlur={() => trigger('documento')}
+                                            onChange={(e) => { onChange(isCNPJ ? maskCNPJ(e.target.value) : maskCPF(e.target.value)); clearShake('documento'); }}
+                                            status={errors.documento || shakes.documento.active ? 'erro' : touchedFields.documento ? 'sucesso' : ''}
+                                            error={errors.documento?.message || ''}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
+                            </div>
 
-                        {/* CAMPO SENHA */}
-                        <Controller
-                            control={control} name="senha"
-                            render={({ field: { onChange, value } }) => (
-                                <PasswordInput
-                                    key={`senha-shake-${JSON.stringify(shakes.senha)}`}
-                                    id="senha" label="Senha" placeholder="Crie uma senha segura"
-                                    value={value} required shake={shakes.senha.shake}
-                                    onChange={(e) => { onChange(e.target.value); clearShake('senha'); }}
-                                    status={errors.senha || shakes.senha.active ? 'erro' : ''}
-                                    error={errors.senha?.message || ''}
-                                />
-                            )}
-                        />
-
-                        <PasswordStrengthMeter strength={strengthResult.strength} visible={senha.length > 0} />
-
-                        {senha.length > 0 && (
-                            <PasswordValidationList title="Dicas de segurança" items={getPasswordValidations(senha)} />
-                        )}
-
-                        {/* CAMPO CONFIRMAR SENHA */}
-                        <Controller
-                            control={control} name="confirmarSenha"
-                            render={({ field: { onChange, value } }) => (
-                                <PasswordInput
-                                    key={`confirmar-shake-${JSON.stringify(shakes.confirmarSenha)}`}
-                                    id="confirmarSenha" label="Confirmar senha" placeholder="Digite a senha novamente"
-                                    value={value} required shake={shakes.confirmarSenha.shake}
-                                    onChange={(e) => { onChange(e.target.value); clearShake('confirmarSenha'); }}
-                                    status={errors.confirmarSenha || shakes.confirmarSenha.active ? 'erro' : getConfirmPasswordStatus(senha, confirmarSenha)}
-                                    error={errors.confirmarSenha?.message || ''}
-                                />
-                            )}
-                        />
-
-                        {/* CAMPO DOCUMENTO */}
-                        <Controller
-                            control={control} name="documento"
-                            render={({ field: { onChange, value } }) => (
-                                <FormInput
-                                    key={`doc-shake-${JSON.stringify(shakes.documento)}`}
-                                    id="documento" label={isCNPJ ? 'CNPJ' : 'CPF'} type="text" inputMode="numeric"
-                                    placeholder={isCNPJ ? '00.000.000/0000-00' : '000.000.000-00'}
-                                    value={value} required shake={shakes.documento.shake}
-                                    onBlur={() => trigger('documento')}
-                                    onChange={(e) => { onChange(isCNPJ ? maskCNPJ(e.target.value) : maskCPF(e.target.value)); clearShake('documento'); }}
-                                    status={errors.documento || shakes.documento.active ? 'erro' : touchedFields.documento ? 'sucesso' : ''}
-                                    error={errors.documento?.message || ''}
-                                />
-                            )}
-                        />
-
-                        {/* CAMPO ENDEREÇO */}
-                        <Controller
-                            control={control} name="endereco"
-                            render={({ field: { onChange, value } }) => (
-                                <FormInput
-                                    key={`endereco-shake-${JSON.stringify(shakes.endereco)}`}
-                                    id="endereco" label="Endereço" type="text" placeholder="Digite seu endereço completo"
-                                    value={value} required shake={shakes.endereco.shake}
-                                    onChange={(e) => { onChange(e.target.value); clearShake('endereco'); }}
-                                    status={errors.endereco || shakes.endereco.active ? 'erro' : ''}
-                                    error={errors.endereco?.message || ''}
-                                />
-                            )}
-                        />
+                            {/* CAMPO ENDEREÇO */}
+                            <Controller
+                                control={control} name="endereco"
+                                render={({ field: { onChange, value } }) => (
+                                    <FormInput
+                                        key={`endereco-shake-${JSON.stringify(shakes.endereco)}`}
+                                        id="endereco" label="Endereço" type="text" placeholder="Digite seu endereço completo"
+                                        value={value} required shake={shakes.endereco.shake}
+                                        onChange={(e) => { onChange(e.target.value); clearShake('endereco'); }}
+                                        status={errors.endereco || shakes.endereco.active ? 'erro' : ''}
+                                        error={errors.endereco?.message || ''}
+                                    />
+                                )}
+                            />
+                        </div>
 
                         <BtnPricipal text="Criar conta" type="submit" />
 

@@ -1,4 +1,4 @@
-import { ImageOff } from 'lucide-react';
+import { ImageOff, Truck, ChevronLeft, ChevronDown, MonitorSmartphone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import type {
   ChaveSubAvaliacao,
@@ -8,8 +8,6 @@ import { LABEL_SUB_AVALIACAO } from '../../../pages/Avaliacao/Avaliacao.types';
 import { EstrelasAvaliacao } from '../EstrelaAvaliacao/EstrelaAvaliacao';
 import { CarrosselAvaliacoesPendentes } from '../CarroselAvaliacoesPendentes/CarroselAvaliacoesPendentes';
 import styles from './ModalAvaliacao.module.css';
-
-import IconCaminhao from '../../../assets/IconCaminhao.png';
 
 interface ModalAvaliacaoProps {
   produto: ProdutoAvaliacao | null;
@@ -25,8 +23,7 @@ interface ModalAvaliacaoProps {
 }
 
 /**
- * Modal completo de avaliação: produto + 3 sub-notas obrigatórias
- * o useState local do painel de observações (obsExpandida abaixo).
+ * Modal completo de avaliação: produto + sub-notas obrigatórias (a quantidade e os aspectos variam por perspectiva — locatário avalia 4, locador avalia 3; ver CHAVES_SUB_AVALIACAO) + o useState local do painel de observações (obsExpandida abaixo).
  */
 export function ModalAvaliacao({
   produto,
@@ -66,11 +63,23 @@ export function ModalAvaliacao({
 
   if (!produto) return null;
 
-  const iconesPorSub: Record<ChaveSubAvaliacao, string | null> = {
+  // Dicionário ajustado apenas para as imagens dinâmicas
+  const imagensPorSub: Record<ChaveSubAvaliacao, string | null> = {
     locador: produto.loja.logo,
-    entrega: IconCaminhao,
+    locatario: null, // sem foto de perfil do locatário no modelo atual — cai no ícone de fallback
+    entrega: null,
     produto: produto.imagem,
+    plataforma: null,
   };
+
+  // Mensagem de erro monta a lista de aspectos de acordo com os que essa avaliação realmente exige (varia por perspectiva — locatário avalia 4 aspectos, locador avalia 3).
+  const aspectosObrigatorios = (Object.keys(produto.subAvaliacoes) as ChaveSubAvaliacao[]).map(
+    (chave) => LABEL_SUB_AVALIACAO[chave].replace('Avaliação ', ''),
+  );
+  const mensagemErro =
+    aspectosObrigatorios.length > 1
+      ? `Avalie ${aspectosObrigatorios.slice(0, -1).join(', ')} e ${aspectosObrigatorios.at(-1)} antes de enviar.`
+      : `Avalie ${aspectosObrigatorios[0] ?? ''} antes de enviar.`;
 
   return (
     <div
@@ -85,18 +94,7 @@ export function ModalAvaliacao({
       <div className={styles.modal}>
         <div className={styles.header}>
           <button className={styles.voltar} onClick={aoFechar} aria-label="Fechar modal">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+            <ChevronLeft size={16} strokeWidth={2.5} />
             Voltar
           </button>
         </div>
@@ -121,19 +119,24 @@ export function ModalAvaliacao({
                   <span className={styles.subRatingLabel}>{LABEL_SUB_AVALIACAO[chave]}</span>
 
                   <div className={styles.subRatingIcone}>
-                    {iconesPorSub[chave] ? (
+                    {/* Lógica de renderização adaptada para o Lucide */}
+                    {chave === 'entrega' ? (
+                      <Truck size={20} aria-label="Ícone de entrega" />
+                    ) : chave === 'plataforma' ? (
+                      <MonitorSmartphone size={20} aria-label="Ícone da plataforma" />
+                    ) : imagensPorSub[chave] ? (
                       <img
-                        src={iconesPorSub[chave] as string}
+                        src={imagensPorSub[chave] as string}
                         alt={chave}
                         loading="eager"
                       />
                     ) : (
-                      <ImageOff size={20} aria-label="Loja sem logo cadastrada" />
+                      <ImageOff size={20} aria-label="Sem logo cadastrada" />
                     )}
                   </div>
 
                   <EstrelasAvaliacao
-                    notaAtual={produto.subAvaliacoes[chave]}
+                    notaAtual={produto.subAvaliacoes[chave] ?? 0}
                     variante="modal"
                     descricaoContexto={LABEL_SUB_AVALIACAO[chave]}
                     aoSelecionar={(valor) => aoSelecionarSubNota(chave, valor)}
@@ -143,7 +146,7 @@ export function ModalAvaliacao({
             </div>
 
             <p className={`${styles.erro} ${erroVisivel ? styles.erroVisivel : ''}`}>
-              Avalie o locador, a entrega e o produto antes de enviar.
+              {mensagemErro}
             </p>
           </div>
         </div>
@@ -156,15 +159,7 @@ export function ModalAvaliacao({
           >
             Observações (opcional)
             <span className={`${styles.chevron} ${obsExpandida ? styles.chevronAberto : ''}`}>
-              <svg width="15" height="8" viewBox="0 0 15 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1.00009 1L7.16118 6.25L13.3223 1"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronDown size={16} strokeWidth={2} />
             </span>
           </button>
 

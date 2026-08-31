@@ -8,14 +8,14 @@ export type NotificationType =
   | 'message'
   | 'reminder';
 
-import type { StatusReserva } from '../Reservas/MinhasReservas/MinhasReservas.types';
+import type { StatusLocacao } from '../Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 
 export type FilterOption = 'Todas' | 'Hoje' | 'Ontem' | 'Esta semana' | 'Este mês';
 
 /** Identifica o "assunto" da notificação, usado para decidir o conteúdo do modal de detalhes */
 export type NotificationCategory =
-  | 'reserva-confirmada'
-  | 'reserva-cancelada'
+  | 'locacao-confirmada'
+  | 'locacao-cancelada'
   | 'devolucao-pendente'
   | 'devolucao-atrasada'
   | 'entrega-andamento'
@@ -45,7 +45,7 @@ export interface NotificationDetails {
   previsaoChegada?: string;
   dataDevolucao?: string;
   statusPagamento?: string;
-  // Reserva cancelada
+  // Locacao cancelada
   motivoCancelamento?: string;
   dataCancelamento?: string;
   valorReembolso?: string;
@@ -72,7 +72,7 @@ export interface NotificationDetails {
 
 export interface NotificationData {
   id: string;
-  type: NotificationType; // controla cor/ícone do card (fallback quando não há statusReserva)
+  type: NotificationType; // controla cor/ícone do card (fallback quando não há statusLocacao)
   category: NotificationCategory; // controla conteúdo do modal e o botão de ação exibido
   title: string;
   description: string;
@@ -83,13 +83,13 @@ export interface NotificationData {
   details: NotificationDetails; /** Dados exibidos no modal "Ver detalhes" */
 
   /**
-   * Status equivalente em 'MinhasReservas'. Quando presente, o card e o modal usam o
+   * Status equivalente em 'MinhasLocacoes'. Quando presente, o card e o modal usam o
    * mesmo ícone/cor de `STATUS_CONFIG` (o mesmo usado em EtiquetaStatus), em vez do
    * ícone genérico de `type`.
    */
-  statusReserva?: StatusReserva;
+  statusLocacao?: StatusLocacao;
 
-  /** Id da reserva (ReservaData) relacionada, usado para levar o usuário até
-   * 'Detalhes da Reserva' ou 'Avaliação' já com a reserva certa selecionada. */
-  reservaId?: string;
+  /** Id da locacao (LocacaoData) relacionada, usado para levar o usuário até
+   * 'Detalhes da Locacao' ou 'Avaliação' já com a locacao certa selecionada. */
+  locacaoId?: string;
 }

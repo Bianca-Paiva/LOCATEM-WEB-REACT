@@ -1,19 +1,19 @@
 import { createContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { ProdutoSelecionado } from './ProdutoContext';
-import type { DadosReservaModal } from '../components/SolicitarReserva/SolicitarReservaModal/SolicitarReservaModal.types';
+import type { DadosLocacaoModal } from '../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 
 export interface ItemCarrinho {
   id: string;
   produto: ProdutoSelecionado;
-  dados: DadosReservaModal;
+  dados: DadosLocacaoModal;
   /** Se o item participa da compra (subtotal/total). Ligado por padrão ao ser adicionado. */
   selecionado: boolean;
 }
 
 interface CarrinhoContextType {
   itens: ItemCarrinho[];
-  adicionarItem: (produto: ProdutoSelecionado, dados: DadosReservaModal) => void;
+  adicionarItem: (produto: ProdutoSelecionado, dados: DadosLocacaoModal) => void;
   removerItem: (id: string) => void;
   atualizarQuantidade: (id: string, quantidade: number) => void;
   atualizarDias: (id: string, dias: number) => void;
@@ -24,7 +24,7 @@ interface CarrinhoContextType {
 
 export const CarrinhoContext = createContext<CarrinhoContextType | null>(null);
 
-// Mesma conversão de preço usada em useSolicitarReservaModal.ts — o preço do
+// Mesma conversão de preço usada em useSolicitarLocacaoModal.ts — o preço do
 // produto vem como string ("599,98") vinda do cadastro.
 function precoDiariaDoProduto(produto: ProdutoSelecionado): number {
   const preco = Number(String(produto.price).replace(',', '.'));
@@ -41,7 +41,7 @@ function formatarMoeda(valor: number): string {
 function recalcularDados(
   item: ItemCarrinho,
   alteracoes: { quantidade?: number; diarias?: number },
-): DadosReservaModal {
+): DadosLocacaoModal {
   const precoDiaria = precoDiariaDoProduto(item.produto);
   const quantidade = alteracoes.quantidade ?? item.dados.quantidade;
   const diarias = alteracoes.diarias ?? item.dados.resumo.diarias;
@@ -70,7 +70,7 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
   // Só adiciona a ferramenta ao carrinho (com datas/horários/quantidade já
   // escolhidos no modal) — não cria solicitação, notificação nem dispara
   // fluxo de aprovação/pagamento algum, conforme o fluxo "Adicionar ao carrinho".
-  const adicionarItem = (produto: ProdutoSelecionado, dados: DadosReservaModal) => {
+  const adicionarItem = (produto: ProdutoSelecionado, dados: DadosLocacaoModal) => {
     const novoItem: ItemCarrinho = { id: `c-${Date.now()}`, produto, dados, selecionado: true };
     setItens((atuais) => [novoItem, ...atuais]);
   };

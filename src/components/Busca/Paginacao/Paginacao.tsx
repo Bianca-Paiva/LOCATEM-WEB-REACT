@@ -1,6 +1,6 @@
 // src/components/Pagination/Pagination.tsx
 import React from 'react';
-import './Paginacao.module.css';
+import styles from './Paginacao.module.css';
 
 // 1. Definimos a tipagem das propriedades que o componente vai receber
 interface PaginacaoProps {
@@ -11,11 +11,11 @@ interface PaginacaoProps {
 }
 
 // 2. Usamos React.FC (Functional Component) e passamos a interface
-const Paginacao: React.FC<PaginacaoProps> = ({ 
-  totalItems, 
-  itemsPerPage, 
-  currentPage, 
-  onPageChange 
+const Paginacao: React.FC<PaginacaoProps> = ({
+  totalItems,
+  itemsPerPage,
+  currentPage,
+  onPageChange
 }) => {
   // CÁLCULO AUTOMÁTICO: Arredonda para cima. Ex: 25 itens / 10 por página = 3 páginas.
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -38,101 +38,97 @@ const Paginacao: React.FC<PaginacaoProps> = ({
     }
   };
 
-  // Gera um array com o número das páginas para os botões [1] [2] [3]
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-
   const renderPageNumbers = () => {
-  const pages = [];
+    const pages: (number | string)[] = [];
 
-  pages.push(1);
+    pages.push(1);
 
-  if (currentPage > 4) {
-    pages.push('...');
-  }
+    if (currentPage > 4) {
+      pages.push('...');
+    }
 
-  for (
-    let i = Math.max(2, currentPage - 1);
-    i <= Math.min(totalPages - 1, currentPage + 1);
-    i++
-  ) {
-    pages.push(i);
-  }
+    for (
+      let i = Math.max(2, currentPage - 1);
+      i <= Math.min(totalPages - 1, currentPage + 1);
+      i++
+    ) {
+      pages.push(i);
+    }
 
-  if (currentPage < totalPages - 3) {
-    pages.push('...');
-  }
+    if (currentPage < totalPages - 3) {
+      pages.push('...');
+    }
 
-  if (totalPages > 1) {
-    pages.push(totalPages);
-  }
+    if (totalPages > 1) {
+      pages.push(totalPages);
+    }
 
-  return pages.map((item, index) =>
-    item === '...' ? (
-      <span key={`dots-${index}`} className="page-dots">
-        ...
-      </span>
-    ) : (
-      <button
-        key={item}
-        className={`page-btn page-number-btn ${
-          currentPage === item ? 'active' : ''
-        }`}
-        onClick={() => {
-          onPageChange(Number(item));
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        }}
-      >
-        {item}
-      </button>
-    )
-  );
-};
+    return pages.map((item, index) =>
+      item === '...' ? (
+        <span key={`dots-${index}`} className={styles.pageDots}>
+          ...
+        </span>
+      ) : (
+        <button
+          key={item}
+          className={`${styles.pageBtn} ${styles.pageNumberBtn} ${currentPage === item ? styles.active : ''
+            }`}
+          onClick={() => {
+            onPageChange(Number(item));
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+            });
+          }}
+        >
+          {item}
+        </button>
+      )
+    );
+  };
 
   return (
-    <div className="paginacao-wrapper">
+    <div className={styles.paginacaoWrapper}>
       {/* Botão Anterior */}
 
-            <button
-        className="page-btn"
+      <button
+        className={styles.pageBtn}
         onClick={() => onPageChange(Math.max(1, currentPage - 5))}
       >
         &laquo;&laquo;
       </button>
-      <button 
-        className="page-btn" 
-        onClick={handlePrev} 
+      <button
+        className={styles.pageBtn}
+        onClick={handlePrev}
         disabled={currentPage === 1}
       >
         &laquo; Anterior
       </button>
 
       {/* Visão Mobile: Mostra "Página X de Y" */}
-      <span className="page-info-mobile">
+      <span className={styles.pageInfoMobile}>
         Página {currentPage} de {totalPages}
       </span>
 
-{renderPageNumbers()}
+      {renderPageNumbers()}
 
       {/* Botão Próximo */}
-      <button 
-        className="page-btn" 
-        onClick={handleNext} 
+      <button
+        className={styles.pageBtn}
+        onClick={handleNext}
         disabled={currentPage === totalPages}
       >
         Próxima &raquo;
       </button>
 
       <button
-  className="page-btn"
-  onClick={() =>
-    onPageChange(Math.min(totalPages, currentPage + 5))
-  }
->
-  &raquo;&raquo;
-</button>
+        className={styles.pageBtn}
+        onClick={() =>
+          onPageChange(Math.min(totalPages, currentPage + 5))
+        }
+      >
+        &raquo;&raquo;
+      </button>
     </div>
   );
 };

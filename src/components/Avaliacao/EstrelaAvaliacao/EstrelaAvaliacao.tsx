@@ -17,8 +17,7 @@ interface EstrelasAvaliacaoProps {
 const QUANTIDADE_ESTRELAS = 5;
 
 /**
- * Fileira de 5 estrelas. Interativa (clique + hover de preview) quando
- * `aoSelecionar` é passado, ou apenas ilustrativa quando não é.
+ * Fileira de 5 estrelas. Interativa (clique + hover de preview) quando `aoSelecionar` é passado, ou apenas ilustrativa quando não é.
  */
 export function EstrelasAvaliacao({
     notaAtual,

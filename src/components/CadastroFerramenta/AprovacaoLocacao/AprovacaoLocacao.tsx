@@ -18,7 +18,7 @@ const OPCOES_APROVACAO: OpcaoAprovacao[] = [
   {
     valor: 'automatica',
     titulo: 'Aprovação automática',
-    descricao: 'As reservas são confirmadas automaticamente quando houver disponibilidade.',
+    descricao: 'As locacoes são confirmadas automaticamente quando houver disponibilidade.',
   },
 ];
 

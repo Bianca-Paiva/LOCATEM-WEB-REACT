@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './CategoryFilter.module.css';
 
-const CATEGORIES = [
-  'Construção Civil',
-  'Reformas e Manutenção',
-  'Jardim e Paisagismo',
-  'Pintura e Acabamento',
-  'Transporte',
-  'Ferramentas Elétricas',
-  'Corte e Desgaste'
-];
+interface CategoryFilterProps {
+  categorias: string[];
+  categoriaSelecionada: string;
+  onSelecionarCategoria: (categoria: string) => void;
+}
 
-export const CategoryFilter: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState<string>('Construção Civil');
-
+export const CategoryFilter: React.FC<CategoryFilterProps> = ({
+  categorias,
+  categoriaSelecionada,
+  onSelecionarCategoria,
+}) => {
   return (
     <div className={styles.categoriesWrapper}>
       <h2 className={styles.sectionTitle}>Ferramentas</h2>
       <div className={styles.categoriesContainer}>
-        {CATEGORIES.map((category) => (
+        {categorias.map((category) => (
           <button
             key={category}
-            className={`${styles.categoryPill} ${activeCategory === category ? styles.active : ''}`}
-            onClick={() => setActiveCategory(category)}
+            className={`${styles.categoryPill} ${categoriaSelecionada === category ? styles.active : ''}`}
+            onClick={() => onSelecionarCategoria(category)}
           >
             {category}
           </button>

@@ -107,7 +107,7 @@ export default function FotosFerramenta({ fotos, onChange, error, shake }: Fotos
   const vagas = Math.max(0, MAXIMO_FOTOS - fotos.length);
 
   // distance: 8 evita que um simples clique (sem movimento) dispare um drag,
-  // o que preserva o clique no botão de remover e no tile "adicionar".
+  // o que plocacao o clique no botão de remover e no tile "adicionar".
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),

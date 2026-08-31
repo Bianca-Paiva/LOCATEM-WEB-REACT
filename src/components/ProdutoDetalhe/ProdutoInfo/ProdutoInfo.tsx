@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Star } from 'lucide-react';
 import PeriodoLocacaoDropdown from '../PeriodoLocacaoDropdown/PeriodoLocacaoDropdown';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import styles from './ProdutoInfo.module.css';
@@ -8,21 +9,21 @@ interface ProdutoInfoProps {
   price: string;
   rating: number;
   reviewCount: number;
-  imageVerificado: string;
-  imageNota: string;
+  imageVerificado?: string;
+  imageNota?: string;
   brand: string;
   estoqueDisponivel: number;
+  /** Voltagem/fonte de alimentação da ferramenta atual, vinda de `Produto.voltagem` (produtos.mock.ts). Ausente = ferramenta sem essa informação cadastrada. */
+  voltagem?: string;
   onAlugar?: () => void;
-  onReservar?: () => void;
+  onLocar?: () => void;
   onAddCarrinho?: () => void;
 
   /**
    * Eleva quantidade, período (em diárias) e tensão selecionados aqui para a página de detalhe, que os repassa como valores iniciais do modal de Solicitação de Locação — assim o usuário não precisa escolher de novo.
-  */
+   */
   onSelecaoChange?: (selecao: { quantidade: number; diarias: number | null; tensao: string | null }) => void;
 }
-
-const TENSAO_OPTIONS = ['127V', '220V', 'Bivolt'];
 
 // Extrai o número de diárias de um valor do PeriodoLocacaoDropdown (ex: "2 dias" -> 2)
 function extrairDiarias(periodo: string): number | null {
@@ -35,16 +36,16 @@ export function ProdutoInfo({
   price,
   rating,
   reviewCount,
-  imageNota,
   brand,
   estoqueDisponivel,
+  voltagem,
   onAlugar,
-  // onReservar,
   onAddCarrinho,
   onSelecaoChange,
 }: ProdutoInfoProps) {
 
-  const [tensaoSelecionada, setTensaoSelecionada] = useState<string | null>(null);
+  // Inicializa com a voltagem real desta ferramenta (mesmo padrão de inicialização já usado para quantidade/periodoLocacao neste componente, sem reset via efeito).
+  const [tensaoSelecionada, setTensaoSelecionada] = useState<string | null>(voltagem ?? null);
   const [periodoLocacao, setPeriodoLocacao] = useState('Selecione');
   const [quantidade, setQuantidade] = useState(1);
 
@@ -69,7 +70,7 @@ export function ProdutoInfo({
       <h1 className={styles.titulo}>{title}</h1>
 
       <div className={styles.ratingRow}>
-        <img src={imageNota} alt="Estrela" className={styles.starIcon} />
+        <Star className={styles.starIcon} size={14} fill="#FFCA00" color="#FFCA00" strokeWidth={0} />
         <span className={styles.ratingValor}>{rating.toFixed(1)}</span>
         <span className={styles.ratingCount}>({reviewCount} avaliações)</span>
         <span className={styles.brandTag}>{brand}</span>
@@ -81,28 +82,27 @@ export function ProdutoInfo({
         <span className={styles.precoDia}>/dia</span>
       </div>
 
-      {/* Tensão */}
-      <div className={styles.opcaoGrupo}>
-        <p className={styles.opcaoLabel}>Tensão</p>
-        <div className={styles.botoesOpcao}>
-          {TENSAO_OPTIONS.map(t => (
+      {/* Tensão — exibe somente a fonte de alimentação real desta ferramenta (produtos.mock.ts), nunca uma lista fixa: cada ferramenta tem um único valor de voltagem. */}
+      {voltagem && (
+        <div className={styles.opcaoGrupo}>
+          <p className={styles.opcaoLabel}>Tensão</p>
+          <div className={styles.botoesOpcao}>
             <button
-              key={t}
-              className={`${styles.btnOpcao} ${tensaoSelecionada === t ? styles.btnOpcaoAtivo : ''}`}
-              onClick={() => setTensaoSelecionada(t)}
+              className={`${styles.btnOpcao} ${tensaoSelecionada === voltagem ? styles.btnOpcaoAtivo : ''}`}
+              onClick={() => setTensaoSelecionada(voltagem)}
             >
-              {t}
+              {voltagem}
             </button>
-          ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className={styles.seletoresRow}>
 
-        {/* Periodo da Locação */}
+        {/* Período da Locação */}
         <div className={styles.opcaoGrupo}>
-          <p className={styles.opcaoLabel}>Periodo da Locação</p>
-          <PeriodoLocacaoDropdown value={periodoLocacao} onChange={setPeriodoLocacao} /> 
+          <p className={styles.opcaoLabel}>Período da Locação</p>
+          <PeriodoLocacaoDropdown value={periodoLocacao} onChange={setPeriodoLocacao} />
         </div>
 
         {/* Quantidade */}
@@ -121,14 +121,14 @@ export function ProdutoInfo({
       {/* CTAs */}
       <div className={styles.ctasContainer}>
         <button className={styles.btnLocar} onClick={onAlugar}>
-          Locar
+          Locar Agora
         </button>
         <div className={styles.linhaSecundaria}>
           <button className={styles.btnCarrinho} onClick={onAddCarrinho}>
             Adicionar ao carrinho
           </button>
-          {/*<button className={styles.btnReservar} onClick={onReservar}>
-            Reservar
+          {/*<button className={styles.btnLocar} onClick={onLocar}>
+            Locar
           </button>*/}
         </div>
       </div>

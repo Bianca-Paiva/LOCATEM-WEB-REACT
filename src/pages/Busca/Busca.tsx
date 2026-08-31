@@ -1,14 +1,14 @@
 import Header from '../../components/Header/Header';
-import { Banner } from '../../components/Banner/Banner';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 import { useProdutoStore } from '../../hooks/useProdutoStore';
 import { useCatalogoStore } from '../../hooks/useCatalogoStore';
+import { useBuscaStore } from '../../hooks/useBuscaStore';
 import type { Route } from '../../router/useRouter';
 import { useMemo, useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';
 import { SideBarBusca } from '../../components/Busca/SideBarBusca/SideBarBusca';
 import Paginacao from '../../components/Busca/Paginacao/Paginacao';
-import { toProdutoBusca } from '../../mocks/produtos.adapters';
+import { toProdutoBusca, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import type { ProdutoBusca, FilterState } from './Busca.types';
 import styles from './Busca.module.css';
 
@@ -19,13 +19,12 @@ interface BuscaProps {
 export default function Busca({ navigate }: BuscaProps) {
   const { setProdutoSelecionado } = useProdutoStore();
   const { produtos } = useCatalogoStore();
+  // Termo pesquisado na barra de busca do Header (funciona em qualquer tela).
+  const { termoBusca } = useBuscaStore();
 
-  // Catálogo de busca (ids 15-24) + ferramentas recém-publicadas pelo usuário.
+  // Catálogo de busca: todo o catálogo real (mesma fonte usada pela Home), não um recorte fixo de ids — um recorte fixo ficaria dessincronizado assim que o catálogo mudasse e faria a busca nunca encontrar nada.
   const produtosBuscaMock = useMemo(
-    () =>
-      produtos
-        .filter((p) => p.meuAnuncio || (p.id >= 15 && p.id <= 24))
-        .map(toProdutoBusca),
+    () => produtos.map(toProdutoBusca),
     [produtos],
   );
 
@@ -34,10 +33,19 @@ export default function Busca({ navigate }: BuscaProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 18;
 
+  // Sempre que o usuário pesquisar um novo termo (a partir de qualquer tela), volta pra primeira página pra não deixar a paginação "presa" fora do range.
+  // Ajustado durante a renderização (em vez de um useEffect) pra evitar re-render em cascata.
+  const [termoBuscaAnterior, setTermoBuscaAnterior] = useState(termoBusca);
+  if (termoBusca !== termoBuscaAnterior) {
+    setTermoBuscaAnterior(termoBusca);
+    setCurrentPage(1);
+  }
+
   const [activeFilters, setActiveFilters] = useState<FilterState>({
     categories: [],
     brands: [],
     brandSearch: '',
+    voltagens: [],
     priceRanges: [],
     paymentMethods: [],
     availability: null,
@@ -52,22 +60,16 @@ export default function Busca({ navigate }: BuscaProps) {
     { value: 'novidades', label: 'Novidades' },
   ];
 
+
   const handleCardClick = (product: ProdutoBusca) => {
-    setProdutoSelecionado({
-      id: product.id,
-      title: product.title,
-      brand: product.brand,
-      price: product.price,
-      images: product.images,
-      imageVerificado: product.imageVerificado,
-      imageNota: product.imageNota,
-      rating: product.rating,
-      reviewCount: product.reviewCount,
-      locador: product.locador,
-      localizacao: product.localizacao,
-      categoria: product.category,
-      estoqueDisponivel: product.estoqueDisponivel,
-    });
+    // O card da Busca só carrega um recorte do produto (ProdutoBusca).
+    // Buscamos o produto completo no catálogo central para levar pra frente os dados reais da ferramenta (descrição, especificações, acessórios, avaliações etc.), assim como já é feito na Home.
+    const produtoCompleto = produtos.find((p) => p.id === product.id);
+
+    if (!produtoCompleto) return;
+
+    setProdutoSelecionado(toProdutoSelecionado(produtoCompleto));
+
     navigate('produtoDetalhe');
   };
 
@@ -75,8 +77,12 @@ export default function Busca({ navigate }: BuscaProps) {
     const productPrice = parseFloat(product.price.replace(',', '.'));
 
     if (activeFilters.categories.length > 0 && !activeFilters.categories.includes(product.category)) return false;
-    if (activeFilters.brands.length > 0 && !activeFilters.brands.includes(product.brand)) return false;
-    if (activeFilters.brandSearch && !product.brand.toLowerCase().includes(activeFilters.brandSearch.toLowerCase())) return false;
+    if (activeFilters.brands.length > 0 && !activeFilters.brands.includes(product.marca)) return false;
+    if (activeFilters.brandSearch && !product.marca.toLowerCase().includes(activeFilters.brandSearch.toLowerCase())) return false;
+
+    if (activeFilters.voltagens.length > 0) {
+      if (!product.voltagem || !activeFilters.voltagens.includes(product.voltagem)) return false;
+    }
 
     if (activeFilters.priceRanges.length > 0) {
       const matchRange = activeFilters.priceRanges.some((range) => {
@@ -100,6 +106,15 @@ export default function Busca({ navigate }: BuscaProps) {
     }
 
     if (activeFilters.minRating !== null && product.rating < activeFilters.minRating) return false;
+
+    if (termoBusca) {
+      const termo = termoBusca.toLowerCase();
+      const correspondeTermo =
+        product.title.toLowerCase().includes(termo) ||
+        product.marca.toLowerCase().includes(termo) ||
+        product.category.toLowerCase().includes(termo);
+      if (!correspondeTermo) return false;
+    }
 
     return true;
   });
@@ -126,8 +141,6 @@ export default function Busca({ navigate }: BuscaProps) {
         <div className={styles.buscaLayout}>
 
           <div className={styles.buscaContentMain}>
-            <Banner />
-
             <div className={styles.buscaControlsContainer}>
               <div className={styles.orderButtonContainer}>
                 <ButtonOrder
@@ -154,7 +167,7 @@ export default function Busca({ navigate }: BuscaProps) {
                   <ProductCard
                     key={product.id}
                     title={product.title}
-                    brand={product.brand}
+                    brand={product.locador}
                     price={product.price}
                     images={product.images}
                     imageVerificado={product.imageVerificado}

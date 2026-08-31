@@ -109,7 +109,7 @@ export function useCadastroFerramenta() {
 
     return {
       title: form.nome.trim(),
-      brand: form.marca.trim(),
+      marca: form.marca.trim(),
       price: form.valorDiaria || '0,00',
       images: form.fotos.length > 0 ? form.fotos : [],
       imageVerificado: 'src/assets/verificadoAzul.png',

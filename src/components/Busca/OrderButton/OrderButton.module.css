@@ -1,33 +1,22 @@
-.button-order-container {
+/* Label "Ordenar por" ao lado do FormSelect (em vez do label empilhado
+   que o próprio FormSelect renderiza por padrão quando recebe a prop
+   `label`) — layout horizontal, como no card do "Ordenar por". */
+.buttonOrderContainer {
   display: flex;
-  align-items: center; /* Alinha o texto e o select na mesma linha perfeitamente */
-  justify-content: flex-start;
-  font-family: Arial, sans-serif;
-  gap: 8px; /* Cria um distanciamento amigável entre o texto e a caixa */
+  align-items: center;
+  gap: 12px;
   width: 100%;
+  max-width: 420px;
 }
 
-.sort-label {
-  font-weight: bold;
-  font-size: 15px; /* CORREÇÃO: 21px era muito grande pro mobile. 15px encaixa bem ao lado do filtro */
-  align-self: center;
-  white-space: nowrap; /* Evita que a palavra quebre pro meio da tela */
-}
-
-.button-order-box {
-  color: #3f3f3f;
-  padding: 6px 8px; /* Aumenta a área de toque no celular para não clicar errado */
+.sortLabel {
   font-size: 14px;
-  background-color: var(--color-bg-card, #ffffff);
-  border: 1px solid #c2c2c2;
-  border-radius: 6px;
-  cursor: pointer;
-  flex: 1; /* Faz o select ocupar o espaço que sobrar de forma inteligente */
-  max-width: 220px; /* Mas não deixa ele esticar ao infinito */
-  text-overflow: ellipsis; /* Se o texto for muito longo, corta com "..." */
+  font-weight: 600;
+  color: #141D23;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.button-order-box:focus {
-  border-color: #ffcc00; /* Usei a mesma cor primária do seu botão */
-  outline: none;
+.selectWrapper {
+  min-width: 0;
 }

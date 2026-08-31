@@ -1,3 +1,6 @@
+import logoLojaMS from '../assets/LogosLojas/logoLojaMS.png';
+import logoLojaJB from '../assets/LogosLojas/logoLojaJB.png';
+
 export interface Locador {
     nome: string;
     logoUrl?: string;
@@ -8,20 +11,21 @@ export interface Locador {
 }
 
 /**
- * Catálogo central de locadores (lojas/pessoas que anunciam ferramentas).
+ * Catálogo central de locadores (lojas parceiras que anunciam ferramentas).
  *
  * Fonte única de verdade para os dados exibidos no card "InfoVendedor".
  * `Produto.locador` (em produtos.mock.ts) guarda apenas o NOME do locador;
- * os demais dados (rating, avaliações, locações, verificado) vêm sempre
- * daqui, por nome — assim um mesmo locador nunca aparece com números
- * diferentes em produtos diferentes, e nenhum componente precisa
+ * os demais dados (rating, avaliações, locações, verificado, logo) vêm
+ * sempre daqui, por nome — assim um mesmo locador nunca aparece com
+ * números diferentes em produtos diferentes, e nenhum componente precisa
  * hardcodar esses valores.
  */
 export const LOCADORES_MOCK: Locador[] = [
     {
-        nome: 'JB Ferramentas',
-        rating: 4.9,
-        reviewCount: 200,
+        nome: 'MS Ferramentas',
+        logoUrl: logoLojaMS,
+        rating: 4.0,
+        reviewCount: 20,
         locacoes: 500,
         verificado: true,
     },
@@ -33,16 +37,10 @@ export const LOCADORES_MOCK: Locador[] = [
         verificado: true,
     },
     {
-        nome: 'João Ferramentas',
-        rating: 4.7,
-        reviewCount: 150,
-        locacoes: 310,
-        verificado: true,
-    },
-    {
-        nome: 'MS Ferramentas',
-        rating: 4.0,
-        reviewCount: 20,
+        nome: 'JB Ferramentas',
+        logoUrl: logoLojaJB,
+        rating: 4.9,
+        reviewCount: 200,
         locacoes: 500,
         verificado: true,
     },

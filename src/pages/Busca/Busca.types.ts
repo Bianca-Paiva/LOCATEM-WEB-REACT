@@ -6,7 +6,7 @@
 export interface ProdutoBusca {
     id: number;
     title: string;
-    brand: string;
+    marca: string;
     category: string;
     price: string;
     images: string[];
@@ -19,12 +19,15 @@ export interface ProdutoBusca {
     locador: string;
     localizacao: string;
     estoqueDisponivel: number;
+    /** Voltagem/fonte de alimentação, ex: "220V", "127V", "Bivolt", "À bateria", "Manual". Reflete as opções do cadastro de ferramenta. */
+    voltagem?: string;
 }
 
 export interface FilterState {
     categories: string[];
     brands: string[];
     brandSearch: string;
+    voltagens: string[];
     priceRanges: string[];
     paymentMethods: string[];
     availability: string | null;

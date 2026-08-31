@@ -12,7 +12,7 @@ import {
   XCircle,
   type LucideIcon,
 } from 'lucide-react';
-import { STATUS_CONFIG } from '../../MinhasReservas/EtiquetaStatus/statusConfig';
+import { STATUS_CONFIG } from '../../MinhasLocacoes/EtiquetaStatus/statusConfig';
 import type { NotificationData } from '../../../pages/Notificacoes/Notificacoes.types';
 import styles from './NotificationCard.module.css';
 
@@ -23,9 +23,9 @@ interface NotificationCardProps {
 }
 
 // Mapeia o "type" (estilo visual) ao ícone correspondente. Usado como fallback quando a
-// notificação não possui `statusReserva` (ex: promoção, mensagem, pagamento recusado).
+// notificação não possui `statusLocacao` (ex: promoção, mensagem, pagamento recusado).
 // Todos os ícones desta tela usam a biblioteca lucide-react, incluindo os mesmos ícones
-// usados em EtiquetaStatus (STATUS_CONFIG) para as notificações de reservas/locações.
+// usados em EtiquetaStatus (STATUS_CONFIG) para as notificações de locacoes/locações.
 const ICON_BY_TYPE: Record<NotificationData['type'], LucideIcon> = {
   success: CheckCircle2,
   warning: AlertTriangle,
@@ -42,13 +42,13 @@ export default function NotificationCard({
   onRenovar,
   onVerDetalhes,
 }: NotificationCardProps) {
-  const { id, type, title, description, timestamp, extraInfo, showRenovar, statusReserva } =
+  const { id, type, title, description, timestamp, extraInfo, showRenovar, statusLocacao } =
     notification;
 
-  // Quando a notificação está atrelada a uma reserva, usa o mesmo ícone/cor de
-  // `STATUS_CONFIG` (o mesmo exibido em 'Minhas Reservas'); caso contrário, cai no
+  // Quando a notificação está atrelada a uma locacao, usa o mesmo ícone/cor de
+  // `STATUS_CONFIG` (o mesmo exibido em 'Minhas Locacoes'); caso contrário, cai no
   // ícone genérico baseado em `type`.
-  const configStatus = statusReserva ? STATUS_CONFIG[statusReserva] : null;
+  const configStatus = statusLocacao ? STATUS_CONFIG[statusLocacao] : null;
   const Icon = configStatus ? configStatus.icon : ICON_BY_TYPE[type];
   const iconStyle = configStatus
     ? ({ background: configStatus.fundo, color: configStatus.cor } as React.CSSProperties)

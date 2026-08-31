@@ -6,7 +6,8 @@
 export interface ProdutoHome {
     id: number;
     title: string;
-    brand: string;
+    marca: string;
+    locador: string;
     price: string;
     images: string[];
     imageVerificado: string;

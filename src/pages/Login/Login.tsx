@@ -67,9 +67,7 @@ export default function Login({ navigate }: LoginProps) {
 
         try {
             // await loginUsuario({ email, senha })
-            // authService ainda não está integrado a um backend real (endpoint comentado
-            // acima), então resolvemos o usuário autenticado a partir do AuthContext, que
-            // por sua vez usa o catálogo mockado em mocks/usuarios.mock.ts.
+            // authService ainda não está integrado a um backend real (endpoint comentado acima), então resolvemos o usuário autenticado a partir do AuthContext, que por sua vez usa o catálogo mockado em mocks/usuarios.mock.ts.
             login(email)
             navigate('home')
         } catch (err) {
@@ -90,41 +88,43 @@ export default function Login({ navigate }: LoginProps) {
 
                 <div className={styles.card}>
                     <form onSubmit={handleSubmit} noValidate>
-                        <FormInput
-                            key={`email-shake-${emailErrState.shake}`}
-                            id="email"
-                            label="E-mail"
-                            type="email"
-                            placeholder="seu@email.com"
-                            value={email}
-                            onChange={e => {
-                                setEmail(e.target.value)
-                                if (emailErrState.active) setEmailErrState({ active: false, shake: false })
-                                setError('')
-                            }}
-                            status={emailErrState.active || error ? 'erro' : ''}
-                            error={emailErrState.active && !email ? 'O e-mail é obrigatório' : emailErrState.active ? 'Digite um e-mail válido' : ''}
-                            shake={emailErrState.shake}
-                            required
-                        />
+                        <div className={styles.inputGroup}>
+                            <FormInput
+                                key={`email-shake-${emailErrState.shake}`}
+                                id="email"
+                                label="E-mail"
+                                type="email"
+                                placeholder="seu@email.com"
+                                value={email}
+                                onChange={e => {
+                                    setEmail(e.target.value)
+                                    if (emailErrState.active) setEmailErrState({ active: false, shake: false })
+                                    setError('')
+                                }}
+                                status={emailErrState.active || error ? 'erro' : ''}
+                                error={emailErrState.active && !email ? 'O e-mail é obrigatório' : emailErrState.active ? 'Digite um e-mail válido' : ''}
+                                shake={emailErrState.shake}
+                                required
+                            />
 
-                        <PasswordField
-                            key={`senha-shake-${senhaErrState.shake}`}
-                            id="senha"
-                            label="Senha"
-                            placeholder="Digite sua senha"
-                            value={senha}
-                            onChange={e => {
-                                setSenha(e.target.value)
-                                if (senhaErrState.active) setSenhaErrState({ active: false, shake: false })
-                                setError('')
-                            }}
-                            status={senhaErrState.active || error ? 'erro' : ''}
-                            // Exibe um erro genérico para não poluir a tela, já que os requisitos visuais só ficam na tela de cadastro
-                            error={senhaErrState.active && !senha ? 'A senha é obrigatória' : senhaErrState.active ? 'Senha inválida' : ''}
-                            shake={senhaErrState.shake}
-                            required
-                        />
+                            <PasswordField
+                                key={`senha-shake-${senhaErrState.shake}`}
+                                id="senha"
+                                label="Senha"
+                                placeholder="Digite sua senha"
+                                value={senha}
+                                onChange={e => {
+                                    setSenha(e.target.value)
+                                    if (senhaErrState.active) setSenhaErrState({ active: false, shake: false })
+                                    setError('')
+                                }}
+                                status={senhaErrState.active || error ? 'erro' : ''}
+                                // Exibe um erro genérico para não poluir a tela, já que os requisitos visuais só ficam na tela de cadastro
+                                error={senhaErrState.active && !senha ? 'A senha é obrigatória' : senhaErrState.active ? 'Senha inválida' : ''}
+                                shake={senhaErrState.shake}
+                                required
+                            />
+                        </div>
 
                         {error && <p className={styles.errorMsg}>{error}</p>}
 

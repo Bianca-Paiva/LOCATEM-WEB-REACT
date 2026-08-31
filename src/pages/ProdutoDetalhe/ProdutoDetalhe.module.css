@@ -94,6 +94,15 @@
   width: 100%;
 }
 
+.vendedorDesktop {
+  display: none;
+}
+
+.vendedorMobile {
+  display: block;
+  width: 100%;
+}
+
 /* ─────────────────────────────────────────────────── */
 /* TABLET: 768px+                                      */
 /* ─────────────────────────────────────────────────── */
@@ -199,6 +208,15 @@
 
   /* Esconde o banner inline mobile */
   .produtoColBannerMobile {
+    display: none;
+  }
+
+  /* Inverte a visibilidade: Volta ao topo e oculta a versão de baixo */
+  .vendedorDesktop {
+    display: block;
+  }
+
+  .vendedorMobile {
     display: none;
   }
 }
