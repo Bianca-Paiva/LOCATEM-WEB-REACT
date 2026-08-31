@@ -16,43 +16,64 @@ export default function InformeToken({ navigate }: InformeTokenProps) {
     const [token, setToken] = useState("");
     const [timeLeft, setTimeLeft] = useState(50);
     const [hasError, setHasError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(""); // Novo estado para a mensagem
 
     // Efeito que controla o relógio regressivo
     useEffect(() => {
-        // Se o tempo chegou a 0, não faz mais nada
         if (timeLeft === 0) return;
 
-        // Cria um cronômetro que roda a cada 1 segundo (1000ms)
         const timer = setInterval(() => {
             setTimeLeft((prevTime) => prevTime - 1);
         }, 1000);
 
-        // Limpa o cronômetro da memória se o usuário sair da tela ou o tempo mudar
         return () => clearInterval(timer);
     }, [timeLeft]);
 
     const handleVerifyToken = () => {
+        const tokenCorreto = localStorage.getItem("codigo_recuperacao");
+
+        // Validação 1: Faltam números
         if (token.length < 5) {
-            // Se já estava com erro, desliga e liga rápido para resetar a animação e chacoalhar de novo
+            setErrorMessage("Preencha todos os 5 dígitos do código.");
             setHasError(false);
             setTimeout(() => setHasError(true), 10);
             return;
         }
 
+        // Validação 2: Código incorreto
+        if (token !== tokenCorreto) {
+            setErrorMessage("Código incorreto. Verifique e tente novamente.");
+            setHasError(false);
+            setTimeout(() => setHasError(true), 10);
+            return;
+        }
+
+        // Sucesso
         setHasError(false);
-        console.log("Token enviado para validação:", token);
+        setErrorMessage(""); // Limpa a mensagem
+        localStorage.removeItem("codigo_recuperacao");
         
-        // Lógica para avançar para a rota de criar nova senha
         navigate('informeNovaSenha');
     };
 
-    // Função disparada ao clicar para reenviar
     const handleResendCode = () => {
-        console.log("Chamando API para reenviar e-mail...");
+        // Gera um NOVO código de 5 dígitos
+        const novoToken = Math.floor(10000 + Math.random() * 90000).toString();
+        
+        // Substitui o código antigo no armazenamento
+        localStorage.setItem("codigo_recuperacao", novoToken);
 
-        // Aqui vai a requisição para o Back-end.
-        // Após o sucesso dela, reiniciamos o contador:
+        // Exibe no console
+        console.log("=====================================");
+        console.log("🔄 NOVO E-MAIL ENVIADO COM SUCESSO!");
+        console.log(`Novo Código de verificação: ${novoToken}`);
+        console.log("=====================================");
+
+        // Reinicia o relógio e limpa os inputs
         setTimeLeft(50);
+        setToken("");
+        setHasError(false);
+        setErrorMessage("");
     };
 
     return (
@@ -71,18 +92,23 @@ export default function InformeToken({ navigate }: InformeTokenProps) {
                     <TokenInput
                         length={5}
                         value={token}
-                        /* Atualiza o valor e remove o erro assim que o usuário digita */
                         onChange={(newValue) => {
                             setToken(newValue);
                             if (hasError) setHasError(false);
+                            if (errorMessage) setErrorMessage(""); // Limpa a mensagem ao digitar
                         }}
-                        hasError={hasError} // Passa o estado do erro para o componente
+                        hasError={hasError}
                     />
+
+                    {/* Exibe a mensagem de erro se ela existir */}
+                    {errorMessage && (
+                        <span className={styles.errorMessage}>{errorMessage}</span>
+                    )}
 
                     <button
                         className={styles.reenviar}
                         onClick={handleResendCode}
-                        disabled={timeLeft > 0} // Fica bloqueado enquanto timeLeft for maior que 0
+                        disabled={timeLeft > 0} 
                     >
                         {timeLeft > 0
                             ? `Reenviar código em ${timeLeft}s`
