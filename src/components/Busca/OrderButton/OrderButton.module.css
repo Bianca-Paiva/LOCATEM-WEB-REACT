@@ -1,6 +1,4 @@
-/* Label "Ordenar por" ao lado do FormSelect (em vez do label empilhado
-   que o próprio FormSelect renderiza por padrão quando recebe a prop
-   `label`) — layout horizontal, como no card do "Ordenar por". */
+/* Label "Ordenar por" ao lado do FormSelect (em vez do label empilhado que o próprio FormSelect renderiza por padrão quando recebe a prop `label`) — layout horizontal, como no card do "Ordenar por". */
 .buttonOrderContainer {
   display: flex;
   align-items: center;
@@ -10,7 +8,7 @@
 }
 
 .sortLabel {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #141D23;
   white-space: nowrap;
