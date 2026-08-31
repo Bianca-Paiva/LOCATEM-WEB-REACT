@@ -39,6 +39,12 @@ export const CADASTRO_MESSAGES = {
         mensagem: 'Digite seu CNPJ completo.',
     },
 
+    // Feedback de validação do campo de CEP (reaproveitado na edição de perfil)
+    INVALID_CEP: {
+        titulo: 'CEP inválido',
+        mensagem: 'Digite um CEP válido.',
+    },
+
     // Feedback de sucesso ao concluir o processo de cadastro
     SUCCESS: {
         titulo: 'Sucesso',

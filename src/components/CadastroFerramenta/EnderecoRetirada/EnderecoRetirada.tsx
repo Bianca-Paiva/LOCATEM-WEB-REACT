@@ -43,7 +43,9 @@ export default function EnderecoRetirada({ form, onChangeCampo, erros, shake }: 
         <button
           type="button"
           className={styles.linkCepDesconhecido}
-          onClick={() => alert('Funcionalidade em desenvolvimento.')}
+
+          // API do Correio para buscar um cep
+          onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
         >
           Não sei meu CEP
         </button>
