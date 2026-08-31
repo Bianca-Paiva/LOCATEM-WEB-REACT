@@ -6,7 +6,7 @@ import Avatar from '../../Avatar/Avatar';
 import FormInput from '../../Inputs/FormInput/FormInput';
 import BtnPrincipal from '../../BtnPrincipal/BtnPrincipal';
 import Alerta from '../../RecuperarSenha/Alerta/Alerta';
-import { maskCPF, maskCNPJ, maskPhone, maskCEP } from '../../../hooks/masks';
+import { maskCPF, maskCNPJ, maskPhone, maskCEP, formatPhone } from '../../../hooks/masks';
 import { useEditarPerfilForm } from '../../../hooks/Perfil/useEditarPerfilForm';
 import type { PerfilFormData } from '../../../hooks/Perfil/perfilSchema';
 import type { Usuario } from '../../../types/usuario.types';
@@ -102,7 +102,7 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
                 value={value}
                 required
                 shake={shakes.telefone.shake}
-                onBlur={() => trigger('telefone')}
+                onBlur={() => { onChange(formatPhone(value)); trigger('telefone'); }}
                 onChange={(e) => { onChange(maskPhone(e.target.value)); clearShake('telefone'); }}
                 status={errors.telefone || shakes.telefone.active ? 'erro' : touchedFields.telefone ? 'sucesso' : ''}
                 error={errors.telefone?.message || ''}
