@@ -112,8 +112,19 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
-            label: "Histórico", // aparece para: locatário
-            perfis: ['locatario'],
+            label: "Gerenciar Locações",
+            // route: "gerenciarLocacoes", // aparece para: locador
+            perfis: ['locador'],
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:clipboard-text" : "mdi:clipboard-text-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
+            label: "Histórico", // aparece para: locatário e locador,
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:clock" : "mdi:clock-outline"}
