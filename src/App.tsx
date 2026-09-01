@@ -13,6 +13,7 @@ import DetalhesLocacao from "./pages/Locacoes/DetalhesLocacao/DetalhesLocacao";
 import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
 import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
 import Carrinho from "./pages/Carrinho/Carrinho";
+import SelecionarCartao from "./pages/SelecionarCartao/SelecionarCartao";
 import Perfil from "./pages/Perfil/Perfil";
 import { useRouter } from "./router/useRouter";
 import { ProdutoProvider } from "./context/ProdutoContext";
@@ -65,6 +66,8 @@ export default function App() {
                   {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
 
                   {route === "carrinho" && <Carrinho navigate={navigate} />}
+
+                  {route === "selecionarCartao" && <SelecionarCartao navigate={navigate} />}
 
                   {route === "perfil" && <Perfil navigate={navigate} />}
                 </BuscaProvider>

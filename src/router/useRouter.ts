@@ -19,6 +19,7 @@ export type Route =
   | "solicitacaoEnviada"
   | "solicitacaoEnviada"
   | "carrinho"
+  | "selecionarCartao"
   | "pagamentoCartao"
   | "pagamentoPix"
   | "minhasFerramentas"
@@ -44,6 +45,7 @@ function getRouteFromHash(): Route {
   if (hash === "solicitarLocacao") return "solicitarLocacao";
   if (hash === "solicitacaoEnviada") return "solicitacaoEnviada";
   if (hash === "carrinho") return "carrinho";
+  if (hash === "selecionarCartao") return "selecionarCartao";
   if (hash === "pagamentoCartao") return "pagamentoCartao";
   if (hash === "pagamentoPix") return "pagamentoPix";
   if (hash === "minhasFerramentas") return "minhasFerramentas";

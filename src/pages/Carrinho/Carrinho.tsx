@@ -78,7 +78,7 @@ export default function CarrinhoPage({
       onBack={() => navigate('busca')}
       onConferirProdutos={() => navigate('busca')}
       onContinuarParaPagamento={() =>
-        navigate('pagamentoPix')
+        navigate('selecionarCartao')
       }
     />
   );

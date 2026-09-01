@@ -1,0 +1,89 @@
+.cartao {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background-color: var(--color-bg-card);
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.184);
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.cartao:active {
+  transform: scale(0.985);
+}
+
+.cartaoIcone {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e7e8e9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cartaoIcone img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.cartaoInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cartaoInfo > h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  letter-spacing: -0.2px;
+}
+
+.cartaoInfo > p {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #a0a0a0;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* Radio nativo escondido, mantendo acessibilidade (foco/teclado) */
+.cartao input[type='radio'] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #d1b464;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+  margin-left: auto;
+}
+
+.cartao input[type='radio']:checked {
+  background-color: #d1b464;
+  box-shadow: inset 0 0 0 4px var(--color-bg-card);
+}
+
+@media (min-width: 1024px) {
+  .cartao:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+  }
+}
