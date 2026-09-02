@@ -9,8 +9,7 @@ import amexIcon from '../../../assets/Cartoesbandeiras/amex.png';
 import dinersIcon from '../../../assets/Cartoesbandeiras/diners.png';
 import discoverIcon from '../../../assets/Cartoesbandeiras/discover.png';
 
-// Ícone da bandeira do cartão, com fallback para o ícone genérico de cartão
-// usado na tela original quando a bandeira não é reconhecida.
+// Ícone da bandeira do cartão, com fallback para o ícone genérico de cartão usado na tela original quando a bandeira não é reconhecida.
 function iconePorBandeira(bandeira: string): string {
   const nome = bandeira.trim().toLowerCase();
 

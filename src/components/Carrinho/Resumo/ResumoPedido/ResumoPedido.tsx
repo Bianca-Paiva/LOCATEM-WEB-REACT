@@ -44,7 +44,7 @@ export function ResumoPedido({
   onCtaClick,
   ctaDisabled,
   prazoPagamento,
-  mostrarSeguro = variant === 'pagamento',
+  mostrarSeguro = variant === 'pagamento' || variant === 'metodoPagamento',
 }: ResumoPedidoProps) {
   const [cepInput, setCepInput] = useState('');
   const [cupomInput, setCupomInput] = useState('');
@@ -206,7 +206,7 @@ export function ResumoPedido({
         </div>
       )}
 
-      {variant === 'pagamento' && (
+      {(variant === 'metodoPagamento' || variant === 'pagamento') && (
         <div className={styles.corpo}>
           <div className={styles.linhaTotal}>
             <span>Total</span>

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Cartao, MetodoPagamento } from '../../types/cartao.types';
 import type { Route } from '../../router/useRouter';
+import { lerMetodoPagamento, salvarCartaoPagamento } from '../../utils/pagamentoStorage';
 
 // ============================================================
 //  DADOS PADRÃO
@@ -15,9 +16,10 @@ const cartoesPadrao: Cartao[] = [
   { id: 4, metodoPagamento: 'debito', bandeira: 'Elo', final: '3456', titular: 'JOÃO SILVA' },
 ];
 
-const METODOS_VALIDOS: MetodoPagamento[] = ['credito', 'debito'];
-
 // Lê (ou semeia) a lista de cartões salvos no localStorage.
+// Obs.: 'cartoes' é a carteira de cartões salvos do usuário (funcionalidade
+// independente do fluxo de checkout) — não faz parte das 3 chaves
+// 'locatem_pagamento_*' do fluxo de pagamento em si.
 function lerCartoesSalvos(): Cartao[] {
   const brutos = localStorage.getItem('cartoes');
 
@@ -31,10 +33,6 @@ function lerCartoesSalvos(): Cartao[] {
 
   localStorage.setItem('cartoes', JSON.stringify(cartoesPadrao));
   return cartoesPadrao;
-}
-
-function ehMetodoValido(valor: string | null): valor is MetodoPagamento {
-  return METODOS_VALIDOS.includes(valor as MetodoPagamento);
 }
 
 interface UseSelecionarCartaoReturn {
@@ -61,9 +59,10 @@ export function useSelecionarCartao(navigate: (route: Route) => void): UseSeleci
   const [cartaoSelecionadoId, setCartaoSelecionadoId] = useState<number | null>(null);
   const [erro, setErro] = useState<string | null>(null);
 
-  const metodoPagamentoBruto = useMemo(() => localStorage.getItem('metodoPagamento'), []);
-  const metodoValido = ehMetodoValido(metodoPagamentoBruto);
-  const metodoPagamento: MetodoPagamento | null = metodoValido ? metodoPagamentoBruto : null;
+  // A tela de Selecionar Cartão só é válida para crédito/débito — PIX não passa por aqui.
+  const metodoBruto = useMemo(() => lerMetodoPagamento(), []);
+  const metodoValido = metodoBruto === 'credito' || metodoBruto === 'debito';
+  const metodoPagamento: MetodoPagamento | null = metodoValido ? metodoBruto : null;
 
   // Redireciona caso o método seja ausente ou inválido. Não existe, nesta SPA, uma tela
   // dedicada de "escolher método de pagamento" — o Carrinho é o ponto de entrada mais
@@ -95,13 +94,10 @@ export function useSelecionarCartao(navigate: (route: Route) => void): UseSeleci
   function adicionarNovoCartao() {
     if (!metodoPagamento) return;
 
-    // Salva o tipo do novo cartão que será cadastrado, para a tela de cadastro usar.
-    localStorage.setItem('tipoNovoCartao', metodoPagamento);
-
-    // A SPA ainda não tem telas dedicadas de cadastro por bandeira/tipo
-    // (equivalentes a adicionarCartaoCredito.html / adicionarCartaoDebito.html);
-    // "pagamentoCartao" é o formulário de cartão mais próximo disponível hoje.
-    navigate('pagamentoCartao');
+    // O tipo do novo cartão (crédito/débito) já está em 'locatem_pagamento_metodo';
+    // as telas de cadastro (AdicionarCartaoCredito/AdicionarCartaoDebito) são
+    // dedicadas por tipo e não precisam de nenhuma chave adicional para isso.
+    navigate(metodoPagamento === 'credito' ? 'adicionarCartaoCredito' : 'adicionarCartaoDebito');
   }
 
   function confirmarPagamento() {
@@ -110,7 +106,16 @@ export function useSelecionarCartao(navigate: (route: Route) => void): UseSeleci
       return;
     }
 
-    localStorage.setItem('cartaoSelecionado', String(cartaoSelecionadoId));
+    const cartaoEscolhido = cartoesFiltrados.find((cartao) => cartao.id === cartaoSelecionadoId);
+
+    if (cartaoEscolhido) {
+      // Persiste apenas dados não sensíveis do cartão escolhido para o pagamento atual.
+      salvarCartaoPagamento({
+        id: String(cartaoEscolhido.id),
+        bandeira: cartaoEscolhido.bandeira,
+        ultimosDigitos: cartaoEscolhido.final,
+      });
+    }
 
     // Sem uma tela própria de "processando pagamento" na SPA, seguimos para o
     // fluxo de pagamento com cartão já existente.

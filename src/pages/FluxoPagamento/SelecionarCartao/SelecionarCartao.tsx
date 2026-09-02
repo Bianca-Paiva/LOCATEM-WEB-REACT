@@ -1,13 +1,13 @@
 import type { FormEvent } from 'react';
 import { Icon } from '@iconify/react';
 
-import Header from '../../components/Header/Header';
-import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
-import { CartaoSelecionavel } from '../../components/Pagamento/CartaoSelecionavel/CartaoSelecionavel';
-import BtnPrincipal from '../../components/BtnPrincipal/BtnPrincipal';
+import Header from '../../../components/Header/Header';
+import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import { CartaoSelecionavel } from '../../../components/Pagamento/CartaoSelecionavel/CartaoSelecionavel';
+import BtnPrincipal from '../../../components/BtnPrincipal/BtnPrincipal';
 
-import { useSelecionarCartao } from '../../hooks/Pagamento/useSelecionarCartao';
-import type { Route } from '../../router/useRouter';
+import { useSelecionarCartao } from '../../../hooks/Pagamento/useSelecionarCartao';
+import type { Route } from '../../../router/useRouter';
 
 import styles from './SelecionarCartao.module.css';
 

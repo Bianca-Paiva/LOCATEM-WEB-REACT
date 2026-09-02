@@ -118,3 +118,104 @@ export function validateDocument(value: string, isCNPJ: boolean): boolean {
     // Retorna true se tiver 14 dígitos para CNPJ ou 11 dígitos para CPF
     return isCNPJ ? digits.length === 14 : digits.length === 11
 }
+
+/**
+ * Código identificando a bandeira detectada de um cartão (crédito/débito).
+ * Vazio quando nenhuma bandeira reconhecida.
+ */
+export type BandeiraCartao = 'VISA' | 'MASTER' | 'AMEX' | 'ELO' | 'DISCOVER' | 'DINERS' | ''
+
+/**
+ * Aplica a máscara do número do cartão (blocos de 4 dígitos) em tempo de digitação.
+ * value String bruta contendo o texto digitado pelo usuário.
+ */
+export function maskNumeroCartao(value: string): string {
+    // 1. Remove tudo que não for número e limita a 16 dígitos
+    const digits = value.replace(/\D/g, '').substring(0, 16)
+
+    // 2. Insere um espaço a cada 4 dígitos: 0000 0000 0000 0000
+    return digits.replace(/(\d{4})(?=\d)/g, '$1 ')
+}
+
+/**
+ * Detecta a bandeira do cartão a partir dos primeiros dígitos do número.
+ * Detecção visual/UX; a validação real deve ocorrer na API.
+ * numero Número do cartão, com ou sem máscara.
+ */
+export function detectarBandeiraCartao(numero: string): BandeiraCartao {
+    const digits = numero.replace(/\D/g, '')
+
+    if (/^4/.test(digits)) return 'VISA'
+
+    if (/^5[1-5]/.test(digits)) return 'MASTER'
+
+    if (/^2(2[2-9]|[3-6]|7[01]|720)/.test(digits)) return 'MASTER'
+
+    if (/^3[47]/.test(digits)) return 'AMEX'
+
+    if (/^6(?:011|5)/.test(digits)) return 'DISCOVER'
+
+    if (/^(4011|4312|4389|4514|4576|5041|5066|5067|509|6277|6362|6363|650|6516|6550)/.test(digits)) return 'ELO'
+
+    if (/^3(?:0[0-5]|[68])/.test(digits)) return 'DINERS'
+
+    return ''
+}
+
+/**
+ * Nome de exibição da bandeira detectada, no mesmo formato usado ao salvar
+ * um cartão (ex.: para casar com CartaoSelecionavel, que reconhece pelo nome).
+ */
+export function nomeBandeiraCartao(codigo: BandeiraCartao): string {
+    const nomes: Record<Exclude<BandeiraCartao, ''>, string> = {
+        VISA: 'Visa',
+        MASTER: 'Mastercard',
+        AMEX: 'American Express',
+        ELO: 'Elo',
+        DISCOVER: 'Discover',
+        DINERS: 'Diners',
+    }
+
+    return codigo ? nomes[codigo] : 'Cartão'
+}
+
+/**
+ * Aplica a máscara de validade do cartão (MM/AA) em tempo de digitação.
+ * value String bruta contendo o texto digitado pelo usuário.
+ */
+export function maskValidadeCartao(value: string): string {
+    // 1. Remove tudo que não for número e limita a 4 dígitos (MMAA)
+    const digits = value.replace(/\D/g, '').substring(0, 4)
+
+    // 2. Insere a barra depois do mês, quando já houver o 3º dígito digitado
+    if (digits.length >= 3) {
+        return `${digits.slice(0, 2)}/${digits.slice(2)}`
+    }
+
+    return digits
+}
+
+/**
+ * Valida a validade do cartão no formato MM/AA: mês válido (01-12) e não vencido.
+ * value Validade já formatada (MM/AA).
+ */
+export function validateValidadeCartao(value: string): boolean {
+    if (value.length !== 5) return false
+
+    const [mes, ano] = value.split('/').map(Number)
+
+    if (!mes || mes < 1 || mes > 12) return false
+
+    const anoAtual = new Date().getFullYear() % 100
+    const mesAtual = new Date().getMonth() + 1
+
+    return ano > anoAtual || (ano === anoAtual && mes >= mesAtual)
+}
+
+/**
+ * Aplica a máscara do CVV do cartão (somente números, até 3 dígitos).
+ * value String bruta contendo o texto digitado pelo usuário.
+ */
+export function maskCVV(value: string): string {
+    return value.replace(/\D/g, '').substring(0, 3)
+}

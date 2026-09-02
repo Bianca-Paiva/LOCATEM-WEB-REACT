@@ -1,29 +1,46 @@
+// Rotas
+import { useRouter } from "./router/useRouter";
+
+// Context Providers
+import { AuthProvider } from "./context/AuthContext";
+import { BuscaProvider } from "./context/BuscaContext";
+import { CarrinhoProvider } from "./context/CarrinhoContext";
+import { CatalogoProvider } from "./context/CatalogoContext";
+import { LocacaoProvider } from "./context/LocacaoContext";
+import { NotificationProvider } from "./context/NotificationContext";
+import { ProdutoProvider } from "./context/ProdutoContext";
+
+// Pages - Autenticação e Recuperação de Senha
 import Login from "./pages/Login/Login";
 import Cadastro from "./pages/Cadastro/Cadastro";
 import RecuperarSenha from "./pages/RecuperarSenha/InformeEmail/InformeEmail";
 import InformeToken from "./pages/RecuperarSenha/InformeToken/InformeToken";
 import InformeNovaSenha from "./pages/RecuperarSenha/InformeNovaSenha/InformeNovaSenha";
+
+// Pages - Navegação Principal e Perfil
 import Home from "./pages/Home/Home";
 import Busca from "./pages/Busca/Busca";
 import Notificacoes from "./pages/Notificacoes/Notificacoes";
+import Perfil from "./pages/Perfil/Perfil";
+
+
+// Pages - Ferramentas e Produtos
+import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
+import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
 import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
 import Avaliacao from "./pages/Avaliacao/Avaliacao";
+
+// Pages - Locações
 import MinhasLocacoes from "./pages/Locacoes/MinhasLocacoes/MinhasLocacoes";
 import DetalhesLocacao from "./pages/Locacoes/DetalhesLocacao/DetalhesLocacao";
-import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
-import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
+
+// Pages - Carrinho e Fluxo de Pagamento
 import Carrinho from "./pages/Carrinho/Carrinho";
-import SelecionarCartao from "./pages/SelecionarCartao/SelecionarCartao";
-import Perfil from "./pages/Perfil/Perfil";
-import { useRouter } from "./router/useRouter";
-import { ProdutoProvider } from "./context/ProdutoContext";
-import { LocacaoProvider } from "./context/LocacaoContext";
-import { CatalogoProvider } from "./context/CatalogoContext";
-import { NotificationProvider } from "./context/NotificationContext";
-import { CarrinhoProvider } from "./context/CarrinhoContext";
-import { AuthProvider } from "./context/AuthContext";
-// Nova importação do contexto de busca
-import { BuscaProvider } from "./context/BuscaContext"; 
+import MetodoPagamento from "./pages/FluxoPagamento/MetodoPagamento/MetodoPagamento";
+import SelecionarCartao from "./pages/FluxoPagamento/SelecionarCartao/SelecionarCartao";
+import AdicionarCartaoCredito from "./pages/FluxoPagamento/AdicionarCartaoCredito/AdicionarCartaoCredito";
+import AdicionarCartaoDebito from "./pages/FluxoPagamento/AdicionarCartaoDebito/AdicionarCartaoDebito";
+import PagamentoPix from "./pages/FluxoPagamento/PagamentoPix/PagamentoPix";
 
 export default function App() {
   const { route, navigate } = useRouter();
@@ -35,7 +52,6 @@ export default function App() {
           <LocacaoProvider>
             <NotificationProvider>
               <CarrinhoProvider>
-                {/* Envolvendo as rotas com o BuscaProvider */}
                 <BuscaProvider>
                   {route === "home" && <Home navigate={navigate} />}
 
@@ -67,7 +83,15 @@ export default function App() {
 
                   {route === "carrinho" && <Carrinho navigate={navigate} />}
 
+                  {route === "metodoPagamento" && <MetodoPagamento navigate={navigate} />}
+
                   {route === "selecionarCartao" && <SelecionarCartao navigate={navigate} />}
+
+                  {route === "adicionarCartaoCredito" && <AdicionarCartaoCredito navigate={navigate} />}
+
+                  {route === "adicionarCartaoDebito" && <AdicionarCartaoDebito navigate={navigate} />}
+
+                  {route === "pagamentoPix" && <PagamentoPix navigate={navigate} />}
 
                   {route === "perfil" && <Perfil navigate={navigate} />}
                 </BuscaProvider>

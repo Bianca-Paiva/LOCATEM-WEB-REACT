@@ -13,21 +13,19 @@ import type { Route } from '../../router/useRouter';
 import styles from './Carrinho.module.css';
 import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
 import { CheckoutLayout } from '../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
+import { salvarValorPagamento } from '../../utils/pagamentoStorage';
 
 /* ============================================================
    HELPERS
 ============================================================ */
 
-// Preço do produto vem como string ("599,98") vinda do cadastro — mesma
-// conversão usada em useSolicitarLocacaoModal.ts.
+// Preço do produto vem como string ("599,98") vinda do cadastro — mesma conversão usada em useSolicitarLocacaoModal.ts.
 function precoDiariaDoProduto(price: string): number {
   const preco = Number(String(price).replace(',', '.'));
   return Number.isFinite(preco) ? preco : 0;
 }
 
-// Agrupa os itens do carrinho (contexto global, populado só via "Adicionar
-// ao carrinho" na página do produto) por locador, no formato que
-// LojaGroup/ItemCarrinho já sabem exibir.
+// Agrupa os itens do carrinho (contexto global, populado só via "Adicionar ao carrinho" na página do produto) por locador, no formato que LojaGroup/ItemCarrinho já sabem exibir.
 function agruparPorLoja(itens: ItemCarrinhoContexto[]): LojaGroupData[] {
   const grupos = new Map<string, LojaGroupData>();
 
@@ -78,7 +76,7 @@ export default function CarrinhoPage({
       onBack={() => navigate('busca')}
       onConferirProdutos={() => navigate('busca')}
       onContinuarParaPagamento={() =>
-        navigate('selecionarCartao')
+        navigate('metodoPagamento')
       }
     />
   );
@@ -252,6 +250,13 @@ export function Carrinho({
     setCupomAviso(null);
   }
 
+  // Persiste o valor total (lido por todas as telas seguintes do fluxo, que não recalculam o carrinho — apenas exibem o que já foi calculado aqui) antes de seguir para o próximo passo do checkout.
+  function handleContinuarParaPagamento() {
+    salvarValorPagamento(total);
+
+    onContinuarParaPagamento?.();
+  }
+
   return (
     <>
       <Header
@@ -288,7 +293,7 @@ export function Carrinho({
                 onOcultarCupomAviso={handleOcultarCupomAviso}
                 ctaLabel="Continuar para Pagamento"
                 onCtaClick={
-                  onContinuarParaPagamento
+                  handleContinuarParaPagamento
                 }
                 ctaDisabled={carrinhoVazio || nenhumSelecionado}
               />

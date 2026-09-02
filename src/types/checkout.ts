@@ -19,7 +19,7 @@ export interface LojaGroupData {
   itens: CarrinhoItemData[];
 }
 
-export type ResumoPedidoVariant = 'vazio' | 'carrinho' | 'pagamento';
+export type ResumoPedidoVariant = 'vazio' | 'carrinho' | 'metodoPagamento' | 'pagamento';
 
 export interface PrazoPagamento {
   texto: string; // ex: "17 de abril 2026, 15:41"
