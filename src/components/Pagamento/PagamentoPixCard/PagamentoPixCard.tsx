@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check, Copy, QrCode } from 'lucide-react';
+import { Check, Copy } from 'lucide-react';
 
 import styles from './PagamentoPixCard.module.css';
 
@@ -78,10 +78,6 @@ export function PagamentoPixCard({ codigoPix, copiado, onCopiarCodigo }: Pagamen
 
   return (
     <section className={styles.card}>
-      <div className={styles.header}>
-        <h2 className={styles.titulo}>Pagamento via Pix</h2>
-        <QrCode size={18} aria-hidden="true" />
-      </div>
 
       <p className={styles.instrucao}>
         Abra o aplicativo do seu banco, escaneie o QR Code abaixo ou use o Pix Copia e Cola para concluir o
