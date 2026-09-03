@@ -22,6 +22,8 @@ interface ResumoPedidoProps {
   onCtaClick?: () => void;
   ctaDisabled?: boolean;
   prazoPagamento?: PrazoPagamento;
+  /** Segundos restantes até a expiração — fonte única de verdade, calculada pelo hook de pagamento. */
+  tempoRestanteSegundos?: number;
   mostrarSeguro?: boolean;
 }
 
@@ -30,6 +32,12 @@ const formatarPreco = (valor: number) =>
     style: 'currency',
     currency: 'BRL',
   }).format(valor);
+
+function formatarTempo(segundos: number): string {
+  const minutos = Math.floor(segundos / 60).toString().padStart(2, '0');
+  const segundosRestantes = (segundos % 60).toString().padStart(2, '0');
+  return `${minutos}:${segundosRestantes}`;
+}
 
 export function ResumoPedido({
   variant,
@@ -45,26 +53,12 @@ export function ResumoPedido({
   onCtaClick,
   ctaDisabled,
   prazoPagamento,
+  tempoRestanteSegundos = 0,
   mostrarSeguro = variant === 'pagamento' || variant === 'metodoPagamento',
 }: ResumoPedidoProps) {
   const [cepInput, setCepInput] = useState('');
   const [cupomInput, setCupomInput] = useState('');
   const cepValido = validateCEP(cepInput);
-
-  // Lógica do cronômetro regressivo (15 minutos)
-  const [tempoRestante, setTempoRestante] = useState(15 * 60);
-
-  useEffect(() => {
-    if (tempoRestante <= 0) return;
-    const interval = setInterval(() => {
-      setTempoRestante((tempoAtual) => tempoAtual - 1);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [tempoRestante]);
-
-  const minutos = Math.floor(tempoRestante / 60).toString().padStart(2, '0');
-  const segundos = (tempoRestante % 60).toString().padStart(2, '0');
 
   useEffect(() => {
     if (!cupomAviso || !onOcultarCupomAviso) {
@@ -241,7 +235,7 @@ export function ResumoPedido({
               {!prazoPagamento.expirado && (
                 <div className={styles.prazoValores}>
                   <strong className={styles.prazoContador}>
-                    {minutos}:{segundos}
+                    {formatarTempo(tempoRestanteSegundos)}
                   </strong>
                   <span className={styles.prazoData}>
                     {prazoPagamento.texto}

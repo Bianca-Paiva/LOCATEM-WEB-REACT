@@ -19,7 +19,7 @@ interface PagamentoPixProps {
 }
 
 export default function PagamentoPix({ navigate }: PagamentoPixProps) {
-  const { total, metodoValido, copiado, copiarCodigo, prazoPagamento } = usePagamentoPix(navigate);
+  const { total, metodoValido, copiado, copiarCodigo, prazoPagamento, tempoRestanteSegundos, gerarNovoCodigo } = usePagamentoPix(navigate);
   
   // Variável de mock estática para testar a leitura do QR Code
   const payloadPixMock = "00020101021126530014br.gov.bcb.pix0114+55119956921560213Teste LOCATEM52040000530398654040.015802BR5914BIANCA S PAIVA6009SAO PAULO62070503***63048BF9";
@@ -42,6 +42,7 @@ export default function PagamentoPix({ navigate }: PagamentoPixProps) {
               variant="pagamento"
               total={total}
               prazoPagamento={prazoPagamento}
+              tempoRestanteSegundos={tempoRestanteSegundos}
               mostrarSeguro
             />
           }
@@ -49,6 +50,8 @@ export default function PagamentoPix({ navigate }: PagamentoPixProps) {
           <PagamentoPixCard 
             codigoPix={payloadPixMock} // Substituímos a variável do hook pelo mock
             copiado={copiado} 
+            expirado={prazoPagamento.expirado}
+            onGerarNovoQrCode={gerarNovoCodigo}
             onCopiarCodigo={() => {
               // Forçamos a cópia do mock para a área de transferência
               navigator.clipboard.writeText(payloadPixMock);

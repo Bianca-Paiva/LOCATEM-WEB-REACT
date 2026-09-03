@@ -46,6 +46,64 @@
   justify-content: center;
 }
 
+.expiradoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 40px 20px;
+}
+
+.expiradoIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #fee2e2;
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+.expiradoTitulo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+.expiradoTexto {
+  font-size: 0.875rem;
+  color: #788191;
+  line-height: 1.5;
+  max-width: 320px;
+  margin: 0;
+}
+
+.btnGerarNovoQrCode {
+  margin-top: 12px;
+  padding: 0 24px;
+  height: 48px;
+  background-color: var(--color-primary);
+  color: var(--color-text-dark);
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btnGerarNovoQrCode:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btnGerarNovoQrCode:active {
+  transform: scale(0.98);
+}
+
 .campo {
   display: flex;
   flex-direction: column;
