@@ -19,9 +19,11 @@ interface PagamentoPixProps {
 }
 
 export default function PagamentoPix({ navigate }: PagamentoPixProps) {
-  const { total, metodoValido, codigoPix, copiado, copiarCodigo, prazoPagamento } = usePagamentoPix(navigate);
+  const { total, metodoValido, copiado, copiarCodigo, prazoPagamento } = usePagamentoPix(navigate);
+  
+  // Variável de mock estática para testar a leitura do QR Code
+  const payloadPixMock = "00020101021126530014br.gov.bcb.pix0114+55119956921560213Teste LOCATEM52040000530398654040.015802BR5914BIANCA S PAIVA6009SAO PAULO62070503***63048BF9";
 
-  // Método ausente/inválido: o hook já disparou o redirecionamento para o Carrinho, então não há nada útil para renderizar aqui.
   if (!metodoValido) return null;
 
   return (
@@ -44,7 +46,16 @@ export default function PagamentoPix({ navigate }: PagamentoPixProps) {
             />
           }
         >
-          <PagamentoPixCard codigoPix={codigoPix} copiado={copiado} onCopiarCodigo={copiarCodigo} />
+          <PagamentoPixCard 
+            codigoPix={payloadPixMock} // Substituímos a variável do hook pelo mock
+            copiado={copiado} 
+            onCopiarCodigo={() => {
+              // Forçamos a cópia do mock para a área de transferência
+              navigator.clipboard.writeText(payloadPixMock);
+              // Chamamos a função do hook apenas para acionar o efeito visual de "Copiado!" (verde)
+              copiarCodigo();
+            }} 
+          />
         </CheckoutLayout>
       </main>
     </>

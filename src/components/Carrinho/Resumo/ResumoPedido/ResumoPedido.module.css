@@ -216,17 +216,37 @@
 
 .prazoBloco {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 16px 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 0 16px;
 }
 
 .prazoLabel {
-  color: #4A5565;
-  font-size: 14px;
+  white-space: nowrap;
+  color: #0A0A0A;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.prazoValor {
+.prazoValores {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Joga o contador e a data totalmente para a direita */
+  text-align: right;
+  gap: 2px;
+  color: #0A0A0A;
+  font-size: 15px;
+}
+
+.prazoContador {
+  color: #f59e0b;
+  font-weight: 500;
+  font-size: 15px;
+  margin-right: 4px;
+}
+
+.prazoData {
   color: #0A0A0A;
   font-size: 15px;
 }

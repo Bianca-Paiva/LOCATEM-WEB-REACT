@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './ResumoPedido.module.css';
-import { Tag, Lock } from 'lucide-react';
+import { Tag } from 'lucide-react';
+import { Icon } from '@iconify/react';
 import { maskCEP, validateCEP } from '../../../../hooks/masks';
 import type {
   PrazoPagamento,
@@ -49,6 +50,21 @@ export function ResumoPedido({
   const [cepInput, setCepInput] = useState('');
   const [cupomInput, setCupomInput] = useState('');
   const cepValido = validateCEP(cepInput);
+
+  // Lógica do cronômetro regressivo (15 minutos)
+  const [tempoRestante, setTempoRestante] = useState(15 * 60);
+
+  useEffect(() => {
+    if (tempoRestante <= 0) return;
+    const interval = setInterval(() => {
+      setTempoRestante((tempoAtual) => tempoAtual - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [tempoRestante]);
+
+  const minutos = Math.floor(tempoRestante / 60).toString().padStart(2, '0');
+  const segundos = (tempoRestante % 60).toString().padStart(2, '0');
 
   useEffect(() => {
     if (!cupomAviso || !onOcultarCupomAviso) {
@@ -134,8 +150,6 @@ export function ResumoPedido({
               <button
                 className={styles.linkTexto}
                 type="button"
-
-                // API dos Correios para buscar um cep
                 onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
               >
                 Não sei o meu CEP
@@ -225,9 +239,14 @@ export function ResumoPedido({
               </span>
 
               {!prazoPagamento.expirado && (
-                <strong className={styles.prazoValor}>
-                  {prazoPagamento.texto}
-                </strong>
+                <div className={styles.prazoValores}>
+                  <strong className={styles.prazoContador}>
+                    {minutos}:{segundos}
+                  </strong>
+                  <span className={styles.prazoData}>
+                    {prazoPagamento.texto}
+                  </span>
+                </div>
               )}
             </div>
           )}
@@ -247,8 +266,10 @@ export function ResumoPedido({
 
       {mostrarSeguro && (
         <div className={styles.seguroRodape}>
-          <Lock
-            size={14}
+          <Icon
+            icon="boxicons:lock-filled"
+            width="14"
+            height="14"
             aria-hidden="true"
           />
           Pagamento 100% seguro
