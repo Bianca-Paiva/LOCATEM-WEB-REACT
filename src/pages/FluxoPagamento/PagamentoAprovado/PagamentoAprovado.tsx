@@ -6,9 +6,7 @@ import type { Route } from '../../../router/useRouter';
 import styles from './PagamentoAprovado.module.css';
 
 /* ============================================================
-   Tela "Pagamento Aprovado"
-   Fluxo: Processando Pagamento -> Pagamento Aprovado
-   Origem: WEB-CRU/pagamentoAprovado.html
+  Fluxo: Processando Pagamento -> Pagamento Aprovado
 ============================================================ */
 
 interface PagamentoAprovadoProps {
@@ -30,9 +28,7 @@ export default function PagamentoAprovado({ navigate }: PagamentoAprovadoProps) 
     voltarParaInicio,
   } = usePagamentoAprovado(navigate);
 
-  // Acesso direto/indevido (sem passar por "Processando Pagamento"): o hook
-  // já disparou o redirecionamento para o Carrinho, então não há nada útil
-  // para renderizar aqui.
+  // Acesso direto/indevido (sem passar por "Processando Pagamento"): o hook já disparou o redirecionamento para o Carrinho, então não há nada útil para renderizar aqui.
   if (!acessoValido) return null;
 
   return (

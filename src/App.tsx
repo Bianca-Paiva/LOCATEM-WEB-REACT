@@ -23,7 +23,6 @@ import Busca from "./pages/Busca/Busca";
 import Notificacoes from "./pages/Notificacoes/Notificacoes";
 import Perfil from "./pages/Perfil/Perfil";
 
-
 // Pages - Ferramentas e Produtos
 import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
 import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
