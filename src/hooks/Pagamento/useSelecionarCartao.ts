@@ -117,9 +117,7 @@ export function useSelecionarCartao(navigate: (route: Route) => void): UseSeleci
       });
     }
 
-    // Sem uma tela própria de "processando pagamento" na SPA, seguimos para o
-    // fluxo de pagamento com cartão já existente.
-    navigate('pagamentoCartao');
+    navigate('processandoPagamento');
   }
 
   return {

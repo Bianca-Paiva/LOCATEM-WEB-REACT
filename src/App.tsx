@@ -41,6 +41,8 @@ import SelecionarCartao from "./pages/FluxoPagamento/SelecionarCartao/Selecionar
 import AdicionarCartaoCredito from "./pages/FluxoPagamento/AdicionarCartaoCredito/AdicionarCartaoCredito";
 import AdicionarCartaoDebito from "./pages/FluxoPagamento/AdicionarCartaoDebito/AdicionarCartaoDebito";
 import PagamentoPix from "./pages/FluxoPagamento/PagamentoPix/PagamentoPix";
+import ProcessandoPagamento from "./pages/FluxoPagamento/ProcessandoPagamento/ProcessandoPagamento";
+import PagamentoAprovado from "./pages/FluxoPagamento/PagamentoAprovado/PagamentoAprovado";
 
 export default function App() {
   const { route, navigate } = useRouter();
@@ -92,6 +94,10 @@ export default function App() {
                   {route === "adicionarCartaoDebito" && <AdicionarCartaoDebito navigate={navigate} />}
 
                   {route === "pagamentoPix" && <PagamentoPix navigate={navigate} />}
+
+                  {route === "processandoPagamento" && <ProcessandoPagamento navigate={navigate} />}
+
+                  {route === "pagamentoAprovado" && <PagamentoAprovado navigate={navigate} />}
 
                   {route === "perfil" && <Perfil navigate={navigate} />}
                 </BuscaProvider>

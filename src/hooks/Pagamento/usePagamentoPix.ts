@@ -56,6 +56,8 @@ interface UsePagamentoPixReturn {
   tempoRestanteSegundos: number;
   /** Gera um novo código Pix e reinicia o prazo de expiração. */
   gerarNovoCodigo: () => void;
+  /** Usado pelo botão "Já efetuei o pagamento" do resumo — avança para "Processando Pagamento". */
+  confirmarPagamento: () => void;
 }
 
 export function usePagamentoPix(navigate: (route: Route) => void): UsePagamentoPixReturn {
@@ -125,6 +127,15 @@ export function usePagamentoPix(navigate: (route: Route) => void): UsePagamentoP
       });
   }
 
+  // Sem integração real com PSP nesta SPA (protótipo) — o usuário confirma
+  // manualmente que efetuou o pagamento, e a simulação segue para
+  // "Processando Pagamento". Bloqueado quando o código expirou: o usuário
+  // precisa gerar um novo código antes de poder confirmar.
+  function confirmarPagamento() {
+    if (expirado) return;
+    navigate('processandoPagamento');
+  }
+
   return {
     total,
     metodoValido,
@@ -134,5 +145,6 @@ export function usePagamentoPix(navigate: (route: Route) => void): UsePagamentoP
     prazoPagamento,
     tempoRestanteSegundos,
     gerarNovoCodigo,
+    confirmarPagamento,
   };
 }

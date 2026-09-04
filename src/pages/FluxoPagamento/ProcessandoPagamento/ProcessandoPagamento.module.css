@@ -1,0 +1,137 @@
+/* Reaproveita as cores/identidade já definidas em src/styles/global.css
+   (--color-primary, --color-primary-light, --color-primary-soft,
+   --color-bg-main, --color-text-dark, --color-text-muted) em vez de
+   redeclarar um :root local, como no HTML original. */
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    var(--color-primary) 0%,
+    var(--color-primary-light) 25%,
+    var(--color-primary-soft) 45%,
+    var(--color-bg-main) 55%
+  );
+}
+
+.main {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 34px;
+  padding: 24px;
+  text-align: center;
+}
+
+/* ========================================================
+    LOADING SPINNER
+======================================================== */
+
+.loadingSpinner {
+  width: 55px;
+  height: 55px;
+
+  border-radius: 50%;
+
+  background: conic-gradient(
+    from 0deg,
+    #f9fafb98 1deg,
+    #64b4f6 15deg,
+    #2195f3 70deg,
+    #2195f34b 100deg,
+    #f9fafb 130deg
+  );
+
+  filter: blur(0.2px);
+
+  /* Corrigido "--webkit-mask" (typo com dupla hifenização) do CSS original,
+     que fazia a propriedade ser ignorada em navegadores WebKit/Safari. */
+  mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 8px));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 8px));
+
+  animation: girar 1s linear infinite;
+}
+
+@keyframes girar {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* ============================= */
+/* PROCESSANDO PAGAMENTO         */
+/* ============================= */
+.processandoPagamento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.processandoPagamento h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.processandoPagamento p {
+  font-size: 12px;
+  color: var(--color-text-muted);
+
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .loadingSpinner {
+    width: 70px;
+    height: 70px;
+  }
+
+  .processandoPagamento h1 {
+    font-size: 24px;
+  }
+
+  .processandoPagamento p {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .loadingSpinner {
+    width: 80px;
+    height: 80px;
+  }
+
+  .processandoPagamento h1 {
+    font-size: 28px;
+  }
+
+  .processandoPagamento p {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .loadingSpinner {
+    width: 90px;
+    height: 90px;
+  }
+
+  .processandoPagamento h1 {
+    font-size: 32px;
+  }
+
+  .processandoPagamento p {
+    font-size: 18px;
+  }
+}
