@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { ProdutoSelecionado } from '../../context/ProdutoContext';
+import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
 import {
     PRAZO_APROVACAO_HORAS,
     PRAZO_PAGAMENTO_HORAS,
@@ -15,7 +15,7 @@ import {
     formatarDataBr,
     getHojeIso,
     parseDataIso,
-} from '../../utils/dataLocacao';
+} from '../../utils/Locacao/dataLocacao';
 
 // ── Helpers de moeda/horário (equivalentes aos de useSolicitarLocacao.ts) ──
 

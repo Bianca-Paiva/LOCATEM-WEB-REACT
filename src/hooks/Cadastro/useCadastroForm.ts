@@ -3,9 +3,9 @@ import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cadastroSchema, type CadastroFormData } from './cadastroSchema'
 import { CADASTRO_MESSAGES } from './cadastroMessages'
-import { PASSWORD_MESSAGES } from './passwordMessages'
-import { checkPasswordStrength } from './passwordStrength'
-import { criarUsuario } from '../services/authService'
+import { PASSWORD_MESSAGES } from '../Password/passwordMessages'
+import { checkPasswordStrength } from '../Password/passwordStrength'
+import { criarUsuario } from '../../services/authService'
 
 interface ErrorState { active: boolean; shake: boolean }
 const INITIAL_ERROR = { active: false, shake: false }
@@ -78,12 +78,12 @@ export function useCadastroForm() {
         const fields = ['nome', 'email', 'telefone', 'documento', 'endereco', 'senha', 'confirmarSenha'] as const
         fields.forEach(field => {
             const val = getValues(field)
-            
+
             // Aciona o shake se o campo estiver vazio
             if (!val || (typeof val === 'string' && !val.trim())) {
                 triggerShake(field)
                 hasEmptyFields = true
-            } 
+            }
             // Aciona o shake se o campo estiver preenchido, mas com erro de validação
             else if (formErrors[field]) {
                 triggerShake(field)

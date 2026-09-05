@@ -1,9 +1,9 @@
 import { Controller } from 'react-hook-form'
 import styles from './Cadastro.module.css'
 
-import { maskCPF, maskCNPJ, maskPhone } from '../../hooks/masks'
-import { getPasswordValidations, getConfirmPasswordStatus } from '../../hooks/passwordValidation'
-import { useCadastroForm } from '../../hooks/useCadastroForm'
+import { maskCPF, maskCNPJ, maskPhone } from '../../hooks/Mascaras/masks'
+import { getPasswordValidations, getConfirmPasswordStatus } from '../../hooks/Password/passwordValidation'
+import { useCadastroForm } from '../../hooks/Cadastro/useCadastroForm'
 import type { Route } from '../../router/useRouter'
 
 import FormInput from '../../components/Inputs/FormInput/FormInput'

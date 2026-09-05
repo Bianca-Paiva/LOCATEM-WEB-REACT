@@ -12,7 +12,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import type { Route } from '../../../router/useRouter';
-import type { TipoUsuario } from '../../../types/usuario.types';
+import type { TipoUsuario } from '../../../types/Usuario/usuario.types';
 import styles from './PainelControle.module.css';
 
 interface PainelControleProps {
@@ -31,7 +31,7 @@ interface OpcaoPainel {
 // Opções comuns às duas variantes do protótipo (Locatário e Locador).
 const OPCOES_BASE: OpcaoPainel[] = [
   { icone: <Wrench size={20} />, titulo: 'Aluguéis Ativos', descricao: 'Visualize seus equipamentos alugados atualmente.', route: 'minhasLocacoes' },
-  { icone: <Clock size={20} />, titulo: 'Histórico de Locações', descricao: 'Consulte todas as suas locações anteriores.'},
+  { icone: <Clock size={20} />, titulo: 'Histórico de Locações', descricao: 'Consulte todas as suas locações anteriores.' },
   { icone: <Heart size={20} />, titulo: 'Favoritos', descricao: 'Ferramentas e equipamentos salvos.' },
   { icone: <Wallet size={20} />, titulo: 'Pagamentos', descricao: 'Visualize pagamentos, cauções e reembolsos.' },
   { icone: <FileText size={20} />, titulo: 'Contratos', descricao: 'Acesse todos os contratos digitais.' },

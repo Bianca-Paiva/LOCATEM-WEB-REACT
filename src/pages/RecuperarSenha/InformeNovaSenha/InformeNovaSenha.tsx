@@ -16,16 +16,16 @@ import SuccessModal from "../../../components/SuccessModal/SucessesModal";
 // HOOKS / REGRAS DE NEGÓCIO / VALIDAÇÕES
 import { useState } from "react";
 
-import { checkPasswordStrength } from "../../../hooks/passwordStrength";
+import { checkPasswordStrength } from "../../../hooks/Password/passwordStrength";
 
 import {
     getConfirmPasswordError,
     getConfirmPasswordStatus,
     getPasswordValidations,
     validatePasswordForm,
-} from "../../../hooks/passwordValidation";
+} from "../../../hooks/Password/passwordValidation";
 
-import { PASSWORD_MESSAGES } from "../../../hooks/passwordMessages";
+import { PASSWORD_MESSAGES } from "../../../hooks/Password/passwordMessages";
 
 
 // ROTAS 

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { StatusLocacao } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import { formatarIntervaloHorario } from '../../../utils/horario';
+import { formatarIntervaloHorario } from '../../../utils/Locacao/horario';
 import styles from './PainelStatusLocacao.module.css';
 
 interface PainelStatusLocacaoProps {

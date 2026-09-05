@@ -1,8 +1,8 @@
 import { createContext, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Produto } from '../types/produto.types';
-import type { AvaliacaoProduto } from '../pages/ProdutoDetalhe/ProdutoDetalhe.types';
-import { PRODUTOS_MOCK } from '../mocks/produtos.mock';
+import type { Produto } from '../../types/Produto/produto.types';
+import type { AvaliacaoProduto } from '../../pages/ProdutoDetalhe/ProdutoDetalhe.types';
+import { PRODUTOS_MOCK } from '../../mocks/produtos.mock';
 
 interface CatalogoContextType {
   /** Fonte única de verdade do catálogo de ferramentas (mock inicial + novos anúncios). */

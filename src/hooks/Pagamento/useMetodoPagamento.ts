@@ -1,10 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { Route } from '../../router/useRouter';
-import type { FormaPagamento } from '../../types/cartao.types';
-import { lerValorPagamento, salvarMetodoPagamento } from '../../utils/pagamentoStorage';
+import type { FormaPagamento } from '../../types/Pagamento/cartao.types';
+import { lerValorPagamento, salvarMetodoPagamento } from '../../utils/Pagamento/pagamentoStorage';
 
-// Formas de pagamento que utilizam um cartão salvo e, por isso, seguem para a
-// tela "Selecionar Cartão".
+// Formas de pagamento que utilizam um cartão salvo e, por isso, seguem para a tela "Selecionar Cartão".
 const FORMAS_COM_CARTAO: FormaPagamento[] = ['credito', 'debito'];
 
 interface UseMetodoPagamentoReturn {
@@ -39,8 +38,7 @@ export function useMetodoPagamento(navigate: (route: Route) => void): UseMetodoP
   function selecionarForma(forma: FormaPagamento) {
     setFormaSelecionada(forma);
 
-    // Cartão de crédito/débito: ao selecionar a opção, já avança para a
-    // tela de Selecionar Cartão (não é preciso clicar em "Continuar Pagamento").
+    // Cartão de crédito/débito: ao selecionar a opção, já avança para a tela de Selecionar Cartão (não é preciso clicar em "Continuar Pagamento").
     if (FORMAS_COM_CARTAO.includes(forma)) {
       irParaProximaTela(forma);
     }

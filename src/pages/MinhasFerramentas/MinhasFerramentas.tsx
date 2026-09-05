@@ -6,8 +6,8 @@ import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
 import EstadoVazio from '../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
 
-import { useCatalogoStore } from '../../hooks/useCatalogoStore';
-import { useProdutoStore } from '../../hooks/useProdutoStore';
+import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
+import { useProdutoStore } from '../../hooks/Produto/useProdutoStore';
 import { toProdutoHome, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import styles from './MinhasFerramentas.module.css';
 

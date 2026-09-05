@@ -9,8 +9,7 @@ import type { Route } from '../../../router/useRouter';
 import styles from './MetodoPagamento.module.css';
 
 /* ============================================================
-   Tela "Método de Pagamento"
-   Fluxo: Carrinho -> Método de Pagamento -> Selecionar Cartão (crédito/débito) ou Pix
+  Fluxo: Carrinho -> Método de Pagamento -> Selecionar Cartão (crédito/débito) ou Pix
 ============================================================ */
 
 interface MetodoPagamentoProps {

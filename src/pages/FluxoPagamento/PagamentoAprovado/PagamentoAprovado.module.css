@@ -1,12 +1,7 @@
-/* Reaproveita --color-bg-main, --color-bg-card, --color-primary,
-   --color-primary-light, --color-text-dark, --color-text-muted e
-   --radius-pill já definidos em src/styles/global.css, em vez de
-   redeclarar um :root local como no HTML original. */
-
 .paymentSuccess {
   width: 100%;
-  min-height: 100vh;
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
   background-color: var(--color-bg-main);
   overflow: hidden;
 }
@@ -15,13 +10,12 @@
    TOPO / HERO
 ========================================================= */
 .hero {
-  background: linear-gradient(
-    to bottom,
-    var(--color-primary) 0%,
-    var(--color-primary-light) 38%,
-    #ece5bf 68%,
-    var(--color-bg-main) 100%
-  );
+  width: 100%;
+  background: linear-gradient(to bottom,
+      var(--color-primary) 0%,
+      var(--color-primary-light) 38%,
+      #ece5bf 68%,
+      var(--color-bg-main) 100%);
   text-align: center;
   padding: 48px 28px 34px;
 }
@@ -30,6 +24,7 @@
   width: 100px;
   height: 100px;
   margin: 0 auto 28px;
+  padding: 0;
   border-radius: 50%;
   background-color: var(--color-bg-card);
   display: flex;
@@ -41,16 +36,16 @@
 .iconeConcluido {
   width: auto;
   height: 50px;
+  margin: 0;
   color: #1f7a2e;
 }
 
 .heroTitle {
-  max-width: 310px;
-  margin: 0 auto 10px;
   font-size: 28px;
-  line-height: 1.2;
   font-weight: 800;
+  line-height: 1.2;
   color: var(--color-text-dark);
+  margin-bottom: 10px;
 }
 
 .heroSubtitle {
@@ -78,9 +73,10 @@
    CONTEÚDO
 ========================================================= */
 .content {
-  padding: 28px 24px 40px;
-  max-width: 640px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px;
+  padding: 48px 28px 34px;
+  margin: 0;
 }
 
 /* =========================================================

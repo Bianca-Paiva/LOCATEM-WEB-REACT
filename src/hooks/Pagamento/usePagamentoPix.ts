@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { Route } from '../../router/useRouter';
-import type { PrazoPagamento } from '../../types/checkout';
-import { lerMetodoPagamento, lerValorPagamento } from '../../utils/pagamentoStorage';
+import type { PrazoPagamento } from '../../types/Pagamento/checkout';
+import { lerMetodoPagamento, lerValorPagamento } from '../../utils/Pagamento/pagamentoStorage';
 
 const MINUTOS_EXPIRACAO = 15;
 

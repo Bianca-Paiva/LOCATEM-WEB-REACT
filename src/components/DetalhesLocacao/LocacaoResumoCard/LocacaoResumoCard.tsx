@@ -1,6 +1,6 @@
 import { Calendar, User, MapPin, Star } from 'lucide-react';
 import type { LocacaoData } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import { formatarIntervaloHorario } from '../../../utils/horario';
+import { formatarIntervaloHorario } from '../../../utils/Locacao/horario';
 import styles from './LocacaoResumoCard.module.css';
 
 interface LocacaoResumoCardProps {

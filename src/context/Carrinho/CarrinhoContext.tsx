@@ -1,7 +1,8 @@
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { ProdutoSelecionado } from './ProdutoContext';
-import type { DadosLocacaoModal } from '../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+import type { ProdutoSelecionado } from '../Produto/ProdutoContext';
+import type { DadosLocacaoModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+import { AuthContext } from '../Auth/AuthContext';
 
 export interface ItemCarrinho {
   id: string;
@@ -67,10 +68,19 @@ function recalcularDados(
 export function CarrinhoProvider({ children }: { children: ReactNode }) {
   const [itens, setItens] = useState<ItemCarrinho[]>([]);
 
+  // Carrinho e locação são funcionalidades exclusivas de locatários — um usuário
+  // autenticado como locador nunca deve conseguir adicionar itens (mesmo que a
+  // interface para chegar até aqui esteja escondida para ele em outros pontos,
+  // como o Header e a página do Carrinho).
+  const auth = useContext(AuthContext);
+  const ehLocador = auth?.usuario?.tipo === 'locador';
+
   // Só adiciona a ferramenta ao carrinho (com datas/horários/quantidade já
   // escolhidos no modal) — não cria solicitação, notificação nem dispara
   // fluxo de aprovação/pagamento algum, conforme o fluxo "Adicionar ao carrinho".
   const adicionarItem = (produto: ProdutoSelecionado, dados: DadosLocacaoModal) => {
+    if (ehLocador) return;
+
     const novoItem: ItemCarrinho = { id: `c-${Date.now()}`, produto, dados, selecionado: true };
     setItens((atuais) => [novoItem, ...atuais]);
   };

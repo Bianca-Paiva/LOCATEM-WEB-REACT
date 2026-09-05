@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Calendar } from 'lucide-react';
 import CalendarioLocacao from '../CalendarioLocacao/CalendarioLocacao';
-import { formatarDataBr, parseDataIso } from '../../../utils/dataLocacao';
+import { formatarDataBr, parseDataIso } from '../../../utils/Locacao/dataLocacao';
 import styles from './CampoData.module.css';
 
 interface CampoDataProps {

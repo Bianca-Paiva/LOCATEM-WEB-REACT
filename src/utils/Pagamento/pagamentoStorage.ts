@@ -1,8 +1,8 @@
 // Ponto único de leitura/escrita do localStorage para o fluxo de pagamento (Carrinho -> Método de Pagamento -> Selecionar Cartão / Pix).
 //
 // Únicas chaves utilizadas por todo o fluxo — nenhum outro módulo deve acessar 'locatem_pagamento_*' diretamente via localStorage, para evitar chaves soltas/duplicadas e manter o valor consistente entre as telas.
-import type { FormaPagamento } from '../types/cartao.types';
-import type { CartaoPagamentoArmazenado } from '../types/cartao.types';
+import type { FormaPagamento } from '../../types/Pagamento/cartao.types';
+import type { CartaoPagamentoArmazenado } from '../../types/Pagamento/cartao.types';
 
 export const CHAVE_VALOR = 'locatem_pagamento_valor';
 export const CHAVE_METODO = 'locatem_pagamento_metodo';

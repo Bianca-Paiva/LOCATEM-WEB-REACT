@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CarrinhoContext } from '../context/CarrinhoContext';
+import { CarrinhoContext } from '../../context/Carrinho/CarrinhoContext';
 
 export function useCarrinhoStore() {
   const ctx = useContext(CarrinhoContext);

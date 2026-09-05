@@ -1,9 +1,6 @@
 import type { NotificationData } from './Notificacoes.types';
 
-// Mock de notificações. "details" contém dados fictícios até integração com API real.
-// `statusLocacao` e `locacaoId` conectam a notificação a uma locacao real de
-// `mockLocacoes` (MinhasLocacoes.mock.ts), garantindo que ícone/cor sigam o mesmo
-// padrão de `STATUS_CONFIG` e que os botões do modal levem à locacao correta.
+// Mock de notificações. "details" contém dados fictícios até integração com API real. `statusLocacao` e `locacaoId` conectam a notificação a uma locacao real de `mockLocacoes` (MinhasLocacoes.mock.ts), garantindo que ícone/cor sigam o mesmo padrão de `STATUS_CONFIG` e que os botões do modal levem à locacao correta.
 export const mockNotifications: NotificationData[] = [
   {
     id: '1',

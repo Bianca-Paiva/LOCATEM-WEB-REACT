@@ -1,5 +1,5 @@
 import styles from './CartaoSelecionavel.module.css';
-import type { Cartao } from '../../../types/cartao.types';
+import type { Cartao } from '../../../types/Pagamento/cartao.types';
 
 import cartaoIconGenerico from '../../../assets/Cartoesbandeiras/cartao.svg';
 import visaIcon from '../../../assets/Cartoesbandeiras/visa.png';

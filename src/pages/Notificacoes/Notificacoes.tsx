@@ -4,7 +4,7 @@ import NotificationCard from '../../components/Notificacoes/NotificationCard/Not
 import FilterDropdown from '../../components/Notificacoes/FilterDropdownNotificacao/FilterDropdown';
 import Pagination from '../../components/Notificacoes/Pagination/Pagination';
 import NotificationDetailsModal from '../../components/Notificacoes/NotificationModal/NotificationDetailsModal';
-import { useNotifications } from '../../hooks/useNotifications';
+import { useNotifications } from '../../hooks/Notificacoes/useNotifications';
 import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import styles from './Notificacoes.module.css';
 import Header from '../../components/Header/Header';

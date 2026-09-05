@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { Route } from '../../router/useRouter';
-import type { Cartao, MetodoPagamento } from '../../types/cartao.types';
+import type { Cartao, MetodoPagamento } from '../../types/Pagamento/cartao.types';
 import {
   detectarBandeiraCartao,
   maskCVV,
@@ -9,8 +9,8 @@ import {
   nomeBandeiraCartao,
   validateValidadeCartao,
   type BandeiraCartao,
-} from '../masks';
-import { lerValorPagamento } from '../../utils/pagamentoStorage';
+} from '../Mascaras/masks';
+import { lerValorPagamento } from '../../utils/Pagamento/pagamentoStorage';
 
 // ============================================================
 //  MENSAGENS DE ERRO
@@ -31,9 +31,9 @@ export const PARCELAS_PADRAO = Array.from({ length: 12 }, (_, index) => {
   // Se for até 6 parcelas é sem juros, se for mais, é com juros
 
   return `${parcela}x sem juros`;
-  
+
   // const juros = parcela <= 6 ? 'sem juros' : 'com juros'; 
-  
+
   // return `${parcela}x ${juros}`;
 });
 

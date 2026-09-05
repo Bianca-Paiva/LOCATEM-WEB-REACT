@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import type { ReactNode, Dispatch, SetStateAction } from 'react';
-import type { LocacaoData } from '../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import { mockLocacoes } from '../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.mock';
+import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import { mockLocacoes } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.mock';
 
 interface LocacaoContextType {
   locacoes: LocacaoData[];

@@ -81,6 +81,42 @@
   border: 1px solid #ffcc0060;
 }
 
+/* Mesmo tratamento visual de erro do componente FormInput (FormInput.module.css) */
+.inputContainerErro {
+  border: 1px solid #E11D48;
+  box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
+}
+
+.freteErroMsg {
+  display: block;
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #E11D48;
+}
+
+/* Mesmo efeito de "chacoalhar" do componente FormInput (FormInput.module.css) */
+.shake {
+  animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
 .linkTexto {
   margin-left: auto;
   padding: 0;

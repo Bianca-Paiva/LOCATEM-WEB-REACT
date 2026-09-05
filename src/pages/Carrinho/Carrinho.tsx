@@ -1,22 +1,25 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Header from '../../components/Header/Header';
 import { CarrinhoVazio } from '../../components/Carrinho/CarrinhoVazio/CarrinhoVazio';
 import { LojaGroup } from '../../components/Carrinho/LojaGroup/LojaGroup';
 import { ResumoPedido } from '../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import { useCarrinhoStore } from '../../hooks/useCarrinhoStore';
+import ModalLoginNecessario from '../../components/Carrinho/ModalLoginNecessario/ModalLoginNecessario';
+import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore';
+import { useAuth } from '../../hooks/Auth/useAuth';
 
-import type { CarrinhoItemData, LojaGroupData } from '../../types/checkout';
-import type { ItemCarrinho as ItemCarrinhoContexto } from '../../context/CarrinhoContext';
+import type { CarrinhoItemData, LojaGroupData } from '../../types/Pagamento/checkout';
+import type { ItemCarrinho as ItemCarrinhoContexto } from '../../context/Carrinho/CarrinhoContext';
 import type { Route } from '../../router/useRouter';
 
 import styles from './Carrinho.module.css';
 import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
 import { CheckoutLayout } from '../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
-import { salvarValorPagamento } from '../../utils/pagamentoStorage';
+import { salvarValorPagamento } from '../../utils/Pagamento/pagamentoStorage';
+import { salvarRedirectAposLogin } from '../../utils/Auth/redirectAposLogin';
 
 /* ============================================================
-   HELPERS
+  HELPERS
 ============================================================ */
 
 // Preço do produto vem como string ("599,98") vinda do cadastro — mesma conversão usada em useSolicitarLocacaoModal.ts.
@@ -60,7 +63,7 @@ function agruparPorLoja(itens: ItemCarrinhoContexto[]): LojaGroupData[] {
 }
 
 /* ============================================================
-   PAGE
+  PAGE
 ============================================================ */
 
 interface CarrinhoPageProps {
@@ -83,7 +86,7 @@ export default function CarrinhoPage({
 }
 
 /* ============================================================
-   COMPONENT
+  COMPONENT
 ============================================================ */
 
 interface CarrinhoProps {
@@ -109,10 +112,31 @@ export function Carrinho({
     selecionarItens,
   } = useCarrinhoStore();
 
+  const { isAuthenticated, usuario } = useAuth();
+
+  // Carrinho e locação são exclusivos de locatários — um locador autenticado não deve
+  // ter acesso a esta página (mesma regra já aplicada na navegação do Header).
+  const acessoNegadoParaLocador = isAuthenticated && usuario?.tipo === 'locador';
+
+  useEffect(() => {
+    if (acessoNegadoParaLocador) {
+      navigate('home');
+    }
+  }, [acessoNegadoParaLocador, navigate]);
+
   const lojas = useMemo(() => agruparPorLoja(itens), [itens]);
 
   const [freteValor, setFreteValor] =
     useState<number | null>(null);
+
+  // Erro/shake do campo de frete ao clicar em "Continuar para Pagamento" sem
+  // preenchê-lo — mesmo padrão (active/shake) já usado em Login.tsx e
+  // useEditarPerfilForm.ts para acionar o efeito do componente FormInput.
+  const [freteErro, setFreteErro] =
+    useState<{ active: boolean; shake: boolean }>({ active: false, shake: false });
+
+  const [modalLoginAberto, setModalLoginAberto] =
+    useState(false);
 
   const [cupomAplicado, setCupomAplicado] =
     useState<string | null>(null);
@@ -218,6 +242,22 @@ export function Carrinho({
      * Depois, este trecho deve chamar a API de frete.
      */
     setFreteValor(10);
+    setFreteErro({ active: false, shake: false });
+  }
+
+  // Mesmo padrão de "chacoalhar" usado em Login.tsx: zera o shake, reativa no próximo
+  // tick (força o React a reiniciar a animação) e desliga só o shake depois, mantendo
+  // a mensagem de erro visível.
+  function triggerFreteShake() {
+    setFreteErro((atual) => ({ ...atual, shake: false }));
+
+    setTimeout(() => {
+      setFreteErro({ active: true, shake: true });
+    }, 10);
+
+    setTimeout(() => {
+      setFreteErro((atual) => ({ ...atual, shake: false }));
+    }, 410);
   }
 
   function handleAplicarCupom(
@@ -252,16 +292,50 @@ export function Carrinho({
 
   // Persiste o valor total (lido por todas as telas seguintes do fluxo, que não recalculam o carrinho — apenas exibem o que já foi calculado aqui) antes de seguir para o próximo passo do checkout.
   function handleContinuarParaPagamento() {
+    // 1. Usuário deslogado: impede o avanço e exibe o modal pedindo login —
+    // o carrinho continua intacto, sem persistir nada ainda.
+    if (!isAuthenticated) {
+      setModalLoginAberto(true);
+      return;
+    }
+
+    // 2. Locatário autenticado: o frete é obrigatório para seguir ao pagamento.
+    if (freteValor == null) {
+      triggerFreteShake();
+      return;
+    }
+
     salvarValorPagamento(total);
 
     onContinuarParaPagamento?.();
   }
+
+  // Ação do botão "Entrar na minha conta" do modal: marca para onde o usuário deve
+  // voltar (o próprio Carrinho, com os itens preservados no CarrinhoContext) e leva
+  // para o Login. Vale tanto para quem já tem conta quanto para quem vai passar por
+  // "Criar uma conta" antes — a marcação persiste em sessionStorage até o login.
+  function handleEntrarNaMinhaConta() {
+    salvarRedirectAposLogin('carrinho');
+    setModalLoginAberto(false);
+    navigate('login');
+  }
+
+  // Locador autenticado: o efeito acima já disparou o redirecionamento para a Home,
+  // então não há nada útil para renderizar aqui (mesmo padrão usado nas telas do
+  // fluxo de pagamento, ex.: SelecionarCartao/ProcessandoPagamento).
+  if (acessoNegadoParaLocador) return null;
 
   return (
     <>
       <Header
         navigate={navigate}
         currentRoute="carrinho"
+      />
+
+      <ModalLoginNecessario
+        open={modalLoginAberto}
+        onClose={() => setModalLoginAberto(false)}
+        onEntrar={handleEntrarNaMinhaConta}
       />
 
       <main className={styles.pagina}>
@@ -283,6 +357,8 @@ export function Carrinho({
                 desconto={desconto}
                 total={total}
                 freteValor={freteComCupom}
+                freteErro={freteErro.active ? 'O frete é obrigatório.' : ''}
+                freteShake={freteErro.shake}
                 onCalcularFrete={
                   handleCalcularFrete
                 }

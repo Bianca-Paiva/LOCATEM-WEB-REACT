@@ -1,6 +1,6 @@
 import { ItemCarrinho } from '../ItemCarrinho/ItemCarrinho';
 import styles from './LojaGroup.module.css';
-import type { LojaGroupData } from '../../../types/checkout';
+import type { LojaGroupData } from '../../../types/Pagamento/checkout';
 
 interface LojaGroupProps {
   loja: LojaGroupData;

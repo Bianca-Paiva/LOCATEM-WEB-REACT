@@ -1,4 +1,4 @@
-import type { Produto } from '../types/produto.types';
+import type { Produto } from '../types/Produto/produto.types';
 
 /**
  * Catálogo central de produtos (ferramentas) mockados.

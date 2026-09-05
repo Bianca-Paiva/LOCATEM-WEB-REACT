@@ -2,13 +2,13 @@
 import { useRouter } from "./router/useRouter";
 
 // Context Providers
-import { AuthProvider } from "./context/AuthContext";
-import { BuscaProvider } from "./context/BuscaContext";
-import { CarrinhoProvider } from "./context/CarrinhoContext";
-import { CatalogoProvider } from "./context/CatalogoContext";
-import { LocacaoProvider } from "./context/LocacaoContext";
-import { NotificationProvider } from "./context/NotificationContext";
-import { ProdutoProvider } from "./context/ProdutoContext";
+import { AuthProvider } from "./context/Auth/AuthContext";
+import { BuscaProvider } from "./context/Busca/BuscaContext";
+import { CarrinhoProvider } from "./context/Carrinho/CarrinhoContext";
+import { CatalogoProvider } from "./context/Catalago/CatalogoContext";
+import { LocacaoProvider } from "./context/Locacao/LocacaoContext";
+import { NotificationProvider } from "./context/Notificacao/NotificationContext";
+import { ProdutoProvider } from "./context/Produto/ProdutoContext";
 
 // Pages - Autenticação e Recuperação de Senha
 import Login from "./pages/Login/Login";

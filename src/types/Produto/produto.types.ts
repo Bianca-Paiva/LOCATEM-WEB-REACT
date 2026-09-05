@@ -1,12 +1,10 @@
-import type { AvaliacaoProduto } from '../pages/ProdutoDetalhe/ProdutoDetalhe.types';
+import type { AvaliacaoProduto } from '../../pages/ProdutoDetalhe/ProdutoDetalhe.types';
 
 /**
  * Tipo mestre de Produto (ferramenta).
  * Reúne TODOS os campos que qualquer página do app pode precisar exibir.
  *
- * Cada página tem seu próprio tipo "recortado" (ex: ProdutoHome, ProdutoBusca)
- * com apenas os campos que ela de fato usa. Os adapters em `produtos.adapters.ts`
- * fazem a conversão de Produto -> tipo da página.
+ * Cada página tem seu próprio tipo "recortado" (ex: ProdutoHome, ProdutoBusca) com apenas os campos que ela de fato usa. Os adapters em `produtos.adapters.ts` fazem a conversão de Produto -> tipo da página.
  */
 export interface Produto {
     id: number;

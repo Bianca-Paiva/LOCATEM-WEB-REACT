@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 import type { Route } from '../../router/useRouter';
-import { lerMetodoPagamento, marcarPagamentoProcessado } from '../../utils/pagamentoStorage';
+import { lerMetodoPagamento, marcarPagamentoProcessado } from '../../utils/Pagamento/pagamentoStorage';
 
 
-const TEMPO_PROCESSAMENTO_MS = 8000;
+const TEMPO_PROCESSAMENTO_MS = 2000;
 
 interface UseProcessandoPagamentoReturn {
   /** false enquanto a tela redireciona por método ausente/inválido (mesma regra usada em Selecionar Cartão/Pix). */
@@ -23,12 +23,11 @@ export function useProcessandoPagamento(navigate: (route: Route) => void): UsePr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metodoValido]);
 
-  // Evita que o timer seja agendado mais de uma vez (ex.: dupla invocação de efeitos em StrictMode) — garante que o pagamento seja "processado" e o redirecionamento para "Pagamento Aprovado" aconteça uma única vez.
-  const jaAgendado = useRef(false);
-
+  // Agenda o redirecionamento para "Pagamento Aprovado" após o tempo de processamento.
+  //
+  // Importante: NÃO usar um useRef como guarda de "já agendado" aqui. Em desenvolvimento, o StrictMode (main.tsx) invoca cada efeito duas vezes de propósito — monta, limpa e monta de novo — para detectar efeitos não-idempotentes. Um guard por ref sobreviveria a essa limpeza simulada (o ref não é resetado) e bloquearia o reagendamento do timer na segunda montagem real, deixando a tela travada em "Processando pagamento..." para sempre. Sem o guard, cada montagem agenda e limpa o seu próprio timer: no StrictMode, o primeiro timer é cancelado no cleanup simulado e o segundo (da montagem real) é o único que efetivamente dispara — exatamente uma vez, como esperado tanto em desenvolvimento quanto em produção (onde o efeito roda uma única vez de qualquer forma).
   useEffect(() => {
-    if (!metodoValido || jaAgendado.current) return;
-    jaAgendado.current = true;
+    if (!metodoValido) return;
 
     const timer = window.setTimeout(() => {
       marcarPagamentoProcessado();

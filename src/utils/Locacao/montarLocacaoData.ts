@@ -1,7 +1,7 @@
-import type { ProdutoSelecionado } from '../context/ProdutoContext';
-import type { DadosLocacaoModal } from '../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
-import type { LocacaoData } from '../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import type { NotificationData } from '../pages/Notificacoes/Notificacoes.types';
+import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
+import type { DadosLocacaoModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import type { NotificationData } from '../../pages/Notificacoes/Notificacoes.types';
 
 const MESES_ABREV = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 

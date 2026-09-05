@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import styles from './ResumoPedido.module.css';
 import { Tag } from 'lucide-react';
 import { Icon } from '@iconify/react';
-import { maskCEP, validateCEP } from '../../../../hooks/masks';
+import { maskCEP, validateCEP } from '../../../../hooks/Mascaras/masks';
 import type {
   PrazoPagamento,
   ResumoPedidoVariant,
-} from '../../../../types/checkout';
+} from '../../../../types/Pagamento/checkout';
 
 interface ResumoPedidoProps {
   variant: ResumoPedidoVariant;
@@ -15,6 +15,10 @@ interface ResumoPedidoProps {
   total?: number;
   onCalcularFrete?: (cep: string) => void;
   freteValor?: number | null;
+  /** Mensagem exibida abaixo do input de frete (ex.: "O frete é obrigatório."), ou vazio/undefined quando não há erro. */
+  freteErro?: string;
+  /** Dispara o efeito de "chacoalhar" (mesmo padrão do componente FormInput) no bloco do frete. */
+  freteShake?: boolean;
   onAplicarCupom?: (codigo: string) => void;
   cupomAviso?: string | null;
   onOcultarCupomAviso?: () => void;
@@ -46,6 +50,8 @@ export function ResumoPedido({
   total = 0,
   onCalcularFrete,
   freteValor,
+  freteErro,
+  freteShake = false,
   onAplicarCupom,
   cupomAviso,
   onOcultarCupomAviso,
@@ -119,7 +125,10 @@ export function ResumoPedido({
             </div>
 
             <div className={styles.freteInputRow}>
-              <div className={styles.inputContainer}>
+              <div
+                key={`frete-input-${freteShake}`}
+                className={`${styles.inputContainer} ${freteErro ? styles.inputContainerErro : ''} ${freteShake ? styles.shake : ''}`}
+              >
                 <input
                   className={styles.inputSemBorda}
                   value={cepInput}
@@ -127,6 +136,7 @@ export function ResumoPedido({
                   inputMode="numeric"
                   onChange={(e) => setCepInput(maskCEP(e.target.value))}
                   aria-label="CEP"
+                  aria-invalid={!!freteErro}
                 />
 
                 <button
@@ -149,6 +159,8 @@ export function ResumoPedido({
                 Não sei o meu CEP
               </button>
             </div>
+
+            {freteErro && <small className={styles.freteErroMsg}>{freteErro}</small>}
           </div>
 
           <div className={styles.cupomBloco}>

@@ -4,10 +4,10 @@ import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
 import { X, LogOut } from "lucide-react";
-import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
-import { useAuth } from '../../hooks/useAuth'
-import { useBuscaStore } from '../../hooks/useBuscaStore'
-import type { TipoUsuario } from '../../types/usuario.types'
+import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore'
+import { useAuth } from '../../hooks/Auth/useAuth'
+import { useBuscaStore } from '../../hooks/Busca/useBuscaStore'
+import type { TipoUsuario } from '../../types/Usuario/usuario.types'
 import Avatar from '../Avatar/Avatar'
 import styles from './Header.module.css'
 
@@ -209,16 +209,19 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         </a>
                     </div>
                     <div className={styles.ladoDireito}>
-                        <a
-                            href="#"
-                            className={styles.carrinhoBtn}
-                            onClick={e => { e.preventDefault(); navigate('carrinho') }}
-                        >
-                            <Icon icon="mdi:cart-outline" width={24} height={24} />
-                            {quantidadeCarrinho > 0 && (
-                                <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
-                            )}
-                        </a>
+                        {/* Carrinho é exclusivo de locatários — mesma regra já aplicada aos itens de navegação (perfis: ['locatario']) */}
+                        {usuario?.tipo !== 'locador' && (
+                            <a
+                                href="#"
+                                className={styles.carrinhoBtn}
+                                onClick={e => { e.preventDefault(); navigate('carrinho') }}
+                            >
+                                <Icon icon="mdi:cart-outline" width={24} height={24} />
+                                {quantidadeCarrinho > 0 && (
+                                    <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
+                                )}
+                            </a>
+                        )}
 
                         <a
                             href="#"

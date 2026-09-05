@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Usuario } from '../types/usuario.types';
-import { buscarUsuarioPorEmail, criarUsuarioFallback } from '../mocks/usuarios.mock';
+import type { Usuario } from '../../types/Usuario/usuario.types';
+import { buscarUsuarioPorEmail, criarUsuarioFallback } from '../../mocks/usuarios.mock';
 
 interface AuthContextType {
   /** Usuário autenticado, ou null quando não há sessão (mesmo comportamento atual do Header). */

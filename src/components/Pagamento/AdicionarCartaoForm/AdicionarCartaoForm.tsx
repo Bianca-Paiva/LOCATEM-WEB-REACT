@@ -1,12 +1,12 @@
 import type { ChangeEvent } from 'react';
 import { CreditCard } from 'lucide-react';
 
-import type { BandeiraCartao } from '../../../hooks/masks';
+import type { BandeiraCartao } from '../../../hooks/Mascaras/masks';
 import type { CampoCartao } from '../../../hooks/Pagamento/useAdicionarCartao';
 import { PARCELAS_PADRAO } from '../../../hooks/Pagamento/useAdicionarCartao';
 
 import FormInput from '../../../components/Inputs/FormInput/FormInput';
-import FormSelect from '../../../components/Inputs/FormSelect/FormSelect'; 
+import FormSelect from '../../../components/Inputs/FormSelect/FormSelect';
 
 import cartaoIconGenerico from '../../../assets/Cartoesbandeiras/cartao.svg';
 import visaIcon from '../../../assets/Cartoesbandeiras/visa.png';
@@ -75,7 +75,7 @@ export function AdicionarCartaoForm({
       </div>
 
       <form className={styles.formulario} onSubmit={(e) => e.preventDefault()}>
-        
+
         {/* Número do Cartão */}
         <div className={styles.inputCartao}>
           <FormInput

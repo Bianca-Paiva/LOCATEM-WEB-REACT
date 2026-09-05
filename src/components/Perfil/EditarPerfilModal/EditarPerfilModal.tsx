@@ -6,10 +6,10 @@ import Avatar from '../../Avatar/Avatar';
 import FormInput from '../../Inputs/FormInput/FormInput';
 import BtnPrincipal from '../../BtnPrincipal/BtnPrincipal';
 import Alerta from '../../RecuperarSenha/Alerta/Alerta';
-import { maskCPF, maskCNPJ, maskPhone, maskCEP, formatPhone } from '../../../hooks/masks';
+import { maskCPF, maskCNPJ, maskPhone, maskCEP, formatPhone } from '../../../hooks/Mascaras/masks';
 import { useEditarPerfilForm } from '../../../hooks/Perfil/useEditarPerfilForm';
 import type { PerfilFormData } from '../../../hooks/Perfil/perfilSchema';
-import type { Usuario } from '../../../types/usuario.types';
+import type { Usuario } from '../../../types/Usuario/usuario.types';
 import styles from './EditarPerfilModal.module.css';
 
 interface EditarPerfilModalProps {

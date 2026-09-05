@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import { EstrelasAvaliacao } from '../../Avaliacao/EstrelaAvaliacao/EstrelaAvaliacao';
-import type { ReputacaoUsuario, TipoUsuario } from '../../../types/usuario.types';
+import type { ReputacaoUsuario, TipoUsuario } from '../../../types/Usuario/usuario.types';
 import styles from './ReputacaoCard.module.css';
 
 interface ReputacaoCardProps {

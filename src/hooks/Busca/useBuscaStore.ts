@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BuscaContext } from '../context/BuscaContext';
+import { BuscaContext } from '../../context/Busca/BuscaContext';
 
 export function useBuscaStore() {
   const ctx = useContext(BuscaContext);

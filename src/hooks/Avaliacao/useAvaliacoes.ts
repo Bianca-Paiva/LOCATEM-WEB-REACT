@@ -10,8 +10,8 @@ import { CHAVES_SUB_AVALIACAO } from '../../pages/Avaliacao/Avaliacao.types';
 import { obterLogoLocador } from '../../pages/Avaliacao/logoLocador';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import { useLocacaoStore } from '../Locacoes/useLocacaoStore';
-import { useAuth } from '../useAuth';
-import { useCatalogoStore } from '../useCatalogoStore';
+import { useAuth } from '../Auth/useAuth';
+import { useCatalogoStore } from '../Catalago/useCatalogoStore';
 
 const DURACAO_TOAST_MS = 3000;
 

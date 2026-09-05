@@ -1,4 +1,4 @@
-import type { AvaliacaoProduto } from '../pages/ProdutoDetalhe/ProdutoDetalhe.types';
+import type { AvaliacaoProduto } from '../../pages/ProdutoDetalhe/ProdutoDetalhe.types';
 
 /**
  * Calcula a média, a quantidade e a distribuição percentual de notas de uma ferramenta a partir das avaliações reais dela (`Produto.avaliacoes`).

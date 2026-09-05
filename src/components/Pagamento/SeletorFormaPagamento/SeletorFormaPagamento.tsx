@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { CreditCard, Landmark, QrCode } from 'lucide-react';
 
-import type { FormaPagamento } from '../../../types/cartao.types';
+import type { FormaPagamento } from '../../../types/Pagamento/cartao.types';
 
 import styles from './SeletorFormaPagamento.module.css';
 

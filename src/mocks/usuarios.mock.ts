@@ -1,4 +1,4 @@
-import type { Usuario } from '../types/usuario.types';
+import type { Usuario } from '../types/Usuario/usuario.types';
 
 /**
  * Catálogo mockado de usuários, no mesmo espírito de mocks/locadores.mock.ts:

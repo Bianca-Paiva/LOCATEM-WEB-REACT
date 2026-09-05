@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import styles from './Home.module.css';
 import type { Route } from '../../router/useRouter';
-import { useProdutoStore } from "../../hooks/useProdutoStore";
-import { useCatalogoStore } from '../../hooks/useCatalogoStore';
-import { derivarCategorias, extrairCategoriaTopo } from '../../utils/categorias';
+import { useProdutoStore } from "../../hooks/Produto/useProdutoStore";
+import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
+import { derivarCategorias, extrairCategoriaTopo } from '../../utils/Catalago/categorias';
 
 // Components
 import Header from '../../components/Header/Header';

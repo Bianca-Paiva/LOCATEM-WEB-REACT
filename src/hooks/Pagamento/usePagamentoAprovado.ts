@@ -1,15 +1,15 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { CarrinhoContext } from '../../context/CarrinhoContext';
-import { useAuth } from '../useAuth';
+import { CarrinhoContext } from '../../context/Carrinho/CarrinhoContext';
+import { useAuth } from '../Auth/useAuth';
 import type { Route } from '../../router/useRouter';
-import type { FormaPagamento } from '../../types/cartao.types';
+import type { FormaPagamento } from '../../types/Pagamento/cartao.types';
 import {
   lerCartaoPagamento,
   lerMetodoPagamento,
   lerPagamentoProcessado,
   lerValorPagamento,
   limparDadosPagamento,
-} from '../../utils/pagamentoStorage';
+} from '../../utils/Pagamento/pagamentoStorage';
 
 // Mesmos rótulos usados em SeletorFormaPagamento — mantém o texto consistente em toda a tela de checkout.
 const ROTULOS_METODO: Record<FormaPagamento, string> = {

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { cpf, cnpj } from 'cpf-cnpj-validator'
-import { validateFullName, validatePhone, validateCEP } from '../masks'
+import { validateFullName, validatePhone, validateCEP } from '../Mascaras/masks'
 
 export const perfilSchema = z.object({
     tipo: z.enum(['locatario', 'locador']),
@@ -23,13 +23,13 @@ export const perfilSchema = z.object({
 
     numero: z.string().min(1, 'O número é obrigatório'),
 })
-.refine((data) => {
-    const cleanDoc = data.documento.replace(/\D/g, '')
-    const isCNPJ = data.tipo === 'locador'
-    return isCNPJ ? cnpj.isValid(cleanDoc) : cpf.isValid(cleanDoc)
-}, {
-    message: 'Documento inválido',
-    path: ['documento']
-})
+    .refine((data) => {
+        const cleanDoc = data.documento.replace(/\D/g, '')
+        const isCNPJ = data.tipo === 'locador'
+        return isCNPJ ? cnpj.isValid(cleanDoc) : cpf.isValid(cleanDoc)
+    }, {
+        message: 'Documento inválido',
+        path: ['documento']
+    })
 
 export type PerfilFormData = z.infer<typeof perfilSchema>
