@@ -42,6 +42,9 @@ interface UseSolicitarLocacaoModalParams {
     duracaoInicial?: number;
     dataEntregaInicial?: string;
     dataDevolucaoInicial?: string;
+    /** Horários já escolhidos anteriormente (ex.: restaurados após o usuário fazer login no meio do preenchimento) */
+    horarioEntregaInicial?: string;
+    horarioDevolucaoInicial?: string;
     /** O modal só existe montado/aberto de fato quando `aberto` é true — usado para
      * ressincronizar o formulário com os valores iniciais toda vez que reabre. */
     aberto: boolean;
@@ -53,6 +56,8 @@ export function useSolicitarLocacaoModal({
     duracaoInicial,
     dataEntregaInicial,
     dataDevolucaoInicial,
+    horarioEntregaInicial,
+    horarioDevolucaoInicial,
     aberto,
 }: UseSolicitarLocacaoModalParams) {
     // Se a página do produto já entregou uma entrega mas não uma devolução,
@@ -66,9 +71,9 @@ export function useSolicitarLocacaoModal({
 
     const [form, setForm] = useState<LocacaoModalFormState>({
         dataEntrega: dataEntregaInicial ?? '',
-        horarioEntrega: '',
+        horarioEntrega: horarioEntregaInicial ?? '',
         dataDevolucao: sugerirDevolucao(dataEntregaInicial ?? '', dataDevolucaoInicial ?? ''),
-        horarioDevolucao: '',
+        horarioDevolucao: horarioDevolucaoInicial ?? '',
         quantidade: quantidadeInicial ?? 1,
     });
 
@@ -89,6 +94,8 @@ export function useSolicitarLocacaoModal({
                     quantidade: quantidadeInicial ?? atual.quantidade ?? 1,
                     dataEntrega,
                     dataDevolucao,
+                    horarioEntrega: horarioEntregaInicial ?? atual.horarioEntrega,
+                    horarioDevolucao: horarioDevolucaoInicial ?? atual.horarioDevolucao,
                 };
             });
         }

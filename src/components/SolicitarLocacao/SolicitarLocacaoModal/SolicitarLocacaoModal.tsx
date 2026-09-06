@@ -19,6 +19,9 @@ interface SolicitarLocacaoModalProps {
   duracaoInicial?: number;
   dataEntregaInicial?: string;
   dataDevolucaoInicial?: string;
+  /** Horários já escolhidos anteriormente (ex.: restaurados após login no meio do preenchimento) */
+  horarioEntregaInicial?: string;
+  horarioDevolucaoInicial?: string;
   /** Voltagem/alimentação escolhida na página do produto, exibida no resumo */
   tensaoSelecionada?: string | null;
   /** Dias sem disponibilidade para este produto. Se omitido, usa `produto.diasIndisponiveis` */
@@ -38,6 +41,8 @@ export default function SolicitarLocacaoModal({
   duracaoInicial,
   dataEntregaInicial,
   dataDevolucaoInicial,
+  horarioEntregaInicial,
+  horarioDevolucaoInicial,
   tensaoSelecionada,
   diasIndisponiveis: diasIndisponiveisProp,
   onClose,
@@ -62,6 +67,8 @@ export default function SolicitarLocacaoModal({
     duracaoInicial,
     dataEntregaInicial,
     dataDevolucaoInicial,
+    horarioEntregaInicial,
+    horarioDevolucaoInicial,
     aberto,
   });
 

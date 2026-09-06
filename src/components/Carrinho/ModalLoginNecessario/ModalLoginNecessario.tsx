@@ -10,9 +10,7 @@ interface ModalLoginNecessarioProps {
 }
 
 /**
- * Modal exibido quando um usuário deslogado clica em "Continuar para Pagamento" no
- * Carrinho. Segue o mesmo padrão visual (overlay + card) já usado em
- * components/Perfil/EditarPerfilModal.
+ * Modal exibido quando um usuário deslogado clica em "Continuar para Pagamento" no Carrinho. Segue o mesmo padrão visual (overlay + card) já usado em components/Perfil/EditarPerfilModal.
  */
 export default function ModalLoginNecessario({ open, onClose, onEntrar }: ModalLoginNecessarioProps) {
   if (!open) return null;

@@ -11,15 +11,24 @@ import { AvaliacaoSection } from '../../components/ProdutoDetalhe/AvaliacaoSecti
 import { BannerLateral } from '../../components/ProdutoDetalhe/BannerLateral/BannerLateral';
 import SolicitarLocacaoModal from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal';
 import SuccessModal from '../../components/SuccessModal/SucessesModal';
+import ModalLoginNecessario from '../../components/Carrinho/ModalLoginNecessario/ModalLoginNecessario';
 import { useProdutoStore } from '../../hooks/Produto/useProdutoStore';
 import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
 import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import { useNotificationStore } from '../../hooks/Locacoes/useNotificationStore';
 import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore';
+import { useAuth } from '../../hooks/Auth/useAuth';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
 import { toProdutoSemelhante, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/Locacao/montarLocacaoData';
 import { salvarValorPagamento } from '../../utils/Pagamento/pagamentoStorage';
+import { salvarRedirectAposLogin } from '../../utils/Auth/redirectAposLogin';
+import {
+  salvarLocacaoModalPendente,
+  lerLocacaoModalPendente,
+  limparLocacaoModalPendente,
+} from '../../utils/Locacao/locacaoModalPendenteStorage';
+import type { LocacaoModalPendente } from '../../utils/Locacao/locacaoModalPendenteStorage';
 import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
 import type { Route } from '../../router/useRouter';
 import type { DadosLocacaoModal, ModoAberturaModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
@@ -36,6 +45,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const { adicionarLocacao } = useLocacaoStore();
   const { adicionarNotificacao } = useNotificationStore();
   const { adicionarItem } = useCarrinhoStore();
+  const { isAuthenticated } = useAuth();
 
   // Usa os dados do produto clicado; caso acesse direto via hash, usa fallback
   const produto: ProdutoSelecionado = produtoSelecionado ?? FALLBACK_PRODUTO;
@@ -59,9 +69,23 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   // Dados do locador vêm sempre do catálogo, buscados pelo nome salvo no produto.
   const locador = getLocadorByNome(produto.locador);
 
+  // Lido e removido do sessionStorage uma única vez, na primeira renderização: se o
+  // usuário acabou de voltar do Login com um formulário de "Detalhes da Locação"
+  // pendente para este mesmo produto, usamos esses dados para a página já nascer com
+  // o modal reaberto e preenchido — sem depender de um efeito disparando setState.
+  const [pendenteInicial] = useState<LocacaoModalPendente | null>(() => {
+    if (!isAuthenticated) return null;
+
+    const pendente = lerLocacaoModalPendente();
+    if (!pendente || pendente.produtoId !== produto.id) return null;
+
+    limparLocacaoModalPendente();
+    return pendente;
+  });
+
   // ── Modal de Solicitação de Locação ──────────────────────────────────────
-  // Aberto tanto por "Locar" quanto por "Adicionar ao carrinho"; o `modo` controla o rótulo/ação do botão de confirmação dentro do modal.
-  const [modalAberto, setModalAberto] = useState(false);
+  // Aberto tanto por "Locar" quanto por "Adicionar ao carrinho"; o `modo` controla o rótulo/ação do botão de confirmação dentro do modal. Já nasce aberto quando há dados pendentes restaurados do login.
+  const [modalAberto, setModalAberto] = useState(() => pendenteInicial !== null);
   const [modoModal, setModoModal] = useState<ModoAberturaModal>('locar');
 
   // Mensagem de sucesso exibida quando a locação exige aprovação manual do locador (fluxo: Locar → Modal → Modal de sucesso → Minhas Locações).
@@ -72,7 +96,16 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
     quantidade: number;
     diarias: number | null;
     tensao: string | null;
-  }>({ quantidade: 1, diarias: null, tensao: null });
+  }>(() => ({ quantidade: pendenteInicial?.quantidade ?? 1, diarias: null, tensao: null }));
+
+  // Modal exibido quando um usuário deslogado clica em "Continuar" no modal de Detalhes
+  // da Locação — mesma regra já aplicada no Carrinho ao avançar para o pagamento.
+  const [modalLoginAberto, setModalLoginAberto] = useState(false);
+
+  // Dados do modal de Detalhes da Locação restaurados após o login (quando o usuário
+  // precisou se autenticar no meio do preenchimento); usados só para pré-preencher o
+  // modal outra vez, sem que nada digitado antes se perca.
+  const [dadosRestaurados, setDadosRestaurados] = useState<LocacaoModalPendente | null>(pendenteInicial);
 
   const handleAlugar = () => {
     setModoModal('locar');
@@ -84,11 +117,32 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
     setModalAberto(true);
   };
 
-  const handleFecharModal = () => setModalAberto(false);
+  const handleFecharModal = () => {
+    setModalAberto(false);
+    setDadosRestaurados(null);
+  };
 
   const handleContinuar = (dados: DadosLocacaoModal) => {
+    // Locação exige usuário autenticado para seguir ao pagamento — mesma regra já
+    // aplicada no Carrinho ao clicar em "Continuar para Pagamento". Sem sessão, guarda
+    // o que já foi preenchido no modal e pede o login, sem perder nada.
+    if (!isAuthenticated) {
+      salvarLocacaoModalPendente({
+        produtoId: produto.id,
+        quantidade: dados.quantidade,
+        dataEntrega: dados.dataEntrega,
+        horarioEntrega: dados.horarioEntrega,
+        dataDevolucao: dados.dataDevolucao,
+        horarioDevolucao: dados.horarioDevolucao,
+      });
+      setModalAberto(false);
+      setModalLoginAberto(true);
+      return;
+    }
+
     setProdutoSelecionado(produto);
     setModalAberto(false);
+    setDadosRestaurados(null);
 
     if (produto.tipoAprovacao === 'manual') {
       // Aprovação manual: cria a solicitação como "Aguardando aprovação", notifica o locatário do prazo de 24h e mostra o modal de sucesso — nada de pagamento nem confirmação automática aqui.
@@ -115,6 +169,16 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
     // Apenas adiciona a ferramenta ao carrinho (datas, horários e quantidade) — não cria solicitação, notificação nem dispara fluxo de aprovação/pagamento algum.
     adicionarItem(produto, dados);
     setModalAberto(false);
+    setDadosRestaurados(null);
+  };
+
+  // Ação do botão "Entrar na minha conta" do modal: marca para onde o usuário deve
+  // voltar (a própria página do produto, com os dados do modal preservados via
+  // sessionStorage) e leva para o Login — mesmo padrão usado no Carrinho.
+  const handleEntrarNaMinhaConta = () => {
+    salvarRedirectAposLogin('produtoDetalhe');
+    setModalLoginAberto(false);
+    navigate('login');
   };
 
   return (
@@ -237,10 +301,20 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
         modo={modoModal}
         quantidadeInicial={selecaoProduto.quantidade}
         duracaoInicial={selecaoProduto.diarias ?? undefined}
+        dataEntregaInicial={dadosRestaurados?.dataEntrega}
+        dataDevolucaoInicial={dadosRestaurados?.dataDevolucao}
+        horarioEntregaInicial={dadosRestaurados?.horarioEntrega}
+        horarioDevolucaoInicial={dadosRestaurados?.horarioDevolucao}
         tensaoSelecionada={selecaoProduto.tensao}
         onClose={handleFecharModal}
         onContinuar={handleContinuar}
         onAdicionarCarrinho={handleAdicionarAoCarrinhoConfirmado}
+      />
+
+      <ModalLoginNecessario
+        open={modalLoginAberto}
+        onClose={() => setModalLoginAberto(false)}
+        onEntrar={handleEntrarNaMinhaConta}
       />
 
       <SuccessModal
