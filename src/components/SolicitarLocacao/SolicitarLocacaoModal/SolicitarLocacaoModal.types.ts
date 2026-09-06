@@ -1,9 +1,6 @@
 /**
  * Tipos do modal de Solicitação de Locação.
- * Substitui, para o fluxo do modal, os tipos de endereço/contato de
- * `SolicitarLocacao.types.ts` — este modal cuida apenas de período,
- * horários e quantidade (o endereço continua sendo pedido depois,
- * na etapa de pagamento/confirmação).
+ * Substitui, para o fluxo do modal, os tipos de endereço/contato de `SolicitarLocacao.types.ts` — este modal cuida apenas de período, horários e quantidade (o endereço continua sendo pedido depois, na etapa de pagamento/confirmação).
  */
 
 /** Estado do formulário dentro do modal */
@@ -49,11 +46,7 @@ export interface DadosLocacaoModal {
 export type ModoAberturaModal = 'locar' | 'carrinho';
 
 /**
- * Prazos (em horas) usados para calcular a primeira data de retirada
- * selecionável quando o locador exige aprovação manual: o locatário não
- * pode escolher uma retirada mais cedo do que o tempo que o locador tem
- * para responder somado ao prazo de pagamento já usado no restante do
- * projeto (ver `MinhasLocacoes.mock.ts` -> PRAZO_PADRAO_PAGAMENTO_HORAS).
+ * Prazos (em horas) usados para calcular a primeira data de retirada selecionável quando o locador exige aprovação manual: o locatário não pode escolher uma retirada mais cedo do que o tempo que o locador tem para responder somado ao prazo de pagamento já usado no restante do projeto (ver `MinhasLocacoes.mock.ts` -> PRAZO_PADRAO_PAGAMENTO_HORAS).
  */
 export const PRAZO_APROVACAO_HORAS = 24;
 export const PRAZO_PAGAMENTO_HORAS = 24;
