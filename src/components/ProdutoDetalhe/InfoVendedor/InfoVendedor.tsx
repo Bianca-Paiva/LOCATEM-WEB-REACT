@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { Star } from 'lucide-react';
 import styles from './InfoVendedor.module.css';
-import { getIniciais } from '../../../utils/iniciais';
+import { getIniciais } from '../../../utils/Avatar/iniciais';
 
 interface InfoVendedorProps {
   nome: string;

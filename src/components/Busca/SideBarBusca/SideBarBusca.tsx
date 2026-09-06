@@ -3,8 +3,8 @@ import { Search, ChevronLeft } from 'lucide-react';
 
 import type { FilterState } from '../../../pages/Busca/Busca.types';
 import { OPCOES_FONTE_ALIMENTACAO } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
-import { useCatalogoStore } from '../../../hooks/useCatalogoStore';
-import { derivarCategorias, extrairNomeSubcategoria } from '../../../utils/categorias';
+import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
+import { derivarCategorias, extrairNomeSubcategoria } from '../../../utils/Catalago/categorias';
 import styles from './SideBarBusca.module.css';
 
 

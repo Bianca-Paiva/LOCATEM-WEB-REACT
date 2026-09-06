@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { LocacaoContext } from '../../context/LocacaoContext';
+import { LocacaoContext } from '../../context/Locacao/LocacaoContext';
 
 export function useLocacaoStore() {
   const ctx = useContext(LocacaoContext);

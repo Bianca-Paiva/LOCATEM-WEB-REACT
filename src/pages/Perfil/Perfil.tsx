@@ -7,7 +7,7 @@ import InformacoesPessoais from '../../components/Perfil/InformacoesPessoais/Inf
 import ReputacaoCard from '../../components/Perfil/ReputacaoCard/ReputacaoCard';
 import PainelControle from '../../components/Perfil/PainelControle/PainelControle';
 import EditarPerfilModal from '../../components/Perfil/EditarPerfilModal/EditarPerfilModal';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../hooks/Auth/useAuth';
 import { useCompletudePerfil } from '../../hooks/Perfil/useCompletudePerfil';
 import type { Route } from '../../router/useRouter';
 import styles from './Perfil.module.css';

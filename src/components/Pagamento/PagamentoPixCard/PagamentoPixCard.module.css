@@ -1,0 +1,277 @@
+.card {
+  background-color: var(--color-bg-card, #ffffff);
+  border-radius: 16px;
+  padding: 25px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: var(--spacing-md, 16px);
+  box-sizing: border-box; /* Previne que o padding quebre a largura */
+  
+  width: 100% !important;
+  min-width: 100%;
+  flex-grow: 1;
+  align-self: stretch;
+  max-width: none !important;
+}
+
+.qrWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  background-color: var(--color-bg-input, #f9fafb);
+  border: 2px dashed #e5e7eb;
+  border-radius: 14px;
+  margin-bottom: 15px;
+}
+
+.qrSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin: var(--spacing-sm, 8px) 0;
+  width: 100%;
+}
+
+.labelQrcode {
+  font-size: 0.875rem;
+  color: #788191;
+  text-align: center;
+  margin-top: -35px;
+}
+
+.contadorBadge {
+  background-color: #f0f5ff; 
+  color: #2563eb;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 6px 16px;
+  border-radius: 9999px; 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expiradoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+.expiradoIconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #fee2e2;
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+.expiradoTitulo {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0;
+}
+
+.expiradoTexto {
+  font-size: 0.875rem;
+  color: #788191;
+  line-height: 1.5;
+  max-width: 100%;
+  margin: 0;
+}
+
+.btnGerarNovoQrCode {
+  margin-top: 12px;
+  padding: 0 24px;
+  height: 48px;
+  background-color: var(--color-primary, #f8d730);
+  color: var(--color-text-dark, #1a1a1a);
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  width: 100%; /* Ocupa largura total no mobile */
+  max-width: 300px;
+}
+
+.btnGerarNovoQrCode:hover {
+  background-color: var(--color-primary-hover, #e5c420);
+}
+
+.btnGerarNovoQrCode:active {
+  transform: scale(0.98);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #364153;
+}
+
+.inputCodigo {
+  display: flex;
+  gap: var(--spacing-md, 16px);
+  width: 100%;
+  align-items: flex-end; /* Alinha o botão com o input */
+}
+
+.input {
+  flex: 1;
+  width: 100%;
+  min-width: 0; /* Importante para o flexbox não estourar a tela */
+}
+
+/* Supondo que o seu FormInput renderize um input, garanta que ele assuma 100% da div pai */
+.input :global(input) {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btnCopiar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 0 20px;
+  height: 48px; /* Mantém a altura igual à do input */
+  background-color: var(--color-primary, #f8d730);
+  color: var(--color-text-dark, #1a1a1a);
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btnCopiar:hover {
+  background-color: var(--color-primary-hover, #e5c420);
+}
+
+.btnCopiar:active {
+  transform: scale(0.98);
+}
+
+.btnCopiar.copiado {
+  background-color: #16a34a;
+  color: #ffffff;
+}
+
+.instrucoesContainer {
+  margin-top: var(--spacing-md, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-top: 1px solid #e8e8e8; 
+  padding-top: 20px;
+  width: 100%;
+}
+
+.listaInstrucoes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.itemInstrucao {
+  display: flex;
+  align-items: flex-start; 
+  gap: 12px;
+}
+
+.numeroInstrucao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: #f8d730; 
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.textoInstrucao {
+  font-size: 0.875rem;
+  color: #0a0a0a;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+/* --- MEDIA QUERIES --- */
+
+/* Tablets e telas médias */
+@media (max-width: 768px) {
+  .card {
+    width: 100% !important;
+    min-width: 100%;
+    padding: 20px;
+  }
+
+  .qrSection {
+    width: 100%;
+  }
+}
+
+/* Celulares padrão */
+@media (max-width: 576px) {
+  .card {
+    padding: 16px;
+  }
+
+  .qrSection {
+    gap: 30px;
+  }
+
+  .labelQrcode {
+    margin-top: -20px;
+  }
+
+  .inputCodigo {
+    flex-direction: column; /* Empilha o input e o botão */
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .btnCopiar {
+    width: 100%; /* Botão copiar ocupa toda a largura */
+  }
+
+  .expiradoContainer {
+    padding: 20px 10px;
+  }
+}
+
+/* Telas muito pequenas (ex: iPhone SE antigo) */
+@media (max-width: 360px) {
+  .textoInstrucao {
+    font-size: 0.8125rem;
+  }
+}

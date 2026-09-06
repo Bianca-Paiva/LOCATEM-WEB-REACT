@@ -1,6 +1,6 @@
 import FormInput from '../../Inputs/FormInput/FormInput';
 import FormTextarea from '../../Inputs/FormTextarea/FormTextarea';
-import { maskCEP } from '../../../hooks/masks';
+import { maskCEP } from '../../../hooks/Mascaras/masks';
 import type { CadastroFerramentaFormState } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './EnderecoRetirada.module.css';
 

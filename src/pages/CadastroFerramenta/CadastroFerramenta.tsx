@@ -16,7 +16,7 @@ import EnderecoRetirada from '../../components/CadastroFerramenta/EnderecoRetira
 import SuccessModal from '../../components/SuccessModal/SucessesModal';
 
 import { useCadastroFerramenta } from '../../hooks/CadastroFerramenta/useCadastroFerramenta';
-import { useCatalogoStore } from '../../hooks/useCatalogoStore';
+import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
 import styles from './CadastroFerramenta.module.css';
 
 import type { Route } from '../../router/useRouter';

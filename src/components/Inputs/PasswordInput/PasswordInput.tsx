@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { InputHTMLAttributes } from 'react'
 import styles from './PasswordInput.module.css'
-import type { PasswordStrengthResult } from '../../../hooks/passwordStrength'
+import type { PasswordStrengthResult } from '../../../hooks/Password/passwordStrength'
 
 import { Eye, EyeClosed } from "lucide-react";
 

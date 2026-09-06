@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { ChevronUp, ChevronDown } from 'lucide-react';
-import { formatarIso, getHojeIso } from '../../../utils/dataLocacao';
+import { formatarIso, getHojeIso } from '../../../utils/Locacao/dataLocacao';
 import styles from './CalendarioLocacao.module.css';
 
 const NOMES_MES = [

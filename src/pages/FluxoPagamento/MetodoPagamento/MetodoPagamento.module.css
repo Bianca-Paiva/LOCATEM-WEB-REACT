@@ -1,0 +1,22 @@
+.pagina {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+@media (min-width: 640px) {
+  .pagina {
+    padding: 28px 24px 56px;
+  }
+}

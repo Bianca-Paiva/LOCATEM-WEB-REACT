@@ -81,6 +81,42 @@
   border: 1px solid #ffcc0060;
 }
 
+/* Mesmo tratamento visual de erro do componente FormInput (FormInput.module.css) */
+.inputContainerErro {
+  border: 1px solid #E11D48;
+  box-shadow: 0px 4px 4px 0px rgba(225, 29, 71, 0.158);
+}
+
+.freteErroMsg {
+  display: block;
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #E11D48;
+}
+
+/* Mesmo efeito de "chacoalhar" do componente FormInput (FormInput.module.css) */
+.shake {
+  animation: gentleShake 0.4s ease-in-out;
+}
+
+@keyframes gentleShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
 .linkTexto {
   margin-left: auto;
   padding: 0;
@@ -216,17 +252,37 @@
 
 .prazoBloco {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 16px 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 0 16px;
 }
 
 .prazoLabel {
-  color: #4A5565;
-  font-size: 14px;
+  white-space: nowrap;
+  color: #0A0A0A;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.prazoValor {
+.prazoValores {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Joga o contador e a data totalmente para a direita */
+  text-align: right;
+  gap: 2px;
+  color: #0A0A0A;
+  font-size: 15px;
+}
+
+.prazoContador {
+  color: #f59e0b;
+  font-weight: 500;
+  font-size: 15px;
+  margin-right: 4px;
+}
+
+.prazoData {
   color: #0A0A0A;
   font-size: 15px;
 }

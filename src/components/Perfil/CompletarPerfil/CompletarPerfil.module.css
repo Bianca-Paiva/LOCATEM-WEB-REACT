@@ -1,3 +1,21 @@
+/* Wrapper controla a animação de saída (fade + colapso de altura) quando o perfil chega a 100% */
+.wrapper {
+    display: grid;
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition: grid-template-rows 0.3s ease, opacity 0.3s ease;
+}
+
+.wrapper > section {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.wrapperSaindo {
+    grid-template-rows: 0fr;
+    opacity: 0;
+}
+
 .card {
     background: var(--color-bg-card);
     border-radius: 14px;

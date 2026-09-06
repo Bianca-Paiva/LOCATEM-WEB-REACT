@@ -1,6 +1,6 @@
 import FormInput from '../../Inputs/FormInput/FormInput';
 import FormTextarea from '../../Inputs/FormTextarea/FormTextarea';
-import { maskCEP, maskPhone } from '../../../hooks/masks';
+import { maskCEP, maskPhone } from '../../../hooks/Mascaras/masks';
 import type { SolicitarLocacaoFormState } from '../../../pages/Locacoes/SolicitarLocacao/SolicitarLocacao.types';
 import styles from './EnderecoEntrega.module.css';
 

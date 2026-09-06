@@ -1,7 +1,7 @@
 import { User, Pencil } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import Avatar from '../../Avatar/Avatar';
-import type { Usuario } from '../../../types/usuario.types';
+import type { Usuario } from '../../../types/Usuario/usuario.types';
 import styles from './PerfilHeader.module.css';
 
 interface PerfilHeaderProps {

@@ -11,7 +11,7 @@
 
 .modal {
     width: 100%;
-    max-width: 460px;
+    max-width: 560px;
     max-height: calc(100vh - 32px);
     overflow-y: auto;
     background: #ffffff;
@@ -19,6 +19,15 @@
     border: 1.5px solid #f6c945;
     padding: 24px;
     box-sizing: border-box;
+
+/* Ocultar no Firefox e IE/Edge antigo */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Ocultar no Chrome, Safari, Edge e Opera */
+.modal::-webkit-scrollbar {
+    display: none;
 }
 
 .cabecalho {

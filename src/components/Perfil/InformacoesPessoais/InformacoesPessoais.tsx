@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { User, CreditCard, Mail, Phone, Home, Pencil } from 'lucide-react';
-import type { Usuario } from '../../../types/usuario.types';
+import type { Usuario } from '../../../types/Usuario/usuario.types';
 import styles from './InformacoesPessoais.module.css';
 
 interface InformacoesPessoaisProps {

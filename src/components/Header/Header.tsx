@@ -4,10 +4,10 @@ import type { Route } from '../../router/useRouter'
 import logoIcon from '../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
 import { X, LogOut } from "lucide-react";
-import { useCarrinhoStore } from '../../hooks/useCarrinhoStore'
-import { useAuth } from '../../hooks/useAuth'
-import { useBuscaStore } from '../../hooks/useBuscaStore'
-import type { TipoUsuario } from '../../types/usuario.types'
+import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore'
+import { useAuth } from '../../hooks/Auth/useAuth'
+import { useBuscaStore } from '../../hooks/Busca/useBuscaStore'
+import type { TipoUsuario } from '../../types/Usuario/usuario.types'
 import Avatar from '../Avatar/Avatar'
 import styles from './Header.module.css'
 
@@ -70,18 +70,6 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:home" : "mdi:home-outline"}
-                    width={22}
-                    height={22}
-                />
-            ),
-        },
-        {
-            label: "Carrinho",
-            route: "carrinho", // aparece para: locatário
-            perfis: ['locatario'],
-            renderIcon: (active) => (
-                <Icon
-                    icon={active ? "mdi:cart" : "mdi:cart-outline"}
                     width={22}
                     height={22}
                 />
@@ -155,17 +143,6 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                 />
             ),
         },
-        // {
-        //     label: "Entrar",
-        //     route: "login",
-        //     renderIcon: (active) => (
-        //         <Icon
-        //             icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
-        //             width={22}
-        //             height={22}
-        //         />
-        //     ),
-        // },
         {
             label: "Suporte", // aparece para: locador e locatário
             renderIcon: (active) => (
@@ -178,10 +155,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
     ];
 
-    // Monta a navegação de fato exibida a partir do tipo do usuário autenticado (mesma fonte
-    // usada em todo o app via useAuth) — desktop e mobile usam esta mesma lista filtrada,
-    // então nunca ficam com regras diferentes entre si. Sem sessão, mantém o comportamento
-    // atual (todos os itens visíveis).
+    // Monta a navegação de fato exibida a partir do tipo do usuário autenticado (mesma fonte usada em todo o app via useAuth) — desktop e mobile usam esta mesma lista filtrada, então nunca ficam com regras diferentes entre si. Sem sessão, mantém o comportamento atual (todos os itens visíveis).
     const navItemsVisiveis = navItems.filter(
         (item) => !item.perfis || !usuario || item.perfis.includes(usuario.tipo),
     );
@@ -209,16 +183,19 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         </a>
                     </div>
                     <div className={styles.ladoDireito}>
-                        <a
-                            href="#"
-                            className={styles.carrinhoBtn}
-                            onClick={e => { e.preventDefault(); navigate('carrinho') }}
-                        >
-                            <Icon icon="mdi:cart-outline" width={24} height={24} />
-                            {quantidadeCarrinho > 0 && (
-                                <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
-                            )}
-                        </a>
+                        {/* Carrinho é exclusivo de locatários — mesma regra já aplicada aos itens de navegação (perfis: ['locatario']) */}
+                        {usuario?.tipo !== 'locador' && (
+                            <a
+                                href="#"
+                                className={styles.carrinhoBtn}
+                                onClick={e => { e.preventDefault(); navigate('carrinho') }}
+                            >
+                                <Icon icon="mdi:cart-outline" width={24} height={24} />
+                                {quantidadeCarrinho > 0 && (
+                                    <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
+                                )}
+                            </a>
+                        )}
 
                         <a
                             href="#"
@@ -350,21 +327,37 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                             </button>
                         )}
                     </form>
-                    <a
-                        href="#"
-                        className={styles.loginBtn}
-                        aria-label={isAuthenticated ? 'Meu perfil' : 'Entrar'}
-                        onClick={e => { e.preventDefault(); navigate(rotaConta) }}
-                    >
-                        {isAuthenticated && usuario ? (
-                            <Avatar nome={usuario.nome} fotoUrl={usuario.fotoUrl} size={38} />
-                        ) : (
-                            <Icon icon="mdi:account-circle-outline"
-                                width={32}
-                                height={32}
-                            />
+                    <div className={styles.ladoDireitoDesktop}>
+                        {/* Carrinho é exclusivo de locatários — mesma regra já aplicada no header mobile */}
+                        {usuario?.tipo !== 'locador' && (
+                            <a
+                                href="#"
+                                className={styles.carrinhoBtn}
+                                onClick={e => { e.preventDefault(); navigate('carrinho') }}
+                            >
+                                <Icon icon="mdi:cart-outline" width={24} height={24} />
+                                {quantidadeCarrinho > 0 && (
+                                    <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
+                                )}
+                            </a>
                         )}
-                    </a>
+
+                        <a
+                            href="#"
+                            className={styles.loginBtn}
+                            aria-label={isAuthenticated ? 'Meu perfil' : 'Entrar'}
+                            onClick={e => { e.preventDefault(); navigate(rotaConta) }}
+                        >
+                            {isAuthenticated && usuario ? (
+                                <Avatar nome={usuario.nome} fotoUrl={usuario.fotoUrl} size={38} />
+                            ) : (
+                                <Icon icon="mdi:account-circle-outline"
+                                    width={32}
+                                    height={32}
+                                />
+                            )}
+                        </a>
+                    </div>
                 </div>
 
                 {/* ── DESKTOP NAV MOVIDO PARA DENTRO DO HEADER ── */}

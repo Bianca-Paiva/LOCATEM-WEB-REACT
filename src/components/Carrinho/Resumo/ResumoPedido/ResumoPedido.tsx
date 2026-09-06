@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import styles from './ResumoPedido.module.css';
-import { Tag, Lock } from 'lucide-react';
-import { maskCEP, validateCEP } from '../../../../hooks/masks';
+import { Tag } from 'lucide-react';
+import { Icon } from '@iconify/react';
+import { maskCEP, validateCEP } from '../../../../hooks/Mascaras/masks';
+import BtnPrincipal from '../../../BtnPrincipal/BtnPrincipal';
 import type {
   PrazoPagamento,
   ResumoPedidoVariant,
-} from '../../../../types/checkout';
+} from '../../../../types/Pagamento/checkout';
 
 interface ResumoPedidoProps {
   variant: ResumoPedidoVariant;
@@ -14,6 +16,10 @@ interface ResumoPedidoProps {
   total?: number;
   onCalcularFrete?: (cep: string) => void;
   freteValor?: number | null;
+  /** Mensagem exibida abaixo do input de frete (ex.: "O frete é obrigatório."), ou vazio/undefined quando não há erro. */
+  freteErro?: string;
+  /** Dispara o efeito de "chacoalhar" (mesmo padrão do componente FormInput) no bloco do frete. */
+  freteShake?: boolean;
   onAplicarCupom?: (codigo: string) => void;
   cupomAviso?: string | null;
   onOcultarCupomAviso?: () => void;
@@ -21,6 +27,8 @@ interface ResumoPedidoProps {
   onCtaClick?: () => void;
   ctaDisabled?: boolean;
   prazoPagamento?: PrazoPagamento;
+  /** Segundos restantes até a expiração — fonte única de verdade, calculada pelo hook de pagamento. */
+  tempoRestanteSegundos?: number;
   mostrarSeguro?: boolean;
 }
 
@@ -30,6 +38,12 @@ const formatarPreco = (valor: number) =>
     currency: 'BRL',
   }).format(valor);
 
+function formatarTempo(segundos: number): string {
+  const minutos = Math.floor(segundos / 60).toString().padStart(2, '0');
+  const segundosRestantes = (segundos % 60).toString().padStart(2, '0');
+  return `${minutos}:${segundosRestantes}`;
+}
+
 export function ResumoPedido({
   variant,
   subtotal = 0,
@@ -37,6 +51,8 @@ export function ResumoPedido({
   total = 0,
   onCalcularFrete,
   freteValor,
+  freteErro,
+  freteShake = false,
   onAplicarCupom,
   cupomAviso,
   onOcultarCupomAviso,
@@ -44,7 +60,8 @@ export function ResumoPedido({
   onCtaClick,
   ctaDisabled,
   prazoPagamento,
-  mostrarSeguro = variant === 'pagamento',
+  tempoRestanteSegundos = 0,
+  mostrarSeguro = variant === 'pagamento' || variant === 'metodoPagamento',
 }: ResumoPedidoProps) {
   const [cepInput, setCepInput] = useState('');
   const [cupomInput, setCupomInput] = useState('');
@@ -109,7 +126,10 @@ export function ResumoPedido({
             </div>
 
             <div className={styles.freteInputRow}>
-              <div className={styles.inputContainer}>
+              <div
+                key={`frete-input-${freteShake}`}
+                className={`${styles.inputContainer} ${freteErro ? styles.inputContainerErro : ''} ${freteShake ? styles.shake : ''}`}
+              >
                 <input
                   className={styles.inputSemBorda}
                   value={cepInput}
@@ -117,6 +137,7 @@ export function ResumoPedido({
                   inputMode="numeric"
                   onChange={(e) => setCepInput(maskCEP(e.target.value))}
                   aria-label="CEP"
+                  aria-invalid={!!freteErro}
                 />
 
                 <button
@@ -134,13 +155,13 @@ export function ResumoPedido({
               <button
                 className={styles.linkTexto}
                 type="button"
-
-                // API dos Correios para buscar um cep
                 onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
               >
                 Não sei o meu CEP
               </button>
             </div>
+
+            {freteErro && <small className={styles.freteErroMsg}>{freteErro}</small>}
           </div>
 
           <div className={styles.cupomBloco}>
@@ -195,18 +216,16 @@ export function ResumoPedido({
             </span>
           </div>
 
-          <button
-            className={styles.btnPrimario}
+          <BtnPrincipal
+            text={ctaLabel ?? 'Continuar para Pagamento'}
             type="button"
             onClick={onCtaClick}
             disabled={ctaDisabled}
-          >
-            {ctaLabel ?? 'Continuar para Pagamento'}
-          </button>
+          />
         </div>
       )}
 
-      {variant === 'pagamento' && (
+      {(variant === 'metodoPagamento' || variant === 'pagamento') && (
         <div className={styles.corpo}>
           <div className={styles.linhaTotal}>
             <span>Total</span>
@@ -225,30 +244,35 @@ export function ResumoPedido({
               </span>
 
               {!prazoPagamento.expirado && (
-                <strong className={styles.prazoValor}>
-                  {prazoPagamento.texto}
-                </strong>
+                <div className={styles.prazoValores}>
+                  <strong className={styles.prazoContador}>
+                    {formatarTempo(tempoRestanteSegundos)}
+                  </strong>
+                  <span className={styles.prazoData}>
+                    {prazoPagamento.texto}
+                  </span>
+                </div>
               )}
             </div>
           )}
 
           {ctaLabel && (
-            <button
-              className={styles.btnPrimario}
+            <BtnPrincipal
+              text={ctaLabel}
               type="button"
               onClick={onCtaClick}
               disabled={ctaDisabled}
-            >
-              {ctaLabel}
-            </button>
+            />
           )}
         </div>
       )}
 
       {mostrarSeguro && (
         <div className={styles.seguroRodape}>
-          <Lock
-            size={14}
+          <Icon
+            icon="boxicons:lock-filled"
+            width="14"
+            height="14"
             aria-hidden="true"
           />
           Pagamento 100% seguro

@@ -2,9 +2,9 @@ import { SlidersHorizontal } from 'lucide-react';
 
 import Header from '../../components/Header/Header';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { useProdutoStore } from '../../hooks/useProdutoStore';
-import { useCatalogoStore } from '../../hooks/useCatalogoStore';
-import { useBuscaStore } from '../../hooks/useBuscaStore';
+import { useProdutoStore } from '../../hooks/Produto/useProdutoStore';
+import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
+import { useBuscaStore } from '../../hooks/Busca/useBuscaStore';
 import type { Route } from '../../router/useRouter';
 import { useMemo, useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';

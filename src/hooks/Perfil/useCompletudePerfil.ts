@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { Usuario } from '../../types/usuario.types';
+import type { Usuario } from '../../types/Usuario/usuario.types';
 
 interface CriterioPerfil {
   chave: string;
@@ -13,16 +13,9 @@ interface CriterioPerfil {
 /**
  * Critérios que compõem a porcentagem de "Complete seu Perfil".
  *
- * Fica como uma lista simples e isolada de propósito: para adicionar ou remover
- * um critério no futuro (ex: exigir CEP validado, ou remover a exigência de
- * telefone), basta editar esta lista — o cálculo do percentual e a mensagem de
- * dica abaixo se ajustam sozinhos, sem precisar mexer no resto da tela.
+ * Fica como uma lista simples e isolada de propósito: para adicionar ou remover um critério no futuro (ex: exigir CEP validado, ou remover a exigência de telefone), basta editar esta lista — o cálculo do percentual e a mensagem de dica abaixo se ajustam sozinhos, sem precisar mexer no resto da tela.
  *
- * Os 5 campos obrigatórios do cadastro (nome, e-mail, telefone, documento,
- * endereço) valem 17 pontos cada (85 no total); foto e e-mail verificado
- * completam os 15 pontos finais — por isso um perfil com todos os campos
- * cadastrais preenchidos mas sem foto/verificação bate nos mesmos "85%
- * concluído" do protótipo, sem esse valor estar fixo em nenhum lugar do código.
+ * Os 5 campos obrigatórios do cadastro (nome, e-mail, telefone, documento, endereço) valem 17 pontos cada (85 no total); foto e e-mail verificado completam os 15 pontos finais — por isso um perfil com todos os campos cadastrais preenchidos mas sem foto/verificação bate nos mesmos "85% concluído" do protótipo, sem esse valor estar fixo em nenhum lugar do código.
  */
 const CRITERIOS_PERFIL: CriterioPerfil[] = [
   { chave: 'nome', peso: 17, acao: 'complete seu nome', atendido: (u) => Boolean(u.nome?.trim()) },
@@ -60,9 +53,7 @@ export function useCompletudePerfil(usuario: Usuario | null): CompletudePerfil {
     );
     const completo = criteriosFaltando.length === 0;
 
-    // Monta a dica citando até 2 pendências (ex: "Adicione uma foto e verifique
-    // seu e-mail para chegar a 100%."), pra não ficar uma frase gigante quando
-    // faltam muitos campos.
+    // Monta a dica citando até 2 pendências (ex: "Adicione uma foto e verifique seu e-mail para chegar a 100%."), pra não ficar uma frase gigante quando faltam muitos campos.
     let mensagemDica = 'Seu perfil está completo!';
     if (!completo) {
       const acoes = criteriosFaltando.slice(0, 2).map((c) => c.acao);

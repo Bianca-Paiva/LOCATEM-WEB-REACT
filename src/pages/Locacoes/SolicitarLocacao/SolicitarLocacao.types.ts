@@ -1,11 +1,7 @@
 /**
- * Tipos do fluxo (não modal) de solicitação de locação: endereço/contato de
- * entrega e devolução, e o resumo de valores exibido junto a esse formulário.
+ * Tipos do fluxo (não modal) de solicitação de locação: endereço/contato de entrega e devolução, e o resumo de valores exibido junto a esse formulário.
  *
- * Observação: o fluxo atual usa `SolicitarLocacaoModal.types.ts` para
- * período/horários/quantidade dentro do modal. Este arquivo cobre apenas os
- * campos de endereço e contato consumidos por `EnderecoEntrega` e o resumo
- * consumido por `ResumoLocacao`.
+ * Observação: o fluxo atual usa `SolicitarLocacaoModal.types.ts` para período/horários/quantidade dentro do modal. Este arquivo cobre apenas os campos de endereço e contato consumidos por `EnderecoEntrega` e o resumo consumido por `ResumoLocacao`.
  */
 
 /** Estado do formulário de endereço/contato da solicitação de locação */
