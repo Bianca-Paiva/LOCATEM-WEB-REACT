@@ -114,8 +114,7 @@ export function Carrinho({
 
   const { isAuthenticated, usuario } = useAuth();
 
-  // Carrinho e locação são exclusivos de locatários — um locador autenticado não deve
-  // ter acesso a esta página (mesma regra já aplicada na navegação do Header).
+  // Carrinho e locação são exclusivos de locatários — um locador autenticado não deve ter acesso a esta página (mesma regra já aplicada na navegação do Header).
   const acessoNegadoParaLocador = isAuthenticated && usuario?.tipo === 'locador';
 
   useEffect(() => {

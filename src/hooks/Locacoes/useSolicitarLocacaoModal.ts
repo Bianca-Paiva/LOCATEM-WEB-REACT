@@ -32,7 +32,7 @@ function formatarIntervaloHorario(horario: string): string {
 }
 
 // Valor fixo de frete (mock), igual ao usado em useSolicitarLocacao.ts
-const FRETE_PADRAO = 15;
+const FRETE_PADRAO = 10;
 
 interface UseSolicitarLocacaoModalParams {
     produto: ProdutoSelecionado;

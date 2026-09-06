@@ -423,6 +423,13 @@
         color: var(--color-text-muted);
     }
 
+    .ladoDireitoDesktop {
+        display: flex;
+        align-items: center;
+        gap: clamp(8px, 1vw, 16px);
+        justify-self: end;
+    }
+
     .loginBtn {
         width: clamp(38px, 3vw, 46px);
         height: clamp(38px, 3vw, 46px);
@@ -434,7 +441,6 @@
         justify-content: center;
         transition: background var(--transition-fast);
         text-decoration: none;
-        justify-self: end;
     }
 
     /* Desktop Nav */

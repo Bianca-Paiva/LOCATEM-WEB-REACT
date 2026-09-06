@@ -19,6 +19,7 @@ import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
 import { toProdutoSemelhante, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/Locacao/montarLocacaoData';
+import { salvarValorPagamento } from '../../utils/Pagamento/pagamentoStorage';
 import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
 import type { Route } from '../../router/useRouter';
 import type { DadosLocacaoModal, ModoAberturaModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
@@ -98,8 +99,10 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
       setSuccessAberto(true);
     } else {
       // Aprovação automática: não cria solicitação pendente nem notificação de aprovação — segue direto para o pagamento.
-      // TODO: integrar com a etapa de pagamento assim que existir no projeto.
-      // navigate('pagamento');
+      // Persiste o valor total da locação (aluguel + frete, já calculado pelo modal) na mesma chave lida por
+      // "Método de Pagamento" e por todo o restante do fluxo — mesmo padrão usado pelo Carrinho ao avançar para o pagamento.
+      salvarValorPagamento(dados.resumo.valor);
+      navigate('metodoPagamento');
     }
   };
 

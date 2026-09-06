@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { ProdutoSelecionado } from '../../../context/ProdutoContext';
+import type { ProdutoSelecionado } from '../../../context/Produto/ProdutoContext';
 import ProdutoResumoCard from '../ProdutoResumoCardSolicitacao/ProdutoResumoCardProdutoResumoCardSolicitacao';
 import CampoData from '../CampoData/CampoData';
 import HorarioDropdown from '../HorarioDropdown/HorarioDropdown';

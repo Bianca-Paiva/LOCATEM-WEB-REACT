@@ -127,9 +127,6 @@ export function ProdutoInfo({
           <button className={styles.btnCarrinho} onClick={onAddCarrinho}>
             Adicionar ao carrinho
           </button>
-          {/*<button className={styles.btnLocar} onClick={onLocar}>
-            Locar
-          </button>*/}
         </div>
       </div>
     </div>
