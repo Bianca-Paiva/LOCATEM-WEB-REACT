@@ -1,3 +1,5 @@
+import { Icon } from '@iconify/react';
+
 import { useProcessandoPagamento } from '../../../hooks/Pagamento/useProcessandoPagamento';
 import type { Route } from '../../../router/useRouter';
 
@@ -20,11 +22,18 @@ export default function ProcessandoPagamento({ navigate }: ProcessandoPagamentoP
   return (
     <div className={styles.app}>
       <main className={styles.main}>
-        <div className={styles.loadingSpinner} role="status" aria-label="Processando pagamento" />
+        <div className={styles.painel}>
+          <div className={styles.loadingSpinner} role="status" aria-label="Processando pagamento" />
 
-        <div className={styles.processandoPagamento}>
-          <h1>Processando pagamento...</h1>
-          <p>Estamos finalizando sua transação. Por favor, aguarde um momento.</p>
+          <div className={styles.processandoPagamento}>
+            <h1>Processando pagamento...</h1>
+            <p>Estamos finalizando sua transação. Por favor, aguarde um momento.</p>
+          </div>
+
+          <div className={styles.seguranca}>
+            <Icon icon="fa6-solid:lock" width="12" height="12" aria-hidden="true" />
+            <span>Conexão segura — não feche esta página</span>
+          </div>
         </div>
       </main>
     </div>

@@ -3,6 +3,7 @@ import styles from './ResumoPedido.module.css';
 import { Tag } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import { maskCEP, validateCEP } from '../../../../hooks/Mascaras/masks';
+import BtnPrincipal from '../../../BtnPrincipal/BtnPrincipal';
 import type {
   PrazoPagamento,
   ResumoPedidoVariant,
@@ -215,14 +216,12 @@ export function ResumoPedido({
             </span>
           </div>
 
-          <button
-            className={styles.btnPrimario}
+          <BtnPrincipal
+            text={ctaLabel ?? 'Continuar para Pagamento'}
             type="button"
             onClick={onCtaClick}
             disabled={ctaDisabled}
-          >
-            {ctaLabel ?? 'Continuar para Pagamento'}
-          </button>
+          />
         </div>
       )}
 
@@ -258,14 +257,12 @@ export function ResumoPedido({
           )}
 
           {ctaLabel && (
-            <button
-              className={styles.btnPrimario}
+            <BtnPrincipal
+              text={ctaLabel}
               type="button"
               onClick={onCtaClick}
               disabled={ctaDisabled}
-            >
-              {ctaLabel}
-            </button>
+            />
           )}
         </div>
       )}

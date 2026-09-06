@@ -21,7 +21,7 @@ import { useAuth } from '../../hooks/Auth/useAuth';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
 import { toProdutoSemelhante, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/Locacao/montarLocacaoData';
-import { salvarValorPagamento } from '../../utils/Pagamento/pagamentoStorage';
+import { salvarValorPagamento, salvarItemPagamentoAvulso } from '../../utils/Pagamento/pagamentoStorage';
 import { salvarRedirectAposLogin } from '../../utils/Auth/redirectAposLogin';
 import {
   salvarLocacaoModalPendente,
@@ -156,6 +156,17 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
       // Persiste o valor total da locação (aluguel + frete, já calculado pelo modal) na mesma chave lida por
       // "Método de Pagamento" e por todo o restante do fluxo — mesmo padrão usado pelo Carrinho ao avançar para o pagamento.
       salvarValorPagamento(dados.resumo.valor);
+      // Essa locação não passa pelo CarrinhoContext, então "Pagamento Aprovado" não teria de onde ler o item alugado.
+      // Persiste esse item avulso para que a tela exiba "Itens alugados" do mesmo jeito que já funciona vindo do Carrinho.
+      salvarItemPagamentoAvulso({
+        id: String(produto.id ?? produto.title),
+        nome: produto.title,
+        imagem: produto.images[0] ?? '',
+        dias: dados.resumo.diarias,
+        unidades: dados.quantidade,
+        dataEntregaFormatada: dados.resumo.dataEntregaFormatada,
+        horarioEntregaFormatado: dados.resumo.entregaHorarioFormatado,
+      });
       navigate('metodoPagamento');
     }
   };

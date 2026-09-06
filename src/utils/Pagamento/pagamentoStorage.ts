@@ -10,6 +10,8 @@ export const CHAVE_CARTAO = 'locatem_pagamento_cartao';
 // Marca que a etapa "Processando Pagamento" já concluiu a simulação atual.
 // Único propósito: impedir que a tela "Pagamento Aprovado" seja acessada diretamente (ex.: hash digitado à mão) sem passar pelo processamento.
 export const CHAVE_PROCESSADO = 'locatem_pagamento_processado';
+// Item da locação iniciada direto por "Locar Agora" (fora do carrinho) — único propósito é permitir que "Pagamento Aprovado" exiba o item alugado nesse fluxo, já que ele nunca passa pelo CarrinhoContext.
+export const CHAVE_ITEM_AVULSO = 'locatem_pagamento_item_avulso';
 
 const METODOS_VALIDOS: FormaPagamento[] = ['credito', 'debito', 'pix'];
 
@@ -76,11 +78,42 @@ export function lerPagamentoProcessado(): boolean {
   return localStorage.getItem(CHAVE_PROCESSADO) === 'true';
 }
 
+/** Item exibido em "Itens alugados" quando a locação não passa pelo carrinho (fluxo "Locar Agora"). */
+export interface ItemPagamentoAvulso {
+  id: string;
+  nome: string;
+  imagem: string;
+  dias: number;
+  unidades: number;
+  /** Dia e horário de entrega escolhidos no modal "Detalhes da Locação" (ex.: "10/08/2026" e "09:00 às 12:00") — exibidos no Resumo de "Pagamento Aprovado". */
+  dataEntregaFormatada: string;
+  horarioEntregaFormatado: string;
+}
+
 /**
- * Limpa as chaves do funil de pagamento (valor, método, cartão e o carimbo de processado) após a confirmação em "Pagamento Aprovado" — evita que dados de uma compra concluída reapareçam numa compra futura.
+ * Persiste o item da locação iniciada direto por "Locar Agora", para que "Pagamento Aprovado" tenha o que exibir em "Itens alugados" — o mesmo papel que o CarrinhoContext cumpre quando a locação vem do Carrinho.
+ */
+export function salvarItemPagamentoAvulso(item: ItemPagamentoAvulso): void {
+  localStorage.setItem(CHAVE_ITEM_AVULSO, JSON.stringify(item));
+}
+
+/** Lê o item avulso persistido, ou null se ausente/corrompido. */
+export function lerItemPagamentoAvulso(): ItemPagamentoAvulso | null {
+  const bruto = localStorage.getItem(CHAVE_ITEM_AVULSO);
+  if (!bruto) return null;
+
+  try {
+    return JSON.parse(bruto) as ItemPagamentoAvulso;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Limpa as chaves do funil de pagamento (valor, método, cartão, item avulso e o carimbo de processado) após a confirmação em "Pagamento Aprovado" — evita que dados de uma compra concluída reapareçam numa compra futura.
  */
 export function limparDadosPagamento(): void {
-  [CHAVE_VALOR, CHAVE_METODO, CHAVE_CARTAO, CHAVE_PROCESSADO].forEach((chave) =>
+  [CHAVE_VALOR, CHAVE_METODO, CHAVE_CARTAO, CHAVE_PROCESSADO, CHAVE_ITEM_AVULSO].forEach((chave) =>
     localStorage.removeItem(chave),
   );
 }

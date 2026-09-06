@@ -7,45 +7,79 @@
 }
 
 /* =========================================================
-   TOPO / HERO
+  TOPO / HERO
 ========================================================= */
 .hero {
   width: 100%;
   background: linear-gradient(to bottom,
       var(--color-primary) 0%,
-      var(--color-primary-light) 38%,
-      #ece5bf 68%,
+      var(--color-primary-light) 32%,
+      #f3ecc9 52%,
+      #f8f4e6 70%,
       var(--color-bg-main) 100%);
   text-align: center;
-  padding: 48px 28px 34px;
+  padding: 48px 28px 56px;
+  position: relative;
+}
+
+/* Contém o conteúdo do hero numa largura confortável de leitura, evitando que o título/preço fiquem esticados em telas muito largas. */
+.heroInner {
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .successIcon {
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 28px;
-  padding: 0;
+  width: 80px; 
+  height: 80px; 
+  margin: 0 auto 24px;
   border-radius: 50%;
   background-color: var(--color-bg-card);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .successIcon {
+    animation: none;
+  }
 }
 
 .iconeConcluido {
   width: auto;
-  height: 50px;
+  height: 40px;
   margin: 0;
   color: #1f7a2e;
 }
 
 .heroTitle {
-  font-size: 28px;
-  font-weight: 800;
+  font-size: 26px;
+  font-weight: 700;
   line-height: 1.2;
   color: var(--color-text-dark);
   margin-bottom: 10px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .heroSubtitle {
@@ -56,9 +90,10 @@
 
 .heroPrice {
   font-size: 34px;
-  font-weight: 900;
+  font-weight: 800;
   color: var(--color-text-dark);
   margin-bottom: 22px;
+  letter-spacing: -0.5px;
 }
 
 .heroDivider {
@@ -70,24 +105,24 @@
 }
 
 /* =========================================================
-   CONTEÚDO
+  CONTEÚDO
 ========================================================= */
 .content {
   width: 100%;
   max-width: 1000px;
   padding: 48px 28px 34px;
-  margin: 0;
+  margin: 0 auto;
 }
 
 /* =========================================================
-   ALERTA VERDE
+  ALERTA VERDE
 ========================================================= */
 .pickupAlert {
   display: flex;
   align-items: flex-start;
   gap: 14px;
   padding: 18px 16px;
-  margin-bottom: 38px;
+  margin-bottom: 32px;
   background-color: #9aed935a;
   border-left: 4px solid #1b6d24;
   border-radius: 16px;
@@ -109,24 +144,56 @@
 }
 
 /* =========================================================
-   DETALHES DO PAGAMENTO
+  TÍTULOS DE SEÇÃO (Resumo do pedido / Itens alugados)
 ========================================================= */
+.sectionTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin: 0 0 14px;
+}
+
+/* =========================================================
+  RESUMO DO PEDIDO (agrupa os detalhes num único cartão)
+========================================================= */
+.resumoCard {
+  background-color: var(--color-bg-card);
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 20px 18px;
+  margin-bottom: 32px;
+}
+
 .detailsList {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  margin-bottom: 34px;
 }
 
 .detailRow {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 14px;
+  gap: 10px 14px;
+  padding: 12px 0;
+}
+
+.detailRow:not(:last-child) {
+  border-bottom: 1px solid #f0f1f3;
 }
 
 .label {
-  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.label svg {
+  flex-shrink: 0;
   color: var(--color-text-muted);
 }
 
@@ -135,19 +202,22 @@
   align-items: center;
   gap: 6px;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text-dark);
   text-align: right;
 }
 
 /* =========================================================
-   CARDS DE PRODUTO
+  CARDS DE PRODUTO
 ========================================================= */
+.produtosSection {
+  margin-bottom: 12px;
+}
+
 .listaProdutos {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 12px;
 }
 
 .productCard {
@@ -158,6 +228,11 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  transition: box-shadow var(--transition-fast);
+}
+
+.productCard:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }
 
 .productCard img {
@@ -183,34 +258,75 @@
   color: var(--color-text-muted);
 }
 
+/* Entrega individual por item — só aparece quando os itens não compartilham a mesma janela de entrega (ver Resumo do pedido). Discreta: menor e mais clara que a linha de Quantidade/Locação acima. */
+.productEntrega {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+.productEntrega svg {
+  flex-shrink: 0;
+}
+
 /* =========================================================
-   AÇÕES
+  AÇÕES
 ========================================================= */
 .actions {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
-  margin-top: 20px;
+  gap: 12px;
+  margin-top: 36px;
 }
 
 .btnLink {
   background: none;
   border: none;
-  padding: 0;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
   font-size: 16px;
   font-weight: 700;
   color: #705d00;
-  transition: var(--transition-fast);
+  transition: background var(--transition-fast), opacity var(--transition-fast);
   cursor: pointer;
 }
 
 .btnLink:hover {
-  opacity: 0.75;
+  background: rgba(0, 0, 0, 0.05);
+  opacity: 1;
 }
 
 @media (min-width: 640px) {
   .content {
     padding: 32px 24px 48px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding: 64px 40px 44px;
+  }
+
+  .heroTitle {
+    font-size: 32px;
+  }
+
+  .heroSubtitle {
+    font-size: 17px;
+  }
+
+  .heroPrice {
+    font-size: 40px;
+  }
+
+  .resumoCard,
+  .productCard {
+    padding: 24px 22px;
   }
 }

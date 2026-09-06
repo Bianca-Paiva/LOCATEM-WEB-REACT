@@ -10,8 +10,7 @@ import type { Route } from '../../../router/useRouter';
 import styles from './PagamentoPix.module.css';
 
 /* ============================================================
-   Tela "Pagamento via Pix"
-   Fluxo: Carrinho -> Método de Pagamento -> Pix
+  Fluxo: Carrinho -> Método de Pagamento -> Pix
 ============================================================ */
 
 interface PagamentoPixProps {

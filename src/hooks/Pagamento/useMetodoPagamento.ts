@@ -11,9 +11,9 @@ interface UseMetodoPagamentoReturn {
   total: number;
   /** Forma de pagamento marcada no momento, ou null se nenhuma foi escolhida. */
   formaSelecionada: FormaPagamento | null;
-  /** Marca a forma de pagamento e, para cartão (crédito/débito), já avança para "Selecionar Cartão". */
+  /** Marca a forma de pagamento selecionada; o avanço de tela só ocorre em `continuarPagamento`. */
   selecionarForma: (forma: FormaPagamento) => void;
-  /** Usado pelo botão "Continuar Pagamento" do resumo (relevante sobretudo para PIX). */
+  /** Usado pelo botão "Continuar Pagamento" do resumo — único ponto que avança para a próxima tela, para qualquer forma de pagamento. */
   continuarPagamento: () => void;
 }
 
@@ -36,12 +36,9 @@ export function useMetodoPagamento(navigate: (route: Route) => void): UseMetodoP
   }
 
   function selecionarForma(forma: FormaPagamento) {
+    // Apenas marca a forma escolhida — o avanço para a próxima tela (Selecionar Cartão/Pix)
+    // só acontece ao clicar em "Continuar Pagamento", para qualquer forma de pagamento.
     setFormaSelecionada(forma);
-
-    // Cartão de crédito/débito: ao selecionar a opção, já avança para a tela de Selecionar Cartão (não é preciso clicar em "Continuar Pagamento").
-    if (FORMAS_COM_CARTAO.includes(forma)) {
-      irParaProximaTela(forma);
-    }
   }
 
   function continuarPagamento() {

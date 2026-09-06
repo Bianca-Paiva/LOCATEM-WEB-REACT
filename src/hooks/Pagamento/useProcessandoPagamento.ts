@@ -3,7 +3,7 @@ import type { Route } from '../../router/useRouter';
 import { lerMetodoPagamento, marcarPagamentoProcessado } from '../../utils/Pagamento/pagamentoStorage';
 
 
-const TEMPO_PROCESSAMENTO_MS = 2000;
+const TEMPO_PROCESSAMENTO_MS = 5000;
 
 interface UseProcessandoPagamentoReturn {
   /** false enquanto a tela redireciona por método ausente/inválido (mesma regra usada em Selecionar Cartão/Pix). */

@@ -1,8 +1,3 @@
-/* Reaproveita as cores/identidade já definidas em src/styles/global.css
-   (--color-primary, --color-primary-light, --color-primary-soft,
-   --color-bg-main, --color-text-dark, --color-text-muted) em vez de
-   redeclarar um :root local, como no HTML original. */
-
 .app {
   width: 100%;
   min-height: 100vh;
@@ -23,9 +18,48 @@
   justify-content: center;
   align-items: center;
 
-  gap: 34px;
   padding: 24px;
   text-align: center;
+}
+
+/* ========================================================
+  PAINEL (dá contorno/elevação ao conteúdo sobre o degradê)
+======================================================== */
+.painel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 68px;
+  width: 100%;
+  max-width: 450px;
+  padding: 60px 32px;
+
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+
+  animation: apresentar 0.4s ease both;
+}
+
+@keyframes apresentar {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .painel {
+    animation: none;
+  }
 }
 
 /* ========================================================
@@ -35,6 +69,7 @@
 .loadingSpinner {
   width: 55px;
   height: 55px;
+  margin-top: 15px;
 
   border-radius: 50%;
 
@@ -49,8 +84,6 @@
 
   filter: blur(0.2px);
 
-  /* Corrigido "--webkit-mask" (typo com dupla hifenização) do CSS original,
-     que fazia a propriedade ser ignorada em navegadores WebKit/Safari. */
   mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 8px));
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 8px));
 
@@ -74,7 +107,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .processandoPagamento h1 {
@@ -91,7 +124,24 @@
   line-height: 1.5;
 }
 
+/* ============================= */
+/* SELO DE SEGURANÇA             */
+/* ============================= */
+.seguranca {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
 @media (min-width: 768px) {
+  .painel {
+    padding: 48px 40px;
+    gap: 32px;
+  }
+
   .loadingSpinner {
     width: 70px;
     height: 70px;
@@ -103,6 +153,10 @@
 
   .processandoPagamento p {
     font-size: 14px;
+  }
+
+  .seguranca {
+    font-size: 13px;
   }
 }
 

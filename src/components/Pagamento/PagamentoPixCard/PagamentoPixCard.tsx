@@ -43,8 +43,7 @@ export function PagamentoPixCard({
   const [mostrarCodigoCompleto, setMostrarCodigoCompleto] = useState(false);
   const [tempoRestante, setTempoRestante] = useState(duracaoSegundos);
 
-  // Reinicia o cronômetro interno sempre que um novo código Pix for exibido
-  // (só é relevante quando o card não está sendo controlado externamente por `expirado`).
+  // Reinicia o cronômetro interno sempre que um novo código Pix for exibido (só é relevante quando o card não está sendo controlado externamente por `expirado`).
   // Ajuste de estado feito durante a renderização (em vez de em um efeito) para evitar o disparo de uma renderização em cascata
   const [codigoPixAnterior, setCodigoPixAnterior] = useState(codigoPix);
   if (codigoPix !== codigoPixAnterior) {

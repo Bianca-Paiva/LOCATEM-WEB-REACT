@@ -1,4 +1,6 @@
 import type { StatusLocacao } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import BtnPrincipal from '../../BtnPrincipal/BtnPrincipal';
+import BtnSecundario from '../../BtnSecundario/BtnSecundario';
 import styles from './AcoesLocacao.module.css';
 
 interface AcoesLocacaoProps {
@@ -25,13 +27,11 @@ export default function AcoesLocacao({
   if (status === 'pendente') {
     return (
       <div className={styles.grupoBotoes}>
-        <button
-          type="button"
-          className={styles.botaoSecundario}
-          onClick={onVoltarLocacoes}
-        >
-          Voltar para Minhas Locações
-        </button>
+        <BtnSecundario 
+          text="Voltar para Minhas Locações" 
+          onClick={onVoltarLocacoes} 
+          type="button" 
+        />
 
         <button
           type="button"
@@ -48,21 +48,17 @@ export default function AcoesLocacao({
   if (status === 'aguardandoPagamento') {
     return (
       <div className={styles.grupoBotoes}>
-        <button
-          type="button"
-          className={styles.botaoSecundario}
-          onClick={onVerLocacoes}
-        >
-          Ver minhas locações
-        </button>
+        <BtnSecundario 
+          text="Ver minhas locações" 
+          onClick={onVerLocacoes} 
+          type="button" 
+        />
 
-        <button
-          type="button"
-          className={styles.botaoPrimario}
-          onClick={onProsseguirAluguel}
-        >
-          Efetuar pagamento
-        </button>
+        <BtnPrincipal 
+          text="Efetuar pagamento" 
+          onClick={onProsseguirAluguel} 
+          type="button" 
+        />
       </div>
     );
   }
@@ -77,13 +73,11 @@ export default function AcoesLocacao({
     status === 'devolucaoEmTransporte'
   ) {
     return (
-      <button
-        type="button"
-        className={styles.botaoSecundario}
-        onClick={onVerLocacoes}
-      >
-        Ver minhas locações
-      </button>
+      <BtnSecundario 
+        text="Ver minhas locações" 
+        onClick={onVerLocacoes} 
+        type="button" 
+      />
     );
   }
 
@@ -92,21 +86,17 @@ export default function AcoesLocacao({
   ) {
     return (
       <div className={styles.grupoBotoes}>
-        <button
-          type="button"
-          className={styles.botaoSecundario}
-          onClick={onVoltarLocacoes}
-        >
-          Voltar para Minhas Locações
-        </button>
+        <BtnSecundario 
+          text="Voltar para minhas locações" 
+          onClick={onVoltarLocacoes} 
+          type="button" 
+        />
 
-        <button
-          type="button"
-          className={styles.botaoPrimario}
-          onClick={onAvaliacao}
-        >
-          Avaliar Locação
-        </button>
+        <BtnPrincipal 
+          text="Avaliar Locação" 
+          onClick={onAvaliacao} 
+          type="button" 
+        />
       </div>
     );
   }
@@ -114,21 +104,17 @@ export default function AcoesLocacao({
   // Recusada e cancelada compartilham o mesmo par de ações
   return (
     <div className={styles.grupoBotoes}>
-      <button
-        type="button"
-        className={styles.botaoSecundario}
-        onClick={onVoltarLocacoes}
-      >
-        Voltar para Minhas Locações
-      </button>
+      <BtnSecundario 
+        text="Voltar para Minhas Locações" 
+        onClick={onVoltarLocacoes} 
+        type="button" 
+      />
 
-      <button
-        type="button"
-        className={styles.botaoPrimario}
-        onClick={onSolicitarNovaLocacao}
-      >
-        Solicitar nova locação
-      </button>
+      <BtnPrincipal 
+        text="Solicitar nova locação" 
+        onClick={onSolicitarNovaLocacao} 
+        type="button" 
+      />
     </div>
   );
 }

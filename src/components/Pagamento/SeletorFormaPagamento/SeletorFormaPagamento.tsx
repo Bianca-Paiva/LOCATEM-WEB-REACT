@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { CreditCard, Landmark, QrCode } from 'lucide-react';
+import { CreditCard, QrCode } from 'lucide-react';
+import { Icon } from '@iconify/react';
 
 import type { FormaPagamento } from '../../../types/Pagamento/cartao.types';
 
@@ -12,8 +13,8 @@ interface Opcao {
 }
 
 const OPCOES: Opcao[] = [
-  { id: 'credito', label: 'Cartão de Crédito', icone: <CreditCard size={18} aria-hidden="true" /> },
-  { id: 'debito', label: 'Cartão de Débito', icone: <Landmark size={18} aria-hidden="true" /> },
+  { id: 'credito', label: 'Cartão de Crédito', icone: <Icon icon="mdi:credit-card-outline" width={18} aria-hidden="true" /> },
+  { id: 'debito', label: 'Cartão de Débito', icone: <CreditCard size={18} aria-hidden="true" /> },
   { id: 'pix', label: 'PIX', icone: <QrCode size={18} aria-hidden="true" /> },
 ];
 
@@ -24,7 +25,6 @@ interface SeletorFormaPagamentoProps {
   onSelecionar: (forma: FormaPagamento) => void;
 }
 
-// Card "Forma de Pagamento" da tela Método de Pagamento — origem: WEB-CRU/metodoPagamento.html.
 export function SeletorFormaPagamento({ selecionado, onSelecionar }: SeletorFormaPagamentoProps) {
   return (
     <section className={styles.card} aria-labelledby="forma-pagamento-titulo">

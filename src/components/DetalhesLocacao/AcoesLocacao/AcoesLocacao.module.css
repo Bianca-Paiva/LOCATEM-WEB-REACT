@@ -5,8 +5,6 @@
   width: 100%;
 }
 
-.botaoPrimario,
-.botaoSecundario,
 .botaoPerigo {
   width: 100%;
   height: 52px;
@@ -18,26 +16,8 @@
   box-sizing: border-box;
 }
 
-.botaoPrimario:active,
-.botaoSecundario:active,
 .botaoPerigo:active {
   transform: scale(0.99);
-}
-
-.botaoPrimario {
-  border: none;
-  background: var(--color-primary);
-  color: #0A0A0A;
-}
-
-.botaoPrimario:hover {
-  background: var(--color-primary-hover);
-}
-
-.botaoSecundario {
-  border: 1px solid #eadfb0;
-  background: #F5E3B3;
-  color: #6E5000;
 }
 
 .botaoPerigo {
