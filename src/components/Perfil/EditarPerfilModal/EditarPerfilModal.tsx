@@ -143,7 +143,7 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
                     <FormInput
                       key={`cep-shake-${JSON.stringify(shakes.cep)}`}
                       id="perfil-cep"
-                      label="Cep"
+                      label="CEP"
                       type="text"
                       inputMode="numeric"
                       value={value}

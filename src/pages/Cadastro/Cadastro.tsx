@@ -1,7 +1,7 @@
 import { Controller } from 'react-hook-form'
 import styles from './Cadastro.module.css'
 
-import { maskCPF, maskCNPJ, maskPhone } from '../../hooks/Mascaras/masks'
+import { maskCPF, maskCNPJ, maskPhone, maskCEP } from '../../hooks/Mascaras/masks'
 import { getPasswordValidations, getConfirmPasswordStatus } from '../../hooks/Password/passwordValidation'
 import { useCadastroForm } from '../../hooks/Cadastro/useCadastroForm'
 import type { Route } from '../../router/useRouter'
@@ -196,19 +196,89 @@ export default function Cadastro({ navigate }: CadastroProps) {
                             </div>
 
                             {/* CAMPO ENDEREÇO */}
-                            <Controller
-                                control={control} name="endereco"
-                                render={({ field: { onChange, value } }) => (
-                                    <FormInput
-                                        key={`endereco-shake-${JSON.stringify(shakes.endereco)}`}
-                                        id="endereco" label="Endereço" type="text" placeholder="Digite seu endereço completo"
-                                        value={value} required shake={shakes.endereco.shake}
-                                        onChange={(e) => { onChange(e.target.value); clearShake('endereco'); }}
-                                        status={errors.endereco || shakes.endereco.active ? 'erro' : ''}
-                                        error={errors.endereco?.message || ''}
-                                    />
-                                )}
-                            />
+                            <div className={styles.endereco}>
+                                <p>Endereço</p>
+
+                                <div className={styles.linhaCep}>
+                                    <div className={styles.inputCep}>
+                                        <Controller
+                                            control={control} name="cep"
+                                            render={({ field: { onChange, value } }) => (
+                                                <FormInput
+                                                    key={`cep-shake-${JSON.stringify(shakes.cep)}`}
+                                                    id="cep"
+                                                    label="CEP"
+                                                    type="text"
+                                                    inputMode="numeric"
+                                                    value={value}
+                                                    placeholder="00000-000"
+                                                    required
+                                                    shake={shakes.cep.shake}
+                                                    onBlur={() => trigger('cep')}
+                                                    onChange={(e) => { onChange(maskCEP(e.target.value)); clearShake('cep'); }}
+                                                    status={errors.cep || shakes.cep.active ? 'erro' : touchedFields.cep ? 'sucesso' : ''}
+                                                    error={errors.cep?.message || ''}
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <button
+                                        type="button"
+                                        className={styles.btnNaoSeiCep}
+
+                                        // API do Correio para buscar um cep
+                                        onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
+                                    >
+                                        Não sei meu CEP
+                                    </button>
+                                </div>
+
+                                <div className={styles.linhaRuaNumero}>
+                                    <div className={styles.inputRua}>
+                                        <Controller
+                                            control={control} name="logradouro"
+                                            render={({ field: { onChange, value } }) => (
+                                                <FormInput
+                                                    key={`logradouro-shake-${JSON.stringify(shakes.logradouro)}`}
+                                                    id="logradouro"
+                                                    label="Rua/Logradouro"
+                                                    type="text"
+                                                    value={value}
+                                                    placeholder="Ex: Avenida Paulista"
+                                                    required
+                                                    shake={shakes.logradouro.shake}
+                                                    onBlur={() => trigger('logradouro')}
+                                                    onChange={(e) => { onChange(e.target.value); clearShake('logradouro'); }}
+                                                    status={errors.logradouro || shakes.logradouro.active ? 'erro' : touchedFields.logradouro ? 'sucesso' : ''}
+                                                    error={errors.logradouro?.message || ''}
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                    <div className={styles.inputNumero}>
+                                        <Controller
+                                            control={control} name="numero"
+                                            render={({ field: { onChange, value } }) => (
+                                                <FormInput
+                                                    key={`numero-shake-${JSON.stringify(shakes.numero)}`}
+                                                    id="numero"
+                                                    label="Número"
+                                                    type="text"
+                                                    value={value}
+                                                    placeholder="Ex: 123"
+                                                    required
+                                                    shake={shakes.numero.shake}
+                                                    onBlur={() => trigger('numero')}
+                                                    onChange={(e) => { onChange(e.target.value); clearShake('numero'); }}
+                                                    status={errors.numero || shakes.numero.active ? 'erro' : touchedFields.numero ? 'sucesso' : ''}
+                                                    error={errors.numero?.message || ''}
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                         <BtnPricipal text="Criar conta" type="submit" />

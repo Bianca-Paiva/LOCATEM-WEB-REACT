@@ -16,12 +16,17 @@ export function useCadastroForm() {
 
     const [shakes, setShakes] = useState<Record<string, ErrorState>>({
         nome: INITIAL_ERROR, email: INITIAL_ERROR, telefone: INITIAL_ERROR,
-        documento: INITIAL_ERROR, endereco: INITIAL_ERROR, senha: INITIAL_ERROR, confirmarSenha: INITIAL_ERROR
+        documento: INITIAL_ERROR, cep: INITIAL_ERROR, logradouro: INITIAL_ERROR, numero: INITIAL_ERROR,
+        senha: INITIAL_ERROR, confirmarSenha: INITIAL_ERROR
     })
 
     const { control, handleSubmit, setValue, trigger, getValues, formState: { errors, touchedFields } } = useForm<CadastroFormData>({
         resolver: zodResolver(cadastroSchema),
-        defaultValues: { tipo: 'locatario', nome: '', email: '', telefone: '', documento: '', endereco: '', senha: '', confirmarSenha: '' }
+        defaultValues: {
+            tipo: 'locatario', nome: '', email: '', telefone: '', documento: '',
+            cep: '', logradouro: '', numero: '',
+            senha: '', confirmarSenha: ''
+        }
     })
 
     const tipo = useWatch({ control, name: 'tipo' })
@@ -75,7 +80,7 @@ export function useCadastroForm() {
     const onInvalidSubmit = (formErrors: typeof errors) => {
         let hasEmptyFields = false
 
-        const fields = ['nome', 'email', 'telefone', 'documento', 'endereco', 'senha', 'confirmarSenha'] as const
+        const fields = ['nome', 'email', 'telefone', 'documento', 'cep', 'logradouro', 'numero', 'senha', 'confirmarSenha'] as const
         fields.forEach(field => {
             const val = getValues(field)
 
@@ -99,6 +104,7 @@ export function useCadastroForm() {
         if (formErrors.nome) return setAlerta(CADASTRO_MESSAGES.INVALID_NAME)
         if (formErrors.telefone) return setAlerta(CADASTRO_MESSAGES.INVALID_PHONE)
         if (formErrors.documento) return setAlerta(isCNPJ ? CADASTRO_MESSAGES.INVALID_CNPJ : CADASTRO_MESSAGES.INVALID_CPF)
+        if (formErrors.cep) return setAlerta(CADASTRO_MESSAGES.INVALID_CEP)
 
         if (formErrors.confirmarSenha?.message === 'As senhas não coincidem') {
             // O triggerShake('confirmarSenha') foi removido daqui pois já é acionado no loop acima
