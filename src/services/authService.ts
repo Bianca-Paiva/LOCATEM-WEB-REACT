@@ -1,4 +1,4 @@
-const API_BASE = 'https://localhost:7127/api'
+const API_BASE = 'http://localhost:5033/api'
 
 export interface CadastroPayload {
     nome: string
@@ -25,13 +25,33 @@ export async function criarUsuario(payload: CadastroPayload): Promise<void> {
     if (!response.ok) throw new Error(JSON.stringify(data))
 }
 
-export async function loginUsuario(payload: LoginPayload): Promise<unknown> {
-    const response = await fetch(`${API_BASE}/Login`, {
+export async function loginUsuario(payload: LoginPayload): Promise<any> {
+    const response = await fetch(`${API_BASE}/Login/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
     })
     const data = await response.json()
     if (!response.ok) throw new Error(JSON.stringify(data))
+        localStorage.setItem('token', data.token)
+    return data
+}
+
+export async function buscarUsuarioLogado(): Promise<any> {
+    const token = localStorage.getItem('token')
+
+    const response = await fetch(`${API_BASE}/Usuarios/me`, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+        throw new Error(JSON.stringify(data))
+    }
+
     return data
 }
