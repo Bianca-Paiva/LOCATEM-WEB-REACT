@@ -72,12 +72,10 @@ export default function SolicitarLocacaoModal({
     aberto,
   });
 
-  // Datas indisponíveis/locadas exibidas no calendário — usa a lista
-  // explícita, se vier, senão cai para a do próprio produto.
+  // Datas indisponíveis/locadas exibidas no calendário — usa a lista explícita, se vier, senão cai para a do próprio produto.
   const diasIndisponiveis = diasIndisponiveisProp ?? produto.diasIndisponiveis ?? [];
 
-  // Controla qual dos dois popovers de calendário (entrega/devolução) está
-  // aberto — nunca os dois ao mesmo tempo.
+  // Controla qual dos dois popovers de calendário (entrega/devolução) está aberto — nunca os dois ao mesmo tempo.
   const [campoDataAberto, setCampoDataAberto] = useState<'entrega' | 'devolucao' | null>(null);
 
   // Fecha com a tecla Esc
@@ -97,9 +95,7 @@ export default function SolicitarLocacaoModal({
 
   const handleSelecionarEntrega = (dataIso: string) => {
     selecionarDataEntrega(dataIso);
-    // Se já existe uma duração de diárias vinda da página do produto, a
-    // devolução já foi preenchida automaticamente — só falta fechar. Senão,
-    // avança o popover para a devolução para o usuário já escolher.
+    // Se já existe uma duração de diárias vinda da página do produto, a devolução já foi preenchida automaticamente — só falta fechar. Senão, avança o popover para a devolução para o usuário já escolher.
     setCampoDataAberto(duracaoInicial && duracaoInicial > 0 ? null : 'devolucao');
   };
 

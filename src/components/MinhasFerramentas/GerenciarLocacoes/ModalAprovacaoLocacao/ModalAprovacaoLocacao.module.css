@@ -18,7 +18,7 @@
 }
 
 .modal {
-  width: 440px;
+  width: 640px;
   max-width: 100%;
 
   background: white;
@@ -102,7 +102,7 @@
 .valorDestaque {
   font-size: 15px;
   font-weight: 800;
-  color: #137333;
+  color: #000000;
   text-align: right;
 }
 

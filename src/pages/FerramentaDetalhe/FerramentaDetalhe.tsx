@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Pencil, Pause, Play, Trash2 } from 'lucide-react';
+import { Pencil, Pause, Play, Trash2, Star } from 'lucide-react';
 
 import Header from '../../components/Header/Header';
 import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
@@ -57,10 +57,7 @@ export default function FerramentaDetalhe({ navigate }: FerramentaDetalheProps) 
   const receitaGerada = locacoesDaFerramenta
     .filter((l) => l.status === 'finalizada')
     .reduce((total, l) => total + paraNumero(l.valor.replace('R$', '').trim()), 0);
-  const solicitacoesRespondidas = locacoesDaFerramenta.filter((l) => l.status !== 'pendente').length;
-  const recusadas = locacoesDaFerramenta.filter((l) => l.status === 'recusada').length;
-  const taxaAceite =
-    solicitacoesRespondidas > 0 ? Math.round(((solicitacoesRespondidas - recusadas) / solicitacoesRespondidas) * 100) : 100;
+
 
   const handleEditar = () => {
     navigate('cadastroFerramenta');
@@ -124,8 +121,15 @@ export default function FerramentaDetalhe({ navigate }: FerramentaDetalheProps) 
               linhas={[
                 { label: 'Locações realizadas', valor: `${locacoesRealizadas}` },
                 { label: 'Receita gerada (total)', valor: formatarValorMonetario(receitaGerada) },
-                { label: 'Avaliação média', valor: `${produto.rating.toFixed(1)} (${produto.reviewCount})` },
-                { label: 'Taxa de aceite', valor: `${taxaAceite}%` },
+                { 
+                  label: 'Avaliação média', 
+                  valor: (
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <Star size={14} fill="#FFCA00" color="#FFCA00" />
+                      {produto.rating.toFixed(1)} ({produto.reviewCount} avaliações)
+                    </span>
+                  )
+                },
               ]}
             />
 

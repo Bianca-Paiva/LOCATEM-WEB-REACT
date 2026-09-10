@@ -54,8 +54,7 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
   const { usuario } = useAuth();
   const [filtro, setFiltro] = useState<FiltroFerramenta>('todas');
 
-  // Só as ferramentas do locador atualmente logado — nunca pelo texto exibido na
-  // tela, sempre pelo identificador único do locador (Usuario.locadorId <-> Produto.locadorId).
+  // Só as ferramentas do locador atualmente logado — nunca pelo texto exibido na tela, sempre pelo identificador único do locador (Usuario.locadorId <-> Produto.locadorId).
   const minhasFerramentasCompletas = useMemo(
     () => produtos.filter((p) => p.locadorId && p.locadorId === usuario?.locadorId),
     [produtos, usuario],

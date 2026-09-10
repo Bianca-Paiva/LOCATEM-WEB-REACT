@@ -41,6 +41,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const content = (
     <>
+      {statusBadge ? (
+        <span className={styles.badgeAprovacao}>{statusBadge}</span>
+      ) : (
+        tipoAprovacao && (
+          <span
+            className={`${styles.badgeAprovacao} ${tipoAprovacao === 'automatica' ? styles.badgeAprovacaoAutomatica : styles.badgeAprovacaoManual
+              }`}
+          >
+            {tipoAprovacao === 'automatica' ? 'Aprovação automática' : 'Aprovação manual'}
+          </span>
+        )
+      )}
       <div className={styles.productImageContainer}>
         {/* Swiper no lugar da imagem estática */}
         <Swiper
@@ -55,19 +67,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {statusBadge ? (
-          <span className={styles.badgeAprovacao}>{statusBadge}</span>
-        ) : (
-          tipoAprovacao && (
-            <span
-              className={`${styles.badgeAprovacao} ${tipoAprovacao === 'automatica' ? styles.badgeAprovacaoAutomatica : styles.badgeAprovacaoManual
-                }`}
-            >
-              {tipoAprovacao === 'automatica' ? 'Aprovação automática' : 'Aprovação manual'}
-            </span>
-          )
-        )}
       </div>
 
       <div className={styles.productInfo}>
@@ -93,12 +92,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
 
           <div className={styles.productRating}>
-            <Star 
-              className={styles.estrelaAvaliacao} 
-              size={14} 
-              fill="#FFCA00" 
-              color="#FFCA00" 
-              strokeWidth={0} 
+            <Star
+              className={styles.estrelaAvaliacao}
+              size={14}
+              fill="#FFCA00"
+              color="#FFCA00"
+              strokeWidth={0}
             />
             <span className={styles.ratingValue}>{rating.toFixed(1)}</span>
             <span className={styles.ratingCount}>({reviewCount})</span>

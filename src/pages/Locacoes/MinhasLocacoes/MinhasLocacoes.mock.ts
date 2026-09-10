@@ -224,7 +224,7 @@ export const mockLocacoes: LocacaoData[] = [
   criarLocacao('8', {
     produtoId: 6, // Serra Circular Profissional DESOON 24 Dentes (JB Ferramentas)
     status: 'recusada',
-    mensagemStatus: 'Recusada pelo Locador',
+    mensagemStatus: 'Solicitação Recusada pelo Locador',
     dataInicio: '22/07/2026',
     horaInicio: '09:00',
     dataFim: '24/07/2026',
