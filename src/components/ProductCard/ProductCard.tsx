@@ -21,6 +21,10 @@ interface ProductCardProps {
   onNavigate?: () => void;
   /** Forma de aprovação da locação. Quando informado, exibe um selo no card (ex: telas de "Minhas Ferramentas"). */
   tipoAprovacao?: 'manual' | 'automatica';
+  /** Selo de status exibido no canto superior esquerdo da imagem (ex: "Disponível", "Locada" em Minhas Ferramentas). Substitui o selo de aprovação quando informado. */
+  statusBadge?: React.ReactNode;
+  /** Conteúdo extra renderizado abaixo das informações do produto (ex: botões "Ver"/"Editar" em Minhas Ferramentas). */
+  footerExtra?: React.ReactNode;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -32,6 +36,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   reviewCount,
   onNavigate,
   tipoAprovacao,
+  statusBadge,
+  footerExtra,
 }) => {
   const content = (
     <>
@@ -50,13 +56,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           ))}
         </Swiper>
 
-        {tipoAprovacao && (
-          <span
-            className={`${styles.badgeAprovacao} ${tipoAprovacao === 'automatica' ? styles.badgeAprovacaoAutomatica : styles.badgeAprovacaoManual
-              }`}
-          >
-            {tipoAprovacao === 'automatica' ? 'Aprovação automática' : 'Aprovação manual'}
-          </span>
+        {statusBadge ? (
+          <span className={styles.badgeAprovacao}>{statusBadge}</span>
+        ) : (
+          tipoAprovacao && (
+            <span
+              className={`${styles.badgeAprovacao} ${tipoAprovacao === 'automatica' ? styles.badgeAprovacaoAutomatica : styles.badgeAprovacaoManual
+                }`}
+            >
+              {tipoAprovacao === 'automatica' ? 'Aprovação automática' : 'Aprovação manual'}
+            </span>
+          )
         )}
       </div>
 
@@ -94,6 +104,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span className={styles.ratingCount}>({reviewCount})</span>
           </div>
         </div>
+
+        {footerExtra}
       </div>
     </>
   );

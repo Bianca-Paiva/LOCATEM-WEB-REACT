@@ -100,6 +100,12 @@
   color: #146C43;
 }
 
+/* Quando o conteúdo do selo já define seu próprio fundo/cor (ex: statusBadge de Minhas Ferramentas) */
+.badgeAprovacao:has(> *) {
+  padding: 0;
+  background: none;
+}
+
 .productTitle {
   font-size: 14px;
   font-weight: 500;
