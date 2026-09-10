@@ -31,12 +31,23 @@ export async function loginUsuario(payload: LoginPayload): Promise<any> {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
     })
-    const data = await response.json()
-    if (!response.ok) throw new Error(JSON.stringify(data))
+
+    // Pega o texto bruto da resposta para a gente inspecionar
+    const text = await response.text()
+    console.log("👀 O que o backend mandou no login:", text);
+
+    if (!response.ok) {
+        throw new Error(text)
+    }
+
+    const data = text ? JSON.parse(text) : {}
+    
+    if (data.token) {
         localStorage.setItem('token', data.token)
+    }
+    
     return data
 }
-
 export async function buscarUsuarioLogado(): Promise<any> {
     const token = localStorage.getItem('token')
 
@@ -55,3 +66,27 @@ export async function buscarUsuarioLogado(): Promise<any> {
 
     return data
 }
+
+export const atualizarPerfilUsuario = async (dados: {
+  nome: string;
+  telefone: string;
+  documento: string;
+  endereco: string;
+}) => {
+  const token = localStorage.getItem('token');
+
+  const response = await fetch('http://localhost:5033/api/Usuarios/me', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(dados)
+  });
+
+  if (!response.ok) {
+    throw new Error('Não foi possível atualizar o perfil.');
+  }
+
+  return await response.json();
+};

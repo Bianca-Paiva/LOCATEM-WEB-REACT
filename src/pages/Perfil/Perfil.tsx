@@ -16,7 +16,7 @@ interface PerfilProps {
   navigate: (route: Route) => void;
 }
 
-/**
+/*
  * Tela de Perfil — compartilhada entre Locatário e Locador. A estrutura é a mesma nos dois protótipos; o que muda (rótulo do documento, indicador de entregas no prazo, badge "desde") é resolvido a partir de `usuario.tipo` dentro de cada subcomponente, então não existem duas implementações paralelas de tela — só este ponto único que decide o que exibir.
  */
 export default function Perfil({ navigate }: PerfilProps) {

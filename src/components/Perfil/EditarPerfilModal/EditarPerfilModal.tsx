@@ -1,7 +1,7 @@
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { X, Camera } from 'lucide-react';
+import { X, Camera, MapPin } from 'lucide-react';
 import Avatar from '../../Avatar/Avatar';
 import FormInput from '../../Inputs/FormInput/FormInput';
 import BtnPrincipal from '../../BtnPrincipal/BtnPrincipal';
@@ -23,7 +23,7 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
 
   const {
     control, isCNPJ, alerta, setAlerta, shakes, clearShake,
-    touchedFields, errors, trigger, buildSubmit
+    touchedFields, errors, trigger, buildSubmit, buscarCep, enderecoResumo // 👈 Pego aqui
   } = useEditarPerfilForm(usuario);
 
   const handleFotoChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -150,7 +150,10 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
                       placeholder="00000-000"
                       required
                       shake={shakes.cep.shake}
-                      onBlur={() => trigger('cep')}
+                      onBlur={() => {
+                        trigger('cep');
+                        buscarCep(value);
+                      }}
                       onChange={(e) => { onChange(maskCEP(e.target.value)); clearShake('cep'); }}
                       status={errors.cep || shakes.cep.active ? 'erro' : touchedFields.cep ? 'sucesso' : ''}
                       error={errors.cep?.message || ''}
@@ -161,13 +164,18 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
               <button
                 type="button"
                 className={styles.btnNaoSeiCep}
-
-                // API do Correio para buscar um cep
                 onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
               >
                 Não sei meu CEP
               </button>
             </div>
+
+       {/* 📍 Exibe o resumo do endereço com o ícone do Lucide */}
+            {enderecoResumo && (
+              <p className="text-xs text-gray-500 mt-1 mb-2 flex items-center gap-1">
+                <MapPin size={14} /> {enderecoResumo}
+              </p>
+            )}
 
             <div className={styles.linhaRuaNumero}>
               <div className={styles.inputRua}>

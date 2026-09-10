@@ -12,13 +12,14 @@ const FIELDS = ['nome', 'telefone', 'documento', 'cep', 'logradouro', 'numero'] 
 
 export function useEditarPerfilForm(usuario: Usuario) {
     const [alerta, setAlerta] = useState<{ titulo: string, mensagem?: string } | null>(null)
+    const [enderecoResumo, setEnderecoResumo] = useState<string>('')
 
     const [shakes, setShakes] = useState<Record<string, ErrorState>>({
         nome: INITIAL_ERROR, telefone: INITIAL_ERROR, documento: INITIAL_ERROR,
         cep: INITIAL_ERROR, logradouro: INITIAL_ERROR, numero: INITIAL_ERROR
     })
 
-    const { control, handleSubmit, trigger, getValues, formState: { errors, touchedFields } } = useForm<PerfilFormData>({
+    const { control, handleSubmit, trigger, getValues, setValue, formState: { errors, touchedFields } } = useForm<PerfilFormData>({
         resolver: zodResolver(perfilSchema),
         defaultValues: {
             tipo: usuario.tipo,
@@ -57,12 +58,10 @@ export function useEditarPerfilForm(usuario: Usuario) {
         FIELDS.forEach(field => {
             const val = getValues(field)
 
-            // Aciona o shake se o campo estiver vazio
             if (!val || (typeof val === 'string' && !val.trim())) {
                 triggerShake(field)
                 hasEmptyFields = true
             }
-            // Aciona o shake se o campo estiver preenchido, mas com erro de validação
             else if (formErrors[field]) {
                 triggerShake(field)
             }
@@ -79,10 +78,61 @@ export function useEditarPerfilForm(usuario: Usuario) {
         if (formErrors.cep) return setAlerta(CADASTRO_MESSAGES.INVALID_CEP)
     }
 
+    const buscarCep = async (cep: string) => {
+        const cepLimpo = cep.replace(/\D/g, '');
+
+        if (cepLimpo.length !== 8) {
+            setEnderecoResumo('');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`);
+
+            if (!response.ok) {
+                return;
+            }
+
+            const data = await response.json();
+
+            if (data.erro) {
+                setEnderecoResumo('');
+                setAlerta({
+                    titulo: 'CEP não encontrado',
+                    mensagem: 'Verifique o CEP informado e tente novamente.',
+                });
+                return;
+            }
+
+            setValue('logradouro', data.logradouro || '');
+            
+            // Monta o resumo bonitinho: UF, Cidade, Bairro
+            if (data.localidade) {
+                const partes = [data.uf, data.localidade, data.bairro].filter(Boolean);
+                setEnderecoResumo(partes.join(', '));
+            }
+        } catch {
+            setAlerta({
+                titulo: 'Erro ao buscar CEP',
+                mensagem: 'Não foi possível consultar o CEP. Tente novamente.',
+            });
+        }
+    };
+
     const buildSubmit = (onValid: (data: PerfilFormData) => void) => handleSubmit(onValid, onInvalidSubmit)
 
     return {
-        control, isCNPJ, alerta, setAlerta, shakes, clearShake,
-        touchedFields, errors, trigger, buildSubmit
+        control,
+        isCNPJ,
+        alerta,
+        setAlerta,
+        shakes,
+        clearShake,
+        touchedFields,
+        errors,
+        trigger,
+        buildSubmit,
+        buscarCep,
+        enderecoResumo
     }
 }
