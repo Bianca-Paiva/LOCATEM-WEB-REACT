@@ -1,8 +1,9 @@
+import type { ReactNode } from 'react';
 import styles from './InfoListCard.module.css';
 
 export interface InfoListRow {
   label: string;
-  valor: string;
+  valor: string | ReactNode;
   /** Destaca o valor (cor primária), usado para o dado mais importante do card. */
   destaque?: boolean;
 }

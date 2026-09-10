@@ -4,6 +4,7 @@ import NotificationCard from '../../components/Notificacoes/NotificationCard/Not
 import FilterDropdown from '../../components/Notificacoes/FilterDropdownNotificacao/FilterDropdown';
 import Pagination from '../../components/Notificacoes/Pagination/Pagination';
 import NotificationDetailsModal from '../../components/Notificacoes/NotificationModal/NotificationDetailsModal';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 import { useNotifications } from '../../hooks/Notificacoes/useNotifications';
 import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import styles from './Notificacoes.module.css';
@@ -37,6 +38,16 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
 
   // Notificação atualmente aberta no modal; null = modal fechado
   const [selectedNotification, setSelectedNotification] = useState<NotificationData | null>(null);
+
+  // Controla o modal de confirmação do botão "Limpar tudo".
+  const [confirmLimparAberto, setConfirmLimparAberto] = useState(false);
+
+  const handleAbrirConfirmLimpar = () => setConfirmLimparAberto(true);
+  const handleFecharConfirmLimpar = () => setConfirmLimparAberto(false);
+  const handleConfirmarLimparTudo = () => {
+    clearAll();
+    setConfirmLimparAberto(false);
+  };
 
   const handleVerDetalhes = (id: string) => {
     const notification = pageItems.find((item) => item.id === id) ?? null;
@@ -84,7 +95,7 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
               <button
                 type="button"
                 className={styles.clearButton}
-                onClick={clearAll}
+                onClick={handleAbrirConfirmLimpar}
                 disabled={notifications.length === 0}
               >
                 <Trash2 size={16} />
@@ -133,6 +144,16 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
         onVerLocacao={handleVerLocacao}
         onAvaliar={handleAvaliar}
         onVerOfertas={handleVerOfertas}
+      />
+
+      <ConfirmModal
+        open={confirmLimparAberto}
+        title="Limpar notificações"
+        message="Tem certeza que deseja apagar todas as notificações? Esta ação não pode ser desfeita."
+        confirmLabel="Limpar tudo"
+        cancelLabel="Cancelar"
+        onConfirm={handleConfirmarLimparTudo}
+        onCancel={handleFecharConfirmLimpar}
       />
     </>
   );

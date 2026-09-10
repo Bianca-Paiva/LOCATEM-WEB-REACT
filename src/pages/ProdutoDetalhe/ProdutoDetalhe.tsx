@@ -20,6 +20,7 @@ import { useAuth } from '../../hooks/Auth/useAuth';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
 import { toProdutoSemelhante, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/Locacao/montarLocacaoData';
+import { salvarValorPagamento, salvarItemPagamentoAvulso } from '../../utils/Pagamento/pagamentoStorage';
 import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
 import type { Route } from '../../router/useRouter';
 import type { DadosLocacaoModal, ModoAberturaModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
@@ -102,8 +103,20 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
       setSuccessAberto(true);
     } else {
       // Aprovação automática: não cria solicitação pendente nem notificação de aprovação — segue direto para o pagamento.
-      // TODO: integrar com a etapa de pagamento assim que existir no projeto.
-      // navigate('pagamento');
+      // Persiste o total (mesma chave que o Carrinho usa) e o item avulso (fluxo "Locar Agora" nunca passa pelo CarrinhoContext),
+      // para que Método de Pagamento e Pagamento Aprovado tenham o que ler.
+      salvarValorPagamento(dados.resumo.valor);
+      salvarItemPagamentoAvulso({
+        id: `avulso-${produto.id}-${Date.now()}`,
+        nome: produto.title,
+        imagem: produto.images?.[0] ?? '',
+        dias: dados.resumo.diarias,
+        unidades: dados.quantidade,
+        dataEntregaFormatada: dados.resumo.dataEntregaFormatada,
+        horarioEntregaFormatado: dados.resumo.entregaHorarioFormatado,
+      });
+
+      navigate('metodoPagamento');
     }
   };
 

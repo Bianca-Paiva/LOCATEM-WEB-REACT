@@ -7,6 +7,7 @@ import InformacoesPessoais from '../../components/Perfil/InformacoesPessoais/Inf
 import ReputacaoCard from '../../components/Perfil/ReputacaoCard/ReputacaoCard';
 import PainelControle from '../../components/Perfil/PainelControle/PainelControle';
 import EditarPerfilModal from '../../components/Perfil/EditarPerfilModal/EditarPerfilModal';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 import { useAuth } from '../../hooks/Auth/useAuth';
 import { useCompletudePerfil } from '../../hooks/Perfil/useCompletudePerfil';
 import type { Route } from '../../router/useRouter';
@@ -23,6 +24,7 @@ export default function Perfil({ navigate }: PerfilProps) {
   const { usuario, logout, atualizarUsuario } = useAuth();
   const { percentual, mensagemDica } = useCompletudePerfil(usuario);
   const [editando, setEditando] = useState(false);
+  const [confirmSairAberto, setConfirmSairAberto] = useState(false);
 
   // Sem sessão: não há o que exibir nesta tela (o Header já direciona o clique no avatar para o login quando não autenticado, mas cobrimos o acesso direto à rota também).
   if (!usuario) {
@@ -46,6 +48,11 @@ export default function Perfil({ navigate }: PerfilProps) {
     navigate('home');
   };
 
+  const handleConfirmarLogout = () => {
+    setConfirmSairAberto(false);
+    handleLogout();
+  };
+
   return (
     <>
       <Header navigate={navigate} currentRoute="perfil" />
@@ -64,7 +71,7 @@ export default function Perfil({ navigate }: PerfilProps) {
 
         <PainelControle tipo={usuario.tipo} navigate={navigate} />
 
-        <button type="button" className={styles.btnSair} onClick={handleLogout}>
+        <button type="button" className={styles.btnSair} onClick={() => setConfirmSairAberto(true)}>
           <LogOut size={16} />
           Sair da Conta
         </button>
@@ -77,6 +84,16 @@ export default function Perfil({ navigate }: PerfilProps) {
           onSalvar={atualizarUsuario}
         />
       )}
+
+      <ConfirmModal
+        open={confirmSairAberto}
+        title="Sair da conta"
+        message="Tem certeza que deseja sair da sua conta?"
+        confirmLabel="Sair"
+        cancelLabel="Cancelar"
+        onConfirm={handleConfirmarLogout}
+        onCancel={() => setConfirmSairAberto(false)}
+      />
     </>
   );
 }

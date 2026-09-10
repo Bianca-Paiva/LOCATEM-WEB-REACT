@@ -1,0 +1,136 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 10000;
+}
+
+.modal {
+    width: 100%;
+    max-width: 420px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1.5px solid #f6c945;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.cabecalho {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.tituloWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.iconePerigo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #fdf1f1;
+    color: #cc3333;
+    flex-shrink: 0;
+}
+
+.titulo {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-text-dark);
+    margin: 0;
+}
+
+.btnFechar {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    transition: background var(--transition-fast);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.btnFechar:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.mensagem {
+    margin: 0 0 22px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+}
+
+.acoes {
+    display: flex;
+    gap: 12px;
+}
+
+.botaoSecundario,
+.botaoPrimario,
+.botaoPerigo {
+    flex: 1;
+    height: 46px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
+    box-sizing: border-box;
+}
+
+.botaoSecundario {
+    border: 1.5px solid #e5e7eb;
+    background: transparent;
+    color: var(--color-text-dark);
+}
+
+.botaoSecundario:hover {
+    background: var(--color-bg-input);
+}
+
+.botaoPrimario {
+    border: none;
+    background: var(--color-primary);
+    color: #141D23;
+}
+
+.botaoPrimario:hover {
+    opacity: 0.9;
+}
+
+.botaoPerigo {
+    border: none;
+    background: #cc3333;
+    color: #ffffff;
+}
+
+.botaoPerigo:hover {
+    background: #b32b2b;
+}
+
+@media (min-width: 480px) {
+    .acoes {
+        flex-direction: row;
+    }
+}

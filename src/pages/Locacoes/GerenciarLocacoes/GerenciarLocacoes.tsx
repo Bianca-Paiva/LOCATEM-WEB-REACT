@@ -6,6 +6,7 @@ import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVa
 import Abas from '../../../components/MinhasFerramentas/Abas/Abas';
 import LocacaoLocadorCard from '../../../components/MinhasFerramentas/GerenciarLocacoes/LocacaoLocadorCard/LocacaoLocadorCard';
 import ModalAprovacaoLocacao from '../../../components/MinhasFerramentas/GerenciarLocacoes/ModalAprovacaoLocacao/ModalAprovacaoLocacao';
+import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
 
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
@@ -26,6 +27,10 @@ export default function GerenciarLocacoes({ navigate }: GerenciarLocacoesProps) 
   const { atualizarLocacao } = useLocacaoStore();
   const { filtro, setFiltro, contagem, locacoesFiltradas } = useGerenciarLocacoes();
   const [locacaoModal, setLocacaoModal] = useState<LocacaoData | null>(null);
+
+  // Locação pendente de confirmação para "Recusar" — controla o ConfirmModal exibido
+  // por cima do ModalAprovacaoLocacao. null = confirmação fechada.
+  const [locacaoParaRecusar, setLocacaoParaRecusar] = useState<LocacaoData | null>(null);
 
   useEffect(() => {
     if (!usuario || usuario.tipo !== 'locador') {
@@ -65,6 +70,23 @@ export default function GerenciarLocacoes({ navigate }: GerenciarLocacoesProps) 
     setLocacaoModal(null);
   };
 
+  // Abre a confirmação em vez de recusar direto — a recusa em si só acontece em
+  // handleConfirmarRecusar, quando o locador confirma no ConfirmModal.
+  const handleAbrirConfirmRecusar = (locacao: LocacaoData) => {
+    setLocacaoParaRecusar(locacao);
+  };
+
+  const handleFecharConfirmRecusar = () => {
+    setLocacaoParaRecusar(null);
+  };
+
+  const handleConfirmarRecusar = () => {
+    if (locacaoParaRecusar) {
+      handleRecusar(locacaoParaRecusar);
+    }
+    setLocacaoParaRecusar(null);
+  };
+
   return (
     <>
       <Header navigate={navigate} currentRoute="gerenciarLocacoes" />
@@ -94,8 +116,22 @@ export default function GerenciarLocacoes({ navigate }: GerenciarLocacoesProps) 
       <ModalAprovacaoLocacao
         locacao={locacaoModal}
         onAprovar={handleAprovar}
-        onRecusar={handleRecusar}
+        onRecusar={handleAbrirConfirmRecusar}
         onFechar={() => setLocacaoModal(null)}
+      />
+
+      <ConfirmModal
+        open={locacaoParaRecusar !== null}
+        title="Recusar solicitação"
+        message={
+          locacaoParaRecusar
+            ? `Tem certeza que deseja recusar a solicitação de "${locacaoParaRecusar.produto}"? Esta ação não pode ser desfeita.`
+            : 'Tem certeza que deseja recusar esta solicitação? Esta ação não pode ser desfeita.'
+        }
+        confirmLabel="Sim, recusar"
+        cancelLabel="Voltar"
+        onConfirm={handleConfirmarRecusar}
+        onCancel={handleFecharConfirmRecusar}
       />
     </>
   );

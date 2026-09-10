@@ -14,6 +14,7 @@ import CalendarioDisponibilidade from '../../components/CadastroFerramenta/Calen
 import AprovacaoLocacao from '../../components/CadastroFerramenta/AprovacaoLocacao/AprovacaoLocacao';
 import EnderecoRetirada from '../../components/CadastroFerramenta/EnderecoRetirada/EnderecoRetirada';
 import SuccessModal from '../../components/SuccessModal/SucessesModal';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 
 import { useCadastroFerramenta } from '../../hooks/CadastroFerramenta/useCadastroFerramenta';
 import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
@@ -46,10 +47,19 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
   const [tentouPublicar, setTentouPublicar] = useState(false);
   const [shake, setShake] = useState(false);
   const [modalAberto, setModalAberto] = useState(false);
+  const [confirmCancelarAberto, setConfirmCancelarAberto] = useState(false);
+
+  const handleAbrirConfirmCancelar = () => setConfirmCancelarAberto(true);
+  const handleFecharConfirmCancelar = () => setConfirmCancelarAberto(false);
 
   const handleCancelar = () => {
     setFerramentaSelecionadaId(null);
     navigate('minhasFerramentas');
+  };
+
+  const handleConfirmarCancelar = () => {
+    setConfirmCancelarAberto(false);
+    handleCancelar();
   };
 
   const handlePublicar = () => {
@@ -243,7 +253,7 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
         </div>
 
         <div className={styles.acoes}>
-          <button type="button" className={styles.botaoSecundario} onClick={handleCancelar}>
+          <button type="button" className={styles.botaoSecundario} onClick={handleAbrirConfirmCancelar}>
             Cancelar
           </button>
           <button type="button" className={styles.botaoPrimario} onClick={handlePublicar}>
@@ -251,6 +261,20 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
           </button>
         </div>
       </main>
+
+      <ConfirmModal
+        open={confirmCancelarAberto}
+        title="Cancelar cadastro"
+        message={
+          produtoEmEdicao
+            ? 'Tem certeza que deseja cancelar? As alterações feitas nesta ferramenta serão perdidas.'
+            : 'Tem certeza que deseja cancelar? As informações preenchidas serão perdidas.'
+        }
+        confirmLabel="Sim, cancelar"
+        cancelLabel="Continuar editando"
+        onConfirm={handleConfirmarCancelar}
+        onCancel={handleFecharConfirmCancelar}
+      />
 
       <SuccessModal
         open={modalAberto}

@@ -1,5 +1,5 @@
 import { X, Check } from 'lucide-react';
-import type { LocacaoData } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import type { LocacaoData } from '../../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import styles from './ModalAprovacaoLocacao.module.css';
 
 interface ModalAprovacaoLocacaoProps {

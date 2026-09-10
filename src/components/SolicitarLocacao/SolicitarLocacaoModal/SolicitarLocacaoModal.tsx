@@ -4,6 +4,7 @@ import ProdutoResumoCard from '../ProdutoResumoCardSolicitacao/ProdutoResumoCard
 import CampoData from '../CampoData/CampoData';
 import HorarioDropdown from '../HorarioDropdown/HorarioDropdown';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
+import ConfirmModal from '../../ConfirmModal/ConfirmModal';
 import { useSolicitarLocacaoModal } from '../../../hooks/Locacoes/useSolicitarLocacaoModal';
 import type { DadosLocacaoModal, ModoAberturaModal } from './SolicitarLocacaoModal.types';
 import styles from './SolicitarLocacaoModal.module.css';
@@ -72,13 +73,16 @@ export default function SolicitarLocacaoModal({
     aberto,
   });
 
-  // Datas indisponíveis/locadas exibidas no calendário — usa a lista
-  // explícita, se vier, senão cai para a do próprio produto.
+  // Datas indisponíveis/locadas exibidas no calendário — usa a lista explícita, se vier, senão cai para a do próprio produto.
   const diasIndisponiveis = diasIndisponiveisProp ?? produto.diasIndisponiveis ?? [];
 
-  // Controla qual dos dois popovers de calendário (entrega/devolução) está
-  // aberto — nunca os dois ao mesmo tempo.
+  // Controla qual dos dois popovers de calendário (entrega/devolução) está aberto — nunca os dois ao mesmo tempo.
   const [campoDataAberto, setCampoDataAberto] = useState<'entrega' | 'devolucao' | null>(null);
+
+  // Controla o modal de confirmação do botão "Cancelar" do rodapé — descarta o
+  // preenchimento do formulário e fecha o modal via `onClose`. Declarado aqui, antes do
+  // retorno antecipado abaixo, para respeitar a regra de hooks.
+  const [confirmCancelarAberto, setConfirmCancelarAberto] = useState(false);
 
   // Fecha com a tecla Esc
   useEffect(() => {
@@ -97,15 +101,20 @@ export default function SolicitarLocacaoModal({
 
   const handleSelecionarEntrega = (dataIso: string) => {
     selecionarDataEntrega(dataIso);
-    // Se já existe uma duração de diárias vinda da página do produto, a
-    // devolução já foi preenchida automaticamente — só falta fechar. Senão,
-    // avança o popover para a devolução para o usuário já escolher.
+    // Se já existe uma duração de diárias vinda da página do produto, a devolução já foi preenchida automaticamente — só falta fechar. Senão, avança o popover para a devolução para o usuário já escolher.
     setCampoDataAberto(duracaoInicial && duracaoInicial > 0 ? null : 'devolucao');
   };
 
   const handleSelecionarDevolucao = (dataIso: string) => {
     selecionarDataDevolucao(dataIso);
     setCampoDataAberto(null);
+  };
+
+  const handleAbrirConfirmCancelar = () => setConfirmCancelarAberto(true);
+  const handleFecharConfirmCancelar = () => setConfirmCancelarAberto(false);
+  const handleConfirmarCancelar = () => {
+    setConfirmCancelarAberto(false);
+    onClose();
   };
 
   const handleConfirmar = () => {
@@ -242,7 +251,7 @@ export default function SolicitarLocacaoModal({
         </div>
 
         <div className={styles.acoes}>
-          <button type="button" className={styles.botaoSecundario} onClick={onClose}>
+          <button type="button" className={styles.botaoSecundario} onClick={handleAbrirConfirmCancelar}>
             Cancelar
           </button>
           <button
@@ -255,6 +264,16 @@ export default function SolicitarLocacaoModal({
           </button>
         </div>
       </div>
+
+      <ConfirmModal
+        open={confirmCancelarAberto}
+        title="Cancelar solicitação"
+        message="Tem certeza que deseja cancelar? Os dados preenchidos nesta solicitação serão perdidos."
+        confirmLabel="Sim, cancelar"
+        cancelLabel="Continuar preenchendo"
+        onConfirm={handleConfirmarCancelar}
+        onCancel={handleFecharConfirmCancelar}
+      />
     </div>
   );
 }

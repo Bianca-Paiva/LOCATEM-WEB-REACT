@@ -9,6 +9,7 @@ import { useAuth } from '../../hooks/Auth/useAuth'
 import { useBuscaStore } from '../../hooks/Busca/useBuscaStore'
 import type { TipoUsuario } from '../../types/Usuario/usuario.types'
 import Avatar from '../Avatar/Avatar'
+import ConfirmModal from '../ConfirmModal/ConfirmModal'
 import styles from './Header.module.css'
 
 
@@ -28,6 +29,7 @@ interface NavItem {
 
 export default function Header({ navigate, currentRoute }: HeaderProps) {
     const [menuOpen, setMenuOpen] = useState(false)
+    const [confirmSairAberto, setConfirmSairAberto] = useState(false)
     const { itens: itensCarrinho } = useCarrinhoStore()
     const quantidadeCarrinho = itensCarrinho.length
     const { usuario, isAuthenticated, logout } = useAuth()
@@ -41,6 +43,15 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         logout()
         setMenuOpen(false)
         navigate('home')
+    }
+
+    const handleAbrirConfirmSair = () => {
+        setConfirmSairAberto(true)
+    }
+
+    const handleConfirmarSair = () => {
+        setConfirmSairAberto(false)
+        handleLogout()
     }
 
     // Submit da barra de busca (desktop e mobile): o termo já fica salvo no BuscaContext a
@@ -312,13 +323,23 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                     </nav>
 
                     {isAuthenticated && (
-                        <button type="button" className={styles.menuLateralBtnSair} onClick={handleLogout}>
+                        <button type="button" className={styles.menuLateralBtnSair} onClick={handleAbrirConfirmSair}>
                             <LogOut size={16} />
                             Sair da Conta
                         </button>
                     )}
                 </div>
             </aside>
+
+            <ConfirmModal
+                open={confirmSairAberto}
+                title="Sair da conta"
+                message="Tem certeza que deseja sair da sua conta?"
+                confirmLabel="Sair"
+                cancelLabel="Cancelar"
+                onConfirm={handleConfirmarSair}
+                onCancel={() => setConfirmSairAberto(false)}
+            />
 
             {/* ── DESKTOP HEADER ── */}
             <header className={styles.headerDesktop}>

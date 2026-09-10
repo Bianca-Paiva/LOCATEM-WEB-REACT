@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../../../components/Header/Header';
 import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
 import EtiquetaStatus from '../../../components/MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
 import LocacaoResumoCard from '../../../components/DetalhesLocacao/LocacaoResumoCard/LocacaoResumoCard';
 import PainelStatusLocacao from '../../../components/DetalhesLocacao/PainelStatusLocacao/PainelStatusLocacao';
 import AcoesLocacao from '../../../components/DetalhesLocacao/AcoesLocacao/AcoesLocacao';
+import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import styles from './DetalhesLocacao.module.css';
 
@@ -16,6 +17,10 @@ interface DetalhesLocacaoProps {
 
 export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
   const { locacaoSelecionada, atualizarLocacao } = useLocacaoStore();
+
+  // Controla o modal de confirmação do botão "Cancelar solicitação". Declarado antes do
+  // retorno antecipado abaixo para respeitar a regra de hooks (ordem estável entre renders).
+  const [confirmCancelarAberto, setConfirmCancelarAberto] = useState(false);
 
   // Sem locacao selecionada (ex: acesso direto à rota), volta para a listagem.
   useEffect(() => {
@@ -30,6 +35,9 @@ export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
 
   const { status, motivoRecusa, motivoCancelamento, horaInicio, horaFim } = locacaoSelecionada;
 
+  const handleAbrirConfirmCancelar = () => setConfirmCancelarAberto(true);
+  const handleFecharConfirmCancelar = () => setConfirmCancelarAberto(false);
+
   const handleCancelarSolicitacao = () => {
     const mensagem = 'Esta locação foi cancelada por você.';
     atualizarLocacao(locacaoSelecionada.id, {
@@ -38,6 +46,11 @@ export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
       motivoCancelamento: mensagem,
     });
   }
+
+  const handleConfirmarCancelarSolicitacao = () => {
+    setConfirmCancelarAberto(false);
+    handleCancelarSolicitacao();
+  };
 
   const handleVerLocacoes = () => {
     // Integrar aqui com a tela de locações do usuário.
@@ -83,7 +96,7 @@ export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
 
         <AcoesLocacao
           status={status}
-          onCancelarSolicitacao={handleCancelarSolicitacao}
+          onCancelarSolicitacao={handleAbrirConfirmCancelar}
           onVerLocacoes={handleVerLocacoes}
           onAvaliacao={handleAvaliacao}
           onProsseguirAluguel={handleProsseguirAluguel}
@@ -91,6 +104,16 @@ export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
           onSolicitarNovaLocacao={handleSolicitarNovaLocacao}
         />
       </main>
+
+      <ConfirmModal
+        open={confirmCancelarAberto}
+        title="Cancelar solicitação"
+        message="Tem certeza que deseja cancelar esta solicitação de locação? Esta ação não pode ser desfeita."
+        confirmLabel="Sim, cancelar"
+        cancelLabel="Voltar"
+        onConfirm={handleConfirmarCancelarSolicitacao}
+        onCancel={handleFecharConfirmCancelar}
+      />
     </>
   );
 }

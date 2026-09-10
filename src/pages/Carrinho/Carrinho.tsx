@@ -5,6 +5,7 @@ import { CarrinhoVazio } from '../../components/Carrinho/CarrinhoVazio/CarrinhoV
 import { LojaGroup } from '../../components/Carrinho/LojaGroup/LojaGroup';
 import { ResumoPedido } from '../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
 import ModalLoginNecessario from '../../components/Carrinho/ModalLoginNecessario/ModalLoginNecessario';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore';
 import { useAuth } from '../../hooks/Auth/useAuth';
 
@@ -146,6 +147,11 @@ export function Carrinho({
   const [percentualDesconto, setPercentualDesconto] =
     useState(0);
 
+  // Controla o modal de confirmação de remoção de item do carrinho — guarda o id do
+  // item pendente de confirmação (null = modal fechado).
+  const [itemParaRemover, setItemParaRemover] =
+    useState<string | null>(null);
+
   const carrinhoVazio = itens.length === 0;
 
   const todosSelecionados =
@@ -211,8 +217,22 @@ export function Carrinho({
   }
 
   function handleRemoveItem(id: string) {
-    removerItem(id);
+    setItemParaRemover(id);
   }
+
+  function handleFecharConfirmRemover() {
+    setItemParaRemover(null);
+  }
+
+  function handleConfirmarRemoverItem() {
+    if (itemParaRemover) {
+      removerItem(itemParaRemover);
+    }
+    setItemParaRemover(null);
+  }
+
+  // Nome do produto exibido na mensagem de confirmação.
+  const itemSelecionadoParaRemover = itens.find((item) => item.id === itemParaRemover);
 
   function handleSelecionarItem(id: string) {
     alternarSelecao(id);
@@ -335,6 +355,20 @@ export function Carrinho({
         open={modalLoginAberto}
         onClose={() => setModalLoginAberto(false)}
         onEntrar={handleEntrarNaMinhaConta}
+      />
+
+      <ConfirmModal
+        open={itemParaRemover !== null}
+        title="Remover item"
+        message={
+          itemSelecionadoParaRemover
+            ? `Tem certeza que deseja remover "${itemSelecionadoParaRemover.produto.title}" do carrinho?`
+            : 'Tem certeza que deseja remover este item do carrinho?'
+        }
+        confirmLabel="Remover"
+        cancelLabel="Cancelar"
+        onConfirm={handleConfirmarRemoverItem}
+        onCancel={handleFecharConfirmRemover}
       />
 
       <main className={styles.pagina}>
