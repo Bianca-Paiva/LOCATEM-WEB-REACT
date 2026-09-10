@@ -26,6 +26,9 @@ import Perfil from "./pages/Perfil/Perfil";
 // Pages - Ferramentas e Produtos
 import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
 import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
+import FerramentaDetalhe from "./pages/FerramentaDetalhe/FerramentaDetalhe";
+import GerenciarLocacoes from "./pages/Locacoes/GerenciarLocacoes/GerenciarLocacoes";
+import HistoricoLocacoes from "./pages/Locacoes/HistoricoLocacoes/HistoricoLocacoes";
 import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
 import Avaliacao from "./pages/Avaliacao/Avaliacao";
 
@@ -80,7 +83,13 @@ export default function App() {
 
                   {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
 
+                  {route === "ferramentaDetalhe" && <FerramentaDetalhe navigate={navigate} />}
+
                   {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
+
+                  {route === "gerenciarLocacoes" && <GerenciarLocacoes navigate={navigate} />}
+
+                  {route === "historicoLocacoes" && <HistoricoLocacoes navigate={navigate} />}
 
                   {route === "carrinho" && <Carrinho navigate={navigate} />}
 

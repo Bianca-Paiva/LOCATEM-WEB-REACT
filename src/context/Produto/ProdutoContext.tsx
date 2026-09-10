@@ -13,6 +13,7 @@ export interface ProdutoSelecionado {
   rating: number;
   reviewCount: number;
   locador: string; /** Nome do locador/anunciante do produto */
+  locadorId?: string; /** Identificador único do locador dono do anúncio — usado para ligar a solicitação de locação criada a partir desta página ao locador correto (ver Produto.locadorId). */
   localizacao: string; /** Localização do locador, ex: "São Paulo - SP" */
   categoria: string; /** Categoria da ferramenta, ex: "Elétrica • Parafusadeira/Furadeira" */
   estoqueDisponivel: number; /** Quantidade máxima disponível para reserva */

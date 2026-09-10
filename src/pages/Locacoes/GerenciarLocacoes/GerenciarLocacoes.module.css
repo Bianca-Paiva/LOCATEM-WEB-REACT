@@ -1,0 +1,34 @@
+.pagina {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Tablet e acima: mais respiro nas laterais e título maior */
+@media (min-width: 640px) {
+  .pagina {
+    padding: 28px 24px 56px;
+  }
+
+  .lista {
+    gap: 16px;
+  }
+}
+
+/* Desktop: layout como no mockup de tela cheia */
+@media (min-width: 1024px) {
+  .pagina {
+    padding: 32px 32px 64px;
+  }
+}

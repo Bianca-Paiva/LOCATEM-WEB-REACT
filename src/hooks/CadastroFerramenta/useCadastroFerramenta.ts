@@ -28,6 +28,37 @@ const ESTADO_INICIAL: CadastroFerramentaFormState = {
   usarMesmoEnderecoDevolucao: true,
 };
 
+/**
+ * Converte um Produto já cadastrado no formato do formulário — usado para
+ * pré-preencher o Cadastro de Ferramenta quando aberto em modo de edição
+ * (botão "Editar" em Minhas Ferramentas / Detalhe da Ferramenta).
+ *
+ * O endereço de retirada não é armazenado em `Produto` hoje (o formulário de
+ * cadastro nunca persistiu esses campos), então a edição começa com o
+ * endereço em branco — mesma limitação que já existia para novos cadastros.
+ */
+function produtoParaFormulario(produto: Produto): CadastroFerramentaFormState {
+  return {
+    ...ESTADO_INICIAL,
+    fotos: produto.images,
+    nome: produto.title,
+    marca: produto.marca,
+    categoria: produto.categoria,
+    quantidadeDisponivel: produto.estoqueDisponivel,
+    fonteAlimentacao: produto.voltagem ?? '',
+    descricao: produto.descricao ?? '',
+    especificacoes:
+      produto.especificacoes && produto.especificacoes.length > 0
+        ? produto.especificacoes.map((esp, indice) => ({ id: `esp-${indice}`, label: esp.label, valor: esp.valor }))
+        : ESTADO_INICIAL.especificacoes,
+    valorDiaria: produto.price,
+    caucao: produto.caucao ?? '',
+    acessorios: produto.acessorios ?? [],
+    diasIndisponiveis: produto.diasIndisponiveis ?? [],
+    tipoAprovacao: produto.tipoAprovacao ?? '',
+  };
+}
+
 // Converte "45,00" -> 45. Aceita tanto vírgula quanto ponto decimal.
 function parseMoeda(valor: string): number {
   const numero = Number(valor.replace(/\./g, '').replace(',', '.'));
@@ -53,8 +84,10 @@ function possuiEspecificacaoIncompleta(especificacoes: CadastroFerramentaFormSta
   return especificacoes.some((esp) => esp.label.trim() === '' || esp.valor.trim() === '');
 }
 
-export function useCadastroFerramenta() {
-  const [form, setForm] = useState<CadastroFerramentaFormState>(ESTADO_INICIAL);
+export function useCadastroFerramenta(produtoEmEdicao?: Produto) {
+  const [form, setForm] = useState<CadastroFerramentaFormState>(
+    produtoEmEdicao ? produtoParaFormulario(produtoEmEdicao) : ESTADO_INICIAL,
+  );
 
   const setCampo = <K extends keyof CadastroFerramentaFormState>(
     campo: K,
@@ -99,7 +132,10 @@ export function useCadastroFerramenta() {
   const formularioCompleto = Object.values(erros).every((valor) => valor === undefined);
 
   // Monta o objeto Produto pronto para entrar no catálogo (CatalogoContext).
-  const montarProduto = (): Omit<Produto, 'id' | 'meuAnuncio'> => {
+  // `locadorInfo` vem do usuário autenticado (useAuth) — garante que a ferramenta
+  // publicada/editada fica corretamente ligada ao locador logado (Produto.locadorId),
+  // em vez do "Você" fixo usado anteriormente.
+  const montarProduto = (locadorInfo: { nome: string; locadorId: string }): Omit<Produto, 'id' | 'meuAnuncio'> => {
     const especificacoesPreenchidas = form.especificacoes
       .filter((esp) => esp.label.trim() && esp.valor.trim())
       .map((esp) => ({
@@ -114,14 +150,19 @@ export function useCadastroFerramenta() {
       images: form.fotos.length > 0 ? form.fotos : [],
       imageVerificado: 'src/assets/verificadoAzul.png',
       imageNota: 'src/assets/StarFullYellow.png',
-      rating: 0,
-      reviewCount: 0,
-      locador: 'Você',
+      rating: produtoEmEdicao?.rating ?? 0,
+      reviewCount: produtoEmEdicao?.reviewCount ?? 0,
+      locador: locadorInfo.nome,
+      locadorId: locadorInfo.locadorId,
       localizacao: 'São Paulo - SP',
       categoria: form.categoria,
       estoqueDisponivel: form.quantidadeDisponivel,
       paymentMethods: ['Cartão de Crédito', 'Pix'],
-      available: true,
+      available: produtoEmEdicao ? produtoEmEdicao.status === 'disponivel' : true,
+      status: produtoEmEdicao?.status ?? 'disponivel',
+      cadastradoEm:
+        produtoEmEdicao?.cadastradoEm ??
+        new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
       descricao: form.descricao.trim(),
       especificacoes: especificacoesPreenchidas,
       acessorios: form.acessorios,
@@ -130,6 +171,8 @@ export function useCadastroFerramenta() {
       // Neste ponto o formulário já foi validado (formularioCompleto === true),
       // então tipoAprovacao nunca será '' — o cast reflete essa garantia.
       tipoAprovacao: form.tipoAprovacao as 'manual' | 'automatica',
+      avaliacoes: produtoEmEdicao?.avaliacoes,
+      distribuicaoAvaliacoes: produtoEmEdicao?.distribuicaoAvaliacoes,
     };
   };
 

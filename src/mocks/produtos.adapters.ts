@@ -90,6 +90,7 @@ export const toProdutoSelecionado = (p: Produto): ProdutoSelecionado => {
         rating: media,
         reviewCount: quantidade,
         locador: p.locador,
+        locadorId: p.locadorId,
         localizacao: p.localizacao,
         categoria: p.categoria,
         estoqueDisponivel: p.estoqueDisponivel,
@@ -110,13 +111,14 @@ export const toProdutoSelecionado = (p: Produto): ProdutoSelecionado => {
  */
 export type LocacaoProdutoBase = Pick<
     LocacaoData,
-    'produto' | 'imagem' | 'categoria' | 'avaliacaoLocador' | 'numeroAvaliacoes' | 'localizacao' | 'locador'
+    'produtoId' | 'produto' | 'imagem' | 'categoria' | 'avaliacaoLocador' | 'numeroAvaliacoes' | 'localizacao' | 'locador' | 'locadorId'
 >;
 
 export const toLocacaoProdutoBase = (p: Produto): LocacaoProdutoBase => {
     const { media, quantidade } = calcularResumoAvaliacoes(p.avaliacoes);
 
     return {
+        produtoId: p.id,
         produto: p.title,
         imagem: p.images[0],
         categoria: p.categoria,
@@ -124,5 +126,6 @@ export const toLocacaoProdutoBase = (p: Produto): LocacaoProdutoBase => {
         numeroAvaliacoes: quantidade,
         localizacao: p.localizacao,
         locador: p.locador,
+        locadorId: p.locadorId,
     };
 };

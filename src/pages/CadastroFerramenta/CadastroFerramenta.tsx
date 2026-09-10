@@ -17,6 +17,7 @@ import SuccessModal from '../../components/SuccessModal/SucessesModal';
 
 import { useCadastroFerramenta } from '../../hooks/CadastroFerramenta/useCadastroFerramenta';
 import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
+import { useAuth } from '../../hooks/Auth/useAuth';
 import styles from './CadastroFerramenta.module.css';
 
 import type { Route } from '../../router/useRouter';
@@ -27,14 +28,27 @@ interface CadastroFerramentaProps {
 
 
 export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps) {
-  const { form, setCampo, toggleDiaIndisponivel, erros, formularioCompleto, montarProduto } = useCadastroFerramenta();
-  const { adicionarProduto } = useCatalogoStore();
+  const { usuario } = useAuth();
+  const { produtos, adicionarProduto, atualizarProduto, ferramentaSelecionadaId, setFerramentaSelecionadaId } =
+    useCatalogoStore();
+
+  // Modo edição: se há uma ferramenta selecionada (via "Editar" em Minhas Ferramentas
+  // ou no Detalhe da Ferramenta) e ela pertence ao locador logado, o formulário abre
+  // pré-preenchido e o botão principal passa a salvar as alterações nela.
+  const produtoEmEdicao =
+    ferramentaSelecionadaId !== null
+      ? produtos.find((p) => p.id === ferramentaSelecionadaId && p.locadorId === usuario?.locadorId)
+      : undefined;
+
+  const { form, setCampo, toggleDiaIndisponivel, erros, formularioCompleto, montarProduto } =
+    useCadastroFerramenta(produtoEmEdicao);
 
   const [tentouPublicar, setTentouPublicar] = useState(false);
   const [shake, setShake] = useState(false);
   const [modalAberto, setModalAberto] = useState(false);
 
   const handleCancelar = () => {
+    setFerramentaSelecionadaId(null);
     navigate('minhasFerramentas');
   };
 
@@ -58,7 +72,17 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
       return;
     }
 
-    adicionarProduto(montarProduto());
+    const locadorInfo = {
+      nome: produtoEmEdicao?.locador ?? usuario?.nome ?? 'Você',
+      locadorId: produtoEmEdicao?.locadorId ?? usuario?.locadorId ?? '',
+    };
+
+    if (produtoEmEdicao) {
+      atualizarProduto(produtoEmEdicao.id, montarProduto(locadorInfo));
+    } else {
+      adicionarProduto(montarProduto(locadorInfo));
+    }
+
     setModalAberto(true);
   };
 
@@ -68,8 +92,12 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
 
       <main className={styles.pagina}>
         <CabecalhoPagina
-          titulo="Cadastrar Ferramenta"
-          subtitulo="Preencha as informações abaixo para publicar sua ferramenta para aluguel."
+          titulo={produtoEmEdicao ? 'Editar Ferramenta' : 'Cadastrar Ferramenta'}
+          subtitulo={
+            produtoEmEdicao
+              ? 'Atualize as informações da sua ferramenta.'
+              : 'Preencha as informações abaixo para publicar sua ferramenta para aluguel.'
+          }
         />
 
         <div className={styles.grid}>
@@ -219,17 +247,24 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
             Cancelar
           </button>
           <button type="button" className={styles.botaoPrimario} onClick={handlePublicar}>
-            Publicar Ferramenta
+            {produtoEmEdicao ? 'Salvar Alterações' : 'Publicar Ferramenta'}
           </button>
         </div>
       </main>
 
       <SuccessModal
         open={modalAberto}
-        title="Ferramenta publicada!"
-        message="Sua ferramenta já está disponível para locação."
+        title={produtoEmEdicao ? 'Ferramenta atualizada!' : 'Ferramenta publicada!'}
+        message={
+          produtoEmEdicao
+            ? 'As alterações foram salvas com sucesso.'
+            : 'Sua ferramenta já está disponível para locação.'
+        }
         buttonText="Ver minhas ferramentas"
-        onConfirm={() => navigate('minhasFerramentas')}
+        onConfirm={() => {
+          setFerramentaSelecionadaId(null);
+          navigate('minhasFerramentas');
+        }}
       />
     </>
   );

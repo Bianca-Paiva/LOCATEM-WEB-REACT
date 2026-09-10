@@ -30,12 +30,16 @@ function formatarPeriodo(dataInicioBr: string, dataFimBr: string): string {
 export function montarLocacaoPendente(
   produto: ProdutoSelecionado,
   dados: DadosLocacaoModal,
+  nomeLocatario: string,
 ): Omit<LocacaoData, 'id'> {
   return {
+    produtoId: produto.id ?? 0,
     produto: produto.title,
     imagem: produto.images?.[0] ?? '',
     periodo: formatarPeriodo(dados.resumo.dataEntregaFormatada, dados.resumo.dataDevolucaoFormatada),
     locador: produto.locador,
+    locadorId: produto.locadorId ?? '',
+    locatario: nomeLocatario,
     status: 'pendente',
     mensagemStatus: 'A solicitação foi enviada e o locador ainda não respondeu',
     categoria: produto.categoria,

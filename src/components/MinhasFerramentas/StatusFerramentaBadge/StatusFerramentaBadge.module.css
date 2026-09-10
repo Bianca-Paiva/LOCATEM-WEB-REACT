@@ -1,0 +1,45 @@
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1;
+  color: var(--etiqueta-cor);
+  background: var(--etiqueta-fundo);
+  border: 1px solid var(--etiqueta-borda);
+}
+
+.icone {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--etiqueta-cor);
+}
+
+.compacto {
+  padding: 3px 9px;
+  font-size: 10.5px;
+  gap: 4px;
+}
+
+.compacto .icone {
+  width: 11px;
+  height: 11px;
+}
+
+@media (min-width: 640px) {
+  .etiqueta {
+    font-size: 13px;
+    padding: 7px 14px;
+    gap: 7px;
+  }
+
+  .icone {
+    width: 15px;
+    height: 15px;
+  }
+}

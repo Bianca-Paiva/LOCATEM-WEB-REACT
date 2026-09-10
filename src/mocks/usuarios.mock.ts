@@ -9,6 +9,11 @@ import type { Usuario } from '../types/Usuario/usuario.types';
  * - Locador sem foto, com dados quase completos (perfil incompleto)
  * - Locatário com foto e e-mail verificado (perfil 100% completo)
  * - Qualquer outro e-mail cai no fallback (usuário novo, perfil bem incompleto)
+ *
+ * Os três locadores abaixo (`locadorId`) representam cada uma das lojas de
+ * mocks/locadores.mock.ts — logar com um e-mail diferente simula um locador
+ * diferente, cada um enxergando somente suas próprias ferramentas e locações
+ * em "Minhas Ferramentas" / "Gerenciar Locações" / "Histórico de Locações".
  */
 export const USUARIOS_MOCK: Usuario[] = [
   {
@@ -19,6 +24,7 @@ export const USUARIOS_MOCK: Usuario[] = [
     documento: '12.345.678/0001-90',
     endereco: 'Rua das Acácias, 247 – Apto 32, São Paulo, SP · 01310-100',
     tipo: 'locador',
+    locadorId: 'loc-jb',
     emailVerificado: false,
     desde: 2026,
     reputacao: {
@@ -26,6 +32,42 @@ export const USUARIOS_MOCK: Usuario[] = [
       totalAvaliacoes: 145,
       locacoesConcluidas: 212,
       entregasNoPrazoPercentual: 98,
+    },
+  },
+  {
+    id: 'u-locador-2',
+    nome: 'Marcos Andrade',
+    email: 'marcos.andrade@exemplo.com',
+    telefone: '(11) 97654-3210',
+    documento: '23.456.789/0001-11',
+    endereco: 'Rua Voluntários da Pátria, 980, São Paulo, SP · 02011-000',
+    tipo: 'locador',
+    locadorId: 'loc-ms',
+    emailVerificado: true,
+    desde: 2025,
+    reputacao: {
+      rating: 4.0,
+      totalAvaliacoes: 20,
+      locacoesConcluidas: 96,
+      entregasNoPrazoPercentual: 94,
+    },
+  },
+  {
+    id: 'u-locador-3',
+    nome: 'Wagner Zanetti',
+    email: 'wagner.zanetti@exemplo.com',
+    telefone: '(11) 96543-2109',
+    documento: '34.567.890/0001-22',
+    endereco: 'Av. Radial Leste, 3200, São Paulo, SP · 03102-000',
+    tipo: 'locador',
+    locadorId: 'loc-wz',
+    emailVerificado: true,
+    desde: 2025,
+    reputacao: {
+      rating: 4.3,
+      totalAvaliacoes: 96,
+      locacoesConcluidas: 138,
+      entregasNoPrazoPercentual: 97,
     },
   },
   {

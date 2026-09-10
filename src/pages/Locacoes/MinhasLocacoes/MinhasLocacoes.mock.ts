@@ -44,6 +44,10 @@ interface DadosSolicitacao {
   dataFim: string; // dd/mm/aaaa
   horaFim: string;
   quantidade: number;
+  /** Nome do locatário que solicitou a locação — exibido nas telas do locador (Gerenciar Locações, Histórico). */
+  locatario: string;
+  /** Endereço de entrega informado na solicitação — exibido no modal de aprovação (visão do locador). */
+  endereco?: LocacaoData['endereco'];
   motivoRecusa?: string;
   motivoCancelamento?: string;
   /** Prazo (em horas, a partir de agora) para pagamento antes do cancelamento automático. Padrão: 24h. */
@@ -80,6 +84,7 @@ function criarLocacao(id: string, dados: DadosSolicitacao): LocacaoData {
     id,
     ...toLocacaoProdutoBase(produto),
     periodo: formatarPeriodo(dados.dataInicio, dados.dataFim),
+    locatario: dados.locatario,
     status: dados.status,
     mensagemStatus: dados.mensagemStatus,
     dataInicio: dados.dataInicio,
@@ -88,6 +93,7 @@ function criarLocacao(id: string, dados: DadosSolicitacao): LocacaoData {
     horaFim: dados.horaFim,
     quantidade: dados.quantidade,
     valor: formatarValor(valorTotal),
+    endereco: dados.endereco,
     motivoRecusa: dados.motivoRecusa,
     motivoCancelamento: dados.motivoCancelamento,
     prazoPagamento,
@@ -105,6 +111,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '18/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Carlos Andrade',
+    endereco: {
+      cep: '03988-000',
+      ruaAvenida: 'Av. Sapopemba',
+      numero: '1200',
+      complemento: '',
+    },
   }),
   criarLocacao('2', {
     produtoId: 2, // Pistola de Pintura The Black Tools (WZ Ferramentas)
@@ -115,6 +128,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '12/07/2026',
     horaFim: '17:00',
     quantidade: 1,
+    locatario: 'Juliana Prado',
+    endereco: {
+      cep: '03972-000',
+      ruaAvenida: 'Rua Barão de Duprat',
+      numero: '450',
+      complemento: 'Casa 2',
+    },
   }),
   criarLocacao('3', {
     produtoId: 3, // Parafusadeira Furadeira de Impacto Hanabi (João Ferramentas)
@@ -125,6 +145,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '07/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Rafael Lima',
+    endereco: {
+      cep: '03931-000',
+      ruaAvenida: 'Rua São Mateus',
+      numero: '87',
+      complemento: '',
+    },
   }),
   criarLocacao('4', {
     produtoId: 4, // Aparador De Grama Bipartido Tramontina (JB Ferramentas)
@@ -135,6 +162,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '03/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Ana Souza',
+    endereco: {
+      cep: '03960-000',
+      ruaAvenida: 'Rua Sapopemba',
+      numero: '2310',
+      complemento: 'Apto 12',
+    },
   }),
   criarLocacao('5', {
     produtoId: 5, // Parafusadeira e Furadeira WAP 12V (JB Ferramentas)
@@ -145,6 +179,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '25/07/2026',
     horaFim: '18:00',
     quantidade: 2,
+    locatario: 'Pedro Melo',
+    endereco: {
+      cep: '03910-000',
+      ruaAvenida: 'Rua Águia de Haia',
+      numero: '640',
+      complemento: '',
+    },
   }),
   criarLocacao('6', {
     produtoId: 6, // Serra Circular Profissional DESOON 24 Dentes (JB Ferramentas)
@@ -155,6 +196,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '24/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Bianca Reis',
+    endereco: {
+      cep: '03920-000',
+      ruaAvenida: 'Rua Barão de Duprat',
+      numero: '120',
+      complemento: '',
+    },
   }),
   criarLocacao('7', {
     produtoId: 7, // Parafusadeira e Furadeira WAP 12V Cinza (JB Ferramentas)
@@ -165,6 +213,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '24/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Marcos Vidal',
+    endereco: {
+      cep: '03945-000',
+      ruaAvenida: 'Av. Sapopemba',
+      numero: '5400',
+      complemento: '',
+    },
   }),
   criarLocacao('8', {
     produtoId: 6, // Serra Circular Profissional DESOON 24 Dentes (JB Ferramentas)
@@ -175,6 +230,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '24/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Diego Farias',
+    endereco: {
+      cep: '03920-000',
+      ruaAvenida: 'Rua São Mateus',
+      numero: '210',
+      complemento: '',
+    },
     motivoRecusa: 'Infelizmente a ferramenta estará em manutenção na data solicitada.',
   }),
   criarLocacao('9', {
@@ -186,6 +248,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '24/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Sônia Alves',
+    endereco: {
+      cep: '03960-000',
+      ruaAvenida: 'Rua Águia de Haia',
+      numero: '55',
+      complemento: 'Fundos',
+    },
     motivoCancelamento: 'Esta locação foi cancelada por você.',
   }),
   criarLocacao('10', {
@@ -197,6 +266,13 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '24/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Fernando Lopes',
+    endereco: {
+      cep: '03931-000',
+      ruaAvenida: 'Rua Barão de Duprat',
+      numero: '980',
+      complemento: '',
+    },
   }),
   criarLocacao('11', {
     produtoId: 6, // Serra Circular Profissional DESOON 24 Dentes (JB Ferramentas)
@@ -207,6 +283,102 @@ export const mockLocacoes: LocacaoData[] = [
     dataFim: '24/07/2026',
     horaFim: '18:00',
     quantidade: 1,
+    locatario: 'Camila Torres',
+    endereco: {
+      cep: '03972-000',
+      ruaAvenida: 'Av. Sapopemba',
+      numero: '3120',
+      complemento: 'Apto 45',
+    },
     motivoCancelamento: 'Locação cancelada automaticamente por falta de pagamento dentro do prazo.',
+  }),
+
+  // ── Locações adicionais: garantem que os três locadores (MS, WZ e JB —
+  // ver mocks/locadores.mock.ts) tenham solicitações "Aguardando aprovação" e
+  // um histórico mínimo, para exercitar Gerenciar Locações/Histórico de cada um.
+  criarLocacao('12', {
+    produtoId: 3, // Parafusadeira Furadeira de Impacto Hanabi (JB Ferramentas)
+    status: 'pendente',
+    mensagemStatus: 'A solicitação foi enviada e o locador ainda não respondeu',
+    dataInicio: '04/09/2026',
+    horaInicio: '09:00',
+    dataFim: '07/09/2026',
+    horaFim: '18:00',
+    quantidade: 1,
+    locatario: 'Carlos Andrade',
+    endereco: {
+      cep: '03988-000',
+      ruaAvenida: 'Av. Sapopemba',
+      numero: '1200',
+      complemento: '',
+    },
+  }),
+  criarLocacao('13', {
+    produtoId: 1, // Furadeira Parafusadeira Sem Fio The Black Tools (MS Ferramentas)
+    status: 'aguardandoPagamento',
+    mensagemStatus: 'Locação aceita, efetue o pagamento em 24hs para continuar',
+    dataInicio: '06/09/2026',
+    horaInicio: '09:00',
+    dataFim: '08/09/2026',
+    horaFim: '18:00',
+    quantidade: 1,
+    locatario: 'Renata Alves',
+    endereco: {
+      cep: '03910-000',
+      ruaAvenida: 'Rua Águia de Haia',
+      numero: '310',
+      complemento: '',
+    },
+  }),
+  criarLocacao('14', {
+    produtoId: 9, // Serra Mármore Profissional Makita (MS Ferramentas)
+    status: 'finalizada',
+    mensagemStatus: 'Locação Finalizada',
+    dataInicio: '28/08/2026',
+    horaInicio: '09:00',
+    dataFim: '31/08/2026',
+    horaFim: '18:00',
+    quantidade: 1,
+    locatario: 'Diego Martins',
+    endereco: {
+      cep: '03960-000',
+      ruaAvenida: 'Rua Sapopemba',
+      numero: '740',
+      complemento: '',
+    },
+  }),
+  criarLocacao('15', {
+    produtoId: 2, // Pistola de Pintura The Black Tools (WZ Ferramentas)
+    status: 'pendente',
+    mensagemStatus: 'A solicitação foi enviada e o locador ainda não respondeu',
+    dataInicio: '05/09/2026',
+    horaInicio: '08:00',
+    dataFim: '06/09/2026',
+    horaFim: '17:00',
+    quantidade: 1,
+    locatario: 'Patrícia Nogueira',
+    endereco: {
+      cep: '03945-000',
+      ruaAvenida: 'Av. Sapopemba',
+      numero: '5400',
+      complemento: '',
+    },
+  }),
+  criarLocacao('16', {
+    produtoId: 10, // Lixadeira Orbital 320w (WZ Ferramentas)
+    status: 'finalizada',
+    mensagemStatus: 'Locação Finalizada',
+    dataInicio: '20/08/2026',
+    horaInicio: '09:00',
+    dataFim: '22/08/2026',
+    horaFim: '18:00',
+    quantidade: 1,
+    locatario: 'Fábio Ramos',
+    endereco: {
+      cep: '03920-000',
+      ruaAvenida: 'Rua Barão de Duprat',
+      numero: '120',
+      complemento: '',
+    },
   }),
 ];

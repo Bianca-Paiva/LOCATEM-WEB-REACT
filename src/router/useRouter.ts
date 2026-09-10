@@ -27,7 +27,10 @@ export type Route =
   | "processandoPagamento"
   | "pagamentoAprovado"
   | "minhasFerramentas"
+  | "ferramentaDetalhe"
   | "cadastroFerramenta"
+  | "gerenciarLocacoes"
+  | "historicoLocacoes"
   | "carrinho"
   | "perfil";
 
@@ -57,7 +60,10 @@ function getRouteFromHash(): Route {
   if (hash === "processandoPagamento") return "processandoPagamento";
   if (hash === "pagamentoAprovado") return "pagamentoAprovado";
   if (hash === "minhasFerramentas") return "minhasFerramentas";
+  if (hash === "ferramentaDetalhe") return "ferramentaDetalhe";
   if (hash === "cadastroFerramenta") return "cadastroFerramenta";
+  if (hash === "gerenciarLocacoes") return "gerenciarLocacoes";
+  if (hash === "historicoLocacoes") return "historicoLocacoes";
   if (hash === "carrinho") return "carrinho";
   if (hash === "perfil") return "perfil";
 

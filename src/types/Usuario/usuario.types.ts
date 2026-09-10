@@ -25,6 +25,8 @@ export interface Usuario {
   documento: string;
   endereco: string;
   tipo: TipoUsuario;
+  /** Somente para `tipo === 'locador'`: identificador da loja/locador (ver mocks/locadores.mock.ts) — liga o usuário autenticado às ferramentas e locações que ele deve enxergar em "Minhas Ferramentas"/"Gerenciar Locações"/"Histórico". */
+  locadorId?: string;
   /** Ausente = avatar cai para as iniciais do nome (ver utils/iniciais.ts). */
   fotoUrl?: string;
   /** Usado tanto no cálculo de conclusão do perfil quanto no texto de dica exibido lá. */

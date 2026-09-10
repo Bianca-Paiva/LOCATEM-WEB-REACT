@@ -19,10 +19,13 @@ export type FiltroLocacao = 'todas' | StatusLocacao;
 
 export interface LocacaoData {
   id: string;
+  produtoId: number; /** Liga a locação à ferramenta de origem (PRODUTOS_MOCK) — usado no desempenho da ferramenta e em telas do locador. */
   produto: string;
   imagem: string;
   periodo: string; /** Período já formatado para exibição, ex: "15 Jul – 18 Jul 2026" */
   locador: string;
+  locadorId: string; /** Identificador do locador dono da ferramenta — usado para filtrar "Gerenciar Locações"/"Histórico" pelo locador autenticado. */
+  locatario: string; /** Nome do locatário que fez a solicitação — exibido nas telas do locador (Gerenciar Locações, Histórico). */
   status: StatusLocacao;
   mensagemStatus: string; /** Texto auxiliar exibido abaixo do locador, ex: "Aguardando aprovação do locador" */
 
