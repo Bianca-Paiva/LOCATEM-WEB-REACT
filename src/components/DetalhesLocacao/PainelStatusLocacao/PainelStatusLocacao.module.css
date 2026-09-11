@@ -109,17 +109,21 @@
   color: #005D75;
 }
 
-/* Finalizada: verde */
+/* Confirmada / Finalizada: verde */
+.confirmada,
 .finalizada {
   background: #E6F4EA;
   border-color: rgba(19, 115, 51, 0.25);
 }
 
+.confirmada .simbolo,
 .finalizada .simbolo {
   background: #137333;
   color: #ffffff;
 }
 
+.confirmada .titulo,
+.confirmada .mensagem,
 .finalizada .titulo,
 .finalizada .mensagem {
   color: #137333;

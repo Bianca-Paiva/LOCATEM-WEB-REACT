@@ -1,5 +1,5 @@
 import { Controller } from 'react-hook-form'
-import styles from './Cadastro.module.css'
+import styles from './CadastroUsuario.module.css'
 
 import { maskCPF, maskCNPJ, maskPhone, maskCEP } from '../../hooks/Mascaras/masks'
 import { getPasswordValidations, getConfirmPasswordStatus } from '../../hooks/Password/passwordValidation'

@@ -1,11 +1,14 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { CarrinhoContext } from '../../context/Carrinho/CarrinhoContext';
 import { useAuth } from '../Auth/useAuth';
+import { useLocacaoStore } from '../Locacoes/useLocacaoStore';
+import { montarLocacaoConfirmada } from '../../utils/Locacao/montarLocacaoData';
 import type { Route } from '../../router/useRouter';
 import type { FormaPagamento } from '../../types/Pagamento/cartao.types';
 import {
   lerCartaoPagamento,
   lerItemPagamentoAvulso,
+  lerLocacaoAvulsaPendente,
   lerMetodoPagamento,
   lerPagamentoProcessado,
   lerValorPagamento,
@@ -60,9 +63,7 @@ interface UsePagamentoAprovadoReturn {
   nomeUsuario: string | null;
   produtos: ProdutoConfirmado[];
   /**
-   * Entrega exibida no Resumo do pedido — só preenchida quando todos os itens têm a mesma data/horário
-   * (entrega unificada). Quando os itens têm entregas diferentes, vem null e cada card em "Itens alugados"
-   * exibe a sua própria entrega (ver `ProdutoConfirmado.entrega`), evitando duplicar a informação.
+   * Entrega exibida no Resumo do pedido — só preenchida quando todos os itens têm a mesma data/horário (entrega unificada). Quando os itens têm entregas diferentes, vem null e cada card em "Itens alugados" exibe a sua própria entrega (ver `ProdutoConfirmado.entrega`), evitando duplicar a informação.
    */
   entrega: EntregaResumo | null;
   verDetalhesDoAluguel: () => void;
@@ -72,6 +73,10 @@ interface UsePagamentoAprovadoReturn {
 export function usePagamentoAprovado(navigate: (route: Route) => void): UsePagamentoAprovadoReturn {
   const carrinho = useContext(CarrinhoContext);
   const { usuario } = useAuth();
+  const { adicionarLocacao } = useLocacaoStore();
+
+  // Guarda se a locação já foi registrada nesta montagem — ao contrário do timer de useProcessandoPagamento, aqui não há um "cleanup" que desfaça a criação da locação, então o StrictMode (dev) invocando o efeito duas vezes duplicaria a locação em "Minhas Locações" sem esta trava.
+  const locacaoRegistradaRef = useRef(false);
 
   const metodo = useMemo(() => lerMetodoPagamento(), []);
   const processado = useMemo(() => lerPagamentoProcessado(), []);
@@ -151,6 +156,29 @@ export function usePagamentoAprovado(navigate: (route: Route) => void): UsePagam
   // Limpeza pós-confirmação: remove as chaves do funil de pagamento e os itens pagos do carrinho — evita que reapareçam numa compra futura ou que a tela quebre se o usuário voltar para o Carrinho depois. Roda uma única vez, só quando o acesso é válido.
   useEffect(() => {
     if (!acessoValido || !carrinho) return;
+
+    // Ao efetuar o pagamento, cada item pago vira uma locação confirmada, para aparecer em "Minhas Locações".
+    // Mesma regra usada acima para montar `produtos`: itens selecionados no carrinho quando o pagamento veio do
+    // Carrinho; caso contrário, o item avulso persistido pela página do produto (fluxo "Locar Agora", que nunca
+    // passa pelo CarrinhoContext).
+    if (!locacaoRegistradaRef.current) {
+      locacaoRegistradaRef.current = true;
+
+      const itensSelecionadosCarrinho = carrinho.itens.filter((item) => item.selecionado);
+
+      if (itensSelecionadosCarrinho.length > 0) {
+        itensSelecionadosCarrinho.forEach((item) => {
+          adicionarLocacao(montarLocacaoConfirmada(item.produto, item.dados, usuario?.nome ?? 'Usuário'));
+        });
+      } else {
+        const locacaoAvulsa = lerLocacaoAvulsaPendente();
+        if (locacaoAvulsa) {
+          adicionarLocacao(
+            montarLocacaoConfirmada(locacaoAvulsa.produto, locacaoAvulsa.dados, usuario?.nome ?? 'Usuário'),
+          );
+        }
+      }
+    }
 
     limparDadosPagamento();
 

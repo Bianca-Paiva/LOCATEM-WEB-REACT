@@ -13,6 +13,7 @@ const ABAS: { key: FiltroLocacao; label: string }[] = [
   { key: 'todas', label: 'Todas' },
   { key: 'pendente', label: STATUS_CONFIG.pendente.tabLabel },
   { key: 'aguardandoPagamento', label: STATUS_CONFIG.aguardandoPagamento.tabLabel },
+  { key: 'confirmada', label: STATUS_CONFIG.confirmada.tabLabel },
   { key: 'preparandoEntrega', label: STATUS_CONFIG.preparandoEntrega.tabLabel },
   { key: 'emTransporte', label: STATUS_CONFIG.emTransporte.tabLabel },
   { key: 'emAndamento', label: STATUS_CONFIG.emAndamento.tabLabel },

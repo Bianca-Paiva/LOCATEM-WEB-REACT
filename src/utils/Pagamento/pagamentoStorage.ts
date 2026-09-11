@@ -3,6 +3,8 @@
 // Únicas chaves utilizadas por todo o fluxo — nenhum outro módulo deve acessar 'locatem_pagamento_*' diretamente via localStorage, para evitar chaves soltas/duplicadas e manter o valor consistente entre as telas.
 import type { FormaPagamento } from '../../types/Pagamento/cartao.types';
 import type { CartaoPagamentoArmazenado } from '../../types/Pagamento/cartao.types';
+import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
+import type { DadosLocacaoModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 
 export const CHAVE_VALOR = 'locatem_pagamento_valor';
 export const CHAVE_METODO = 'locatem_pagamento_metodo';
@@ -12,6 +14,8 @@ export const CHAVE_CARTAO = 'locatem_pagamento_cartao';
 export const CHAVE_PROCESSADO = 'locatem_pagamento_processado';
 // Item da locação iniciada direto por "Locar Agora" (fora do carrinho) — único propósito é permitir que "Pagamento Aprovado" exiba o item alugado nesse fluxo, já que ele nunca passa pelo CarrinhoContext.
 export const CHAVE_ITEM_AVULSO = 'locatem_pagamento_item_avulso';
+// Produto completo + dados da locação escolhidos no modal, para a locação iniciada direto por "Locar Agora" (fora do carrinho) — ao contrário de CHAVE_ITEM_AVULSO (que guarda só o recorte usado para exibição em "Pagamento Aprovado"), esta chave guarda tudo que `montarLocacaoConfirmada` precisa para registrar a locação em "Minhas Locações", já que este fluxo nunca passa pelo CarrinhoContext.
+export const CHAVE_LOCACAO_AVULSA = 'locatem_pagamento_locacao_avulsa';
 
 const METODOS_VALIDOS: FormaPagamento[] = ['credito', 'debito', 'pix'];
 
@@ -109,11 +113,41 @@ export function lerItemPagamentoAvulso(): ItemPagamentoAvulso | null {
   }
 }
 
+/** Produto completo + dados da locação (modal "Detalhes da Locação") da locação iniciada direto por "Locar Agora", necessários para `montarLocacaoConfirmada` registrar a locação em "Minhas Locações" após o pagamento. */
+export interface LocacaoAvulsaPendente {
+  produto: ProdutoSelecionado;
+  dados: DadosLocacaoModal;
+}
+
+/**
+ * Persiste o produto completo e os dados da locação escolhidos no modal, para a locação iniciada direto por "Locar Agora" — permite que "Pagamento Aprovado" registre a locação em "Minhas Locações" assim como já é feito para o fluxo do carrinho.
+ */
+export function salvarLocacaoAvulsaPendente(dados: LocacaoAvulsaPendente): void {
+  localStorage.setItem(CHAVE_LOCACAO_AVULSA, JSON.stringify(dados));
+}
+
+/** Lê o produto/dados da locação avulsa pendente, ou null se ausente/corrompido. */
+export function lerLocacaoAvulsaPendente(): LocacaoAvulsaPendente | null {
+  const bruto = localStorage.getItem(CHAVE_LOCACAO_AVULSA);
+  if (!bruto) return null;
+
+  try {
+    return JSON.parse(bruto) as LocacaoAvulsaPendente;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Limpa as chaves do funil de pagamento (valor, método, cartão, item avulso e o carimbo de processado) após a confirmação em "Pagamento Aprovado" — evita que dados de uma compra concluída reapareçam numa compra futura.
  */
 export function limparDadosPagamento(): void {
-  [CHAVE_VALOR, CHAVE_METODO, CHAVE_CARTAO, CHAVE_PROCESSADO, CHAVE_ITEM_AVULSO].forEach((chave) =>
-    localStorage.removeItem(chave),
-  );
+  [
+    CHAVE_VALOR,
+    CHAVE_METODO,
+    CHAVE_CARTAO,
+    CHAVE_PROCESSADO,
+    CHAVE_ITEM_AVULSO,
+    CHAVE_LOCACAO_AVULSA,
+  ].forEach((chave) => localStorage.removeItem(chave));
 }

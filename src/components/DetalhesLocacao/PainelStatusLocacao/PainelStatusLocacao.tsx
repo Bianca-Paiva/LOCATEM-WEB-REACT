@@ -42,6 +42,11 @@ const CONTEUDO_POR_STATUS: Record<StatusLocacao, ConteudoStatus> = {
     ),
     simbolo: '✓',
   },
+  confirmada: {
+    titulo: 'Pagamento confirmado!',
+    mensagem: () => 'Sua locacao foi confirmada. Aguarde a preparação da entrega.',
+    simbolo: '✓',
+  },
   preparandoEntrega: {
     titulo: 'Pagamento confirmado!',
     mensagem: () => 'O locador está preparando a ferramenta para envio.',

@@ -20,7 +20,11 @@ import { useAuth } from '../../hooks/Auth/useAuth';
 import { getLocadorByNome } from '../../mocks/locadores.mock';
 import { toProdutoSemelhante, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/Locacao/montarLocacaoData';
-import { salvarValorPagamento, salvarItemPagamentoAvulso } from '../../utils/Pagamento/pagamentoStorage';
+import {
+  salvarValorPagamento,
+  salvarItemPagamentoAvulso,
+  salvarLocacaoAvulsaPendente,
+} from '../../utils/Pagamento/pagamentoStorage';
 import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
 import type { Route } from '../../router/useRouter';
 import type { DadosLocacaoModal, ModoAberturaModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
@@ -103,8 +107,9 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
       setSuccessAberto(true);
     } else {
       // Aprovação automática: não cria solicitação pendente nem notificação de aprovação — segue direto para o pagamento.
-      // Persiste o total (mesma chave que o Carrinho usa) e o item avulso (fluxo "Locar Agora" nunca passa pelo CarrinhoContext),
-      // para que Método de Pagamento e Pagamento Aprovado tenham o que ler.
+      // Persiste o total (mesma chave que o Carrinho usa), o recorte de exibição do item avulso e o produto/dados
+      // completos (fluxo "Locar Agora" nunca passa pelo CarrinhoContext), para que Método de Pagamento e Pagamento
+      // Aprovado tenham o que ler — e para que a locação seja registrada em "Minhas Locações" após o pagamento.
       salvarValorPagamento(dados.resumo.valor);
       salvarItemPagamentoAvulso({
         id: `avulso-${produto.id}-${Date.now()}`,
@@ -115,6 +120,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
         dataEntregaFormatada: dados.resumo.dataEntregaFormatada,
         horarioEntregaFormatado: dados.resumo.entregaHorarioFormatado,
       });
+      salvarLocacaoAvulsaPendente({ produto, dados });
 
       navigate('metodoPagamento');
     }

@@ -60,6 +60,43 @@ export function montarLocacaoPendente(
 }
 
 /**
+ * Monta os dados de uma locação já paga (sem `id`, atribuído por
+ * `useLocacaoStore.adicionarLocacao`) a partir do produto e do que foi
+ * escolhido no modal/carrinho — usado no fluxo de pagamento direto (Carrinho
+ * -> Método de Pagamento -> ... -> Pagamento Aprovado), onde não há
+ * aprovação manual do locador: a locação já entra confirmada
+ * (`status: 'confirmada'`), sem prazo de pagamento (já foi pago).
+ */
+export function montarLocacaoConfirmada(
+  produto: ProdutoSelecionado,
+  dados: DadosLocacaoModal,
+  nomeLocatario: string,
+): Omit<LocacaoData, 'id'> {
+  return {
+    produtoId: produto.id ?? 0,
+    produto: produto.title,
+    imagem: produto.images?.[0] ?? '',
+    periodo: formatarPeriodo(dados.resumo.dataEntregaFormatada, dados.resumo.dataDevolucaoFormatada),
+    locador: produto.locador,
+    locadorId: produto.locadorId ?? '',
+    locatario: nomeLocatario,
+    status: 'confirmada',
+    mensagemStatus: 'Pagamento confirmado. Aguarde a preparação da entrega.',
+    categoria: produto.categoria,
+    avaliacaoLocador: produto.rating,
+    numeroAvaliacoes: produto.reviewCount,
+    localizacao: produto.localizacao,
+    dataInicio: dados.resumo.dataEntregaFormatada,
+    horaInicio: dados.horarioEntrega,
+    dataFim: dados.resumo.dataDevolucaoFormatada,
+    horaFim: dados.horarioDevolucao,
+    quantidade: dados.quantidade,
+    valor: dados.resumo.valorFormatado,
+    frete: dados.resumo.freteFormatado,
+  };
+}
+
+/**
  * Monta a notificação enviada ao locatário assim que a solicitação de
  * locação (aprovação manual) é enviada, informando o prazo de 24h que o
  * locador tem para responder.

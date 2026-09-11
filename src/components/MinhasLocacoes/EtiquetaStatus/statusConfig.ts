@@ -39,6 +39,14 @@ export const STATUS_CONFIG: Record<StatusLocacao, StatusVisualConfig> = {
     borda: 'rgba(167, 75, 0, 0.25)',
     fundo: '#FFEBCF',
   },
+  confirmada: {
+    label: 'Confirmada',
+    tabLabel: 'Confirmada',
+    icon: Check,
+    cor: '#137333',
+    borda: 'rgba(19, 115, 51, 0.25)',
+    fundo: '#E6F4EA',
+  },
   preparandoEntrega: {
     label: 'Preparando entrega',
     tabLabel: 'Preparando entrega',
