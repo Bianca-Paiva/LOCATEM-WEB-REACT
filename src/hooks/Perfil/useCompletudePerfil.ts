@@ -28,8 +28,8 @@ const CRITERIOS_PERFIL: CriterioPerfil[] = [
     atendido: (u) => Boolean(u.documento?.trim()),
   },
   { chave: 'endereco', peso: 17, acao: 'informe seu endereço', atendido: (u) => Boolean(u.endereco?.trim()) },
-  { chave: 'foto', peso: 8, acao: 'adicione uma foto', atendido: (u) => Boolean(u.fotoUrl) },
-  { chave: 'emailVerificado', peso: 7, acao: 'verifique seu e-mail', atendido: (u) => u.emailVerificado },
+  { chave: 'foto', peso: 15, acao: 'adicione uma foto', atendido: (u) => Boolean(u.fotoUrl) },
+  // { chave: 'emailVerificado', peso: 7, acao: 'verifique seu e-mail', atendido: (u) => u.emailVerificado },
 ];
 
 interface CompletudePerfil {

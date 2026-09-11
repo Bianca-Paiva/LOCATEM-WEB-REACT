@@ -3,6 +3,7 @@
     border-radius: 14px;
     border: 1px solid #f3f4f6;
     padding: 18px 20px 20px;
+    width: 100%;
 }
 
 .titulo {
@@ -73,6 +74,7 @@
     color: var(--color-text-muted);
     overflow: hidden;
     text-overflow: ellipsis;
+    line-clamp: 2;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
