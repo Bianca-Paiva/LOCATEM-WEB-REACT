@@ -62,6 +62,8 @@ main {
 }
 
 .btnNaoSeiCep {
+    display: flex;
+    align-items: center;
     background: transparent;
     border: none;
     color: #007bff;

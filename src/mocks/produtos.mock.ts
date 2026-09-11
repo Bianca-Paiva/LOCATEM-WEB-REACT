@@ -14,7 +14,7 @@ import type { Produto } from '../types/Produto/produto.types';
 export const PRODUTOS_MOCK: Produto[] = [
     {
         id: 1,
-        title: 'Furadeira Parafusadeira Sem Fio A Bateria Tb-12e 12v',
+        title: 'Furadeira Parafusadeira Sem Fio A Bateria The Black Tools',
         marca: 'The Black Tools',
         price: '25,00',
         images: [
@@ -54,7 +54,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 2,
-        title: 'Pistola de Pintura Sucção 1000ml 3 Bicos 1.2 1.5 1.8 BTPT1100 Profissional',
+        title: 'Pistola de Pintura Sucção The Black Tools',
         marca: 'The Black Tools',
         price: '35,00',
         images: [
@@ -93,7 +93,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 3,
-        title: 'Parafusadeira Furadeira de Impacto Hanabi CY-3003 Brushless 2 Baterias 21v Cor Azul-petróleo Frequência 60hz 45N·m com 25 níveis de ajuste',
+        title: 'Parafusadeira Furadeira de Impacto Hanabi',
         marca: 'Hanabi',
         price: '38,00',
         images: [
@@ -133,7 +133,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 4,
-        title: 'Aparador De Grama Bipartido 1500w Apb1500t Tramontina Jardim',
+        title: 'Aparador De Grama Bipartido Tramontina',
         marca: 'Tramontina',
         price: '40,00',
         images: [
@@ -173,7 +173,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 5,
-        title: 'Cortador De Grama 2500w Ce45m Tramontina Cor Laranja E Preto',
+        title: 'Cortador De Grama Tramontina',
         marca: 'Tramontina',
         price: '70,00',
         images: [
@@ -213,7 +213,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 6,
-        title: 'Serra Circular Profissional 1800w Motor Cobre Puro 185mm Base De Aço Com Laser E Disco 24 Dentes Corte 220v Desoon',
+        title: 'Serra Circular Profissional 220v Desoon',
         marca: 'Desoon',
         price: '55,00',
         images: [
@@ -253,7 +253,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 7,
-        title: 'Parafusadeira A Bateria Wap Sem Fio 12k3.2 + Maleta E Brocas',
+        title: 'Parafusadeira A Bateria Wap Sem Fio + Maleta E Brocas',
         marca: 'WAP',
         price: '20,00',
         images: [
@@ -292,7 +292,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 8,
-        title: 'Furadeira Industrial Impacto Rev 450w Gsb 450 Re Bosch + Kit',
+        title: 'Furadeira Industrial Impacto Rev Bosch + Kit',
         marca: 'Bosch',
         price: '45,00',
         images: [
@@ -332,7 +332,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 9,
-        title: 'Serra Mármore 4.3/8 Pol 1.300w + 2 Discos 4100nh3zx2 Makita',
+        title: 'Serra Mármore Makita',
         marca: 'Makita',
         price: '65,00',
         images: [
@@ -372,7 +372,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 10,
-        title: 'Lixadeira Orbital 320w 14000 Rpm 5 Pol.',
+        title: 'Lixadeira Orbital Deko',
         marca: 'Deko',
         price: '25,00',
         images: [
@@ -411,7 +411,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 11,
-        title: 'Lixadeira Teto E Parede Telescópica Profissional Com Led E Saco Coletor The Black Tools Btl750 750w',
+        title: 'Lixadeira Teto E Parede Telescópica Profissional Com Led E Saco Coletor The Black Tools',
         marca: 'The Black Tools',
         price: '50,00',
         images: [
@@ -450,8 +450,8 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 12,
-        title: 'Pistola Pintura Gravidade 600ml + 3 Bicos 1.2 1.5 1.8 Stels',
-        marca: 'Stels',
+        title: 'Pistola Pintura Gravidade 600ml + 3 Bicos The Black Tools',
+        marca: 'The Black Tools',
         price: '30,00',
         images: [
             'src/assets/ProdutosImg/pistolaPintura2.png',

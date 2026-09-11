@@ -140,6 +140,7 @@ export default function Login({ navigate }: LoginProps) {
                         {error && <p className={styles.errorMsg}>{error}</p>}
 
                         <button
+                            type="button"
                             className={styles.esqueceuSenha}
                             onClick={e => { e.preventDefault(); navigate('recuperarSenha') }}
                         >

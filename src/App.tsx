@@ -12,7 +12,7 @@ import { ProdutoProvider } from "./context/Produto/ProdutoContext";
 
 // Pages - Autenticação e Recuperação de Senha
 import Login from "./pages/Login/Login";
-import Cadastro from "./pages/Cadastro/Cadastro";
+import Cadastro from "./pages/CadastroUsuario/CadastroUsuario";
 import RecuperarSenha from "./pages/RecuperarSenha/InformeEmail/InformeEmail";
 import InformeToken from "./pages/RecuperarSenha/InformeToken/InformeToken";
 import InformeNovaSenha from "./pages/RecuperarSenha/InformeNovaSenha/InformeNovaSenha";
