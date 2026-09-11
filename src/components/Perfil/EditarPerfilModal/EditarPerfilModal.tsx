@@ -11,6 +11,7 @@ import { useEditarPerfilForm } from '../../../hooks/Perfil/useEditarPerfilForm';
 import type { PerfilFormData } from '../../../hooks/Perfil/perfilSchema';
 import type { Usuario } from '../../../types/Usuario/usuario.types';
 import styles from './EditarPerfilModal.module.css';
+import { uploadFotoPerfil } from '../../../services/authService';
 
 interface EditarPerfilModalProps {
   usuario: Usuario;
@@ -19,28 +20,47 @@ interface EditarPerfilModalProps {
 }
 
 export default function EditarPerfilModal({ usuario, onClose, onSalvar }: EditarPerfilModalProps) {
-  const [fotoUrl, setFotoUrl] = useState<string | undefined>(usuario.fotoUrl);
-
+  
   const {
     control, isCNPJ, alerta, setAlerta, shakes, clearShake,
     touchedFields, errors, trigger, buildSubmit, buscarCep, enderecoResumo // 👈 Pego aqui
   } = useEditarPerfilForm(usuario);
 
+ const [fotoUrl, setFotoUrl] = useState<string | undefined>(usuario.fotoUrl);
+  const [arquivoFoto, setArquivoFoto] = useState<File | null>(null); // 👈 Guarda o arquivo bruto
+
   const handleFotoChange = (e: ChangeEvent<HTMLInputElement>) => {
     const arquivo = e.target.files?.[0];
-    if (arquivo) setFotoUrl(URL.createObjectURL(arquivo));
+    if (arquivo) {
+      setArquivoFoto(arquivo); // Salva o arquivo pra enviar depois
+      setFotoUrl(URL.createObjectURL(arquivo)); // Pré-visualização instantânea na tela
+    }
   };
 
-  const onValidSubmit = (data: PerfilFormData) => {
-    const enderecoCompleto = `${data.logradouro}, ${data.numero} - CEP: ${data.cep}`;
-    onSalvar({
-      nome: data.nome,
-      telefone: data.telefone,
-      documento: data.documento,
-      endereco: enderecoCompleto,
-      fotoUrl,
-    });
-    onClose();
+  const onValidSubmit = async (data: PerfilFormData) => {
+    let urlFinal = fotoUrl;
+
+    try {
+      // Se o usuário escolheu uma foto nova, faz o upload primeiro
+      if (arquivoFoto) {
+        const respostaUpload = await uploadFotoPerfil(usuario.id, arquivoFoto);
+        urlFinal = respostaUpload.urlFoto; // Pega a URL definitiva que veio do backend
+      }
+
+      const enderecoCompleto = `${data.logradouro}, ${data.numero} - CEP: ${data.cep}`;
+      
+      await onSalvar({
+        nome: data.nome,
+        telefone: data.telefone,
+        documento: data.documento,
+        endereco: enderecoCompleto,
+        fotoUrl: urlFinal,
+      });
+
+      onClose();
+    } catch (error) {
+      console.error("Deu ruim ao salvar o perfil com foto:", error);
+    }
   };
 
   return (
@@ -226,6 +246,7 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
           <BtnPrincipal text="Salvar alterações" type="submit" />
         </form>
       </div>
+      
     </div>
   );
 }

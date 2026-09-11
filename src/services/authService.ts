@@ -90,3 +90,30 @@ export const atualizarPerfilUsuario = async (dados: {
 
   return await response.json();
 };
+
+export async function uploadFotoPerfil(usuarioId: number, arquivo: File): Promise<any> {
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    
+    // O DTO no C# espera exatamente "UsuarioId" e "Foto"
+    formData.append('UsuarioId', usuarioId.toString());
+    formData.append('Foto', arquivo);
+
+    const response = await fetch(`${API_BASE}/Upload/foto-perfil`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            // Nota: com FormData, NÃO definimos 'Content-Type', o browser faz isso sozinho gerando o boundary
+        },
+        body: formData,
+    });
+
+    const text = await response.text();
+    const data = text ? JSON.parse(text) : {};
+
+    if (!response.ok) {
+        throw new Error(JSON.stringify(data));
+    }
+
+    return data; // Retorna o objeto com a urlFoto gerada pelo backend
+}
