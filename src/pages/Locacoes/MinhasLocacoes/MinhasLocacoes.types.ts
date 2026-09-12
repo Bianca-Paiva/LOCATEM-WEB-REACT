@@ -17,6 +17,20 @@ export type StatusLocacao =
 /** Aba selecionada no filtro de locacoes ('todas' + cada status) */
 export type FiltroLocacao = 'todas' | StatusLocacao;
 
+/**
+ * Motivo granular de um cancelamento (status === 'cancelada'), independente do texto livre já exibido em `motivoCancelamento`. Permite que cada perspectiva (locatário/locador) monte sua própria mensagem a partir do mesmo dado, sem depender de parsing de texto:
+ * - 'locatario': o próprio locatário cancelou a locação.
+ * - 'faltaPagamento': o locatário não pagou dentro do prazo de 24h.
+ * - 'faltaRespostaLocador': o locador não aceitou nem recusou dentro do prazo de 24h.
+ */
+export type MotivoCancelamento = 'locatario' | 'faltaPagamento' | 'faltaRespostaLocador';
+
+export interface EnderecoLocacao {
+  ruaAvenida: string;
+  numero: string;
+  complemento?: string;
+}
+
 export interface LocacaoData {
   id: string;
   produtoId: number; /** Liga a locação à ferramenta de origem (PRODUTOS_MOCK) — usado no desempenho da ferramenta e em telas do locador. */

@@ -57,10 +57,7 @@ interface DadosSolicitacao {
 const PRAZO_PADRAO_PAGAMENTO_HORAS = 24;
 
 /**
- * Monta uma locacao completa combinando os dados fixos do produto (vindos de
- * `PRODUTOS_MOCK`, via `toLocacaoProdutoBase`) com os dados específicos da
- * solicitação (período, status, datas, quantidade). O valor final é sempre
- * calculado como preço da diária × quantidade de ferramentas × nº de diárias.
+ * Monta uma locacao completa combinando os dados fixos do produto (vindos de `PRODUTOS_MOCK`, via `toLocacaoProdutoBase`) com os dados específicos da solicitação (período, status, datas, quantidade). O valor final é sempre calculado como preço da diária × quantidade de ferramentas × nº de diárias.
  */
 function criarLocacao(id: string, dados: DadosSolicitacao): LocacaoData {
   const produto = PRODUTOS_MOCK.find((p) => p.id === dados.produtoId);

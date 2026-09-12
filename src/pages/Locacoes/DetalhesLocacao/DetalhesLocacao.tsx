@@ -18,8 +18,7 @@ interface DetalhesLocacaoProps {
 export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
   const { locacaoSelecionada, atualizarLocacao } = useLocacaoStore();
 
-  // Controla o modal de confirmação do botão "Cancelar solicitação". Declarado antes do
-  // retorno antecipado abaixo para respeitar a regra de hooks (ordem estável entre renders).
+  // Controla o modal de confirmação do botão "Cancelar solicitação". Declarado antes do retorno antecipado abaixo para respeitar a regra de hooks (ordem estável entre renders).
   const [confirmCancelarAberto, setConfirmCancelarAberto] = useState(false);
 
   // Sem locacao selecionada (ex: acesso direto à rota), volta para a listagem.
@@ -44,6 +43,7 @@ export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
       status: 'cancelada',
       mensagemStatus: mensagem,
       motivoCancelamento: mensagem,
+      motivoCancelamentoTipo: 'locatario',
     });
   }
 
@@ -66,9 +66,7 @@ export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
   };
 
   const handleAvaliacao = () => {
-    // A locacao finalizada já está em `locacaoSelecionada` (contexto), então a
-    // página de Avaliação consegue montar a ferramenta de avaliação com os
-    // dados dela assim que a rota mudar.
+    // A locacao finalizada já está em `locacaoSelecionada` (contexto), então a página de Avaliação consegue montar a ferramenta de avaliação com os dados dela assim que a rota mudar.
     navigate('avaliacao');
   };
 

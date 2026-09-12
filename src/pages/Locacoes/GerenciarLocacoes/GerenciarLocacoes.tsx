@@ -28,8 +28,7 @@ export default function GerenciarLocacoes({ navigate }: GerenciarLocacoesProps) 
   const { filtro, setFiltro, contagem, locacoesFiltradas } = useGerenciarLocacoes();
   const [locacaoModal, setLocacaoModal] = useState<LocacaoData | null>(null);
 
-  // Locação pendente de confirmação para "Recusar" — controla o ConfirmModal exibido
-  // por cima do ModalAprovacaoLocacao. null = confirmação fechada.
+  // Locação pendente de confirmação para "Recusar" — controla o ConfirmModal exibido por cima do ModalAprovacaoLocacao. null = confirmação fechada.
   const [locacaoParaRecusar, setLocacaoParaRecusar] = useState<LocacaoData | null>(null);
 
   useEffect(() => {
@@ -70,8 +69,7 @@ export default function GerenciarLocacoes({ navigate }: GerenciarLocacoesProps) 
     setLocacaoModal(null);
   };
 
-  // Abre a confirmação em vez de recusar direto — a recusa em si só acontece em
-  // handleConfirmarRecusar, quando o locador confirma no ConfirmModal.
+  // Abre a confirmação em vez de recusar direto — a recusa em si só acontece em handleConfirmarRecusar, quando o locador confirma no ConfirmModal.
   const handleAbrirConfirmRecusar = (locacao: LocacaoData) => {
     setLocacaoParaRecusar(locacao);
   };
@@ -94,7 +92,7 @@ export default function GerenciarLocacoes({ navigate }: GerenciarLocacoesProps) 
       <main className={styles.pagina}>
         <CabecalhoPagina
           titulo="Gerenciar Locações"
-          subtitulo="Acompanhe e responda às solicitações feitas às suas ferramentas."
+          subtitulo="Acompanhe e gerencie as locações em andamento das suas ferramentas."
         />
 
         <Abas abas={ABAS_GERENCIAR_LOCACAO} ativo={filtro} onChange={setFiltro} contagem={contagem} />

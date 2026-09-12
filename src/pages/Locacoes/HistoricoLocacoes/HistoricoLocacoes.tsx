@@ -5,7 +5,7 @@ import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina
 import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
 import Abas from '../../../components/MinhasFerramentas/Abas/Abas';
 import type { AbaItem } from '../../../components/MinhasFerramentas/Abas/Abas';
-import StatusBadge from '../../../components/MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
+import LocacaoHistoricoCard from '../../../components/MinhasFerramentas/HistoricosLocacoes/LocacaoHistoricoCard/LocacaoHistoricoCard';
 
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
@@ -23,6 +23,7 @@ export default function HistoricoLocacoes({ navigate }: HistoricoLocacoesProps) 
   const { usuario } = useAuth();
   const { locacoes } = useLocacaoStore();
   const [filtro, setFiltro] = useState<FiltroHistorico>('todas');
+  const [expandidos, setExpandidos] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!usuario || usuario.tipo !== 'locador') {
@@ -30,8 +31,7 @@ export default function HistoricoLocacoes({ navigate }: HistoricoLocacoesProps) 
     }
   }, [usuario, navigate]);
 
-  // Só o histórico das ferramentas do locador logado, e só locações já encerradas
-  // (finalizada, recusada ou cancelada) — locações em andamento ficam em Gerenciar Locações.
+  // Só o histórico das ferramentas do locador logado, e só locações já encerradas (finalizada, recusada ou cancelada) — locações em andamento ficam em Gerenciar Locações.
   const historicoCompleto = useMemo(
     () =>
       locacoes.filter(
@@ -72,6 +72,19 @@ export default function HistoricoLocacoes({ navigate }: HistoricoLocacoesProps) 
     { key: 'cancelada', label: 'Canceladas' },
   ];
 
+  // Alterna o card expandido/recolhido (múltiplos cards podem ficar abertos ao mesmo tempo)
+  const alternarExpansao = (id: string) => {
+    setExpandidos((atual) => {
+      const proximo = new Set(atual);
+      if (proximo.has(id)) {
+        proximo.delete(id);
+      } else {
+        proximo.add(id);
+      }
+      return proximo;
+    });
+  };
+
   return (
     <>
       <Header navigate={navigate} currentRoute="historicoLocacoes" />
@@ -79,7 +92,7 @@ export default function HistoricoLocacoes({ navigate }: HistoricoLocacoesProps) 
       <main className={styles.pagina}>
         <CabecalhoPagina
           titulo="Histórico de Locações"
-          subtitulo="Todas as locações finalizadas, recusadas ou canceladas."
+          subtitulo="Acompanhe todas as locações encerradas das suas ferramentas."
         />
 
         <Abas abas={abas} ativo={filtro} onChange={setFiltro} contagem={contagem} />
@@ -90,37 +103,15 @@ export default function HistoricoLocacoes({ navigate }: HistoricoLocacoesProps) 
             descricao="Locações finalizadas, recusadas ou canceladas aparecerão aqui."
           />
         ) : (
-          <div className={styles.tabelaWrapper}>
-            <div className={styles.tabela}>
-              <div className={`${styles.linha} ${styles.linhaCabecalho}`}>
-                <span>Ferramenta</span>
-                <span>Locatário</span>
-                <span>Período</span>
-                <span>Status</span>
-                <span className={styles.colunaValor}>Valor</span>
-              </div>
-
-              {historicoFiltrado.map((locacao) => (
-                <div key={locacao.id} className={styles.linha}>
-                  <span className={styles.celulaFerramenta} data-rotulo="Ferramenta">
-                    {locacao.produto}
-                  </span>
-                  <span data-rotulo="Locatário">{locacao.locatario}</span>
-                  <span data-rotulo="Período">{locacao.periodo}</span>
-                  <span data-rotulo="Status">
-                    <StatusBadge status={locacao.status} />
-                  </span>
-                  <span
-                    className={`${styles.colunaValor} ${
-                      locacao.status === 'finalizada' ? styles.valorPositivo : styles.valorNeutro
-                    }`}
-                    data-rotulo="Valor"
-                  >
-                    {locacao.status === 'finalizada' ? `+ ${locacao.valor}` : 'R$ 0,00'}
-                  </span>
-                </div>
-              ))}
-            </div>
+          <div className={styles.lista}>
+            {historicoFiltrado.map((locacao) => (
+              <LocacaoHistoricoCard
+                key={locacao.id}
+                locacao={locacao}
+                expandido={expandidos.has(locacao.id)}
+                onToggle={alternarExpansao}
+              />
+            ))}
           </div>
         )}
       </main>

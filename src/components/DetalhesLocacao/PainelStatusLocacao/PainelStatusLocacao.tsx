@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { StatusLocacao } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import type { MotivoCancelamento, StatusLocacao } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import { formatarIntervaloHorario } from '../../../utils/Locacao/horario';
 import styles from './PainelStatusLocacao.module.css';
 
@@ -7,8 +7,12 @@ interface PainelStatusLocacaoProps {
   status: StatusLocacao;
   motivoRecusa?: string; /** Usado apenas quando status === 'recusada' */
   motivoCancelamento?: string;
+  /** Motivo granular do cancelamento — usado para montar a mensagem correta na perspectiva do locador. */
+  motivoCancelamentoTipo?: MotivoCancelamento;
   horaInicio?: string; /** Horário de início escolhido na solicitação (usado em 'emTransporte') */
   horaFim?: string; /** Horário de término escolhido na solicitação (usado em 'aguardandoDevolucao') */
+  /** De quem é o ponto de vista exibido: quem solicitou a locação ('locatario', padrão) ou quem a ofereceu ('locador'). */
+  perspectiva?: 'locatario' | 'locador';
 }
 
 interface ConteudoStatus {
@@ -22,7 +26,7 @@ function Destaque({ children }: { children: ReactNode }) {
   return <strong className={styles.destaque}>{children}</strong>;
 }
 
-// Textos padrão exibidos em cada estado da locacao
+// Textos padrão exibidos em cada estado da locacao, na perspectiva do locatário (quem solicitou)
 const CONTEUDO_POR_STATUS: Record<StatusLocacao, ConteudoStatus> = {
   pendente: {
     titulo: 'Sua solicitação está aguardando aprovação.',
@@ -96,21 +100,65 @@ const CONTEUDO_POR_STATUS: Record<StatusLocacao, ConteudoStatus> = {
   },
 };
 
+// Mensagens padrão de cada motivo de cancelamento, já na perspectiva do locador (quem ofereceu a ferramenta)
+const MENSAGEM_CANCELAMENTO_LOCADOR: Record<MotivoCancelamento, string> = {
+  locatario: 'O locatário cancelou esta locação.',
+  faltaPagamento:
+    'A locação foi cancelada automaticamente porque o locatário não realizou o pagamento dentro do prazo de 24 horas.',
+  faltaRespostaLocador:
+    'A locação foi cancelada automaticamente porque você não respondeu à solicitação dentro do prazo de 24 horas.',
+};
+
+// Únicos status que, na prática, o locador acompanha por este painel (Histórico de Locações só lista locações já encerradas)
+const CONTEUDO_POR_STATUS_LOCADOR: Partial<Record<StatusLocacao, ConteudoStatus>> = {
+  finalizada: {
+    titulo: 'Locação finalizada!',
+    mensagem: () => 'A locação foi concluída com sucesso.',
+    simbolo: '✓',
+  },
+  recusada: {
+    titulo: 'Motivo da recusa',
+    mensagem: () => 'Você recusou esta solicitação de locação.',
+    simbolo: '!',
+  },
+  cancelada: {
+    titulo: 'Esta locação foi cancelada.',
+    mensagem: () =>
+      'Se precisar, o locatário pode solicitar uma nova locação para outras datas ou procurar equipamentos similares.',
+    simbolo: 'i',
+  },
+};
+
 export default function PainelStatusLocacao({
   status,
   motivoRecusa,
   motivoCancelamento,
+  motivoCancelamentoTipo,
   horaInicio,
   horaFim,
+  perspectiva = 'locatario',
 }: PainelStatusLocacaoProps) {
-  const conteudo = CONTEUDO_POR_STATUS[status];
+  const ehLocador = perspectiva === 'locador';
+  const conteudo = (ehLocador ? CONTEUDO_POR_STATUS_LOCADOR[status] : undefined) ?? CONTEUDO_POR_STATUS[status];
 
-  // Lógica para definir a mensagem dinamicamente com base no status e motivos/horários fornecidos
+  // Lógica para definir a mensagem dinamicamente com base no status, perspectiva e motivos/horários fornecidos.
+  // Nunca usamos um texto genérico de "Cancelada": o motivo correto vem sempre do dado da locação.
   let mensagem: ReactNode = conteudo.mensagem(horaInicio, horaFim);
-  if (status === 'recusada' && motivoRecusa) {
-    mensagem = motivoRecusa;
-  } else if (status === 'cancelada' && motivoCancelamento) {
-    mensagem = motivoCancelamento;
+
+  if (status === 'recusada') {
+    if (ehLocador) {
+      mensagem = 'Você recusou esta solicitação de locação.';
+    } else if (motivoRecusa) {
+      mensagem = motivoRecusa;
+    }
+  } else if (status === 'cancelada') {
+    if (ehLocador) {
+      mensagem = motivoCancelamentoTipo
+        ? MENSAGEM_CANCELAMENTO_LOCADOR[motivoCancelamentoTipo]
+        : motivoCancelamento ?? mensagem;
+    } else if (motivoCancelamento) {
+      mensagem = motivoCancelamento;
+    }
   }
 
   return (

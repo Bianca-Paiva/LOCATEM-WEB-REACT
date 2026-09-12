@@ -15,87 +15,9 @@
   gap: 14px;
 }
 
-.tabelaWrapper {
-  width: 100%;
-  background: var(--color-bg-card);
-  border: 1px solid #eeeeee;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.tabela {
-  display: flex;
-  flex-direction: column;
-}
-
-.linha {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 4px;
-  padding: 14px 16px;
-  border-bottom: 1px solid #F3F4F6;
-  font-size: 13px;
-  color: var(--color-text-dark);
-}
-
-.linha:last-child {
-  border-bottom: none;
-}
-
-.linha > span[data-rotulo]::before {
-  content: attr(data-rotulo) ": ";
-  font-weight: 700;
-  color: var(--color-text-muted);
-}
-
-.linhaCabecalho {
-  display: none;
-}
-
-.celulaFerramenta {
-  font-weight: 700;
-}
-
-.colunaValor {
-  font-weight: 800;
-}
-
-.valorPositivo {
-  color: #137333;
-}
-
-.valorNeutro {
-  color: var(--color-text-muted);
-}
-
-/* Tablet e acima: layout de tabela de verdade, com cabeçalho */
 @media (min-width: 720px) {
   .pagina {
     padding: 28px 24px 56px;
-  }
-
-  .linha {
-    grid-template-columns: 1.6fr 1.2fr 1.2fr 1.1fr 0.9fr;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .linha > span[data-rotulo]::before {
-    content: '';
-  }
-
-  .linhaCabecalho {
-    display: grid;
-    background: #FAFAFA;
-    font-size: 12px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: var(--color-text-muted);
-  }
-
-  .colunaValor {
-    text-align: right;
   }
 }
 

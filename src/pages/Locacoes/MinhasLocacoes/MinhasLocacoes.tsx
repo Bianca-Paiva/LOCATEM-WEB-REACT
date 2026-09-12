@@ -8,7 +8,6 @@ import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import styles from './MinhasLocacoes.module.css';
 
 import type { Route } from '../../../router/useRouter';
-// Certifique--se de importar LocacaoData aqui:
 import type { FiltroLocacao, LocacaoData } from './MinhasLocacoes.types';
 import type { Dispatch, SetStateAction } from 'react';
 

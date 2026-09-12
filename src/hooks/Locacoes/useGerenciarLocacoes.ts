@@ -4,32 +4,38 @@ import { useAuth } from '../Auth/useAuth';
 import type { LocacaoData, StatusLocacao } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 
 /**
- * Filtro de "Gerenciar Locações" (visão do locador) — agrupa os status mais
- * granulares de `StatusLocacao` nas categorias exibidas no protótipo.
+ * Filtro de "Gerenciar Locações" (visão do locador).
+ *
+ * Gerenciar Locações é a área operacional do locador: só existem aqui as locações ainda em aberto (ativas ou que dependem de alguma ação/acompanhamento dele). Locações finalizadas, recusadas ou canceladas saem desta tela e passam a aparecer apenas em Histórico de Locações — por isso esses status nem entram neste filtro.
  */
 export type FiltroGerenciarLocacao =
-  | 'todas'
+  | 'emAberto'
   | 'pendente'
   | 'aguardandoPagamento'
+  | 'preparandoEntrega'
   | 'emTransporte'
   | 'emAndamento'
   | 'aguardandoDevolucao'
-  | 'finalizada'
-  | 'recusadaCancelada';
+  | 'devolucaoEmTransporte';
 
 export const ABAS_GERENCIAR_LOCACAO: { key: FiltroGerenciarLocacao; label: string }[] = [
-  { key: 'todas', label: 'Todas' },
-  { key: 'pendente', label: 'Pendentes' },
-  { key: 'aguardandoPagamento', label: 'Aguard. pagamento' },
+  { key: 'emAberto', label: 'Em aberto' },
+  { key: 'pendente', label: 'Pendente' },
+  { key: 'aguardandoPagamento', label: 'Aguardando pagamento' },
+  { key: 'preparandoEntrega', label: 'Preparando entrega' },
   { key: 'emTransporte', label: 'Em transporte' },
   { key: 'emAndamento', label: 'Em andamento' },
-  { key: 'aguardandoDevolucao', label: 'Aguard. devolução' },
-  { key: 'finalizada', label: 'Finalizadas' },
-  { key: 'recusadaCancelada', label: 'Recusadas/Canceladas' },
+  { key: 'aguardandoDevolucao', label: 'Aguardando devolução' },
+  { key: 'devolucaoEmTransporte', label: 'Devolução em transporte' },
 ];
 
-/** Agrupa um StatusLocacao granular na aba de Gerenciar Locações correspondente. */
-function paraFiltro(status: StatusLocacao): Exclude<FiltroGerenciarLocacao, 'todas'> {
+// Status que já se encerraram e por isso não pertencem mais a Gerenciar Locações (ficam disponíveis apenas em Histórico de Locações).
+const STATUS_ENCERRADOS: StatusLocacao[] = ['finalizada', 'recusada', 'cancelada'];
+
+/**
+ * Agrupa um StatusLocacao granular na aba de Gerenciar Locações correspondente. `confirmada` (pagamento confirmado, aguardando o locador organizar o envio) entra na mesma aba de "Preparando entrega", já que ambos representam a etapa de preparação anterior ao transporte.
+ */
+function paraFiltro(status: StatusLocacao): Exclude<FiltroGerenciarLocacao, 'emAberto'> | null {
   switch (status) {
     case 'pendente':
       return 'pendente';
@@ -37,55 +43,60 @@ function paraFiltro(status: StatusLocacao): Exclude<FiltroGerenciarLocacao, 'tod
       return 'aguardandoPagamento';
     case 'confirmada':
     case 'preparandoEntrega':
+      return 'preparandoEntrega';
     case 'emTransporte':
-    case 'devolucaoEmTransporte':
       return 'emTransporte';
     case 'emAndamento':
       return 'emAndamento';
     case 'aguardandoDevolucao':
       return 'aguardandoDevolucao';
+    case 'devolucaoEmTransporte':
+      return 'devolucaoEmTransporte';
     case 'finalizada':
-      return 'finalizada';
     case 'recusada':
     case 'cancelada':
-      return 'recusadaCancelada';
+      return null;
   }
 }
 
 export function useGerenciarLocacoes() {
   const { usuario } = useAuth();
   const { locacoes } = useLocacaoStore();
-  const [filtro, setFiltro] = useState<FiltroGerenciarLocacao>('todas');
+  const [filtro, setFiltro] = useState<FiltroGerenciarLocacao>('emAberto');
 
-  // Só as locações das ferramentas do locador logado — sempre pelo identificador único do locador.
-  const minhasLocacoes = useMemo(
-    () => locacoes.filter((l) => l.locadorId && l.locadorId === usuario?.locadorId),
+  // Só as locações das ferramentas do locador logado, e só as que ainda estão em aberto — locações encerradas (finalizada, recusada, cancelada) pertencem exclusivamente ao Histórico de Locações.
+  const minhasLocacoesEmAberto = useMemo(
+    () =>
+      locacoes.filter(
+        (l) => l.locadorId && l.locadorId === usuario?.locadorId && !STATUS_ENCERRADOS.includes(l.status),
+      ),
     [locacoes, usuario],
   );
 
   const contagem = useMemo(() => {
     const base: Record<FiltroGerenciarLocacao, number> = {
-      todas: minhasLocacoes.length,
+      emAberto: minhasLocacoesEmAberto.length,
       pendente: 0,
       aguardandoPagamento: 0,
+      preparandoEntrega: 0,
       emTransporte: 0,
       emAndamento: 0,
       aguardandoDevolucao: 0,
-      finalizada: 0,
-      recusadaCancelada: 0,
+      devolucaoEmTransporte: 0,
     };
 
-    minhasLocacoes.forEach((locacao) => {
-      base[paraFiltro(locacao.status)] += 1;
+    minhasLocacoesEmAberto.forEach((locacao) => {
+      const chave = paraFiltro(locacao.status);
+      if (chave) base[chave] += 1;
     });
 
     return base;
-  }, [minhasLocacoes]);
+  }, [minhasLocacoesEmAberto]);
 
   const locacoesFiltradas: LocacaoData[] = useMemo(() => {
-    if (filtro === 'todas') return minhasLocacoes;
-    return minhasLocacoes.filter((l) => paraFiltro(l.status) === filtro);
-  }, [minhasLocacoes, filtro]);
+    if (filtro === 'emAberto') return minhasLocacoesEmAberto;
+    return minhasLocacoesEmAberto.filter((l) => paraFiltro(l.status) === filtro);
+  }, [minhasLocacoesEmAberto, filtro]);
 
   return { filtro, setFiltro, contagem, locacoesFiltradas };
 }
