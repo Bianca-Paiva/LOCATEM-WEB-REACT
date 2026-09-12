@@ -52,9 +52,7 @@ export function LocacaoProvider({ children }: { children: ReactNode }) {
     return novaLocacao;
   };
 
-  // Verifica periodicamente se alguma locacao "Aguardando pagamento" teve seu
-  // prazo expirado e, se sim, cancela automaticamente — atualizando tanto o
-  // status quanto a mensagem exibida na listagem e nos detalhes da locacao.
+  // Verifica periodicamente se alguma locacao "Aguardando pagamento" teve seu prazo expirado e, se sim, cancela automaticamente — atualizando tanto o status quanto a mensagem exibida na listagem e nos detalhes da locacao.
   useEffect(() => {
     const cancelarLocacoesComPagamentoVencido = () => {
       const agora = Date.now();
