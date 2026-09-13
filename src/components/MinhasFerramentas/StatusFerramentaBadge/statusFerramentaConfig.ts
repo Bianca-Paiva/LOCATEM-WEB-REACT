@@ -1,5 +1,5 @@
 import { CheckCircle2, PackageCheck, Ban, Wrench, type LucideIcon } from 'lucide-react';
-import type { StatusFerramenta } from '../../../types/produto.types';
+import type { StatusFerramenta } from '../../../types/Ferramentas/produto.types';
 
 export interface StatusFerramentaVisualConfig {
   label: string;

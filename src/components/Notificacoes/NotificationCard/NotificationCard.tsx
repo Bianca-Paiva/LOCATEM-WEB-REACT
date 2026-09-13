@@ -13,7 +13,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import { STATUS_CONFIG } from '../../MinhasLocacoes/EtiquetaStatus/statusConfig';
-import type { NotificationData } from '../../../pages/Notificacoes/Notificacoes.types';
+import type { NotificationData } from '../../../pages/Conta/Notificacoes/Notificacoes.types';
 import styles from './NotificationCard.module.css';
 
 interface NotificationCardProps {

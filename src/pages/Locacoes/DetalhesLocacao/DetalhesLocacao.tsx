@@ -43,7 +43,6 @@ export default function DetalhesLocacao({ navigate }: DetalhesLocacaoProps) {
       status: 'cancelada',
       mensagemStatus: mensagem,
       motivoCancelamento: mensagem,
-      motivoCancelamentoTipo: 'locatario',
     });
   }
 

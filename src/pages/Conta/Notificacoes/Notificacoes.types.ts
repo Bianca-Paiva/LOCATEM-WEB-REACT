@@ -8,7 +8,7 @@ export type NotificationType =
   | 'message'
   | 'reminder';
 
-import type { StatusLocacao } from '../Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import type { StatusLocacao } from '../../Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 
 export type FilterOption = 'Todas' | 'Hoje' | 'Ontem' | 'Esta semana' | 'Este mês';
 

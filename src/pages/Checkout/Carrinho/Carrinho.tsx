@@ -1,23 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import Header from '../../components/Header/Header';
-import { CarrinhoVazio } from '../../components/Carrinho/CarrinhoVazio/CarrinhoVazio';
-import { LojaGroup } from '../../components/Carrinho/LojaGroup/LojaGroup';
-import { ResumoPedido } from '../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import ModalLoginNecessario from '../../components/Carrinho/ModalLoginNecessario/ModalLoginNecessario';
-import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
-import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore';
-import { useAuth } from '../../hooks/Auth/useAuth';
+import Header from '../../../components/Header/Header';
+import { CarrinhoVazio } from '../../../components/Carrinho/CarrinhoVazio/CarrinhoVazio';
+import { LojaGroup } from '../../../components/Carrinho/LojaGroup/LojaGroup';
+import { ResumoPedido } from '../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
+import ModalLoginNecessario from '../../../components/Carrinho/ModalLoginNecessario/ModalLoginNecessario';
+import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
+import { useCarrinhoStore } from '../../../hooks/Carrinho/useCarrinhoStore';
+import { useAuth } from '../../../hooks/Auth/useAuth';
 
-import type { CarrinhoItemData, LojaGroupData } from '../../types/Pagamento/checkout';
-import type { ItemCarrinho as ItemCarrinhoContexto } from '../../context/Carrinho/CarrinhoContext';
-import type { Route } from '../../router/useRouter';
+import type { CarrinhoItemData, LojaGroupData } from '../../../types/Checkout/Pagamento/checkout';
+import type { ItemCarrinho as ItemCarrinhoContexto } from '../../../context/Checkout/Carrinho/CarrinhoContext';
+import type { Route } from '../../../router/useRouter';
 
 import styles from './Carrinho.module.css';
-import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
-import { CheckoutLayout } from '../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
-import { salvarValorPagamento } from '../../utils/Pagamento/pagamentoStorage';
-import { salvarRedirectAposLogin } from '../../utils/Auth/redirectAposLogin';
+import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import { CheckoutLayout } from '../../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
+import { salvarValorPagamento } from '../../../utils/Checkout/Pagamento/pagamentoStorage';
+import { salvarRedirectAposLogin } from '../../../utils/Auth/redirectAposLogin';
 
 /* ============================================================
   HELPERS

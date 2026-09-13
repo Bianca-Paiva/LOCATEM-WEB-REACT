@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import type { FilterOption } from '../../../pages/Notificacoes/Notificacoes.types';
+import type { FilterOption } from '../../../pages/Conta/Notificacoes/Notificacoes.types';
 import styles from './FilterDropdown.module.css';
 
 const OPTIONS: FilterOption[] = ['Todas', 'Hoje', 'Ontem', 'Esta semana', 'Este mês'];

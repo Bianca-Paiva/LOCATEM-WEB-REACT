@@ -69,7 +69,6 @@ export function LocacaoProvider({ children }: { children: ReactNode }) {
               status: 'cancelada',
               mensagemStatus: MENSAGEM_CANCELAMENTO_AUTOMATICO,
               motivoCancelamento: MENSAGEM_CANCELAMENTO_AUTOMATICO,
-              motivoCancelamentoTipo: 'faltaPagamento',
             }
           : locacao;
 

@@ -32,16 +32,13 @@ export default function Home({ navigate }: HomeProps) {
 
   const [categoriaAtiva, setCategoriaAtiva] = useState<string>('');
 
-  // Mantém uma categoria selecionada assim que o catálogo carrega, sem sobrescrever
-  // uma escolha que o usuário já tenha feito.
+  // Mantém uma categoria selecionada assim que o catálogo carrega, sem sobrescrever uma escolha que o usuário já tenha feito.
   if (!categoriaAtiva && categorias.length > 0) {
     setCategoriaAtiva(categorias[0]);
   }
 
   // Catálogo completo da Home, filtrado pela categoria selecionada no CategoryFilter:
-  // todos os produtos disponíveis dessa categoria + ferramentas recém-publicadas pelo
-  // usuário, sempre em primeiro. Vem do CatalogoContext (reativo), não mais de um
-  // recorte fixo de ids.
+  // todos os produtos disponíveis dessa categoria + ferramentas recém-publicadas pelo usuário, sempre em primeiro. Vem do CatalogoContext (reativo), não mais de um recorte fixo de ids.
   const produtosHome = useMemo(
     () =>
       [...produtos]
@@ -53,9 +50,7 @@ export default function Home({ navigate }: HomeProps) {
 
   const handleCardClick = (product: ProdutoHome) => {
     // O card da Home só carrega um recorte do produto (ProdutoHome).
-    // Buscamos o produto completo no catálogo central para levar pra frente
-    // os dados reais do locador (nome, localização, categoria, estoque),
-    // em vez de valores fixos/placeholder.
+    // Buscamos o produto completo no catálogo central para levar pra frente os dados reais do locador (nome, localização, categoria, estoque), em vez de valores fixos/placeholder.
     const produtoCompleto = produtos.find((p) => p.id === product.id);
 
     if (!produtoCompleto) return;

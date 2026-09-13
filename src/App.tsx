@@ -6,7 +6,7 @@ import { useRouter } from "./router/useRouter";
 import { AuthProvider } from "./context/Auth/AuthContext";
 import { BuscaProvider } from "./context/Busca/BuscaContext";
 import { CarrinhoProvider } from "./context/Checkout/Carrinho/CarrinhoContext";
-import { CatalogoProvider } from "./context/Catalago/CatalogoContext";
+import { CatalogoProvider } from "./context/Ferramentas/Catalago/CatalogoContext";
 import { LocacaoProvider } from "./context/Locacoes/LocacaoContext";
 import { NotificationProvider } from "./context/Conta/Notificacao/NotificationContext";
 import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoContext";
@@ -18,39 +18,39 @@ import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoContext";
 // Navegação Principal e Descoberta
 import Home from "./pages/Home/Home";
 import Busca from "./pages/Busca/Busca";
-import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
+import ProdutoDetalhe from "./pages/Ferramentas/ProdutoDetalhe/ProdutoDetalhe";
 
 // Autenticação e Acesso
-import Login from "./pages/Login/Login";
+import Login from "./pages/Auth/Login/Login";
 import Cadastro from "./pages/Auth/CadastroUsuario/CadastroUsuario";
-import RecuperarSenha from "./pages/RecuperarSenha/InformeEmail/InformeEmail";
-import InformeToken from "./pages/RecuperarSenha/InformeToken/InformeToken";
-import InformeNovaSenha from "./pages/RecuperarSenha/InformeNovaSenha/InformeNovaSenha";
+import RecuperarSenha from "./pages/Auth/RecuperarSenha/InformeEmail/InformeEmail";
+import InformeToken from "./pages/Auth/RecuperarSenha/InformeToken/InformeToken";
+import InformeNovaSenha from "./pages/Auth/RecuperarSenha/InformeNovaSenha/InformeNovaSenha";
 
 // Perfil e Interações
-import Perfil from "./pages/Perfil/Perfil";
-import Notificacoes from "./pages/Notificacoes/Notificacoes";
+import Perfil from "./pages/Conta/Perfil/Perfil";
+import Notificacoes from "./pages/Conta/Notificacoes/Notificacoes";
 import Avaliacao from "./pages/Avaliacao/Avaliacao";
 
 // Área do Cliente/Locatário (Quem está alugando)
-import Carrinho from "./pages/Carrinho/Carrinho";
+import Carrinho from "./pages/Checkout/Carrinho/Carrinho";
 import MinhasLocacoes from "./pages/Locacoes/MinhasLocacoes/MinhasLocacoes";
 import DetalhesLocacao from "./pages/Locacoes/DetalhesLocacao/DetalhesLocacao";
 import HistoricoLocacoes from "./pages/Locacoes/HistoricoLocacoes/HistoricoLocacoes";
 
 // Pagamento e Checkout 
-import MetodoPagamento from "./pages/FluxoPagamento/MetodoPagamento/MetodoPagamento";
-import SelecionarCartao from "./pages/FluxoPagamento/SelecionarCartao/SelecionarCartao";
-import AdicionarCartaoCredito from "./pages/FluxoPagamento/AdicionarCartaoCredito/AdicionarCartaoCredito";
-import AdicionarCartaoDebito from "./pages/FluxoPagamento/AdicionarCartaoDebito/AdicionarCartaoDebito";
-import PagamentoPix from "./pages/FluxoPagamento/PagamentoPix/PagamentoPix";
-import ProcessandoPagamento from "./pages/FluxoPagamento/ProcessandoPagamento/ProcessandoPagamento";
-import PagamentoAprovado from "./pages/FluxoPagamento/PagamentoAprovado/PagamentoAprovado";
+import MetodoPagamento from "./pages/Checkout/FluxoPagamento/MetodoPagamento/MetodoPagamento";
+import SelecionarCartao from "./pages/Checkout/FluxoPagamento/SelecionarCartao/SelecionarCartao";
+import AdicionarCartaoCredito from "./pages/Checkout/FluxoPagamento/AdicionarCartaoCredito/AdicionarCartaoCredito";
+import AdicionarCartaoDebito from "./pages/Checkout/FluxoPagamento/AdicionarCartaoDebito/AdicionarCartaoDebito";
+import PagamentoPix from "./pages/Checkout/FluxoPagamento/PagamentoPix/PagamentoPix";
+import ProcessandoPagamento from "./pages/Checkout/FluxoPagamento/ProcessandoPagamento/ProcessandoPagamento";
+import PagamentoAprovado from "./pages/Checkout/FluxoPagamento/PagamentoAprovado/PagamentoAprovado";
 
 // Área do Locador (Quem disponibiliza a ferramenta)
-import MinhasFerramentas from "./pages/MinhasFerramentas/MinhasFerramentas";
-import FerramentaDetalhe from "./pages/FerramentaDetalhe/FerramentaDetalhe";
-import CadastroFerramenta from "./pages/CadastroFerramenta/CadastroFerramenta";
+import MinhasFerramentas from "./pages/Ferramentas/MinhasFerramentas/MinhasFerramentas";
+import FerramentaDetalhe from "./pages/Ferramentas/FerramentaDetalhe/FerramentaDetalhe";
+import CadastroFerramenta from "./pages/Ferramentas/CadastroFerramenta/CadastroFerramenta";
 import GerenciarLocacoes from "./pages/Locacoes/GerenciarLocacoes/GerenciarLocacoes";
 
 export default function App() {

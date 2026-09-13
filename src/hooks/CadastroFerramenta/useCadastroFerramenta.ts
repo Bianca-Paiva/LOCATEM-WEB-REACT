@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Produto } from '../../types/Ferramentas/produto.types';
-import type { CadastroFerramentaFormState } from '../../pages/CadastroFerramenta/CadastroFerramenta.types';
+import type { CadastroFerramentaFormState } from '../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
 import { validateCEP } from '../Mascaras/masks';
 
 const MIN_CARACTERES_DESCRICAO = 50;

@@ -1,11 +1,11 @@
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
-import { CheckoutLayout } from '../../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
-import { ResumoPedido } from '../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import { AdicionarCartaoForm } from '../../../components/Pagamento/AdicionarCartaoForm/AdicionarCartaoForm';
+import Header from '../../../../components/Header/Header';
+import CabecalhoPagina from '../../../../components/CabecalhoPagina/CabecalhoPagina';
+import { CheckoutLayout } from '../../../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
+import { ResumoPedido } from '../../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
+import { AdicionarCartaoForm } from '../../../../components/Pagamento/AdicionarCartaoForm/AdicionarCartaoForm';
 
-import { useAdicionarCartao } from '../../../hooks/Pagamento/useAdicionarCartao';
-import type { Route } from '../../../router/useRouter';
+import { useAdicionarCartao } from '../../../../hooks/Pagamento/useAdicionarCartao';
+import type { Route } from '../../../../router/useRouter';
 
 import styles from './AdicionarCartaoCredito.module.css';
 

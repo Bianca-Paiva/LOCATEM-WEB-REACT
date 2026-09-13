@@ -1,10 +1,10 @@
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
-import { ResumoPedido } from '../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import { SeletorFormaPagamento } from '../../../components/Pagamento/SeletorFormaPagamento/SeletorFormaPagamento';
+import Header from '../../../../components/Header/Header';
+import CabecalhoPagina from '../../../../components/CabecalhoPagina/CabecalhoPagina';
+import { ResumoPedido } from '../../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
+import { SeletorFormaPagamento } from '../../../../components/Pagamento/SeletorFormaPagamento/SeletorFormaPagamento';
 
-import { useMetodoPagamento } from '../../../hooks/Pagamento/useMetodoPagamento';
-import type { Route } from '../../../router/useRouter';
+import { useMetodoPagamento } from '../../../../hooks/Pagamento/useMetodoPagamento';
+import type { Route } from '../../../../router/useRouter';
 
 import styles from './MetodoPagamento.module.css';
 

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import styles from "./InformeEmail.module.css";
-import AuthHeader from "../../../components/Header/AuthHeader/AuthHeader";
-import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
-import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
-import FormInput from "../../../components/Inputs/FormInput/FormInput";
-import BtnPrincipal from "../../../components/Botões/BtnPrincipal/BtnPrincipal";
-import FooterLink from "../../../components/RecuperarSenha/FooterLink/FooterLink";
-import type { Route } from "../../../router/useRouter";
+import AuthHeader from "../../../../components/Header/AuthHeader/AuthHeader";
+import Etapas from "../../../../components/RecuperarSenha/Etapas/Etapas";
+import PageHeader from "../../../../components/RecuperarSenha/PageHeader/PageHeader";
+import FormInput from "../../../../components/Inputs/FormInput/FormInput";
+import BtnPrincipal from "../../../../components/Botões/BtnPrincipal/BtnPrincipal";
+import FooterLink from "../../../../components/RecuperarSenha/FooterLink/FooterLink";
+import type { Route } from "../../../../router/useRouter";
 
 interface RecuperarSenhaProps {
     navigate: (route: Route) => void;

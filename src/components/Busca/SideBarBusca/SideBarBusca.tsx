@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Search, ChevronLeft } from 'lucide-react';
 
 import type { FilterState } from '../../../pages/Busca/Busca.types';
-import { OPCOES_FONTE_ALIMENTACAO } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
+import { OPCOES_FONTE_ALIMENTACAO } from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
 import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
 import { derivarCategorias, extrairNomeSubcategoria } from '../../../utils/Ferramentas/Catalago/categorias';
 import BtnPrincipal from '../../Botões/BtnPrincipal/BtnPrincipal';

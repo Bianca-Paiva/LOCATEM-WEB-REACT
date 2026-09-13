@@ -1,11 +1,11 @@
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
-import { CheckoutLayout } from '../../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
-import { ResumoPedido } from '../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import { PagamentoPixCard } from '../../../components/Pagamento/PagamentoPixCard/PagamentoPixCard';
+import Header from '../../../../components/Header/Header';
+import CabecalhoPagina from '../../../../components/CabecalhoPagina/CabecalhoPagina';
+import { CheckoutLayout } from '../../../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
+import { ResumoPedido } from '../../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
+import { PagamentoPixCard } from '../../../../components/Pagamento/PagamentoPixCard/PagamentoPixCard';
 
-import { usePagamentoPix } from '../../../hooks/Pagamento/usePagamentoPix';
-import type { Route } from '../../../router/useRouter';
+import { usePagamentoPix } from '../../../../hooks/Pagamento/usePagamentoPix';
+import type { Route } from '../../../../router/useRouter';
 
 import styles from './PagamentoPix.module.css';
 

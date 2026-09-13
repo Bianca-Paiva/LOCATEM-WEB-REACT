@@ -5,8 +5,8 @@ import {
   CATEGORIAS_FERRAMENTA,
   ESTADOS_CONSERVACAO,
   OPCOES_FONTE_ALIMENTACAO,
-} from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
-import type { CadastroFerramentaFormState } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
+} from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
+import type { CadastroFerramentaFormState } from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './InformacoesBasicas.module.css';
 
 type CampoBasico =

@@ -1,4 +1,4 @@
-import type { TipoAprovacao } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
+import type { TipoAprovacao } from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './AprovacaoLocacao.module.css';
 
 interface OpcaoAprovacao {

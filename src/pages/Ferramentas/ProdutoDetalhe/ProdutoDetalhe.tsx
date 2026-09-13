@@ -1,33 +1,33 @@
 import { useState, useMemo } from 'react';
-import Header from '../../components/Header/Header';
-import { ImagemCarrossel } from '../../components/ProdutoDetalhe/ImagemCarrossel/ImagemCarrossel';
-import { ProdutoInfo } from '../../components/ProdutoDetalhe/ProdutoInfo/ProdutoInfo';
-import { ProdutosSemelhantes } from '../../components/ProdutoDetalhe/ProdutosSemelhantes/ProdutosSemelhantes';
-import { Descricao } from '../../components/ProdutoDetalhe/Descricao/Descricao';
-import { EspecificacoesTecnicas } from '../../components/ProdutoDetalhe/EspecificacoesTecnicas/EspecificacoesTecnicas';
-import { Acessorios } from '../../components/ProdutoDetalhe/Acessorios/Acessorios';
-import { InfoVendedor } from '../../components/ProdutoDetalhe/InfoVendedor/InfoVendedor';
-import { AvaliacaoSection } from '../../components/ProdutoDetalhe/AvaliacaoSection/AvaliacaoSection';
-import { BannerLateral } from '../../components/ProdutoDetalhe/BannerLateral/BannerLateral';
-import SolicitarLocacaoModal from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal';
-import SuccessModal from '../../components/SuccessModal/SucessesModal';
-import { useProdutoStore } from '../../hooks/Produto/useProdutoStore';
-import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
-import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
-import { useNotificationStore } from '../../hooks/Locacoes/useNotificationStore';
-import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore';
-import { useAuth } from '../../hooks/Auth/useAuth';
-import { getLocadorByNome } from '../../mocks/locadores.mock';
-import { toProdutoSemelhante, toProdutoSelecionado } from '../../mocks/produtos.adapters';
-import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../utils/Locacao/montarLocacaoData';
+import Header from '../../../components/Header/Header';
+import { ImagemCarrossel } from '../../../components/ProdutoDetalhe/ImagemCarrossel/ImagemCarrossel';
+import { ProdutoInfo } from '../../../components/ProdutoDetalhe/ProdutoInfo/ProdutoInfo';
+import { ProdutosSemelhantes } from '../../../components/ProdutoDetalhe/ProdutosSemelhantes/ProdutosSemelhantes';
+import { Descricao } from '../../../components/ProdutoDetalhe/Descricao/Descricao';
+import { EspecificacoesTecnicas } from '../../../components/ProdutoDetalhe/EspecificacoesTecnicas/EspecificacoesTecnicas';
+import { Acessorios } from '../../../components/ProdutoDetalhe/Acessorios/Acessorios';
+import { InfoVendedor } from '../../../components/ProdutoDetalhe/InfoVendedor/InfoVendedor';
+import { AvaliacaoSection } from '../../../components/ProdutoDetalhe/AvaliacaoSection/AvaliacaoSection';
+import { BannerLateral } from '../../../components/ProdutoDetalhe/BannerLateral/BannerLateral';
+import SolicitarLocacaoModal from '../../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal';
+import SuccessModal from '../../../components/SuccessModal/SucessesModal';
+import { useProdutoStore } from '../../../hooks/Produto/useProdutoStore';
+import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
+import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
+import { useNotificationStore } from '../../../hooks/Locacoes/useNotificationStore';
+import { useCarrinhoStore } from '../../../hooks/Carrinho/useCarrinhoStore';
+import { useAuth } from '../../../hooks/Auth/useAuth';
+import { getLocadorByNome } from '../../../mocks/locadores.mock';
+import { toProdutoSemelhante, toProdutoSelecionado } from '../../../mocks/produtos.adapters';
+import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../../utils/Locacoes/montarLocacaoData';
 import {
   salvarValorPagamento,
   salvarItemPagamentoAvulso,
   salvarLocacaoAvulsaPendente,
-} from '../../utils/Pagamento/pagamentoStorage';
-import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
-import type { Route } from '../../router/useRouter';
-import type { DadosLocacaoModal, ModoAberturaModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+} from '../../../utils/Checkout/Pagamento/pagamentoStorage';
+import type { ProdutoSelecionado } from '../../../context/Ferramentas/Produto/ProdutoContext';
+import type { Route } from '../../../router/useRouter';
+import type { DadosLocacaoModal, ModoAberturaModal } from '../../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import { FALLBACK_PRODUTO } from './ProdutoDetalhe.mock';
 import styles from './ProdutoDetalhe.module.css';
 

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import styles from "./InformeToken.module.css"
-import AuthHeader from "../../../components/Header/AuthHeader/AuthHeader";
-import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
-import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
-import TokenInput from '../../../components/RecuperarSenha/TokenInput/TokenInput'
-import BtnPrincipal from "../../../components/Botões/BtnPrincipal/BtnPrincipal";
-import type { Route } from "../../../router/useRouter";
+import AuthHeader from "../../../../components/Header/AuthHeader/AuthHeader";
+import Etapas from "../../../../components/RecuperarSenha/Etapas/Etapas";
+import PageHeader from "../../../../components/RecuperarSenha/PageHeader/PageHeader";
+import TokenInput from '../../../../components/RecuperarSenha/TokenInput/TokenInput'
+import BtnPrincipal from "../../../../components/Botões/BtnPrincipal/BtnPrincipal";
+import type { Route } from "../../../../router/useRouter";
 
 interface InformeTokenProps {
     navigate: (route: Route) => void;

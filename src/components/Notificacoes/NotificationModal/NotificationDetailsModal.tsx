@@ -20,7 +20,7 @@ import { STATUS_CONFIG } from '../../MinhasLocacoes/EtiquetaStatus/statusConfig'
 import type {
     NotificationCategory,
     NotificationData,
-} from '../../../pages/Notificacoes/Notificacoes.types';
+} from '../../../pages/Conta/Notificacoes/Notificacoes.types';
 import styles from './NotificationDetailsModal.module.css';
 
 interface NotificationDetailsModalProps {

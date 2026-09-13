@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { LogOut } from 'lucide-react';
-import Header from '../../components/Header/Header';
-import PerfilHeader from '../../components/Perfil/PerfilHeader/PerfilHeader';
-import CompletarPerfil from '../../components/Perfil/CompletarPerfil/CompletarPerfil';
-import InformacoesPessoais from '../../components/Perfil/InformacoesPessoais/InformacoesPessoais';
-import ReputacaoCard from '../../components/Perfil/ReputacaoCard/ReputacaoCard';
-import PainelControle from '../../components/Perfil/PainelControle/PainelControle';
-import EditarPerfilModal from '../../components/Perfil/EditarPerfilModal/EditarPerfilModal';
-import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
-import { useAuth } from '../../hooks/Auth/useAuth';
-import { useCompletudePerfil } from '../../hooks/Perfil/useCompletudePerfil';
-import type { Route } from '../../router/useRouter';
+import Header from '../../../components/Header/Header';
+import PerfilHeader from '../../../components/Perfil/PerfilHeader/PerfilHeader';
+import CompletarPerfil from '../../../components/Perfil/CompletarPerfil/CompletarPerfil';
+import InformacoesPessoais from '../../../components/Perfil/InformacoesPessoais/InformacoesPessoais';
+import ReputacaoCard from '../../../components/Perfil/ReputacaoCard/ReputacaoCard';
+import PainelControle from '../../../components/Perfil/PainelControle/PainelControle';
+import EditarPerfilModal from '../../../components/Perfil/EditarPerfilModal/EditarPerfilModal';
+import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
+import { useAuth } from '../../../hooks/Auth/useAuth';
+import { useCompletudePerfil } from '../../../hooks/Perfil/useCompletudePerfil';
+import type { Route } from '../../../router/useRouter';
 import styles from './Perfil.module.css';
 
 interface PerfilProps {

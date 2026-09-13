@@ -1,7 +1,7 @@
 import FormInput from '../../Inputs/FormInput/FormInput';
 import FormTextarea from '../../Inputs/FormTextarea/FormTextarea';
 import { maskCEP } from '../../../hooks/Mascaras/masks';
-import type { CadastroFerramentaFormState } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
+import type { CadastroFerramentaFormState } from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './EnderecoRetirada.module.css';
 
 type CampoEndereco = 'cep' | 'ruaAvenida' | 'numero' | 'complemento' | 'usarMesmoEnderecoDevolucao';

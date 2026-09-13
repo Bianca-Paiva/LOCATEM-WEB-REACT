@@ -1,5 +1,5 @@
 import { User, Star, MapPin } from 'lucide-react';
-import type { ProdutoSelecionado } from '../../context/ProdutoContext';
+import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
 import styles from './ProdutoResumoCard.module.css';
 
 interface ProdutoResumoCardProps {

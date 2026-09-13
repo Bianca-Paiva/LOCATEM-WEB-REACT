@@ -1,4 +1,4 @@
-import type { AvaliacaoProduto } from '../../pages/ProdutoDetalhe/ProdutoDetalhe.types';
+import type { AvaliacaoProduto } from '../../pages/Ferramentas/ProdutoDetalhe/ProdutoDetalhe.types';
 
 /**
  * Status operacional de uma ferramenta do ponto de vista do LOCADOR.

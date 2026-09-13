@@ -1,7 +1,7 @@
 import type { Produto } from '../types/Ferramentas/produto.types';
 import type { ProdutoHome } from '../pages/Home/Home.types';
 import type { ProdutoBusca } from '../pages/Busca/Busca.types';
-import type { ProdutoSemelhante } from '../pages/ProdutoDetalhe/ProdutoDetalhe.types';
+import type { ProdutoSemelhante } from '../pages/Ferramentas/ProdutoDetalhe/ProdutoDetalhe.types';
 import type { ProdutoSelecionado } from '../context/Ferramentas/Produto/ProdutoContext';
 import type { LocacaoData } from '../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import { calcularResumoAvaliacoes } from '../utils/Avaliacao/avaliacoesResumo';

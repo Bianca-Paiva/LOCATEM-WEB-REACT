@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CatalogoContext } from '../../context/Catalago/CatalogoContext';
+import { CatalogoContext } from '../../context/Ferramentas/Catalago/CatalogoContext';
 
 export function useCatalogoStore() {
   const ctx = useContext(CatalogoContext);

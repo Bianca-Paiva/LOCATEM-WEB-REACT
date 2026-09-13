@@ -1,29 +1,29 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 
-import Header from '../../components/Header/Header';
-import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
-import SecaoCard from '../../components/CadastroFerramenta/SecaoCard/SecaoCard';
-import FotosFerramenta from '../../components/CadastroFerramenta/FotosFerramenta/FotosFerramenta';
-import InformacoesBasicas from '../../components/CadastroFerramenta/InformacoesBasicas/InformacoesBasicas';
-import DescricaoFerramenta from '../../components/CadastroFerramenta/DescricaoFerramenta/DescricaoFerramenta';
-import EspecificacoesTecnicasForm from '../../components/CadastroFerramenta/EspecificacoesTecnicasForm/EspecificacoesTecnicasForm';
-import Precificacao from '../../components/CadastroFerramenta/Precificacao/Precificacao';
-import AcessoriosInclusos from '../../components/CadastroFerramenta/AcessoriosInclusos/AcessoriosInclusos';
-import CalendarioDisponibilidade from '../../components/CadastroFerramenta/CalendarioDisponibilidade/CalendarioDisponibilidade';
-import AprovacaoLocacao from '../../components/CadastroFerramenta/AprovacaoLocacao/AprovacaoLocacao';
-import EnderecoRetirada from '../../components/CadastroFerramenta/EnderecoRetirada/EnderecoRetirada';
-import SuccessModal from '../../components/SuccessModal/SucessesModal';
-import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
-import BtnPrincipal from '../../components/Botões/BtnPrincipal/BtnPrincipal';
-import BtnNegativo from '../../components/Botões/BtnNegativo/BtnNegativo';
+import Header from '../../../components/Header/Header';
+import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import SecaoCard from '../../../components/CadastroFerramenta/SecaoCard/SecaoCard';
+import FotosFerramenta from '../../../components/CadastroFerramenta/FotosFerramenta/FotosFerramenta';
+import InformacoesBasicas from '../../../components/CadastroFerramenta/InformacoesBasicas/InformacoesBasicas';
+import DescricaoFerramenta from '../../../components/CadastroFerramenta/DescricaoFerramenta/DescricaoFerramenta';
+import EspecificacoesTecnicasForm from '../../../components/CadastroFerramenta/EspecificacoesTecnicasForm/EspecificacoesTecnicasForm';
+import Precificacao from '../../../components/CadastroFerramenta/Precificacao/Precificacao';
+import AcessoriosInclusos from '../../../components/CadastroFerramenta/AcessoriosInclusos/AcessoriosInclusos';
+import CalendarioDisponibilidade from '../../../components/CadastroFerramenta/CalendarioDisponibilidade/CalendarioDisponibilidade';
+import AprovacaoLocacao from '../../../components/CadastroFerramenta/AprovacaoLocacao/AprovacaoLocacao';
+import EnderecoRetirada from '../../../components/CadastroFerramenta/EnderecoRetirada/EnderecoRetirada';
+import SuccessModal from '../../../components/SuccessModal/SucessesModal';
+import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
+import BtnPrincipal from '../../../components/Botões/BtnPrincipal/BtnPrincipal';
+import BtnNegativo from '../../../components/Botões/BtnNegativo/BtnNegativo';
 
-import { useCadastroFerramenta } from '../../hooks/CadastroFerramenta/useCadastroFerramenta';
-import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
-import { useAuth } from '../../hooks/Auth/useAuth';
+import { useCadastroFerramenta } from '../../../hooks/CadastroFerramenta/useCadastroFerramenta';
+import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
+import { useAuth } from '../../../hooks/Auth/useAuth';
 import styles from './CadastroFerramenta.module.css';
 
-import type { Route } from '../../router/useRouter';
+import type { Route } from '../../../router/useRouter';
 
 interface CadastroFerramentaProps {
   navigate: (route: Route) => void;
@@ -35,9 +35,7 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
   const { produtos, adicionarProduto, atualizarProduto, ferramentaSelecionadaId, setFerramentaSelecionadaId } =
     useCatalogoStore();
 
-  // Modo edição: se há uma ferramenta selecionada (via "Editar" em Minhas Ferramentas
-  // ou no Detalhe da Ferramenta) e ela pertence ao locador logado, o formulário abre
-  // pré-preenchido e o botão principal passa a salvar as alterações nela.
+  // Modo edição: se há uma ferramenta selecionada (via "Editar" em Minhas Ferramentas ou no Detalhe da Ferramenta) e ela pertence ao locador logado, o formulário abre pré-preenchido e o botão principal passa a salvar as alterações nela.
   const produtoEmEdicao =
     ferramentaSelecionadaId !== null
       ? produtos.find((p) => p.id === ferramentaSelecionadaId && p.locadorId === usuario?.locadorId)
