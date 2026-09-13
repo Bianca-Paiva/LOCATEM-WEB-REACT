@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CircleAlert } from 'lucide-react'
 import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
 import PageHeader from '../../components/RecuperarSenha/PageHeader/PageHeader'
 import FormInput from '../../components/Inputs/FormInput/FormInput'
@@ -41,21 +42,12 @@ export default function Login({ navigate }: LoginProps) {
         let possuiErro = false
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-        // Validação de força da senha (mesmos critérios do cadastro)
-        const hasTamanho = senha.length >= 8
-        const hasMinuscula = /[a-z]/.test(senha)
-        const hasMaiuscula = /[A-Z]/.test(senha)
-        const hasNumero = /[0-9]/.test(senha)
-        const hasEspecial = /[^A-Za-z0-9]/.test(senha)
-        const isSenhaValida = hasTamanho && hasMinuscula && hasMaiuscula && hasNumero && hasEspecial
-
         if (!email || !emailRegex.test(email)) {
             triggerShake(setEmailErrState)
             possuiErro = true
         }
 
-        // Dispara o erro se a senha estiver vazia OU se não cumprir os requisitos de segurança
-        if (!senha || !isSenhaValida) {
+        if (!senha) {
             triggerShake(setSenhaErrState)
             possuiErro = true
         }
@@ -69,6 +61,7 @@ export default function Login({ navigate }: LoginProps) {
         try {
             // await loginUsuario({ email, senha })
             // authService ainda não está integrado a um backend real (endpoint comentado acima), então resolvemos o usuário autenticado a partir do AuthContext, que por sua vez usa o catálogo mockado em mocks/usuarios.mock.ts.
+            if (senha === 'erro-login') throw new Error('Falha de autenticacao simulada')
             login(email)
 
             // Login originado do Carrinho (usuário deslogado tentou "Continuar para Pagamento"):
@@ -81,10 +74,8 @@ export default function Login({ navigate }: LoginProps) {
             } else {
                 navigate('home')
             }
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'E-mail ou senha inválidos')
-            triggerShake(setEmailErrState)
-            triggerShake(setSenhaErrState)
+        } catch {
+            setError('E-mail ou senha inválidos.')
         } finally {
             setSubmitting(false)
         }
@@ -130,14 +121,21 @@ export default function Login({ navigate }: LoginProps) {
                                     setError('')
                                 }}
                                 status={senhaErrState.active || error ? 'erro' : ''}
-                                // Exibe um erro genérico para não poluir a tela, já que os requisitos visuais só ficam na tela de cadastro
-                                error={senhaErrState.active && !senha ? 'A senha é obrigatória' : senhaErrState.active ? 'Senha inválida' : ''}
+                                error={senhaErrState.active && !senha ? 'A senha é obrigatória' : ''}
                                 shake={senhaErrState.shake}
                                 required
                             />
                         </div>
 
-                        {error && <p className={styles.errorMsg}>{error}</p>}
+                        {error && (
+                            <p className={styles.errorMsg}>
+                                <CircleAlert size={14} strokeWidth={2.2} aria-hidden="true" />
+                                <span className={styles.errorTextos}>
+                                    <strong>Não foi possí­vel entrar</strong>
+                                    <span>{error}</span>
+                                </span>
+                            </p>
+                        )}
 
                         <button
                             type="button"
