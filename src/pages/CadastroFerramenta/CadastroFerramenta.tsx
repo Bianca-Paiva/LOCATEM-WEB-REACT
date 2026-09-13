@@ -15,6 +15,8 @@ import AprovacaoLocacao from '../../components/CadastroFerramenta/AprovacaoLocac
 import EnderecoRetirada from '../../components/CadastroFerramenta/EnderecoRetirada/EnderecoRetirada';
 import SuccessModal from '../../components/SuccessModal/SucessesModal';
 import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
+import BtnPrincipal from '../../components/Botões/BtnPrincipal/BtnPrincipal';
+import BtnNegativo from '../../components/Botões/BtnNegativo/BtnNegativo';
 
 import { useCadastroFerramenta } from '../../hooks/CadastroFerramenta/useCadastroFerramenta';
 import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
@@ -253,12 +255,14 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
         </div>
 
         <div className={styles.acoes}>
-          <button type="button" className={styles.botaoSecundario} onClick={handleAbrirConfirmCancelar}>
+          <BtnNegativo type="button" onClick={handleAbrirConfirmCancelar}>
             Cancelar
-          </button>
-          <button type="button" className={styles.botaoPrimario} onClick={handlePublicar}>
-            {produtoEmEdicao ? 'Salvar Alterações' : 'Publicar Ferramenta'}
-          </button>
+          </BtnNegativo>
+          <BtnPrincipal
+            type="button"
+            onClick={handlePublicar}
+            text={produtoEmEdicao ? 'Salvar Alterações' : 'Publicar Ferramenta'}
+          />
         </div>
       </main>
 

@@ -1,4 +1,5 @@
 import { AlertTriangle } from 'lucide-react';
+import BtnNegativo from '../../Botões/BtnNegativo/BtnNegativo';
 import styles from './RemoverFerramentaModal.module.css';
 
 interface RemoverFerramentaModalProps {
@@ -32,9 +33,9 @@ export default function RemoverFerramentaModal({
         </p>
 
         <div className={styles.acoes}>
-          <button type="button" className={styles.botaoCancelar} onClick={onCancelar}>
+          <BtnNegativo type="button" className={styles.botaoCancelar} onClick={onCancelar}>
             Cancelar
-          </button>
+          </BtnNegativo>
           <button type="button" className={styles.botaoConfirmar} onClick={onConfirmar}>
             Remover
           </button>

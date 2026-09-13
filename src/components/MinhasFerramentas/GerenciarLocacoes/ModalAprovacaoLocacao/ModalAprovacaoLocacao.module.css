@@ -18,12 +18,13 @@
 }
 
 .modal {
-  width: 640px;
+  position: relative;
+  width: 480px;
   max-width: 100%;
 
   background: white;
   border-radius: 20px;
-  padding: 26px;
+  padding: 22px;
   box-sizing: border-box;
 
   box-shadow: 0 20px 50px rgba(0, 0, 0, .18);
@@ -31,25 +32,13 @@
   animation: pop .2s ease;
 }
 
-.cabecalho {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.titulo {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--color-text-dark);
-}
-
 .botaoFechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
   flex-shrink: 0;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   border: none;
   background: #F3F4F6;
@@ -65,19 +54,86 @@
   background: #E5E7EB;
 }
 
+/* ── Cabeçalho: imagem + badge + título + texto auxiliar ──────────────── */
+
+.cabecalho {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-right: 26px;
+  margin-bottom: 18px;
+}
+
+.miniatura {
+  flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #F7F8F9;
+  border: 1px solid #EEEEEE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cabecalhoTexto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.badgePendente {
+  display: inline-flex;
+  align-items: center;
+  background: #FFF6D9;
+  color: #A16B00;
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.3;
+}
+
+.subtitulo {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+/* ── Linhas de informação ──────────────────────────────────────────────── */
+
 .linhas {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 0;
+  margin-bottom: 22px;
 }
 
 .linha {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding-bottom: 12px;
+  padding: 11px 0;
   border-bottom: 1px solid #F3F4F6;
 }
 
@@ -87,8 +143,18 @@
 }
 
 .label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 13px;
   color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.labelIcone {
+  width: 15px;
+  height: 15px;
+  opacity: 0.7;
   flex-shrink: 0;
 }
 
@@ -102,9 +168,11 @@
 .valorDestaque {
   font-size: 15px;
   font-weight: 800;
-  color: #000000;
+  color: #15803D;
   text-align: right;
 }
+
+/* ── Ações ─────────────────────────────────────────────────────────────── */
 
 .acoes {
   display: flex;
@@ -112,58 +180,52 @@
   gap: 10px;
 }
 
-.botaoRecusar,
-.botaoAprovar {
+/* BtnPrincipal mantém sua altura e estilo padrão (55px) — o wrapper só cuida do
+   dimensionamento no layout flex, sem sobrescrever a aparência do componente. */
+.botaoAprovarWrapper {
   width: 100%;
-  height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  border-radius: var(--radius-pill);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color .18s ease, transform .1s ease;
 }
 
 .botaoRecusar {
-  background: #fff;
-  border: 1.5px solid #f6c9ce;
-  color: #E11D48;
-}
-
-.botaoRecusar:hover {
-  background: #fdf1f2;
-}
-
-.botaoAprovar {
-  background: #137333;
-  border: 1.5px solid #137333;
-  color: #fff;
-}
-
-.botaoAprovar:hover {
-  background: #0f5c28;
-}
-
-.botaoRecusar:active,
-.botaoAprovar:active {
-  transform: scale(0.99);
+  margin-top: 0;
 }
 
 @keyframes fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes pop {
-  from { opacity: 0; transform: scale(.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @media (min-width: 480px) {
   .acoes {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .botaoRecusar {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .botaoAprovarWrapper {
+    min-width: 0;
+    width: 100%;
   }
 }

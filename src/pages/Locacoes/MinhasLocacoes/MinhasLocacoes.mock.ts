@@ -1,28 +1,16 @@
 import type { LocacaoData, StatusLocacao } from './MinhasLocacoes.types';
 import { PRODUTOS_MOCK } from '../../../mocks/produtos.mock';
 import { toLocacaoProdutoBase } from '../../../mocks/produtos.adapters';
-
-const MESES_ABREV = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-
-/** Converte "dd/mm/aaaa" em Date, sem depender de fuso/timezone. */
-function paraData(data: string): Date {
-  const [dia, mes, ano] = data.split('/').map(Number);
-  return new Date(ano, mes - 1, dia);
-}
+import { paraDataBr, formatarPeriodoBr } from '../../../utils/Locacao/formatoDataBr';
 
 /** Quantidade de diárias entre o início e o fim da locação (mínimo de 1). */
 function calcularDiarias(dataInicio: string, dataFim: string): number {
-  const diffMs = paraData(dataFim).getTime() - paraData(dataInicio).getTime();
+  const inicio = paraDataBr(dataInicio);
+  const fim = paraDataBr(dataFim);
+  if (!inicio || !fim) return 1;
+  const diffMs = fim.getTime() - inicio.getTime();
   const dias = Math.round(diffMs / (1000 * 60 * 60 * 24));
   return Math.max(dias, 1);
-}
-
-/** Monta o texto de período exibido no card, ex: "15 Jul – 18 Jul 2025". */
-function formatarPeriodo(dataInicio: string, dataFim: string): string {
-  const inicio = paraData(dataInicio);
-  const fim = paraData(dataFim);
-  const diaMes = (d: Date) => `${String(d.getDate()).padStart(2, '0')} ${MESES_ABREV[d.getMonth()]}`;
-  return `${diaMes(inicio)} – ${diaMes(fim)} ${fim.getFullYear()}`;
 }
 
 /** Converte "15,00" -> 15 (number). */
@@ -80,7 +68,7 @@ function criarLocacao(id: string, dados: DadosSolicitacao): LocacaoData {
   return {
     id,
     ...toLocacaoProdutoBase(produto),
-    periodo: formatarPeriodo(dados.dataInicio, dados.dataFim),
+    periodo: formatarPeriodoBr(dados.dataInicio, dados.dataFim),
     locatario: dados.locatario,
     status: dados.status,
     mensagemStatus: dados.mensagemStatus,
@@ -97,7 +85,7 @@ function criarLocacao(id: string, dados: DadosSolicitacao): LocacaoData {
   };
 }
 
-// Mock de locacções: cada uma referencia um produto real de PRODUTOS_MOCK (ferramenta, imagem, categoria, avaliações, localização e locador vêm de lá) e acrescenta os dados da própria solicitação de locacao.
+// Mock de locações: cada uma referencia um produto real de PRODUTOS_MOCK (ferramenta, imagem, categoria, avaliações, localização e locador vêm de lá) e acrescenta os dados da própria solicitação de locacao.
 export const mockLocacoes: LocacaoData[] = [
   criarLocacao('1', {
     produtoId: 1, // Furadeira Parafusadeira Sem Fio... The Black Tools (MS Ferramentas)

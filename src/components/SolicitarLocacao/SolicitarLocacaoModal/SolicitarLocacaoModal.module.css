@@ -159,7 +159,8 @@
 }
 
 .botaoSecundario,
-.botaoPrimario {
+.botaoPrimario,
+.botaoNegativo {
   flex: 1;
   height: 46px;
   border-radius: 10px;
@@ -206,4 +207,8 @@
   .gridCampos {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+.acoes .botaoNegativo {
+  margin-top: 0;
 }

@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
+import BtnNeutro from '../Botões/BtnNeutro/BtnNeutro';
+import BtnNegativo from '../Botões/BtnNegativo/BtnNegativo';
 import styles from './ConfirmModal.module.css';
 
 interface ConfirmModalProps {
@@ -22,6 +24,7 @@ interface ConfirmModalProps {
    * "perigo" estiliza o botão de confirmação como uma ação destrutiva (vermelho) — usado em exclusões e cancelamentos. "padrao" usa a cor primária da marca. Padrão: "perigo".
    */
   variant?: 'perigo' | 'padrao';
+  confirmButtonStyle?: 'padrao' | 'negativo';
 }
 
 /**
@@ -37,6 +40,7 @@ export default function ConfirmModal({
   onConfirm,
   onCancel,
   variant = 'perigo',
+  confirmButtonStyle = 'padrao',
 }: ConfirmModalProps) {
   // Fecha com a tecla Esc — mesmo padrão já usado em SolicitarLocacaoModal.
   useEffect(() => {
@@ -51,6 +55,12 @@ export default function ConfirmModal({
   }, [open, onCancel]);
 
   if (!open) return null;
+
+  const usarConfirmacaoNegativa =
+    confirmButtonStyle === 'negativo' ||
+    confirmLabel === 'Remover' ||
+    confirmLabel === 'Sim, cancelar' ||
+    confirmLabel === 'Sair';
 
   return (
     <div className={styles.overlay} onClick={onCancel}>
@@ -83,16 +93,22 @@ export default function ConfirmModal({
         </div>
 
         <div className={styles.acoes}>
-          <button type="button" className={styles.botaoSecundario} onClick={onCancel}>
+          <BtnNeutro type="button" className={styles.botaoAcao} onClick={onCancel}>
             {cancelLabel}
-          </button>
-          <button
-            type="button"
-            className={variant === 'perigo' ? styles.botaoPerigo : styles.botaoPrimario}
-            onClick={onConfirm}
-          >
-            {confirmLabel}
-          </button>
+          </BtnNeutro>
+          {usarConfirmacaoNegativa ? (
+            <BtnNegativo type="button" className={styles.botaoAcao} onClick={onConfirm}>
+              {confirmLabel}
+            </BtnNegativo>
+          ) : (
+            <button
+              type="button"
+              className={variant === 'perigo' ? styles.botaoPerigo : styles.botaoPrimario}
+              onClick={onConfirm}
+            >
+              {confirmLabel}
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -14,10 +14,10 @@
     border-color: #e2e2e2;
 }
 
-/* Estado expandido: borda amarela discreta */
+/* Estado expandido: borda neutra discreta */
 .card.expandido {
-    border-color: #ffd75e;
-    box-shadow: 0 2px 10px rgba(255, 202, 0, 0.12);
+    border-color: #D9DDE3;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
 }
 
 .cabecalho {

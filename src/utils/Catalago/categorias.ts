@@ -3,8 +3,7 @@ import type { Produto } from '../../types/Produto/produto.types';
 /**
  * Deriva categorias e subcategorias a partir do catálogo real de produtos.
  *
- * `Produto.categoria` guarda categoria e subcategoria juntas numa única string
- * (ex: "Ferramentas Elétricas • Corte e Desgaste"). Este módulo é a única fonte usada para "desmontar" esse formato — assim o CategoryFilter (Home) e os filtros da página de Busca sempre exibem exatamente as categorias que existem nas ferramentas cadastradas, sem manter uma lista paralela que possa ficar dessincronizada dos dados reais.
+ * `Produto.categoria` guarda categoria e subcategoria juntas numa única string (ex: "Ferramentas Elétricas • Corte e Desgaste"). Este módulo é a única fonte usada para "desmontar" esse formato — assim o CategoryFilter (Home) e os filtros da página de Busca sempre exibem exatamente as categorias que existem nas ferramentas cadastradas, sem manter uma lista paralela que possa ficar dessincronizada dos dados reais.
  */
 const SEPARADOR_SUBCATEGORIA = ' • ';
 

@@ -12,6 +12,16 @@
   border-color: #e2e2e2;
 }
 
+/* Destaque discreto do card expandido, como na referência */
+.cardExpandido {
+  border-color: #D9DDE3;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.cardExpandido:hover {
+  border-color: #D9DDE3;
+}
+
 .cardButton {
   width: 100%;
   display: flex;
@@ -114,12 +124,11 @@
   white-space: nowrap;
 }
 
-.seta {
-  width: 8px;
-  height: 8px;
-  border-top: 2px solid #c4c4c4;
-  border-right: 2px solid #c4c4c4;
-  transform: rotate(45deg);
+.iconeExpandir {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa0a6;
   flex-shrink: 0;
 }
 
@@ -168,5 +177,207 @@
 
   .titulo {
     font-size: 16px;
+  }
+}
+
+/* ── Painel expandido ─────────────────────────────────────────────────── */
+
+.painelExpandido {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 4px 14px 16px;
+  border-top: 1px solid #f2f2f2;
+}
+
+/* ── "O que você precisa fazer agora" ─────────────────────────────────── */
+
+.acaoAgora {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #fafafa;
+  border: 1px solid #eeeeee;
+  border-left: 4px solid #fdeea4;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.acaoIconeWrapper {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #FFF8D6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acaoIcone {
+  width: 17px;
+  height: 17px;
+  color: #6F5A18;
+}
+
+.acaoTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.acaoRotulo {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #7a7f87;
+}
+
+.acaoTitulo {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.35;
+}
+
+.acaoDescricao {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.45;
+}
+
+.infoGrade {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  background: #f7f8f9;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.infoCabecalho {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.infoIcone {
+  width: 15px;
+  height: 15px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.infoValor {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+.infoDescricao {
+  font-size: 11.5px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.verMais {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f7f8f9;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.verMaisTexto {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.verMaisTitulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+}
+
+.verMaisIcone {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.verMaisDescricao {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.botaoVerDetalhes {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  align-self: stretch;
+  background: var(--color-primary);
+  color: var(--color-text-dark);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter var(--transition-fast);
+}
+
+.botaoVerDetalhes:hover {
+  filter: brightness(0.96);
+}
+
+/* Tablet e acima: grade 2x2 e "Ver detalhes" alinhado à direita */
+@media (min-width: 640px) {
+  .painelExpandido {
+    padding: 4px 20px 20px;
+  }
+
+  .infoGrade {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .verMais {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .botaoVerDetalhes {
+    align-self: center;
+    flex-shrink: 0;
+  }
+}
+
+/* Desktop: as 4 informações lado a lado, como na referência */
+@media (min-width: 1024px) {
+  .infoGrade {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

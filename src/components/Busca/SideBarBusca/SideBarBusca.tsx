@@ -5,6 +5,8 @@ import type { FilterState } from '../../../pages/Busca/Busca.types';
 import { OPCOES_FONTE_ALIMENTACAO } from '../../../pages/CadastroFerramenta/CadastroFerramenta.types';
 import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
 import { derivarCategorias, extrairNomeSubcategoria } from '../../../utils/Catalago/categorias';
+import BtnPrincipal from '../../Botões/BtnPrincipal/BtnPrincipal';
+import BtnSecundario from '../../Botões/BtnSecundario/BtnSecundario';
 import styles from './SideBarBusca.module.css';
 
 
@@ -19,12 +21,10 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
   const { produtos } = useCatalogoStore();
 
-  // Categorias/subcategorias derivadas do catálogo real — única fonte também usada
-  // pelo CategoryFilter da Home, para os filtros nunca divergirem dos dados reais.
+  // Categorias/subcategorias derivadas do catálogo real — única fonte também usada pelo CategoryFilter da Home, para os filtros nunca divergirem dos dados reais.
   const categoriasComSubcategorias = useMemo(() => derivarCategorias(produtos), [produtos]);
 
-  // Categoria de topo atualmente "aberta" no filtro (exibindo suas subcategorias).
-  // null = exibindo a lista de categorias principais.
+  // Categoria de topo atualmente "aberta" no filtro (exibindo suas subcategorias). null = exibindo a lista de categorias principais.
   const [categoriaExpandida, setCategoriaExpandida] = useState<string | null>(null);
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -151,8 +151,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
           {categoriaExpandida ? (
             <>
-              {/* Indica qual categoria está selecionada e permite voltar ao nível anterior,
-                  em vez de misturar categorias e subcategorias na mesma lista. */}
+              {/* Indica qual categoria está selecionada e permite voltar ao nível anterior, em vez de misturar categorias e subcategorias na mesma lista. */}
               <button
                 type="button"
                 className={styles.categoriaVoltarBtn}
@@ -181,8 +180,7 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
                   key={categoria}
                   className={`${styles.filterPill} ${selectedCategories.includes(categoria) ? styles.active : ''}`}
                   onClick={() => {
-                    // Categorias com subcategorias abrem o próximo nível em vez de
-                    // serem aplicadas diretamente como filtro.
+                    // Categorias com subcategorias abrem o próximo nível em vez de serem aplicadas diretamente como filtro.
                     if (subcategorias.length > 0) {
                       setCategoriaExpandida(categoria);
                     } else {
@@ -362,13 +360,9 @@ export function SideBarBusca({ isOpen, onClose, onApplyFilters }: SideBarBuscaPr
 
         <div className={styles.sidebarActions}>
 
-          <button className={styles.sidebarBtnPrimary} onClick={handleApply}>
-            Pesquisar
-          </button>
+          <BtnPrincipal text="Pesquisar" onClick={handleApply} type="button" />
 
-          <button className={styles.sidebarBtnSecondary} onClick={handleClear}>
-            Limpar Filtros
-          </button>
+          <BtnSecundario text="Limpar Filtros" onClick={handleClear} type="button" />
 
         </div>
       </aside>

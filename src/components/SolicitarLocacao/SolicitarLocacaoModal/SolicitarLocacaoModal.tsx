@@ -5,6 +5,7 @@ import CampoData from '../CampoData/CampoData';
 import HorarioDropdown from '../HorarioDropdown/HorarioDropdown';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
 import ConfirmModal from '../../ConfirmModal/ConfirmModal';
+import BtnNegativo from '../../Botões/BtnNegativo/BtnNegativo';
 import { useSolicitarLocacaoModal } from '../../../hooks/Locacoes/useSolicitarLocacaoModal';
 import type { DadosLocacaoModal, ModoAberturaModal } from './SolicitarLocacaoModal.types';
 import styles from './SolicitarLocacaoModal.module.css';
@@ -251,9 +252,9 @@ export default function SolicitarLocacaoModal({
         </div>
 
         <div className={styles.acoes}>
-          <button type="button" className={styles.botaoSecundario} onClick={handleAbrirConfirmCancelar}>
+          <BtnNegativo type="button" className={styles.botaoNegativo} onClick={handleAbrirConfirmCancelar}>
             Cancelar
-          </button>
+          </BtnNegativo>
           <button
             type="button"
             className={styles.botaoPrimario}

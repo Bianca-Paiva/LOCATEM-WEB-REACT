@@ -84,16 +84,6 @@
   transition: background-color .18s ease, border-color .18s ease, transform .1s ease;
 }
 
-.botaoCancelar {
-  background: white;
-  border: 1px solid #E5E7EB;
-  color: var(--color-text-dark);
-}
-
-.botaoCancelar:hover {
-  background: #F9FAFB;
-}
-
 .botaoConfirmar {
   background: #E11D48;
   border: 1px solid #E11D48;

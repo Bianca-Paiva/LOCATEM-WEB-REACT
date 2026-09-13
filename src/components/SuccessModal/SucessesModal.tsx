@@ -1,5 +1,5 @@
 import styles from "./SucessesModal.module.css";
-import BtnPrincipal from "../../components/BtnPrincipal/BtnPrincipal";
+import BtnPrincipal from "../Botões/BtnPrincipal/BtnPrincipal";
 
 interface SuccessModalProps {
     open: boolean;

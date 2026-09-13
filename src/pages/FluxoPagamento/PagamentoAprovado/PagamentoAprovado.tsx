@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react';
 import { CreditCard } from 'lucide-react';
 
-import BtnPrincipal from '../../../components/BtnPrincipal/BtnPrincipal';
-import BtnSecundario from '../../../components/BtnSecundario/BtnSecundario';
+import BtnPrincipal from '../../../components/Botões/BtnPrincipal/BtnPrincipal';
+import BtnSecundario from '../../../components/Botões/BtnSecundario/BtnSecundario';
 
 import { usePagamentoAprovado } from '../../../hooks/Pagamento/usePagamentoAprovado';
 import type { Route } from '../../../router/useRouter';

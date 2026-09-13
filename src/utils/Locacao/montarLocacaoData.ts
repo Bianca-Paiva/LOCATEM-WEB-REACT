@@ -2,24 +2,7 @@ import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
 import type { DadosLocacaoModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import type { NotificationData } from '../../pages/Notificacoes/Notificacoes.types';
-
-const MESES_ABREV = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-
-// Converte "dd/mm/aaaa" em Date, sem depender de fuso horário
-function paraData(dataBr: string): Date | null {
-  if (!dataBr) return null;
-  const [dia, mes, ano] = dataBr.split('/').map(Number);
-  if (!dia || !mes || !ano) return null;
-  return new Date(ano, mes - 1, dia);
-}
-
-function formatarPeriodo(dataInicioBr: string, dataFimBr: string): string {
-  const inicio = paraData(dataInicioBr);
-  const fim = paraData(dataFimBr);
-  if (!inicio || !fim) return '';
-  const diaMes = (d: Date) => `${String(d.getDate()).padStart(2, '0')} ${MESES_ABREV[d.getMonth()]}`;
-  return `${diaMes(inicio)} – ${diaMes(fim)} ${fim.getFullYear()}`;
-}
+import { formatarPeriodoBr } from './formatoDataBr';
 
 /**
  * Monta os dados de uma nova solicitação de locação (sem `id`, atribuído por
@@ -36,7 +19,7 @@ export function montarLocacaoPendente(
     produtoId: produto.id ?? 0,
     produto: produto.title,
     imagem: produto.images?.[0] ?? '',
-    periodo: formatarPeriodo(dados.resumo.dataEntregaFormatada, dados.resumo.dataDevolucaoFormatada),
+    periodo: formatarPeriodoBr(dados.resumo.dataEntregaFormatada, dados.resumo.dataDevolucaoFormatada),
     locador: produto.locador,
     locadorId: produto.locadorId ?? '',
     locatario: nomeLocatario,
@@ -76,7 +59,7 @@ export function montarLocacaoConfirmada(
     produtoId: produto.id ?? 0,
     produto: produto.title,
     imagem: produto.images?.[0] ?? '',
-    periodo: formatarPeriodo(dados.resumo.dataEntregaFormatada, dados.resumo.dataDevolucaoFormatada),
+    periodo: formatarPeriodoBr(dados.resumo.dataEntregaFormatada, dados.resumo.dataDevolucaoFormatada),
     locador: produto.locador,
     locadorId: produto.locadorId ?? '',
     locatario: nomeLocatario,

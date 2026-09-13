@@ -154,6 +154,7 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
         cancelLabel="Cancelar"
         onConfirm={handleConfirmarLimparTudo}
         onCancel={handleFecharConfirmLimpar}
+        confirmButtonStyle="negativo"
       />
     </>
   );

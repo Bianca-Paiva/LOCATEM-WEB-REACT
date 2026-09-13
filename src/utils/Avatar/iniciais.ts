@@ -1,9 +1,7 @@
 /**
  * Gera as iniciais de um nome para uso em avatares sem foto (ex: "João da Silva" -> "JS").
  *
- * Extraído de components/ProdutoDetalhe/AvaliacaoSection (que tinha essa mesma lógica
- * duplicada localmente) para virar um utilitário único, reutilizado por qualquer
- * avatar do projeto (componente Avatar, InfoVendedor, Header, Perfil).
+ * Extraído de components/ProdutoDetalhe/AvaliacaoSection (que tinha essa mesma lógica duplicada localmente) para virar um utilitário único, reutilizado por qualquer avatar do projeto (componente Avatar, InfoVendedor, Header, Perfil).
  */
 export function getIniciais(nome: string): string {
   if (!nome) return '';

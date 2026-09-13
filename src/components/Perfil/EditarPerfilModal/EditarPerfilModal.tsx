@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 import { X, Camera } from 'lucide-react';
 import Avatar from '../../Avatar/Avatar';
 import FormInput from '../../Inputs/FormInput/FormInput';
-import BtnPrincipal from '../../BtnPrincipal/BtnPrincipal';
+import BtnPrincipal from '../../Botões/BtnPrincipal/BtnPrincipal';
 import Alerta from '../../RecuperarSenha/Alerta/Alerta';
 import { maskCPF, maskCNPJ, maskPhone, maskCEP, formatPhone } from '../../../hooks/Mascaras/masks';
 import { useEditarPerfilForm } from '../../../hooks/Perfil/useEditarPerfilForm';

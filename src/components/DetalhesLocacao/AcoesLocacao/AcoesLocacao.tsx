@@ -1,6 +1,7 @@
 import type { StatusLocacao } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import BtnPrincipal from '../../BtnPrincipal/BtnPrincipal';
-import BtnSecundario from '../../BtnSecundario/BtnSecundario';
+import BtnNegativo from '../../Botões/BtnNegativo/BtnNegativo';
+import BtnPrincipal from '../../Botões/BtnPrincipal/BtnPrincipal';
+import BtnSecundario from '../../Botões/BtnSecundario/BtnSecundario';
 import styles from './AcoesLocacao.module.css';
 
 interface AcoesLocacaoProps {
@@ -33,13 +34,13 @@ export default function AcoesLocacao({
           type="button" 
         />
 
-        <button
+        <BtnNegativo
           type="button"
           className={styles.botaoPerigo}
           onClick={onCancelarSolicitacao}
         >
           Cancelar solicitação
-        </button>
+        </BtnNegativo>
       </div>
     );
   }
@@ -63,8 +64,7 @@ export default function AcoesLocacao({
     );
   }
 
-  // Preparando entrega, em transporte, em andamento, aguardando devolução e devolução em
-  // transporte: a locacao já está em curso, o usuário só acompanha o status
+  // Preparando entrega, em transporte, em andamento, aguardando devolução e devolução em transporte: a locacao já está em curso, o usuário só acompanha o status
   if (
     status === 'preparandoEntrega' ||
     status === 'emTransporte' ||

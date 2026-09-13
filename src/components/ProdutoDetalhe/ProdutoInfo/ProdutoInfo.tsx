@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Star } from 'lucide-react';
 import PeriodoLocacaoDropdown from '../PeriodoLocacaoDropdown/PeriodoLocacaoDropdown';
 import SeletorQuantidade from '../../Inputs/SeletorQuantidade/SeletorQuantidade';
-import BtnPrincipal from '../../BtnPrincipal/BtnPrincipal';
-import BtnSecundario from '../../BtnSecundario/BtnSecundario';
+import BtnPrincipal from '../../Botões/BtnPrincipal/BtnPrincipal';
+import BtnSecundario from '../../Botões/BtnSecundario/BtnSecundario';
 import styles from './ProdutoInfo.module.css';
 
 interface ProdutoInfoProps {
@@ -122,16 +122,16 @@ export function ProdutoInfo({
 
       {/* CTAs */}
       <div className={styles.ctasContainer}>
-        <BtnPrincipal 
-          text="Locar Agora" 
-          onClick={onAlugar} 
-          type="button" 
+        <BtnPrincipal
+          text="Locar Agora"
+          onClick={onAlugar}
+          type="button"
         />
         <div className={styles.linhaSecundaria}>
-          <BtnSecundario 
-            text="Adicionar ao carrinho" 
-            onClick={onAddCarrinho} 
-            type="button" 
+          <BtnSecundario
+            text="Adicionar ao carrinho"
+            onClick={onAddCarrinho}
+            type="button"
           />
         </div>
       </div>

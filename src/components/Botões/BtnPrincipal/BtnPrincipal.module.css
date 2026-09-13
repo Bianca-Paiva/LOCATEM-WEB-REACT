@@ -8,7 +8,18 @@
     font-weight: 600;
     cursor: pointer;
     margin-top: 4px;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: filter 0.15s, transform 0.1s;
+}
+
+.icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 /* Efeito de clique físico */
@@ -19,6 +30,11 @@
 /* Estilo para quando o botão estiver desativado (opcional) */
 .customButton:hover:not(:disabled) {
     background-color: #e6b800;
+}
+
+.customButton:hover {
+    filter: brightness(1.05); /* Leve aumento de brilho ao passar o mouse */
+    transform: translateY(-1px);
 }
 
 .customButton:disabled {

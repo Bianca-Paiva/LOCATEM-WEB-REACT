@@ -16,7 +16,8 @@
     overflow-y: auto;
     background: #ffffff;
     border-radius: 16px;
-    border: 1.5px solid #f6c945;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     padding: 24px;
     box-sizing: border-box;
 }
@@ -82,14 +83,17 @@
 }
 
 .acoes {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
 }
 
-.botaoSecundario,
 .botaoPrimario,
-.botaoPerigo {
+.botaoPerigo,
+.botaoAcao {
     flex: 1;
+    min-width: 0;
+    width: 100%;
     height: 46px;
     border-radius: 10px;
     font-size: 14px;
@@ -99,14 +103,8 @@
     box-sizing: border-box;
 }
 
-.botaoSecundario {
-    border: 1.5px solid #e5e7eb;
-    background: transparent;
-    color: var(--color-text-dark);
-}
-
-.botaoSecundario:hover {
-    background: var(--color-bg-input);
+.acoes .botaoAcao {
+    margin-top: 0;
 }
 
 .botaoPrimario {
@@ -131,6 +129,6 @@
 
 @media (min-width: 480px) {
     .acoes {
-        flex-direction: row;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }

@@ -4,7 +4,7 @@ import AuthHeader from "../../../components/Header/AuthHeader/AuthHeader";
 import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
 import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
 import FormInput from "../../../components/Inputs/FormInput/FormInput";
-import BtnPrincipal from "../../../components/BtnPrincipal/BtnPrincipal";
+import BtnPrincipal from "../../../components/Botões/BtnPrincipal/BtnPrincipal";
 import FooterLink from "../../../components/RecuperarSenha/FooterLink/FooterLink";
 import type { Route } from "../../../router/useRouter";
 
@@ -37,8 +37,8 @@ export default function RecuperarSenha({ navigate }: RecuperarSenhaProps) {
         const tokenGerado = Math.floor(10000 + Math.random() * 90000).toString();
 
         // SALVA O TOKEN NO NAVEGADOR (Adicione esta linha!)
-        localStorage.setItem("codigo_recuperacao", tokenGerado);        
-        
+        localStorage.setItem("codigo_recuperacao", tokenGerado);
+
         // Exibe no terminal/console do navegador
         console.log("=====================================");
         console.log("E-MAIL ENVIADO COM SUCESSO!");
@@ -82,10 +82,10 @@ export default function RecuperarSenha({ navigate }: RecuperarSenhaProps) {
 
                     <div className={styles.btnEnviar}>
                         <BtnPrincipal
-                        text="Enviar e-mail"
-                        onClick={handleSendEmail}
-                        type="button"
-                    />
+                            text="Enviar e-mail"
+                            onClick={handleSendEmail}
+                            type="button"
+                        />
                     </div>
                 </div>
 

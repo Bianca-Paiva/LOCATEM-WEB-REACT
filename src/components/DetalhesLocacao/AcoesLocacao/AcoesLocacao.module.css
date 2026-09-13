@@ -20,16 +20,6 @@
   transform: scale(0.99);
 }
 
-.botaoPerigo {
-  border: 1px solid #f3b8b8;
-  background: #ffffff;
-  color: #cc3333;
-}
-
-.botaoPerigo:hover {
-  background: #fdf1f1;
-}
-
 @media (min-width: 640px) {
   .grupoBotoes {
     flex-direction: row;

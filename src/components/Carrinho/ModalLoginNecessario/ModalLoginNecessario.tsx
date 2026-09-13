@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import BtnPrincipal from '../../BtnPrincipal/BtnPrincipal';
+import BtnPrincipal from '../../Botões/BtnPrincipal/BtnPrincipal';
 import styles from './ModalLoginNecessario.module.css';
 
 interface ModalLoginNecessarioProps {

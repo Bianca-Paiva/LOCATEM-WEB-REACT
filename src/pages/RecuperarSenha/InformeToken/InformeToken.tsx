@@ -4,7 +4,7 @@ import AuthHeader from "../../../components/Header/AuthHeader/AuthHeader";
 import Etapas from "../../../components/RecuperarSenha/Etapas/Etapas";
 import PageHeader from "../../../components/RecuperarSenha/PageHeader/PageHeader";
 import TokenInput from '../../../components/RecuperarSenha/TokenInput/TokenInput'
-import BtnPrincipal from "../../../components/BtnPrincipal/BtnPrincipal";
+import BtnPrincipal from "../../../components/Botões/BtnPrincipal/BtnPrincipal";
 import type { Route } from "../../../router/useRouter";
 
 interface InformeTokenProps {
@@ -52,14 +52,14 @@ export default function InformeToken({ navigate }: InformeTokenProps) {
         setHasError(false);
         setErrorMessage(""); // Limpa a mensagem
         localStorage.removeItem("codigo_recuperacao");
-        
+
         navigate('informeNovaSenha');
     };
 
     const handleResendCode = () => {
         // Gera um NOVO código de 5 dígitos
         const novoToken = Math.floor(10000 + Math.random() * 90000).toString();
-        
+
         // Substitui o código antigo no armazenamento
         localStorage.setItem("codigo_recuperacao", novoToken);
 
@@ -108,7 +108,7 @@ export default function InformeToken({ navigate }: InformeTokenProps) {
                     <button
                         className={styles.reenviar}
                         onClick={handleResendCode}
-                        disabled={timeLeft > 0} 
+                        disabled={timeLeft > 0}
                     >
                         {timeLeft > 0
                             ? `Reenviar código em ${timeLeft}s`

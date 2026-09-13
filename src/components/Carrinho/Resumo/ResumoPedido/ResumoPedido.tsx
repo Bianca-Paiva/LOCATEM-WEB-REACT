@@ -3,7 +3,7 @@ import styles from './ResumoPedido.module.css';
 import { Tag } from 'lucide-react';
 import { Icon } from '@iconify/react';
 import { maskCEP, validateCEP } from '../../../../hooks/Mascaras/masks';
-import BtnPrincipal from '../../../BtnPrincipal/BtnPrincipal';
+import BtnPrincipal from '../../../Botões/BtnPrincipal/BtnPrincipal';
 import type {
   PrazoPagamento,
   ResumoPedidoVariant,
