@@ -16,7 +16,7 @@ import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoProvider";
 // -------------------------------
 
 // Navegação Principal e Descoberta
-import Home from "./pages/Home/Home";
+import Home from "./pages/Home/HomeLocatario";
 import Busca from "./pages/Busca/Busca";
 import ProdutoDetalhe from "./pages/Ferramentas/ProdutoDetalhe/ProdutoDetalhe";
 
