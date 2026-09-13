@@ -22,7 +22,7 @@ import ProdutoDetalhe from "./pages/ProdutoDetalhe/ProdutoDetalhe";
 
 // Autenticação e Acesso
 import Login from "./pages/Login/Login";
-import Cadastro from "./pages/CadastroUsuario/CadastroUsuario";
+import Cadastro from "./pages/Auth/CadastroUsuario/CadastroUsuario";
 import RecuperarSenha from "./pages/RecuperarSenha/InformeEmail/InformeEmail";
 import InformeToken from "./pages/RecuperarSenha/InformeToken/InformeToken";
 import InformeNovaSenha from "./pages/RecuperarSenha/InformeNovaSenha/InformeNovaSenha";
@@ -67,7 +67,7 @@ export default function App() {
             <NotificationProvider>
               <CarrinhoProvider>
                 <BuscaProvider>
-                  
+
                   {/* Navegação Principal e Descoberta */}
                   {route === "home" && <Home navigate={navigate} />}
                   {route === "busca" && <Busca navigate={navigate} />}
@@ -106,7 +106,7 @@ export default function App() {
                   {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
                   {route === "gerenciarLocacoes" && <GerenciarLocacoes navigate={navigate} />}
 
-                </BuscaProvider> 
+                </BuscaProvider>
               </CarrinhoProvider>
             </NotificationProvider>
           </LocacaoProvider>
