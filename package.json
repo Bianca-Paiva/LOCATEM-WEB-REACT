@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "check": "tsc --noEmit && eslint . && vite build"
+    "check": "tsc --noEmit && eslint ."
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

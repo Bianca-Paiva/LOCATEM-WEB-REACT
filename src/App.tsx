@@ -3,13 +3,13 @@
 // -------------------------------
 import { useRouter } from "./router/useRouter";
 
-import { AuthProvider } from "./context/Auth/AuthContext";
-import { BuscaProvider } from "./context/Busca/BuscaContext";
-import { CarrinhoProvider } from "./context/Checkout/Carrinho/CarrinhoContext";
-import { CatalogoProvider } from "./context/Ferramentas/Catalago/CatalogoContext";
-import { LocacaoProvider } from "./context/Locacoes/LocacaoContext";
-import { NotificationProvider } from "./context/Conta/Notificacao/NotificationContext";
-import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoContext";
+import { AuthProvider } from "./context/Auth/AuthProvider";
+import { BuscaProvider } from "./context/Busca/BuscaProvider";
+import { CarrinhoProvider } from "./context/Checkout/Carrinho/CarrinhoProvider";
+import { CatalogoProvider } from "./context/Ferramentas/Catalago/CatalogoProvider";
+import { LocacaoProvider } from "./context/Locacoes/LocacaoProvider";
+import { NotificacaoProvider } from "./context/Conta/Notificacao/NotificacaoProvider";
+import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoProvider";
 
 // -------------------------------
 // IMPORTAÇÃO DAS TELAS (PAGES)
@@ -64,7 +64,7 @@ export default function App() {
       <CatalogoProvider>
         <ProdutoProvider>
           <LocacaoProvider>
-            <NotificationProvider>
+            <NotificacaoProvider>
               <CarrinhoProvider>
                 <BuscaProvider>
 
@@ -108,7 +108,7 @@ export default function App() {
 
                 </BuscaProvider>
               </CarrinhoProvider>
-            </NotificationProvider>
+            </NotificacaoProvider>
           </LocacaoProvider>
         </ProdutoProvider>
       </CatalogoProvider>

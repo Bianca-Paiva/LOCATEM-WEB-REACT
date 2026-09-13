@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { cpf, cnpj } from 'cpf-cnpj-validator'
-import { validateFullName, validatePhone, validateCEP } from '../../../utils/Formatacao/masks'
+import { validateFullName, validatePhone, validateCEP } from '../../utils/Formatacao/masks'
 
 export const perfilSchema = z.object({
     tipo: z.enum(['locatario', 'locador']),

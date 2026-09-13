@@ -1,20 +1,8 @@
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Usuario } from '../../types/Auth/usuario.types';
 import { buscarUsuarioPorEmail, criarUsuarioFallback } from '../../mocks/usuarios.mock';
-
-interface AuthContextType {
-  /** Usuário autenticado, ou null quando não há sessão (mesmo comportamento atual do Header). */
-  usuario: Usuario | null;
-  isAuthenticated: boolean;
-  /** Autentica pelo e-mail digitado no login (ver mocks/usuarios.mock.ts para os cenários cobertos). */
-  login: (email: string) => Usuario;
-  logout: () => void;
-  /** Atualiza campos do usuário logado (usado pelo modal "Editar Perfil"). */
-  atualizarUsuario: (dados: Partial<Usuario>) => void;
-}
-
-export const AuthContext = createContext<AuthContextType | null>(null);
+import { AuthContext, type AuthContextType } from './AuthContext';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   // Sem sessão por padrão — replica o comportamento atual do Header ("usuário

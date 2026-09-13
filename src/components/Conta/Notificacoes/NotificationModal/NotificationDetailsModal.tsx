@@ -16,15 +16,15 @@ import {
     XCircle,
     type LucideIcon,
 } from 'lucide-react';
-import { STATUS_CONFIG } from '../../../MinhasLocacoes/EtiquetaStatus/statusConfig';
+import { STATUS_CONFIG } from '../../../Locacoes/MinhasLocacoes/EtiquetaStatus/statusConfig';
 import type {
-    NotificationCategory,
-    NotificationData,
+    NotificacaoCategory,
+    NotificacaoData,
 } from '../../../../pages/Conta/Notificacoes/Notificacoes.types';
 import styles from './NotificationDetailsModal.module.css';
 
-interface NotificationDetailsModalProps {
-    notification: NotificationData | null; // null = modal fechado
+interface NotificacaoDetailsModalProps {
+    notification: NotificacaoData | null; // null = modal fechado
     onClose: () => void;
     onRenovar?: (id: string) => void;
     /** Leva o usuário até 'Detalhes da Locacao' com a locacao já selecionada
@@ -36,10 +36,8 @@ interface NotificationDetailsModalProps {
     onVerOfertas?: () => void;
 }
 
-// Ícone/cor genéricos por `type`, usados apenas quando a notificação não está atrelada
-// a uma locacao (ex: promoção, nova mensagem, pagamento recusado). Notificações de
-// locacoes/locações usam o mesmo ícone/cor de STATUS_CONFIG (EtiquetaStatus).
-const ICON_BY_TYPE: Record<NotificationData['type'], LucideIcon> = {
+// Ícone/cor genéricos por `type`, usados apenas quando a notificação não está atrelada a uma locacao (ex: promoção, nova mensagem, pagamento recusado). Notificações de locacoes/locações usam o mesmo ícone/cor de STATUS_CONFIG (EtiquetaStatus).
+const ICON_BY_TYPE: Record<NotificacaoData['type'], LucideIcon> = {
     success: CheckCircle2,
     warning: AlertTriangle,
     delivery: Truck,
@@ -56,8 +54,8 @@ interface DetailRow {
 }
 
 // Monta as linhas exibidas no modal de acordo com a categoria da notificação
-function getDetailRows(notification: NotificationData): DetailRow[] {
-    const { category, details } = notification;
+function getDetailRows(notificacao: NotificacaoData): DetailRow[] {
+    const { category, details } = notificacao;
 
     switch (category) {
         case 'locacao-confirmada':
@@ -169,10 +167,8 @@ interface AcaoConfig {
     alvo: AlvoAcao;
 }
 
-// Define o botão de ação principal do modal de acordo com a categoria da notificação,
-// levando o usuário para o próximo passo natural daquele fluxo (pagamento, avaliação,
-// detalhes da locação, etc).
-function getAcaoConfig(category: NotificationCategory): AcaoConfig | null {
+// Define o botão de ação principal do modal de acordo com a categoria da notificação, levando o usuário para o próximo passo natural daquele fluxo (pagamento, avaliação, detalhes da locação, etc).
+function getAcaoConfig(category: NotificacaoCategory): AcaoConfig | null {
     switch (category) {
         case 'locacao-confirmada':
         case 'entrega-andamento':
@@ -204,14 +200,14 @@ function getAcaoConfig(category: NotificationCategory): AcaoConfig | null {
     }
 }
 
-export default function NotificationDetailsModal({
+export default function NotificacaoDetailsModal({
     notification,
     onClose,
     onRenovar,
     onVerLocacao,
     onAvaliar,
     onVerOfertas,
-}: NotificationDetailsModalProps) {
+}: NotificacaoDetailsModalProps) {
     // Fecha o modal ao pressionar Esc
     useEffect(() => {
         if (!notification) return;
@@ -229,9 +225,7 @@ export default function NotificationDetailsModal({
     const { id, type, category, title, description, showRenovar, statusLocacao, locacaoId } =
         notification;
 
-    // Quando a notificação está atrelada a uma locacao, usa o mesmo ícone/cor de
-    // STATUS_CONFIG (o mesmo exibido em 'Minhas Locacoes'); caso contrário, cai no
-    // ícone genérico baseado em `type`.
+    // Quando a notificação está atrelada a uma locacao, usa o mesmo ícone/cor de STATUS_CONFIG (o mesmo exibido em 'Minhas Locacoes'); caso contrário, cai no ícone genérico baseado em `type`.
     const configStatus = statusLocacao ? STATUS_CONFIG[statusLocacao] : null;
     const Icon = configStatus ? configStatus.icon : ICON_BY_TYPE[type];
     const iconStyle = configStatus

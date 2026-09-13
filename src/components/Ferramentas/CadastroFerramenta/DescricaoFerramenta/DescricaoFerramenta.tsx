@@ -1,5 +1,5 @@
 import styles from './DescricaoFerramenta.module.css';
-import FormTextarea from '../../Shared/Inputs/FormTextarea/FormTextarea';
+import FormTextarea from '../../../Shared/Inputs/FormTextarea/FormTextarea';
 
 const LIMITE_CARACTERES = 1000;
 const MIN_CARACTERES = 50;

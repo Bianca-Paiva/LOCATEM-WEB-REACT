@@ -1,7 +1,7 @@
 import Header from '../../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import { ResumoPedido } from '../../../../components/Checkout/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import { SeletorFormaPagamento } from '../../../../components/Pagamento/SeletorFormaPagamento/SeletorFormaPagamento';
+import { SeletorFormaPagamento } from '../../../../components/Checkout/Pagamento/SeletorFormaPagamento/SeletorFormaPagamento';
 
 import { useMetodoPagamento } from '../../../../hooks/Checkout/Pagamento/useMetodoPagamento';
 import type { Route } from '../../../../router/useRouter';

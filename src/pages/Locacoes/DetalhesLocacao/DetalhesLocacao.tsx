@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Header from '../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
-import EtiquetaStatus from '../../../components/MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
+import EtiquetaStatus from '../../../components/Locacoes/MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
 import LocacaoResumoCard from '../../../components/Locacoes/DetalhesLocacao/LocacaoResumoCard/LocacaoResumoCard';
 import PainelStatusLocacao from '../../../components/Locacoes/DetalhesLocacao/PainelStatusLocacao/PainelStatusLocacao';
 import AcoesLocacao from '../../../components/Locacoes/DetalhesLocacao/AcoesLocacao/AcoesLocacao';

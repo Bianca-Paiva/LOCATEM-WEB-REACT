@@ -1,4 +1,4 @@
-import type { FiltroLocacao } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import type { FiltroLocacao } from '../../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import { STATUS_CONFIG } from '../EtiquetaStatus/statusConfig';
 import styles from './LocacaoAbas.module.css';
 

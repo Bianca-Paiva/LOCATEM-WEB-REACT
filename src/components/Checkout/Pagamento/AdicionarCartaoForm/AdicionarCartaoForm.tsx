@@ -1,20 +1,20 @@
 import type { ChangeEvent } from 'react';
 import { CreditCard } from 'lucide-react';
 
-import type { BandeiraCartao } from '../../../utils/Formatacao/masks';
-import type { CampoCartao } from '../../../hooks/Checkout/Pagamento/useAdicionarCartao';
-import { PARCELAS_PADRAO } from '../../../hooks/Checkout/Pagamento/useAdicionarCartao';
+import type { BandeiraCartao } from '../../../../utils/Formatacao/masks';
+import type { CampoCartao } from '../../../../hooks/Checkout/Pagamento/useAdicionarCartao';
+import { PARCELAS_PADRAO } from '../../../../hooks/Checkout/Pagamento/useAdicionarCartao';
 
-import FormInput from '../../Shared/Inputs/FormInput/FormInput';
-import FormSelect from '../../Shared/Inputs/FormSelect/FormSelect';
+import FormInput from '../../../Shared/Inputs/FormInput/FormInput';
+import FormSelect from '../../../Shared/Inputs/FormSelect/FormSelect';
 
-import cartaoIconGenerico from '../../../assets/Cartoesbandeiras/cartao.svg';
-import visaIcon from '../../../assets/Cartoesbandeiras/visa.png';
-import masterIcon from '../../../assets/Cartoesbandeiras/master.png';
-import eloIcon from '../../../assets/Cartoesbandeiras/elo.png';
-import amexIcon from '../../../assets/Cartoesbandeiras/amex.png';
-import dinersIcon from '../../../assets/Cartoesbandeiras/diners.png';
-import discoverIcon from '../../../assets/Cartoesbandeiras/discover.png';
+import cartaoIconGenerico from '../../../../assets/Cartoesbandeiras/cartao.svg';
+import visaIcon from '../../../../assets/Cartoesbandeiras/visa.png';
+import masterIcon from '../../../../assets/Cartoesbandeiras/master.png';
+import eloIcon from '../../../../assets/Cartoesbandeiras/elo.png';
+import amexIcon from '../../../../assets/Cartoesbandeiras/amex.png';
+import dinersIcon from '../../../../assets/Cartoesbandeiras/diners.png';
+import discoverIcon from '../../../../assets/Cartoesbandeiras/discover.png';
 
 import styles from './AdicionarCartaoForm.module.css';
 

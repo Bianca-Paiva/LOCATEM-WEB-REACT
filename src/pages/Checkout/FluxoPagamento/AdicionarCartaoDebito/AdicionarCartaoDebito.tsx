@@ -2,7 +2,7 @@ import Header from '../../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import { CheckoutLayout } from '../../../../components/Checkout/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
 import { ResumoPedido } from '../../../../components/Checkout/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import { AdicionarCartaoForm } from '../../../../components/Pagamento/AdicionarCartaoForm/AdicionarCartaoForm';
+import { AdicionarCartaoForm } from '../../../../components/Checkout/Pagamento/AdicionarCartaoForm/AdicionarCartaoForm';
 
 import { useAdicionarCartao } from '../../../../hooks/Checkout/Pagamento/useAdicionarCartao';
 import type { Route } from '../../../../router/useRouter';

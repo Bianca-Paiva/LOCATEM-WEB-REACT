@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
-import FormInput from '../../Shared/Inputs/FormInput/FormInput';
-import type { EspecificacaoForm } from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
+import FormInput from '../../../Shared/Inputs/FormInput/FormInput';
+import type { EspecificacaoForm } from '../../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './EspecificacoesTecnicasForm.module.css';
 
 interface EspecificacoesTecnicasFormProps {

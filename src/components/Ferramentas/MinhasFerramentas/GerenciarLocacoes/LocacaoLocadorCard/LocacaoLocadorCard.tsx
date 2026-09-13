@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import type { ReactElement } from 'react';
 import type { LocacaoData, StatusLocacao } from '../../../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import StatusBadge from '../../../../MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
+import StatusBadge from '../../../../Locacoes/MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
 import {
   formatarHorarioEntrega,
   formatarJanelaDevolucao,

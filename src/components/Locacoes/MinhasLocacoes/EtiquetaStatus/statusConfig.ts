@@ -10,7 +10,7 @@ import {
   X,
   type LucideIcon,
 } from 'lucide-react';
-import type { StatusLocacao } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import type { StatusLocacao } from '../../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 
 export interface StatusVisualConfig {
   label: string;

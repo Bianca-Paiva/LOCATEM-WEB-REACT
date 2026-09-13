@@ -1,7 +1,7 @@
 import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
 import type { DadosLocacaoModal } from '../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import type { NotificationData } from '../../pages/Conta/Notificacoes/Notificacoes.types';
+import type { NotificacaoData } from '../../pages/Conta/Notificacoes/Notificacoes.types';
 import { formatarPeriodoBr } from '../Formatacao/formatoDataBr';
 
 /**
@@ -88,7 +88,7 @@ export function montarNotificacaoSolicitacaoEnviada(
   produto: ProdutoSelecionado,
   locacaoId: string,
   periodoLocacao: string,
-): Omit<NotificationData, 'id'> {
+): Omit<NotificacaoData, 'id'> {
   const agora = new Date();
   const timestamp = `${String(agora.getDate()).padStart(2, '0')}/${String(agora.getMonth() + 1).padStart(2, '0')}/${agora.getFullYear()} às ${String(agora.getHours()).padStart(2, '0')}h${String(agora.getMinutes()).padStart(2, '0')}`;
 

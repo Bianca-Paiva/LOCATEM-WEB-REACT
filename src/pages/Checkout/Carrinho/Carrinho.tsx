@@ -10,7 +10,7 @@ import { useCarrinhoStore } from '../../../hooks/Checkout/Carrinho/useCarrinhoSt
 import { useAuth } from '../../../hooks/Auth/useAuth';
 
 import type { CarrinhoItemData, LojaGroupData } from '../../../types/Checkout/Pagamento/checkout';
-import type { ItemCarrinho as ItemCarrinhoContexto } from '../../../context/Checkout/Carrinho/CarrinhoContext';
+import type { ItemCarrinho as ItemCarrinhoContexto } from '../../../context/Checkout/Carrinho/CarrinhoProvider';
 import type { Route } from '../../../router/useRouter';
 
 import styles from './Carrinho.module.css';

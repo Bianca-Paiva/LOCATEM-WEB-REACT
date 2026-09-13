@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { ReactNode, FormEvent } from "react";
 import type { Route } from '../../../router/useRouter'
-import logoIcon from '../../assets/LogoIcon.png'
+import logoIcon from '../../../assets/LogoIcon.png'
 import { Icon } from "@iconify/react"; // home, bell-outline, account-circle-outline, menu, cart-outline, magnify, star 
 import { X, LogOut } from "lucide-react";
 import { useCarrinhoStore } from '../../../hooks/Checkout/Carrinho/useCarrinhoStore'

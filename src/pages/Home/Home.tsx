@@ -23,8 +23,7 @@ export default function Home({ navigate }: HomeProps) {
   const { setProdutoSelecionado } = useProdutoStore();
   const { produtos } = useCatalogoStore();
 
-  // Categorias derivadas do catálogo real (mesma fonte usada pelos filtros da Busca),
-  // em vez de uma lista fixa que podia divergir das ferramentas realmente cadastradas.
+  // Categorias derivadas do catálogo real (mesma fonte usada pelos filtros da Busca), em vez de uma lista fixa que podia divergir das ferramentas realmente cadastradas.
   const categorias = useMemo(
     () => derivarCategorias(produtos).map((c) => c.categoria),
     [produtos],

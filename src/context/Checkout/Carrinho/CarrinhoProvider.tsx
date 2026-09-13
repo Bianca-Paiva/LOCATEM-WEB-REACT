@@ -1,32 +1,11 @@
-import { createContext, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { ProdutoSelecionado } from '../../Ferramentas/Produto/ProdutoContext';
 import type { DadosLocacaoModal } from '../../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import { AuthContext } from '../../Auth/AuthContext';
+import { CarrinhoContext, type ItemCarrinho } from './CarrinhoContext';
 
-export interface ItemCarrinho {
-  id: string;
-  produto: ProdutoSelecionado;
-  dados: DadosLocacaoModal;
-  /** Se o item participa da compra (subtotal/total). Ligado por padrão ao ser adicionado. */
-  selecionado: boolean;
-}
-
-interface CarrinhoContextType {
-  itens: ItemCarrinho[];
-  adicionarItem: (produto: ProdutoSelecionado, dados: DadosLocacaoModal) => void;
-  removerItem: (id: string) => void;
-  atualizarQuantidade: (id: string, quantidade: number) => void;
-  atualizarDias: (id: string, dias: number) => void;
-  alternarSelecao: (id: string) => void;
-  selecionarTodos: (selecionado: boolean) => void;
-  selecionarItens: (ids: string[], selecionado: boolean) => void;
-}
-
-export const CarrinhoContext = createContext<CarrinhoContextType | null>(null);
-
-// Mesma conversão de preço usada em useSolicitarLocacaoModal.ts — o preço do
-// produto vem como string ("599,98") vinda do cadastro.
+// Mesma conversão de preço usada em useSolicitarLocacaoModal.ts — o preço do produto vem como string ("599,98") vinda do cadastro.
 function precoDiariaDoProduto(produto: ProdutoSelecionado): number {
   const preco = Number(String(produto.price).replace(',', '.'));
   return Number.isFinite(preco) ? preco : 0;
@@ -36,9 +15,7 @@ function formatarMoeda(valor: number): string {
   return `R$ ${valor.toFixed(2).replace('.', ',')}`;
 }
 
-// Recalcula o resumo (aluguel/valor) de um item quando a quantidade ou os
-// dias de aluguel são alterados diretamente no carrinho — sem mexer nas
-// datas/horários já escolhidos no modal de solicitação.
+// Recalcula o resumo (aluguel/valor) de um item quando a quantidade ou os dias de aluguel são alterados diretamente no carrinho — sem mexer nas datas/horários já escolhidos no modal de solicitação.
 function recalcularDados(
   item: ItemCarrinho,
   alteracoes: { quantidade?: number; diarias?: number },
@@ -68,16 +45,11 @@ function recalcularDados(
 export function CarrinhoProvider({ children }: { children: ReactNode }) {
   const [itens, setItens] = useState<ItemCarrinho[]>([]);
 
-  // Carrinho e locação são funcionalidades exclusivas de locatários — um usuário
-  // autenticado como locador nunca deve conseguir adicionar itens (mesmo que a
-  // interface para chegar até aqui esteja escondida para ele em outros pontos,
-  // como o Header e a página do Carrinho).
+  // Carrinho e locação são funcionalidades exclusivas de locatários — um usuário autenticado como locador nunca deve conseguir adicionar itens (mesmo que a interface para chegar até aqui esteja escondida para ele em outros pontos, como o Header e a página do Carrinho).
   const auth = useContext(AuthContext);
   const ehLocador = auth?.usuario?.tipo === 'locador';
 
-  // Só adiciona a ferramenta ao carrinho (com datas/horários/quantidade já
-  // escolhidos no modal) — não cria solicitação, notificação nem dispara
-  // fluxo de aprovação/pagamento algum, conforme o fluxo "Adicionar ao carrinho".
+  // Só adiciona a ferramenta ao carrinho (com datas/horários/quantidade já escolhidos no modal) — não cria solicitação, notificação nem dispara fluxo de aprovação/pagamento algum, conforme o fluxo "Adicionar ao carrinho".
   const adicionarItem = (produto: ProdutoSelecionado, dados: DadosLocacaoModal) => {
     if (ehLocador) return;
 

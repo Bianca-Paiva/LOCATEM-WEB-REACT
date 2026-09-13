@@ -14,7 +14,7 @@ import SuccessModal from '../../../components/Shared/SuccessModal/SucessesModal'
 import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
 import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
-import { useNotificationStore } from '../../../hooks/Locacoes/useNotificationStore';
+import { useNotificacaoStore } from '../../../hooks/Conta/Notificacoes/useNotificationStore';
 import { useCarrinhoStore } from '../../../hooks/Checkout/Carrinho/useCarrinhoStore';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { getLocadorByNome } from '../../../mocks/locadores.mock';
@@ -39,7 +39,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const { produtoSelecionado, setProdutoSelecionado } = useProdutoStore();
   const { produtos } = useCatalogoStore();
   const { adicionarLocacao } = useLocacaoStore();
-  const { adicionarNotificacao } = useNotificationStore();
+  const { adicionarNotificacao } = useNotificacaoStore();
   const { adicionarItem } = useCarrinhoStore();
   const { usuario } = useAuth();
 

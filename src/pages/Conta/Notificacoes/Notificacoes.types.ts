@@ -1,4 +1,4 @@
-export type NotificationType =
+export type NotificacaoType =
   | 'success'
   | 'warning'
   | 'delivery'
@@ -13,7 +13,7 @@ import type { StatusLocacao } from '../../Locacoes/MinhasLocacoes/MinhasLocacoes
 export type FilterOption = 'Todas' | 'Hoje' | 'Ontem' | 'Esta semana' | 'Este mês';
 
 /** Identifica o "assunto" da notificação, usado para decidir o conteúdo do modal de detalhes */
-export type NotificationCategory =
+export type NotificacaoCategory =
   | 'locacao-confirmada'
   | 'locacao-cancelada'
   | 'devolucao-pendente'
@@ -33,7 +33,7 @@ export type NotificationCategory =
  * Todos os campos são opcionais porque cada categoria usa apenas um subconjunto deles.
  * Estrutura pensada para mapear diretamente a resposta futura da API.
  */
-export interface NotificationDetails {
+export interface NotificacaoDetails {
   equipamento?: string;
   status?: string;
   dataConfirmacao?: string;
@@ -70,17 +70,17 @@ export interface NotificationDetails {
   mensagem?: string;
 }
 
-export interface NotificationData {
+export interface NotificacaoData {
   id: string;
-  type: NotificationType; // controla cor/ícone do card (fallback quando não há statusLocacao)
-  category: NotificationCategory; // controla conteúdo do modal e o botão de ação exibido
+  type: NotificacaoType; // controla cor/ícone do card (fallback quando não há statusLocacao)
+  category: NotificacaoCategory; // controla conteúdo do modal e o botão de ação exibido
   title: string;
   description: string;
   timestamp: string; /** Data/hora já formatada para exibição, ex: "02/10/2025 às 10h15" */
   date: string; /** Data em ISO, usada apenas para o filtro por período */
   extraInfo?: string; /** Linha extra usada pelo card de entrega, ex: "Tempo estimado de chegada: Hoje às 15:00" */
   showRenovar?: boolean; /** Exibe o botão amarelo "Renovar" quando true */
-  details: NotificationDetails; /** Dados exibidos no modal "Ver detalhes" */
+  details: NotificacaoDetails; /** Dados exibidos no modal "Ver detalhes" */
 
   /**
    * Status equivalente em 'MinhasLocacoes'. Quando presente, o card e o modal usam o

@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react';
-import type { FilterOption, NotificationData } from '../../pages/Conta/Notificacoes/Notificacoes.types';
-import { PAGE_SIZE, mockNotifications } from '../../pages/Conta/Notificacoes/Notificacao.mock';
+import type { FilterOption, NotificacaoData } from '../../../pages/Conta/Notificacoes/Notificacoes.types';
+import { PAGE_SIZE, mockNotificacoes } from '../../../pages/Conta/Notificacoes/Notificacao.mock';
 
 interface UseNotificationsReturn {
-  notifications: NotificationData[];
-  pageItems: NotificationData[];
+  notifications: NotificacaoData[];
+  pageItems: NotificacaoData[];
   filter: FilterOption;
   setFilter: (filter: FilterOption) => void;
   currentPage: number;
@@ -36,7 +36,7 @@ function startOfWeek(date: Date): Date {
 }
 
 // Decide se uma notificação pertence ao período selecionado no filtro
-function matchesFilter(notification: NotificationData, filter: FilterOption, now: Date): boolean {
+function matchesFilter(notification: NotificacaoData, filter: FilterOption, now: Date): boolean {
   const notifDate = new Date(notification.date);
 
   switch (filter) {
@@ -70,7 +70,7 @@ function matchesFilter(notification: NotificationData, filter: FilterOption, now
 
 export function useNotifications(): UseNotificationsReturn {
   // Fonte da verdade: todas as notificações, sem filtro de período
-  const [allNotifications, setAllNotifications] = useState<NotificationData[]>(mockNotifications);
+  const [allNotifications, setAllNotifications] = useState<NotificacaoData[]>(mockNotificacoes);
   const [filter, setFilterState] = useState<FilterOption>('Todas');
   const [currentPage, setCurrentPage] = useState(1);
 

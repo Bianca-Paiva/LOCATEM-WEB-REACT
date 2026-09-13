@@ -1,5 +1,5 @@
 import styles from './Precificacao.module.css';
-import FormInput from '../../Shared/Inputs/FormInput/FormInput';
+import FormInput from '../../../Shared/Inputs/FormInput/FormInput';
 
 interface PrecificacaoProps {
   valorDiaria: string;

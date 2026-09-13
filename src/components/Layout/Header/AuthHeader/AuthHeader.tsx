@@ -1,5 +1,5 @@
 import type { Route } from '../../../../router/useRouter'
-import logoIcon from '../../../assets/LogoIcon.png'
+import logoIcon from '../../../../assets/LogoIcon.png'
 import styles from './AuthHeader.module.css'
 
 interface AuthHeaderProps {

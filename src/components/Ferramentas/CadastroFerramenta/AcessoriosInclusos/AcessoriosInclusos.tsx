@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { X } from 'lucide-react';
 
-import FormInput from '../../Shared/Inputs/FormInput/FormInput';
+import FormInput from '../../../Shared/Inputs/FormInput/FormInput';
 import styles from './AcessoriosInclusos.module.css';
 
 interface AcessoriosInclusosProps {

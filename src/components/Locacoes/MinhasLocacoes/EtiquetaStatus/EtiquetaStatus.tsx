@@ -1,4 +1,4 @@
-import type { StatusLocacao } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import type { StatusLocacao } from '../../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import { STATUS_CONFIG } from './statusConfig';
 import styles from './EtiquetaStatus.module.css';
 

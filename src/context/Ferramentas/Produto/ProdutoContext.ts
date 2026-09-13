@@ -1,5 +1,4 @@
-import { createContext, useState } from 'react';
-import type { ReactNode } from 'react';
+import { createContext } from 'react';
 import type { AvaliacaoProduto } from '../../../pages/Ferramentas/ProdutoDetalhe/ProdutoDetalhe.types';
 
 export interface ProdutoSelecionado {
@@ -27,22 +26,9 @@ export interface ProdutoSelecionado {
   distribuicaoAvaliacoes?: number[]; /** Distribuição percentual das notas [5,4,3,2,1] estrelas */
 }
 
-interface ProdutoContextType {
+export interface ProdutoContextType {
   produtoSelecionado: ProdutoSelecionado | null;
   setProdutoSelecionado: (p: ProdutoSelecionado) => void;
 }
 
 export const ProdutoContext = createContext<ProdutoContextType | null>(null);
-
-export function ProdutoProvider({ children }: { children: ReactNode }) {
-  const [produtoSelecionado, setProdutoSelecionado] =
-    useState<ProdutoSelecionado | null>(null);
-
-  return (
-    <ProdutoContext.Provider
-      value={{ produtoSelecionado, setProdutoSelecionado }}
-    >
-      {children}
-    </ProdutoContext.Provider>
-  );
-}

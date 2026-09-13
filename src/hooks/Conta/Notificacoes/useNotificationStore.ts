@@ -1,12 +1,12 @@
 import { useContext } from 'react';
-import { NotificationContext } from '../../context/Conta/Notificacao/NotificationContext';
+import { NotificacaoContext } from '../../../context/Conta/Notificacao/NotificacaoContext';
 
-export function useNotificationStore() {
-  const ctx = useContext(NotificationContext);
+export function useNotificacaoStore() {
+  const ctx = useContext(NotificacaoContext);
 
   if (!ctx) {
     throw new Error(
-      'useNotificationStore deve ser usado dentro de NotificationProvider'
+      'useNotificacaonStore deve ser usado dentro de NotificacaoProvider'
     );
   }
 

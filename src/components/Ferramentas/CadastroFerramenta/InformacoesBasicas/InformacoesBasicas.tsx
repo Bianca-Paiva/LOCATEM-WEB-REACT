@@ -1,12 +1,12 @@
-import FormInput from '../../Shared/Inputs/FormInput/FormInput';
-import FormSelect from '../../Shared/Inputs/FormSelect/FormSelect';
-import SeletorQuantidade from '../../Shared/Inputs/SeletorQuantidade/SeletorQuantidade';
+import FormInput from '../../../Shared/Inputs/FormInput/FormInput';
+import FormSelect from '../../../Shared/Inputs/FormSelect/FormSelect';
+import SeletorQuantidade from '../../../Shared/Inputs/SeletorQuantidade/SeletorQuantidade';
 import {
   CATEGORIAS_FERRAMENTA,
   ESTADOS_CONSERVACAO,
   OPCOES_FONTE_ALIMENTACAO,
-} from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
-import type { CadastroFerramentaFormState } from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
+} from '../../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
+import type { CadastroFerramentaFormState } from '../../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
 import styles from './InformacoesBasicas.module.css';
 
 type CampoBasico =

@@ -3,7 +3,7 @@ import styles from './CadastroUsuario.module.css'
 
 import { maskCPF, maskCNPJ, maskPhone, maskCEP } from '../../../utils/Formatacao/masks'
 import { getPasswordValidations, getConfirmPasswordStatus } from '../../../validation/Password/passwordValidation'
-import { useCadastroForm } from '../../../validation/Cadastro/useCadastroForm'
+import { useCadastroForm } from '../../../hooks/Auth/useCadastroForm'
 import type { Route } from '../../../router/useRouter'
 
 import FormInput from '../../../components/Shared/Inputs/FormInput/FormInput'

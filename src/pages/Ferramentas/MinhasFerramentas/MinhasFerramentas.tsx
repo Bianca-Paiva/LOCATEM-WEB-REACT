@@ -4,7 +4,7 @@ import { Eye, Pencil } from 'lucide-react';
 
 import Header from '../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
-import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
+import EstadoVazio from '../../../components/Locacoes/MinhasLocacoes/EstadoVazio/EstadoVazio';
 import { ProductCard } from '../../../components/Ferramentas/ProductCard/ProductCard';
 import Abas from '../../../components/Ferramentas/MinhasFerramentas/Abas/Abas';
 import type { AbaItem } from '../../../components/Ferramentas/MinhasFerramentas/Abas/Abas';

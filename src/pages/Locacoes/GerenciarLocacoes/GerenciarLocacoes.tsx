@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import Header from '../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
-import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
+import EstadoVazio from '../../../components/Locacoes/MinhasLocacoes/EstadoVazio/EstadoVazio';
 import Abas from '../../../components/Ferramentas/MinhasFerramentas/Abas/Abas';
 import LocacaoLocadorCard from '../../../components/Ferramentas/MinhasFerramentas/GerenciarLocacoes/LocacaoLocadorCard/LocacaoLocadorCard';
 import ModalAprovacaoLocacao from '../../../components/Ferramentas/MinhasFerramentas/GerenciarLocacoes/ModalAprovacaoLocacao/ModalAprovacaoLocacao';

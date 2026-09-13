@@ -5,14 +5,14 @@ import FilterDropdown from '../../../components/Conta/Notificacoes/FilterDropdow
 import Pagination from '../../../components/Conta/Notificacoes/Pagination/Pagination';
 import NotificationDetailsModal from '../../../components/Conta/Notificacoes/NotificationModal/NotificationDetailsModal';
 import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
-import { useNotifications } from '../../../hooks/Notificacoes/useNotifications';
+import { useNotifications } from '../../../hooks/Conta/Notificacoes/useNotifications';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import styles from './Notificacoes.module.css';
 import Header from '../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 
 import type { Route } from '../../../router/useRouter';
-import type { NotificationData } from './Notificacoes.types';
+import type { NotificacaoData } from './Notificacoes.types';
 
 interface NotificacoesProps {
   navigate: (route: Route) => void;
@@ -37,7 +37,7 @@ export default function Notificacoes({ navigate }: NotificacoesProps) {
   const { locacoes, setLocacaoSelecionada } = useLocacaoStore();
 
   // Notificação atualmente aberta no modal; null = modal fechado
-  const [selectedNotification, setSelectedNotification] = useState<NotificationData | null>(null);
+  const [selectedNotification, setSelectedNotification] = useState<NotificacaoData | null>(null);
 
   // Controla o modal de confirmação do botão "Limpar tudo".
   const [confirmLimparAberto, setConfirmLimparAberto] = useState(false);

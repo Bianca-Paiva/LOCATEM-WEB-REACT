@@ -1,21 +1,10 @@
-import { createContext, useEffect, useState } from 'react';
-import type { ReactNode, Dispatch, SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import { mockLocacoes } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.mock';
+import { LocacaoContext } from './LocacaoContext';
 
-interface LocacaoContextType {
-  locacoes: LocacaoData[];
-  locacaoSelecionada: LocacaoData | null;
-  // Ajuste: Tipagem nativa do React para funções de atualização de estado
-  setLocacaoSelecionada: Dispatch<SetStateAction<LocacaoData | null>>;
-  atualizarLocacao: (id: string, dadosAtualizados: Partial<LocacaoData>) => void;
-  adicionarLocacao: (dadosLocacao: Omit<LocacaoData, 'id'>) => LocacaoData;
-}
-
-export const LocacaoContext = createContext<LocacaoContextType | null>(null);
-
-// Mensagem exibida (na listagem e nos detalhes) quando o prazo de pagamento
-// expira sem o pagamento ser efetuado
+// Mensagem exibida (na listagem e nos detalhes) quando o prazo de pagamento expira sem o pagamento ser efetuado
 const MENSAGEM_CANCELAMENTO_AUTOMATICO =
   'Locação cancelada automaticamente por falta de pagamento dentro do prazo.';
 

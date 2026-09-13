@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AlertTriangle, Check, Copy } from 'lucide-react';
 import QRCode from 'react-qr-code';
-import FormInput from '../../Shared/Inputs/FormInput/FormInput';
+import FormInput from '../../../Shared/Inputs/FormInput/FormInput';
 
 import styles from './PagamentoPixCard.module.css';
 

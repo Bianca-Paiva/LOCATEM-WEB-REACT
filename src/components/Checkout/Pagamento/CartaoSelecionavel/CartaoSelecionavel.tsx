@@ -1,13 +1,13 @@
 import styles from './CartaoSelecionavel.module.css';
-import type { Cartao } from '../../../types/Checkout/Pagamento/cartao.types';
+import type { Cartao } from '../../../../types/Checkout/Pagamento/cartao.types';
 
-import cartaoIconGenerico from '../../../assets/Cartoesbandeiras/cartao.svg';
-import visaIcon from '../../../assets/Cartoesbandeiras/visa.png';
-import masterIcon from '../../../assets/Cartoesbandeiras/master.png';
-import eloIcon from '../../../assets/Cartoesbandeiras/elo.png';
-import amexIcon from '../../../assets/Cartoesbandeiras/amex.png';
-import dinersIcon from '../../../assets/Cartoesbandeiras/diners.png';
-import discoverIcon from '../../../assets/Cartoesbandeiras/discover.png';
+import cartaoIconGenerico from '../../../../assets/Cartoesbandeiras/cartao.svg';
+import visaIcon from '../../../../assets/Cartoesbandeiras/visa.png';
+import masterIcon from '../../../../assets/Cartoesbandeiras/master.png';
+import eloIcon from '../../../../assets/Cartoesbandeiras/elo.png';
+import amexIcon from '../../../../assets/Cartoesbandeiras/amex.png';
+import dinersIcon from '../../../../assets/Cartoesbandeiras/diners.png';
+import discoverIcon from '../../../../assets/Cartoesbandeiras/discover.png';
 
 // Ícone da bandeira do cartão, com fallback para o ícone genérico de cartão usado na tela original quando a bandeira não é reconhecida.
 function iconePorBandeira(bandeira: string): string {

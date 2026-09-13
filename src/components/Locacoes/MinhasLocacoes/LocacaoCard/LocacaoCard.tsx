@@ -1,4 +1,4 @@
-import type { LocacaoData } from '../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
+import type { LocacaoData } from '../../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import StatusBadge from '../EtiquetaStatus/EtiquetaStatus';
 import { Calendar, User } from 'lucide-react';
 import styles from './LocacaoCard.module.css';

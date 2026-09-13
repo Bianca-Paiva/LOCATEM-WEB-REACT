@@ -1,8 +1,8 @@
 import { Calendar, ChevronDown, ChevronRight, FileText, Package, User } from 'lucide-react';
 
 import type { LocacaoData, StatusLocacao } from '../../../../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import StatusBadge from '../../../../MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
-import { STATUS_CONFIG } from '../../../../MinhasLocacoes/EtiquetaStatus/statusConfig';
+import StatusBadge from '../../../../Locacoes/MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
+import { STATUS_CONFIG } from '../../../../Locacoes/MinhasLocacoes/EtiquetaStatus/statusConfig';
 import styles from './LocacaoHistoricoCard.module.css';
 
 interface LocacaoHistoricoCardProps {

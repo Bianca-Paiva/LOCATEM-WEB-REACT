@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 
 import Header from '../../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
-import { CartaoSelecionavel } from '../../../../components/Pagamento/CartaoSelecionavel/CartaoSelecionavel';
+import { CartaoSelecionavel } from '../../../../components/Checkout/Pagamento/CartaoSelecionavel/CartaoSelecionavel';
 import BtnPrincipal from '../../../../components/Botoes/BtnPrincipal/BtnPrincipal';
 
 import { useSelecionarCartao } from '../../../../hooks/Checkout/Pagamento/useSelecionarCartao';

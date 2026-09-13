@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { perfilSchema, type PerfilFormData } from './perfilSchema'
+import { perfilSchema, type PerfilFormData } from '../../../validation/Perfil/perfilSchema'
 import { CADASTRO_MESSAGES } from '../../../validation/Cadastro/cadastroMessages'
 import type { Usuario } from '../../../types/Auth/usuario.types'
 

@@ -2,7 +2,7 @@ import Header from '../../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import { CheckoutLayout } from '../../../../components/Checkout/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
 import { ResumoPedido } from '../../../../components/Checkout/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import { PagamentoPixCard } from '../../../../components/Pagamento/PagamentoPixCard/PagamentoPixCard';
+import { PagamentoPixCard } from '../../../../components/Checkout/Pagamento/PagamentoPixCard/PagamentoPixCard';
 
 import { usePagamentoPix } from '../../../../hooks/Checkout/Pagamento/usePagamentoPix';
 import type { Route } from '../../../../router/useRouter';

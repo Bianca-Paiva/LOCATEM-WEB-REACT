@@ -12,21 +12,19 @@ import {
   XCircle,
   type LucideIcon,
 } from 'lucide-react';
-import { STATUS_CONFIG } from '../../../MinhasLocacoes/EtiquetaStatus/statusConfig';
-import type { NotificationData } from '../../../../pages/Conta/Notificacoes/Notificacoes.types';
+import { STATUS_CONFIG } from '../../../Locacoes/MinhasLocacoes/EtiquetaStatus/statusConfig';
+import type { NotificacaoData } from '../../../../pages/Conta/Notificacoes/Notificacoes.types';
 import styles from './NotificationCard.module.css';
 
-interface NotificationCardProps {
-  notification: NotificationData;
+interface NotificacaoCardProps {
+  notification: NotificacaoData;
   onRenovar?: (id: string) => void;
   onVerDetalhes?: (id: string) => void;
 }
 
-// Mapeia o "type" (estilo visual) ao ícone correspondente. Usado como fallback quando a
-// notificação não possui `statusLocacao` (ex: promoção, mensagem, pagamento recusado).
-// Todos os ícones desta tela usam a biblioteca lucide-react, incluindo os mesmos ícones
-// usados em EtiquetaStatus (STATUS_CONFIG) para as notificações de locacoes/locações.
-const ICON_BY_TYPE: Record<NotificationData['type'], LucideIcon> = {
+// Mapeia o "type" (estilo visual) ao ícone correspondente. Usado como fallback quando a notificação não possui `statusLocacao` (ex: promoção, mensagem, pagamento recusado).
+// Todos os ícones desta tela usam a biblioteca lucide-react, incluindo os mesmos ícones usados em EtiquetaStatus (STATUS_CONFIG) para as notificações de locacoes/locações.
+const ICON_BY_TYPE: Record<NotificacaoData['type'], LucideIcon> = {
   success: CheckCircle2,
   warning: AlertTriangle,
   delivery: Truck,
@@ -41,13 +39,11 @@ export default function NotificationCard({
   notification,
   onRenovar,
   onVerDetalhes,
-}: NotificationCardProps) {
+}: NotificacaoCardProps) {
   const { id, type, title, description, timestamp, extraInfo, showRenovar, statusLocacao } =
     notification;
 
-  // Quando a notificação está atrelada a uma locacao, usa o mesmo ícone/cor de
-  // `STATUS_CONFIG` (o mesmo exibido em 'Minhas Locacoes'); caso contrário, cai no
-  // ícone genérico baseado em `type`.
+  // Quando a notificação está atrelada a uma locacao, usa o mesmo ícone/cor de `STATUS_CONFIG` (o mesmo exibido em 'Minhas Locacoes'); caso contrário, cai no ícone genérico baseado em `type`.
   const configStatus = statusLocacao ? STATUS_CONFIG[statusLocacao] : null;
   const Icon = configStatus ? configStatus.icon : ICON_BY_TYPE[type];
   const iconStyle = configStatus

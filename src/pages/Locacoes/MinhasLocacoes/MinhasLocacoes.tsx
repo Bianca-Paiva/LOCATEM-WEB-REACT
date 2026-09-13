@@ -1,8 +1,8 @@
 import Header from '../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
-import LocacaoAbas from '../../../components/MinhasLocacoes/LocacaoAbas/LocacaoAbas';
-import LocacaoCard from '../../../components/MinhasLocacoes/LocacaoCard/LocacaoCard';
-import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
+import LocacaoAbas from '../../../components/Locacoes/MinhasLocacoes/LocacaoAbas/LocacaoAbas';
+import LocacaoCard from '../../../components/Locacoes/MinhasLocacoes/LocacaoCard/LocacaoCard';
+import EstadoVazio from '../../../components/Locacoes/MinhasLocacoes/EstadoVazio/EstadoVazio';
 import { useMinhasLocacoes } from '../../../hooks/Locacoes/useMinhasLocacoes';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import styles from './MinhasLocacoes.module.css';
