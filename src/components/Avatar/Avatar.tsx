@@ -1,4 +1,4 @@
-import { getIniciais } from '../../utils/Avatar/iniciais';
+import { getIniciais } from '../../utils/Conta/Avatar/iniciais';
 import styles from './Avatar.module.css';
 
 interface AvatarProps {

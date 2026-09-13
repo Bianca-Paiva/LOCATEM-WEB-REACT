@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import type { Route } from '../../router/useRouter';
-import { lerMetodoPagamento, marcarPagamentoProcessado } from '../../utils/Pagamento/pagamentoStorage';
+import { lerMetodoPagamento, marcarPagamentoProcessado } from '../../utils/Checkout/Pagamento/pagamentoStorage';
 
 
 const TEMPO_PROCESSAMENTO_MS = 5000;

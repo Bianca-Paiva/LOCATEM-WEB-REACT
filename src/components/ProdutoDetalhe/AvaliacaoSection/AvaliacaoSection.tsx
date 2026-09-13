@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Icon } from "@iconify/react";
 import styles from './AvaliacaoSection.module.css';
-import { getIniciais } from '../../../utils/Avatar/iniciais';
+import { getIniciais } from '../../../utils/Conta/Avatar/iniciais';
 
 interface Avaliacao {
   nome: string;

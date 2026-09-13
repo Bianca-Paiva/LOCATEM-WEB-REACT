@@ -5,11 +5,11 @@ import { useRouter } from "./router/useRouter";
 
 import { AuthProvider } from "./context/Auth/AuthContext";
 import { BuscaProvider } from "./context/Busca/BuscaContext";
-import { CarrinhoProvider } from "./context/Carrinho/CarrinhoContext";
+import { CarrinhoProvider } from "./context/Checkout/Carrinho/CarrinhoContext";
 import { CatalogoProvider } from "./context/Catalago/CatalogoContext";
-import { LocacaoProvider } from "./context/Locacao/LocacaoContext";
-import { NotificationProvider } from "./context/Notificacao/NotificationContext";
-import { ProdutoProvider } from "./context/Produto/ProdutoContext";
+import { LocacaoProvider } from "./context/Locacoes/LocacaoContext";
+import { NotificationProvider } from "./context/Conta/Notificacao/NotificationContext";
+import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoContext";
 
 // -------------------------------
 // IMPORTAÇÃO DAS TELAS (PAGES)

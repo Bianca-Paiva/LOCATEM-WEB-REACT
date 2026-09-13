@@ -12,7 +12,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import type { Route } from '../../../router/useRouter';
-import type { TipoUsuario } from '../../../types/Usuario/usuario.types';
+import type { TipoUsuario } from '../../../types/Auth/usuario.types';
 import styles from './PainelControle.module.css';
 
 interface PainelControleProps {

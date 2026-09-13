@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { perfilSchema, type PerfilFormData } from './perfilSchema'
 import { CADASTRO_MESSAGES } from '../Cadastro/cadastroMessages'
-import type { Usuario } from '../../types/Usuario/usuario.types'
+import type { Usuario } from '../../types/Auth/usuario.types'
 
 interface ErrorState { active: boolean; shake: boolean }
 const INITIAL_ERROR = { active: false, shake: false }

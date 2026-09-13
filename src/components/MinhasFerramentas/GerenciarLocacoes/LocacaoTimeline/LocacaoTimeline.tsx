@@ -1,5 +1,5 @@
 import { Check } from 'lucide-react';
-import type { EtapaTimelineLocacao } from '../../../../utils/Locacao/timeLineLocacao';
+import type { EtapaTimelineLocacao } from '../../../../utils/Locacoes/timeLineLocacao';
 import styles from './LocacaoTimeline.module.css';
 
 interface LocacaoTimelineProps {

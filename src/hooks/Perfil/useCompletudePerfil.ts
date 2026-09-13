@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { Usuario } from '../../types/Usuario/usuario.types';
+import type { Usuario } from '../../types/Auth/usuario.types';
 
 interface CriterioPerfil {
   chave: string;

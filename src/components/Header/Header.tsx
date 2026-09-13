@@ -7,7 +7,7 @@ import { X, LogOut } from "lucide-react";
 import { useCarrinhoStore } from '../../hooks/Carrinho/useCarrinhoStore'
 import { useAuth } from '../../hooks/Auth/useAuth'
 import { useBuscaStore } from '../../hooks/Busca/useBuscaStore'
-import type { TipoUsuario } from '../../types/Usuario/usuario.types'
+import type { TipoUsuario } from '../../types/Auth/usuario.types'
 import Avatar from '../Avatar/Avatar'
 import ConfirmModal from '../ConfirmModal/ConfirmModal'
 import styles from './Header.module.css'

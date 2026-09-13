@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 import type { ReactNode } from 'react';
-import type { Usuario } from '../../types/Usuario/usuario.types';
+import type { Usuario } from '../../types/Auth/usuario.types';
 import { buscarUsuarioPorEmail, criarUsuarioFallback } from '../../mocks/usuarios.mock';
 
 interface AuthContextType {

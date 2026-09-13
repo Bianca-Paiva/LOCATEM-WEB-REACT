@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { Cartao, MetodoPagamento } from '../../types/Pagamento/cartao.types';
+import type { Cartao, MetodoPagamento } from '../../types/Checkout/Pagamento/cartao.types';
 import type { Route } from '../../router/useRouter';
-import { lerMetodoPagamento, salvarCartaoPagamento } from '../../utils/Pagamento/pagamentoStorage';
+import { lerMetodoPagamento, salvarCartaoPagamento } from '../../utils/Checkout/Pagamento/pagamentoStorage';
 
 // ============================================================
 //  DADOS PADRÃO

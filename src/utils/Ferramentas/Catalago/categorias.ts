@@ -1,4 +1,4 @@
-import type { Produto } from '../../types/Produto/produto.types';
+import type { Produto } from '../../../types/Ferramentas/produto.types';
 
 /**
  * Deriva categorias e subcategorias a partir do catálogo real de produtos.

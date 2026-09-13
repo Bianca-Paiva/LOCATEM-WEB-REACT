@@ -1,5 +1,5 @@
-import { formatarIntervaloHorario } from './horario';
-import { formatarDiaMes, formatarDiaMesAno } from './formatoDataBr';
+import { formatarIntervaloHorario } from '../Formatacao/horario';
+import { formatarDiaMes, formatarDiaMesAno } from '../Formatacao/formatoDataBr';
 import type { LocacaoData, StatusLocacao } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 
 /** Formata um ISO datetime (ex: `prazoPagamento`) como "dd/mm às HH:mm". */

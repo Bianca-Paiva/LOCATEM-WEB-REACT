@@ -1,8 +1,8 @@
-import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
+import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
 import type { DadosLocacaoModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import type { NotificationData } from '../../pages/Notificacoes/Notificacoes.types';
-import { formatarPeriodoBr } from './formatoDataBr';
+import { formatarPeriodoBr } from '../Formatacao/formatoDataBr';
 
 /**
  * Monta os dados de uma nova solicitação de locação (sem `id`, atribuído por

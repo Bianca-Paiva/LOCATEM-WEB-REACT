@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { Route } from '../../router/useRouter';
-import type { Cartao, MetodoPagamento } from '../../types/Pagamento/cartao.types';
+import type { Cartao, MetodoPagamento } from '../../types/Checkout/Pagamento/cartao.types';
 import {
   detectarBandeiraCartao,
   maskCVV,
@@ -10,7 +10,7 @@ import {
   validateValidadeCartao,
   type BandeiraCartao,
 } from '../Mascaras/masks';
-import { lerValorPagamento } from '../../utils/Pagamento/pagamentoStorage';
+import { lerValorPagamento } from '../../utils/Checkout/Pagamento/pagamentoStorage';
 
 // ============================================================
 //  MENSAGENS DE ERRO

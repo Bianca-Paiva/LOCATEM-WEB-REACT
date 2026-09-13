@@ -1,7 +1,7 @@
 import type { LocacaoData, StatusLocacao } from './MinhasLocacoes.types';
 import { PRODUTOS_MOCK } from '../../../mocks/produtos.mock';
 import { toLocacaoProdutoBase } from '../../../mocks/produtos.adapters';
-import { paraDataBr, formatarPeriodoBr } from '../../../utils/Locacao/formatoDataBr';
+import { paraDataBr, formatarPeriodoBr } from '../../../utils/Formatacao/formatoDataBr';
 
 /** Quantidade de diárias entre o início e o fim da locação (mínimo de 1). */
 function calcularDiarias(dataInicio: string, dataFim: string): number {
@@ -61,8 +61,8 @@ function criarLocacao(id: string, dados: DadosSolicitacao): LocacaoData {
   const prazoPagamento =
     dados.status === 'aguardandoPagamento'
       ? new Date(
-          Date.now() + (dados.prazoPagamentoHoras ?? PRAZO_PADRAO_PAGAMENTO_HORAS) * 60 * 60 * 1000
-        ).toISOString()
+        Date.now() + (dados.prazoPagamentoHoras ?? PRAZO_PADRAO_PAGAMENTO_HORAS) * 60 * 60 * 1000
+      ).toISOString()
       : undefined;
 
   return {

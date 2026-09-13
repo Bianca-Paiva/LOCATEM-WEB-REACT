@@ -1,4 +1,4 @@
-import type { StatusFerramenta } from '../../../types/Produto/produto.types';
+import type { StatusFerramenta } from '../../../types/Ferramentas/produto.types';
 import { STATUS_FERRAMENTA_CONFIG } from './statusFerramentaConfig';
 import styles from './StatusFerramentaBadge.module.css';
 

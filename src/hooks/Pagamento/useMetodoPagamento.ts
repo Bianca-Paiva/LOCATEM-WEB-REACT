@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Route } from '../../router/useRouter';
-import type { FormaPagamento } from '../../types/Pagamento/cartao.types';
-import { lerValorPagamento, salvarMetodoPagamento } from '../../utils/Pagamento/pagamentoStorage';
+import type { FormaPagamento } from '../../types/Checkout/Pagamento/cartao.types';
+import { lerValorPagamento, salvarMetodoPagamento } from '../../utils/Checkout/Pagamento/pagamentoStorage';
 
 // Formas de pagamento que utilizam um cartão salvo e, por isso, seguem para a tela "Selecionar Cartão".
 const FORMAS_COM_CARTAO: FormaPagamento[] = ['credito', 'debito'];

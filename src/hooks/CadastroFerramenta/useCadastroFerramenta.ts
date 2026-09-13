@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Produto } from '../../types/Produto/produto.types';
+import type { Produto } from '../../types/Ferramentas/produto.types';
 import type { CadastroFerramentaFormState } from '../../pages/CadastroFerramenta/CadastroFerramenta.types';
 import { validateCEP } from '../Mascaras/masks';
 

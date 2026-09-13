@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { CreditCard, QrCode } from 'lucide-react';
 import { Icon } from '@iconify/react';
 
-import type { FormaPagamento } from '../../../types/Pagamento/cartao.types';
+import type { FormaPagamento } from '../../../types/Checkout/Pagamento/cartao.types';
 
 import styles from './SeletorFormaPagamento.module.css';
 

@@ -7,7 +7,7 @@ import BtnPrincipal from '../../../Botões/BtnPrincipal/BtnPrincipal';
 import type {
   PrazoPagamento,
   ResumoPedidoVariant,
-} from '../../../../types/Pagamento/checkout';
+} from '../../../../types/Checkout/Pagamento/checkout';
 
 interface ResumoPedidoProps {
   variant: ResumoPedidoVariant;

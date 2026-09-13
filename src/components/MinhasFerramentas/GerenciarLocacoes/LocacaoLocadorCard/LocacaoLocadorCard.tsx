@@ -20,7 +20,7 @@ import {
   formatarJanelaDevolucao,
   obterAcaoAgora,
   obterProximaEtapa,
-} from '../../../../utils/Locacao/timeLineLocacao';
+} from '../../../../utils/Locacoes/timeLineLocacao';
 import styles from './LocacaoLocadorCard.module.css';
 
 /** Ícone exibido junto de "O que você precisa fazer agora", de acordo com o status atual.
