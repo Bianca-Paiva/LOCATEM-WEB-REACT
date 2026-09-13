@@ -2,30 +2,30 @@
 import styles from "./InformeNovaSenha.module.css";
 
 // COMPONENTES 
-import AuthHeader from "../../../../components/Header/AuthHeader/AuthHeader";
-import Etapas from "../../../../components/RecuperarSenha/Etapas/Etapas";
-import PageHeader from "../../../../components/RecuperarSenha/PageHeader/PageHeader";
-import PasswordField from "../../../../components/Inputs/PasswordInput/PasswordInput";
-import BtnPrincipal from "../../../../components/Botões/BtnPrincipal/BtnPrincipal";
-import PasswordValidationList from "../../../../components/RecuperarSenha/PasswordValidationList/PasswordValidationList";
-import PasswordStrengthMeter from "../../../../components/PasswordMedidor/PasswordStrengthMeter";
-import Alerta from "../../../../components/RecuperarSenha/Alerta/Alerta";
-import SuccessModal from "../../../../components/SuccessModal/SucessesModal";
+import AuthHeader from "../../../../components/Layout/Header/AuthHeader/AuthHeader";
+import Etapas from "../../../../components/Auth/RecuperarSenha/Etapas/Etapas";
+import PageHeader from "../../../../components/Auth/RecuperarSenha/PageHeader/PageHeader";
+import PasswordField from "../../../../components/Shared/Inputs/PasswordInput/PasswordInput";
+import BtnPrincipal from "../../../../components/Botoes/BtnPrincipal/BtnPrincipal";
+import PasswordValidationList from "../../../../components/Auth/RecuperarSenha/PasswordValidationList/PasswordValidationList";
+import PasswordStrengthMeter from "../../../../components/Auth/PasswordMedidor/PasswordStrengthMeter";
+import Alerta from "../../../../components/Auth/RecuperarSenha/Alerta/Alerta";
+import SuccessModal from "../../../../components/Shared/SuccessModal/SucessesModal";
 
 
 // HOOKS / REGRAS DE NEGÓCIO / VALIDAÇÕES
 import { useState } from "react";
 
-import { checkPasswordStrength } from "../../../../hooks/Password/passwordStrength";
+import { checkPasswordStrength } from "../../../../validation/Password/passwordStrength";
 
 import {
     getConfirmPasswordError,
     getConfirmPasswordStatus,
     getPasswordValidations,
     validatePasswordForm,
-} from "../../../../hooks/Password/passwordValidation";
+} from "../../../../validation/Password/passwordValidation";
 
-import { PASSWORD_MESSAGES } from "../../../../hooks/Password/passwordMessages";
+import { PASSWORD_MESSAGES } from "../../../../validation/Password/passwordMessages";
 
 
 // ROTAS 

@@ -1,5 +1,5 @@
 import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
-import type { DadosLocacaoModal } from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+import type { DadosLocacaoModal } from '../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import type { NotificationData } from '../../pages/Conta/Notificacoes/Notificacoes.types';
 import { formatarPeriodoBr } from '../Formatacao/formatoDataBr';

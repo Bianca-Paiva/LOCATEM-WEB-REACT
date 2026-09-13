@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react';
 import { CreditCard } from 'lucide-react';
 
-import BtnPrincipal from '../../../../components/Botões/BtnPrincipal/BtnPrincipal';
-import BtnSecundario from '../../../../components/Botões/BtnSecundario/BtnSecundario';
+import BtnPrincipal from '../../../../components/Botoes/BtnPrincipal/BtnPrincipal';
+import BtnSecundario from '../../../../components/Botoes/BtnSecundario/BtnSecundario';
 
-import { usePagamentoAprovado } from '../../../../hooks/Pagamento/usePagamentoAprovado';
+import { usePagamentoAprovado } from '../../../../hooks/Checkout/Pagamento/usePagamentoAprovado';
 import type { Route } from '../../../../router/useRouter';
 
 import styles from './PagamentoAprovado.module.css';
@@ -155,10 +155,10 @@ export default function PagamentoAprovado({ navigate }: PagamentoAprovadoProps) 
         <div className={styles.actions}>
           <BtnPrincipal text="Ver detalhes do aluguel" onClick={verDetalhesDoAluguel} type="button" />
 
-          <BtnSecundario 
-            text="Voltar para a página inicial" 
-            onClick={voltarParaInicio} 
-            type="button" 
+          <BtnSecundario
+            text="Voltar para a página inicial"
+            onClick={voltarParaInicio}
+            type="button"
           />
         </div>
       </section>

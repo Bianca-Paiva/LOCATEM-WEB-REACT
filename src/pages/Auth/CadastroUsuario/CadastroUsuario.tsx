@@ -1,22 +1,22 @@
 import { Controller } from 'react-hook-form'
 import styles from './CadastroUsuario.module.css'
 
-import { maskCPF, maskCNPJ, maskPhone, maskCEP } from '../../../hooks/Mascaras/masks'
-import { getPasswordValidations, getConfirmPasswordStatus } from '../../../hooks/Password/passwordValidation'
-import { useCadastroForm } from '../../../hooks/Cadastro/useCadastroForm'
+import { maskCPF, maskCNPJ, maskPhone, maskCEP } from '../../../utils/Formatacao/masks'
+import { getPasswordValidations, getConfirmPasswordStatus } from '../../../validation/Password/passwordValidation'
+import { useCadastroForm } from '../../../validation/Cadastro/useCadastroForm'
 import type { Route } from '../../../router/useRouter'
 
-import FormInput from '../../../components/Inputs/FormInput/FormInput'
-import PasswordInput from '../../../components/Inputs/PasswordInput/PasswordInput'
-import AuthHeader from '../../../components/Header/AuthHeader/AuthHeader'
-import PageHeader from '../../../components/RecuperarSenha/PageHeader/PageHeader'
-import CardOpcaoConta from '../../../components/CardOpcaoConta/CardOpcaoConta'
-import BtnPricipal from '../../../components/Botões/BtnPrincipal/BtnPrincipal'
-import FooterLink from '../../../components/RecuperarSenha/FooterLink/FooterLink'
-import PasswordStrengthMeter from '../../../components/PasswordMedidor/PasswordStrengthMeter'
-import PasswordValidationList from '../../../components/RecuperarSenha/PasswordValidationList/PasswordValidationList'
-import Alerta from "../../../components/RecuperarSenha/Alerta/Alerta"
-import SuccessModal from "../../../components/SuccessModal/SucessesModal"
+import FormInput from '../../../components/Shared/Inputs/FormInput/FormInput'
+import PasswordInput from '../../../components/Shared/Inputs/PasswordInput/PasswordInput'
+import AuthHeader from '../../../components/Layout/Header/AuthHeader/AuthHeader'
+import PageHeader from '../../../components/Auth/RecuperarSenha/PageHeader/PageHeader'
+import CardOpcaoConta from '../../../components/Auth/CardOpcaoConta/CardOpcaoConta'
+import BtnPricipal from '../../../components/Botoes/BtnPrincipal/BtnPrincipal'
+import FooterLink from '../../../components/Auth/RecuperarSenha/FooterLink/FooterLink'
+import PasswordStrengthMeter from '../../../components/Auth/PasswordMedidor/PasswordStrengthMeter'
+import PasswordValidationList from '../../../components/Auth/RecuperarSenha/PasswordValidationList/PasswordValidationList'
+import Alerta from "../../../components/Auth/RecuperarSenha/Alerta/Alerta"
+import SuccessModal from "../../../components/Shared/SuccessModal/SucessesModal"
 
 
 interface CadastroProps { navigate: (route: Route) => void }

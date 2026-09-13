@@ -2,16 +2,16 @@ import { useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { Eye, Pencil } from 'lucide-react';
 
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
-import { ProductCard } from '../../../components/ProductCard/ProductCard';
-import Abas from '../../../components/MinhasFerramentas/Abas/Abas';
-import type { AbaItem } from '../../../components/MinhasFerramentas/Abas/Abas';
-import StatusFerramentaBadge from '../../../components/MinhasFerramentas/StatusFerramentaBadge/StatusFerramentaBadge';
-import { STATUS_FERRAMENTA_CONFIG } from '../../../components/MinhasFerramentas/StatusFerramentaBadge/statusFerramentaConfig';
+import { ProductCard } from '../../../components/Ferramentas/ProductCard/ProductCard';
+import Abas from '../../../components/Ferramentas/MinhasFerramentas/Abas/Abas';
+import type { AbaItem } from '../../../components/Ferramentas/MinhasFerramentas/Abas/Abas';
+import StatusFerramentaBadge from '../../../components/Ferramentas/MinhasFerramentas/StatusFerramentaBadge/StatusFerramentaBadge';
+import { STATUS_FERRAMENTA_CONFIG } from '../../../components/Ferramentas/MinhasFerramentas/StatusFerramentaBadge/statusFerramentaConfig';
 
-import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
+import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { toProdutoHome } from '../../../mocks/produtos.adapters';
 import styles from './MinhasFerramentas.module.css';

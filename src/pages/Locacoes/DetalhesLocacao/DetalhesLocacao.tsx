@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import EtiquetaStatus from '../../../components/MinhasLocacoes/EtiquetaStatus/EtiquetaStatus';
-import LocacaoResumoCard from '../../../components/DetalhesLocacao/LocacaoResumoCard/LocacaoResumoCard';
-import PainelStatusLocacao from '../../../components/DetalhesLocacao/PainelStatusLocacao/PainelStatusLocacao';
-import AcoesLocacao from '../../../components/DetalhesLocacao/AcoesLocacao/AcoesLocacao';
-import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
+import LocacaoResumoCard from '../../../components/Locacoes/DetalhesLocacao/LocacaoResumoCard/LocacaoResumoCard';
+import PainelStatusLocacao from '../../../components/Locacoes/DetalhesLocacao/PainelStatusLocacao/PainelStatusLocacao';
+import AcoesLocacao from '../../../components/Locacoes/DetalhesLocacao/AcoesLocacao/AcoesLocacao';
+import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import styles from './DetalhesLocacao.module.css';
 

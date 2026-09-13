@@ -3,12 +3,12 @@ import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/Produ
 import {
     PRAZO_APROVACAO_HORAS,
     PRAZO_PAGAMENTO_HORAS,
-} from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+} from '../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import type {
     LocacaoModalFormState,
     ResumoLocacaoModalCalculado,
     DadosLocacaoModal,
-} from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+} from '../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import {
     adicionarDias,
     adicionarHorasAPartirDeAgora,

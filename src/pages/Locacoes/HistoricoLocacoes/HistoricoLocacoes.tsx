@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
-import Abas from '../../../components/MinhasFerramentas/Abas/Abas';
-import type { AbaItem } from '../../../components/MinhasFerramentas/Abas/Abas';
-import LocacaoHistoricoCard from '../../../components/MinhasFerramentas/HistoricosLocacoes/LocacaoHistoricoCard/LocacaoHistoricoCard';
+import Abas from '../../../components/Ferramentas/MinhasFerramentas/Abas/Abas';
+import type { AbaItem } from '../../../components/Ferramentas/MinhasFerramentas/Abas/Abas';
+import LocacaoHistoricoCard from '../../../components/Ferramentas/MinhasFerramentas/HistoricosLocacoes/LocacaoHistoricoCard/LocacaoHistoricoCard';
 
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';

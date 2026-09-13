@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { LogOut } from 'lucide-react';
-import Header from '../../../components/Header/Header';
-import PerfilHeader from '../../../components/Perfil/PerfilHeader/PerfilHeader';
-import CompletarPerfil from '../../../components/Perfil/CompletarPerfil/CompletarPerfil';
-import InformacoesPessoais from '../../../components/Perfil/InformacoesPessoais/InformacoesPessoais';
-import ReputacaoCard from '../../../components/Perfil/ReputacaoCard/ReputacaoCard';
-import PainelControle from '../../../components/Perfil/PainelControle/PainelControle';
-import EditarPerfilModal from '../../../components/Perfil/EditarPerfilModal/EditarPerfilModal';
-import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
+import Header from '../../../components/Layout/Header/Header';
+import PerfilHeader from '../../../components/Conta/Perfil/PerfilHeader/PerfilHeader';
+import CompletarPerfil from '../../../components/Conta/Perfil/CompletarPerfil/CompletarPerfil';
+import InformacoesPessoais from '../../../components/Conta/Perfil/InformacoesPessoais/InformacoesPessoais';
+import ReputacaoCard from '../../../components/Conta/Perfil/ReputacaoCard/ReputacaoCard';
+import PainelControle from '../../../components/Conta/Perfil/PainelControle/PainelControle';
+import EditarPerfilModal from '../../../components/Conta/Perfil/EditarPerfilModal/EditarPerfilModal';
+import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
 import { useAuth } from '../../../hooks/Auth/useAuth';
-import { useCompletudePerfil } from '../../../hooks/Perfil/useCompletudePerfil';
+import { useCompletudePerfil } from '../../../hooks/Conta/Perfil/useCompletudePerfil';
 import type { Route } from '../../../router/useRouter';
 import styles from './Perfil.module.css';
 
@@ -66,7 +66,7 @@ export default function Perfil({ navigate }: PerfilProps) {
 
         <div className={styles.colunas}>
           <InformacoesPessoais usuario={usuario} onEditar={() => setEditando(true)} />
-          <ReputacaoCard reputacao={usuario.reputacao} tipo={usuario.tipo}/>
+          <ReputacaoCard reputacao={usuario.reputacao} tipo={usuario.tipo} />
         </div>
 
         <PainelControle tipo={usuario.tipo} navigate={navigate} />

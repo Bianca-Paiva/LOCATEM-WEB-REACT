@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import type { Route } from '../../router/useRouter';
 
 // components
-import { CardProdutoAvaliacao } from '../../components/Avaliacao/CardProdutoAvaliacao/CardProdutoAvaliacao';
-import { ModalAvaliacao } from '../../components/Avaliacao/ModalAvaliacao/ModalAvaliacao';
-import { ToastConfirmacao } from '../../components/Avaliacao/ToastConfirmacao/ToastConfirmacao';
-import { EstadoVazio } from '../../components/Avaliacao/EstadoVazio/EstadoVazio';
-import Header from '../../components/Header/Header';
-import CabecalhoPagina from '../../components/CabecalhoPagina/CabecalhoPagina';
+import { CardProdutoAvaliacao } from '../../components/Avaliacoes/CardProdutoAvaliacao/CardProdutoAvaliacao';
+import { ModalAvaliacao } from '../../components/Avaliacoes/ModalAvaliacao/ModalAvaliacao';
+import { ToastConfirmacao } from '../../components/Avaliacoes/ToastConfirmacao/ToastConfirmacao';
+import { EstadoVazio } from '../../components/Avaliacoes/EstadoVazio/EstadoVazio';
+import Header from '../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 
-import { useAvaliacoes } from '../../hooks/Avaliacao/useAvaliacoes';
+import { useAvaliacoes } from '../../hooks/Avaliacoes/useAvaliacoes';
 import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import type { LocacaoData } from '../Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import type { AbaAvaliacao } from './Avaliacao.types';
@@ -61,7 +61,7 @@ export default function Avaliacao({ navigate }: AvaliacaoProps) {
 
     return (
         <>
-            <Header navigate={navigate} currentRoute='avaliacao'/>
+            <Header navigate={navigate} currentRoute='avaliacao' />
 
             <div className={styles.contentArea}>
                 <CabecalhoPagina

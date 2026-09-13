@@ -3,10 +3,10 @@ import { Search, ChevronLeft } from 'lucide-react';
 
 import type { FilterState } from '../../../pages/Busca/Busca.types';
 import { OPCOES_FONTE_ALIMENTACAO } from '../../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
-import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
+import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
 import { derivarCategorias, extrairNomeSubcategoria } from '../../../utils/Ferramentas/Catalago/categorias';
-import BtnPrincipal from '../../Botões/BtnPrincipal/BtnPrincipal';
-import BtnSecundario from '../../Botões/BtnSecundario/BtnSecundario';
+import BtnPrincipal from '../../Botoes/BtnPrincipal/BtnPrincipal';
+import BtnSecundario from '../../Botoes/BtnSecundario/BtnSecundario';
 import styles from './SideBarBusca.module.css';
 
 

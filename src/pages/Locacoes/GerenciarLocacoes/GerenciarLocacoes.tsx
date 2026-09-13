@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
-import Abas from '../../../components/MinhasFerramentas/Abas/Abas';
-import LocacaoLocadorCard from '../../../components/MinhasFerramentas/GerenciarLocacoes/LocacaoLocadorCard/LocacaoLocadorCard';
-import ModalAprovacaoLocacao from '../../../components/MinhasFerramentas/GerenciarLocacoes/ModalAprovacaoLocacao/ModalAprovacaoLocacao';
-import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
+import Abas from '../../../components/Ferramentas/MinhasFerramentas/Abas/Abas';
+import LocacaoLocadorCard from '../../../components/Ferramentas/MinhasFerramentas/GerenciarLocacoes/LocacaoLocadorCard/LocacaoLocadorCard';
+import ModalAprovacaoLocacao from '../../../components/Ferramentas/MinhasFerramentas/GerenciarLocacoes/ModalAprovacaoLocacao/ModalAprovacaoLocacao';
+import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
 
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';

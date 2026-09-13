@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Pencil, Pause, Play, Trash2, Star } from 'lucide-react';
 
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
-import { ImagemCarrossel } from '../../../components/ProdutoDetalhe/ImagemCarrossel/ImagemCarrossel';
-import { Descricao } from '../../../components/ProdutoDetalhe/Descricao/Descricao';
-import { EspecificacoesTecnicas } from '../../../components/ProdutoDetalhe/EspecificacoesTecnicas/EspecificacoesTecnicas';
-import StatusFerramentaBadge from '../../../components/MinhasFerramentas/StatusFerramentaBadge/StatusFerramentaBadge';
-import InfoListCard from '../../../components/FerramentaDetalhe/InfoListCard/InfoListCard';
-import RemoverFerramentaModal from '../../../components/FerramentaDetalhe/RemoverFerramentaModal/RemoverFerramentaModal';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
+import { ImagemCarrossel } from '../../../components/Ferramentas/ProdutoDetalhe/ImagemCarrossel/ImagemCarrossel';
+import { Descricao } from '../../../components/Ferramentas/ProdutoDetalhe/Descricao/Descricao';
+import { EspecificacoesTecnicas } from '../../../components/Ferramentas/ProdutoDetalhe/EspecificacoesTecnicas/EspecificacoesTecnicas';
+import StatusFerramentaBadge from '../../../components/Ferramentas/MinhasFerramentas/StatusFerramentaBadge/StatusFerramentaBadge';
+import InfoListCard from '../../../components/Ferramentas/FerramentaDetalhe/InfoListCard/InfoListCard';
+import RemoverFerramentaModal from '../../../components/Ferramentas/FerramentaDetalhe/RemoverFerramentaModal/RemoverFerramentaModal';
 
-import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
+import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { paraNumero, formatarValorMonetario } from '../../../utils/Formatacao/valorMonetario';
@@ -88,9 +88,8 @@ export default function FerramentaDetalhe({ navigate }: FerramentaDetalheProps) 
       <main className={styles.pagina}>
         <CabecalhoPagina
           titulo={produto.title}
-          subtitulo={`Cadastrada em ${produto.cadastradoEm ?? '—'} · Aprovação ${
-            produto.tipoAprovacao === 'automatica' ? 'automática' : 'manual'
-          }`}
+          subtitulo={`Cadastrada em ${produto.cadastradoEm ?? '—'} · Aprovação ${produto.tipoAprovacao === 'automatica' ? 'automática' : 'manual'
+            }`}
           acao={<StatusFerramentaBadge status={produto.status} />}
         />
 
@@ -121,8 +120,8 @@ export default function FerramentaDetalhe({ navigate }: FerramentaDetalheProps) 
               linhas={[
                 { label: 'Locações realizadas', valor: `${locacoesRealizadas}` },
                 { label: 'Receita gerada (total)', valor: formatarValorMonetario(receitaGerada) },
-                { 
-                  label: 'Avaliação média', 
+                {
+                  label: 'Avaliação média',
                   valor: (
                     <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <Star size={14} fill="#FFCA00" color="#FFCA00" />

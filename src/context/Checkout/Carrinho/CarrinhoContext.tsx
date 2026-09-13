@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { ProdutoSelecionado } from '../../Ferramentas/Produto/ProdutoContext';
-import type { DadosLocacaoModal } from '../../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+import type { DadosLocacaoModal } from '../../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import { AuthContext } from '../../Auth/AuthContext';
 
 export interface ItemCarrinho {

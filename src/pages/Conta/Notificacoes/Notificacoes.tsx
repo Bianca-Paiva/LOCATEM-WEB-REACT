@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { BellOff, Trash2 } from 'lucide-react';
-import NotificationCard from '../../../components/Notificacoes/NotificationCard/NotificationCard';
-import FilterDropdown from '../../../components/Notificacoes/FilterDropdownNotificacao/FilterDropdown';
-import Pagination from '../../../components/Notificacoes/Pagination/Pagination';
-import NotificationDetailsModal from '../../../components/Notificacoes/NotificationModal/NotificationDetailsModal';
-import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
+import NotificationCard from '../../../components/Conta/Notificacoes/NotificationCard/NotificationCard';
+import FilterDropdown from '../../../components/Conta/Notificacoes/FilterDropdownNotificacao/FilterDropdown';
+import Pagination from '../../../components/Conta/Notificacoes/Pagination/Pagination';
+import NotificationDetailsModal from '../../../components/Conta/Notificacoes/NotificationModal/NotificationDetailsModal';
+import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
 import { useNotifications } from '../../../hooks/Notificacoes/useNotifications';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import styles from './Notificacoes.module.css';
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 
 import type { Route } from '../../../router/useRouter';
 import type { NotificationData } from './Notificacoes.types';

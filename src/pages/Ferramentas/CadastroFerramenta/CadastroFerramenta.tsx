@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import SecaoCard from '../../../components/CadastroFerramenta/SecaoCard/SecaoCard';
 import FotosFerramenta from '../../../components/CadastroFerramenta/FotosFerramenta/FotosFerramenta';
 import InformacoesBasicas from '../../../components/CadastroFerramenta/InformacoesBasicas/InformacoesBasicas';
@@ -13,13 +13,13 @@ import AcessoriosInclusos from '../../../components/CadastroFerramenta/Acessorio
 import CalendarioDisponibilidade from '../../../components/CadastroFerramenta/CalendarioDisponibilidade/CalendarioDisponibilidade';
 import AprovacaoLocacao from '../../../components/CadastroFerramenta/AprovacaoLocacao/AprovacaoLocacao';
 import EnderecoRetirada from '../../../components/CadastroFerramenta/EnderecoRetirada/EnderecoRetirada';
-import SuccessModal from '../../../components/SuccessModal/SucessesModal';
-import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
-import BtnPrincipal from '../../../components/Botões/BtnPrincipal/BtnPrincipal';
-import BtnNegativo from '../../../components/Botões/BtnNegativo/BtnNegativo';
+import SuccessModal from '../../../components/Shared/SuccessModal/SucessesModal';
+import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
+import BtnPrincipal from '../../../components/Botoes/BtnPrincipal/BtnPrincipal';
+import BtnNegativo from '../../../components/Botoes/BtnNegativo/BtnNegativo';
 
-import { useCadastroFerramenta } from '../../../hooks/CadastroFerramenta/useCadastroFerramenta';
-import { useCatalogoStore } from '../../../hooks/Catalago/useCatalogoStore';
+import { useCadastroFerramenta } from '../../../hooks/Ferramentas/useCadastroFerramenta';
+import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import styles from './CadastroFerramenta.module.css';
 

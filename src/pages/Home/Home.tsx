@@ -1,15 +1,15 @@
 import { useMemo, useState } from 'react';
 import styles from './Home.module.css';
 import type { Route } from '../../router/useRouter';
-import { useProdutoStore } from "../../hooks/Produto/useProdutoStore";
-import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
+import { useProdutoStore } from "../../hooks/Ferramentas/useProdutoStore";
+import { useCatalogoStore } from '../../hooks/Ferramentas/useCatalogoStore';
 import { derivarCategorias, extrairCategoriaTopo } from '../../utils/Ferramentas/Catalago/categorias';
 
 // Components
-import Header from '../../components/Header/Header';
-import { Banner } from '../../components/Banner/Banner';
-import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
-import { ProductCard } from '../../components/ProductCard/ProductCard';
+import Header from '../../components/Layout/Header/Header';
+import { Banner } from '../../components/Shared/Banner/Banner';
+import { CategoryFilter } from '../../components/Busca/CategoryFilter/CategoryFilter';
+import { ProductCard } from '../../components/Ferramentas/ProductCard/ProductCard';
 
 // Dados mockados
 import { toProdutoHome, toProdutoSelecionado } from '../../mocks/produtos.adapters';

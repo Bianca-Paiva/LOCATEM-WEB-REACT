@@ -1,5 +1,5 @@
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import LocacaoAbas from '../../../components/MinhasLocacoes/LocacaoAbas/LocacaoAbas';
 import LocacaoCard from '../../../components/MinhasLocacoes/LocacaoCard/LocacaoCard';
 import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
@@ -70,8 +70,8 @@ const ESTADO_VAZIO_TEXTO: Record<FiltroLocacao, { titulo: string; descricao: str
 export default function MinhasLocacoes({ navigate }: MinhasLocacoesProps) {
   const { locacoesFiltradas, filtro, setFiltro, contagem } = useMinhasLocacoes();
 
-  const { setLocacaoSelecionada } = useLocacaoStore() as { 
-    setLocacaoSelecionada: Dispatch<SetStateAction<LocacaoData | null>> 
+  const { setLocacaoSelecionada } = useLocacaoStore() as {
+    setLocacaoSelecionada: Dispatch<SetStateAction<LocacaoData | null>>
   };
 
   const handleVerDetalhes = (id: string) => {

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 
-import { useProcessandoPagamento } from '../../../../hooks/Pagamento/useProcessandoPagamento';
+import { useProcessandoPagamento } from '../../../../hooks/Checkout/Pagamento/useProcessandoPagamento';
 import type { Route } from '../../../../router/useRouter';
 
 import styles from './ProcessandoPagamento.module.css';

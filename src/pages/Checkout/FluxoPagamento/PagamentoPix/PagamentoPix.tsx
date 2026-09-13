@@ -1,10 +1,10 @@
-import Header from '../../../../components/Header/Header';
-import CabecalhoPagina from '../../../../components/CabecalhoPagina/CabecalhoPagina';
-import { CheckoutLayout } from '../../../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
-import { ResumoPedido } from '../../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
+import Header from '../../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
+import { CheckoutLayout } from '../../../../components/Checkout/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
+import { ResumoPedido } from '../../../../components/Checkout/Carrinho/Resumo/ResumoPedido/ResumoPedido';
 import { PagamentoPixCard } from '../../../../components/Pagamento/PagamentoPixCard/PagamentoPixCard';
 
-import { usePagamentoPix } from '../../../../hooks/Pagamento/usePagamentoPix';
+import { usePagamentoPix } from '../../../../hooks/Checkout/Pagamento/usePagamentoPix';
 import type { Route } from '../../../../router/useRouter';
 
 import styles from './PagamentoPix.module.css';
@@ -28,7 +28,7 @@ export default function PagamentoPix({ navigate }: PagamentoPixProps) {
     gerarNovoCodigo,
     confirmarPagamento,
   } = usePagamentoPix(navigate);
-  
+
   // Variável de mock estática para testar a leitura do QR Code
   const payloadPixMock = "00020101021126530014br.gov.bcb.pix0114+55119956921560213Teste LOCATEM52040000530398654040.015802BR5914BIANCA S PAIVA6009SAO PAULO62070503***63048BF9";
 
@@ -58,9 +58,9 @@ export default function PagamentoPix({ navigate }: PagamentoPixProps) {
             />
           }
         >
-          <PagamentoPixCard 
+          <PagamentoPixCard
             codigoPix={payloadPixMock} // Substituímos a variável do hook pelo mock
-            copiado={copiado} 
+            copiado={copiado}
             expirado={prazoPagamento.expirado}
             onGerarNovoQrCode={gerarNovoCodigo}
             onCopiarCodigo={() => {
@@ -68,7 +68,7 @@ export default function PagamentoPix({ navigate }: PagamentoPixProps) {
               navigator.clipboard.writeText(payloadPixMock);
               // Chamamos a função do hook apenas para acionar o efeito visual de "Copiado!" (verde)
               copiarCodigo();
-            }} 
+            }}
           />
         </CheckoutLayout>
       </main>

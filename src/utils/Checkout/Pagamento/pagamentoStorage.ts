@@ -4,7 +4,7 @@
 import type { FormaPagamento } from '../../../types/Checkout/Pagamento/cartao.types';
 import type { CartaoPagamentoArmazenado } from '../../../types/Checkout/Pagamento/cartao.types';
 import type { ProdutoSelecionado } from '../../../context/Ferramentas/Produto/ProdutoContext';
-import type { DadosLocacaoModal } from '../../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+import type { DadosLocacaoModal } from '../../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 
 export const CHAVE_VALOR = 'locatem_pagamento_valor';
 export const CHAVE_METODO = 'locatem_pagamento_metodo';

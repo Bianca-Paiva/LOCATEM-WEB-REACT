@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import Header from '../../../components/Header/Header';
-import { CarrinhoVazio } from '../../../components/Carrinho/CarrinhoVazio/CarrinhoVazio';
-import { LojaGroup } from '../../../components/Carrinho/LojaGroup/LojaGroup';
-import { ResumoPedido } from '../../../components/Carrinho/Resumo/ResumoPedido/ResumoPedido';
-import ModalLoginNecessario from '../../../components/Carrinho/ModalLoginNecessario/ModalLoginNecessario';
-import ConfirmModal from '../../../components/ConfirmModal/ConfirmModal';
-import { useCarrinhoStore } from '../../../hooks/Carrinho/useCarrinhoStore';
+import Header from '../../../components/Layout/Header/Header';
+import { CarrinhoVazio } from '../../../components/Checkout/Carrinho/CarrinhoVazio/CarrinhoVazio';
+import { LojaGroup } from '../../../components/Checkout/Carrinho/LojaGroup/LojaGroup';
+import { ResumoPedido } from '../../../components/Checkout/Carrinho/Resumo/ResumoPedido/ResumoPedido';
+import ModalLoginNecessario from '../../../components/Checkout/Carrinho/ModalLoginNecessario/ModalLoginNecessario';
+import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
+import { useCarrinhoStore } from '../../../hooks/Checkout/Carrinho/useCarrinhoStore';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 
 import type { CarrinhoItemData, LojaGroupData } from '../../../types/Checkout/Pagamento/checkout';
@@ -14,8 +14,8 @@ import type { ItemCarrinho as ItemCarrinhoContexto } from '../../../context/Chec
 import type { Route } from '../../../router/useRouter';
 
 import styles from './Carrinho.module.css';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
-import { CheckoutLayout } from '../../../components/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
+import { CheckoutLayout } from '../../../components/Checkout/Carrinho/Resumo/CheckoutLayout/CheckoutLayout';
 import { salvarValorPagamento } from '../../../utils/Checkout/Pagamento/pagamentoStorage';
 import { salvarRedirectAposLogin } from '../../../utils/Auth/redirectAposLogin';
 
