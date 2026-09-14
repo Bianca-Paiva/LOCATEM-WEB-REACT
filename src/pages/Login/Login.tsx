@@ -3,7 +3,7 @@ import AuthHeader from '../../components/Header/AuthHeader/AuthHeader'
 import PageHeader from '../../components/RecuperarSenha/PageHeader/PageHeader'
 import FormInput from '../../components/Inputs/FormInput/FormInput'
 import PasswordField from '../../components/Inputs/PasswordInput/PasswordInput'
-//import { loginUsuario } from '../../services/authService'
+import { loginUsuario } from '../../services/authService'
 import { useAuth } from '../../hooks/Auth/useAuth'
 import { lerRedirectAposLogin, limparRedirectAposLogin } from '../../utils/Auth/redirectAposLogin'
 import type { Route } from '../../router/useRouter'
@@ -67,14 +67,11 @@ export default function Login({ navigate }: LoginProps) {
         setError('')
 
         try {
-            // await loginUsuario({ email, senha })
-            // authService ainda não está integrado a um backend real (endpoint comentado acima), então resolvemos o usuário autenticado a partir do AuthContext, que por sua vez usa o catálogo mockado em mocks/usuarios.mock.ts.
-            login(email)
+            await loginUsuario({ email, senha })
+            await login()
 
-            // Login originado do Carrinho (usuário deslogado tentou "Continuar para Pagamento"):
-            // volta exatamente para lá, com os itens do carrinho preservados. Sem essa marcação,
-            // mantém o comportamento atual (vai para a Home).
             const rotaRedirect = lerRedirectAposLogin()
+
             if (rotaRedirect) {
                 limparRedirectAposLogin()
                 navigate(rotaRedirect)

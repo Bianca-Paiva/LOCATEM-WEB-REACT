@@ -17,19 +17,17 @@ export interface ReputacaoUsuario {
 }
 
 export interface Usuario {
-  id: string;
-  nome: string;
-  email: string;
-  telefone: string;
-  /** CPF (locatário) ou CNPJ (locador) — sem máscara ou com, conforme preenchido no cadastro/edição. */
-  documento: string;
-  endereco: string;
-  tipo: TipoUsuario;
-  /** Ausente = avatar cai para as iniciais do nome (ver utils/iniciais.ts). */
-  fotoUrl?: string;
-  /** Usado tanto no cálculo de conclusão do perfil quanto no texto de dica exibido lá. */
-  emailVerificado: boolean;
-  /** Ano de criação da conta — exibido como "Locador/Locatário desde {ano}". */
-  desde: number;
-  reputacao: ReputacaoUsuario;
+    id: number
+    nome: string
+    email: string
+    telefone: string
+    documento: string
+    endereco: string
+    tipo: TipoUsuario
+
+    fotoUrl?: string
+    emailVerificado?: boolean
+    desde?: number
+
+    reputacao?: ReputacaoUsuario
 }
