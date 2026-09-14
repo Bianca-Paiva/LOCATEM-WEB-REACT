@@ -1,7 +1,8 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { Usuario } from '../../types/Usuario/usuario.types';
 import { buscarUsuarioLogado, atualizarPerfilUsuario } from '../../services/authService';
+
 
 
 interface AuthContextType {
@@ -19,6 +20,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Sem sessão por padrão — replica o comportamento atual do Header ("usuário
   // não autenticado -> manter comportamento atual") até que o login seja feito.
   const [usuario, setUsuario] = useState<Usuario | null>(null);
+
+  // Recupera a sessão automaticamente ao dar F5 se houver token salvo
+  useEffect(() => {
+    const carregarUsuarioSalvo = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      try {
+        const dados = await buscarUsuarioLogado();
+
+        const usuarioMapeado: Usuario = {
+          id: dados.id,
+          nome: dados.nome,
+          email: dados.email,
+          telefone: dados.telefone,
+          documento: dados.documento,
+          endereco: dados.endereco ?? '',
+          tipo: dados.tipoUsuario.toLowerCase() as 'locatario' | 'locador',
+          fotoUrl: dados.fotoUrl ?? undefined,
+          desde: dados.desde,
+          reputacao: dados.reputacao,
+        };
+
+        setUsuario(usuarioMapeado);
+      } catch (error) {
+        // Se o token expirou ou deu ruim, limpa tudo pra evitar loop
+        localStorage.removeItem('token');
+        setUsuario(null);
+      }
+    };
+
+    carregarUsuarioSalvo();
+  }, []);
 const login: AuthContextType['login'] = async () => {
     const dados = await buscarUsuarioLogado();
 
