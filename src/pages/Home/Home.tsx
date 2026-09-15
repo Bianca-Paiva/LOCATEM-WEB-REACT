@@ -1,18 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styles from './Home.module.css';
 import type { Route } from '../../router/useRouter';
 import { useProdutoStore } from "../../hooks/Produto/useProdutoStore";
-import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
-import { derivarCategorias, extrairCategoriaTopo } from '../../utils/Catalago/categorias';
+import { buscarFerramentasDisponiveis } from '../../services/ferramentaservice';
+import { Drill } from 'lucide-react';
 
 // Components
 import Header from '../../components/Header/Header';
 import { Banner } from '../../components/Banner/Banner';
 import { CategoryFilter } from '../../components/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../components/ProductCard/ProductCard';
-
-// Dados mockados
-import { toProdutoHome, toProdutoSelecionado } from '../../mocks/produtos.adapters';
 import type { ProdutoHome } from './Home.types';
 
 interface HomeProps {
@@ -21,46 +18,71 @@ interface HomeProps {
 
 export default function Home({ navigate }: HomeProps) {
   const { setProdutoSelecionado } = useProdutoStore();
-  const { produtos } = useCatalogoStore();
-
-  // Categorias derivadas do catálogo real (mesma fonte usada pelos filtros da Busca),
-  // em vez de uma lista fixa que podia divergir das ferramentas realmente cadastradas.
-  const categorias = useMemo(
-    () => derivarCategorias(produtos).map((c) => c.categoria),
-    [produtos],
-  );
-
+  
+  // Estados para gerenciar os dados reais da API
+  const [ferramentasRaw, setFerramentasRaw] = useState<any[]>([]);
+  const [carregando, setCarregando] = useState(true);
   const [categoriaAtiva, setCategoriaAtiva] = useState<string>('');
 
-  // Mantém uma categoria selecionada assim que o catálogo carrega, sem sobrescrever
-  // uma escolha que o usuário já tenha feito.
+  // 1. Busca os dados reais do Backend assim que a tela abre
+  useEffect(() => {
+    const carregarVitrine = async () => {
+      try {
+        const dados = await buscarFerramentasDisponiveis();
+        setFerramentasRaw(dados);
+      } catch (error) {
+        console.error("Erro ao carregar ferramentas da vitrine:", error);
+      } finally {
+        setCarregando(false);
+      }
+    };
+
+    carregarVitrine();
+  }, []);
+
+  // 2. Extrai categorias dinâmicas (usando o ID ou nome que vier do banco)
+  const categorias = useMemo(() => {
+    // Como a API atual pode não trazer o nome da categoria populado (sem o .Include),
+    // agrupamos pelo CategoriaId temporariamente ou usamos um fallback.
+    const cats = ferramentasRaw.map(f => f.categoria?.nome || `Categoria ${f.categoriaId || 1}`);
+    return Array.from(new Set(cats));
+  }, [ferramentasRaw]);
+
   if (!categoriaAtiva && categorias.length > 0) {
     setCategoriaAtiva(categorias[0]);
   }
 
-  // Catálogo completo da Home, filtrado pela categoria selecionada no CategoryFilter:
-  // todos os produtos disponíveis dessa categoria + ferramentas recém-publicadas pelo
-  // usuário, sempre em primeiro. Vem do CatalogoContext (reativo), não mais de um
-  // recorte fixo de ids.
-  const produtosHome = useMemo(
-    () =>
-      [...produtos]
-        .filter((p) => !categoriaAtiva || extrairCategoriaTopo(p.categoria) === categoriaAtiva)
-        .sort((a, b) => (b.meuAnuncio ? 1 : 0) - (a.meuAnuncio ? 1 : 0))
-        .map(toProdutoHome),
-    [produtos, categoriaAtiva],
-  );
+  // 3. Converte os dados do C# para o formato do seu ProductCard (ProdutoHome)
+  const produtosHome = useMemo<ProdutoHome[]>(() => {
+    return ferramentasRaw
+      .filter(f => {
+        const cat = f.categoria?.nome || `Categoria ${f.categoriaId || 1}`;
+        return !categoriaAtiva || cat === categoriaAtiva;
+      })
+      .map(f => ({
+        id: f.ferramentaId,
+        title: f.nome,
+        marca: f.marca || 'Sem Marca',
+        locador: f.usuario?.nome || 'Locador Parceiro',
+        price: f.diaria ? f.diaria.toFixed(2).replace('.', ',') : '0,00',
+        images: ['/caminho-padrao-ou-foto-real.jpg'], // O ideal é usar f.ferramentaImagens se existir
+        imageVerificado: '/icon-verified.png', // Fallbacks visuais
+        imageNota: '/icon-star.png',
+        rating: 5.0, // Avaliação fixa até o backend calcular a média
+        reviewCount: 0
+      }));
+  }, [ferramentasRaw, categoriaAtiva]);
 
   const handleCardClick = (product: ProdutoHome) => {
-    // O card da Home só carrega um recorte do produto (ProdutoHome).
-    // Buscamos o produto completo no catálogo central para levar pra frente
-    // os dados reais do locador (nome, localização, categoria, estoque),
-    // em vez de valores fixos/placeholder.
-    const produtoCompleto = produtos.find((p) => p.id === product.id);
-
+    // Achamos o objeto original que veio do banco de dados
+    const produtoCompleto = ferramentasRaw.find((p) => p.ferramentaId === product.id);
     if (!produtoCompleto) return;
 
-    setProdutoSelecionado(toProdutoSelecionado(produtoCompleto));
+    // Joga pro contexto global para a tela de Detalhes usar
+    setProdutoSelecionado({
+      ...produtoCompleto,
+      priceFormatado: product.price // Enviamos um facilitador pro Detalhe
+    });
 
     navigate('produtoDetalhe');
   };
@@ -71,28 +93,45 @@ export default function Home({ navigate }: HomeProps) {
 
       <main className={styles.homeMain}>
         <Banner />
-        <CategoryFilter
-          categorias={categorias}
-          categoriaSelecionada={categoriaAtiva}
-          onSelecionarCategoria={setCategoriaAtiva}
-        />
+        
+        {categorias.length > 0 && (
+          <CategoryFilter
+            categorias={categorias}
+            categoriaSelecionada={categoriaAtiva}
+            onSelecionarCategoria={setCategoriaAtiva}
+          />
+        )}
 
-        <div className={styles.productsGrid}>
-          {produtosHome.map((product) => (
-            <ProductCard
-              key={product.id}
-              title={product.title}
-              brand={product.locador}
-              price={product.price}
-              images={product.images}
-              imageVerificado={product.imageVerificado}
-              imageNota={product.imageNota}
-              rating={product.rating}
-              reviewCount={product.reviewCount}
-              onNavigate={() => handleCardClick(product)}
-            />
-          ))}
-        </div>
+        {carregando ? (
+          <p style={{ textAlign: 'center', marginTop: '2rem' }}>Carregando vitrine...</p>
+        ) : produtosHome.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '4rem 1rem', color: '#6b7280' }}>
+            <Drill size={64} style={{ margin: '0 auto', marginBottom: '1rem', opacity: 0.5 }} />
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#374151' }}>
+              Nenhuma ferramenta na vitrine
+            </h3>
+            <p style={{ marginTop: '0.5rem' }}>
+              Ainda não há ferramentas disponíveis para locação no momento.
+            </p>
+          </div>
+        ) : (
+          <div className={styles.productsGrid}>
+            {produtosHome.map((product) => (
+              <ProductCard
+                key={product.id}
+                title={product.title}
+                brand={product.locador}
+                price={`R$ ${product.price}/dia`}
+                images={product.images}
+                imageVerificado={product.imageVerificado}
+                imageNota={product.imageNota}
+                rating={product.rating}
+                reviewCount={product.reviewCount}
+                onNavigate={() => handleCardClick(product)}
+              />
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );
