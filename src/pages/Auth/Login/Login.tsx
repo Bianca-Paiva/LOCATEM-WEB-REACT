@@ -4,7 +4,7 @@ import AuthHeader from '../../../components/Layout/Header/AuthHeader/AuthHeader'
 import PageHeader from '../../../components/Auth/RecuperarSenha/PageHeader/PageHeader'
 import FormInput from '../../../components/Shared/Inputs/FormInput/FormInput'
 import PasswordField from '../../../components/Shared/Inputs/PasswordInput/PasswordInput'
-//import { loginUsuario } from '../../services/authService'
+import { loginUsuario } from '../../../services/authService'
 import { useAuth } from '../../../hooks/Auth/useAuth'
 import { lerRedirectAposLogin, limparRedirectAposLogin } from '../../../utils/Auth/redirectAposLogin'
 import type { Route } from '../../../router/useRouter'
@@ -61,13 +61,11 @@ export default function Login({ navigate }: LoginProps) {
         try {
             // await loginUsuario({ email, senha })
             // authService ainda não está integrado a um backend real (endpoint comentado acima), então resolvemos o usuário autenticado a partir do AuthContext, que por sua vez usa o catálogo mockado em mocks/usuarios.mock.ts.
-            if (senha === 'erro-login') throw new Error('Falha de autenticacao simulada')
-            login(email)
+            await loginUsuario({ email, senha })
+            await login()
 
-            // Login originado do Carrinho (usuário deslogado tentou "Continuar para Pagamento"):
-            // volta exatamente para lá, com os itens do carrinho preservados. Sem essa marcação,
-            // mantém o comportamento atual (vai para a Home).
             const rotaRedirect = lerRedirectAposLogin()
+
             if (rotaRedirect) {
                 limparRedirectAposLogin()
                 navigate(rotaRedirect)
@@ -84,7 +82,7 @@ export default function Login({ navigate }: LoginProps) {
     return (
         <div>
             <AuthHeader navigate={navigate} />
-
+        
             <main>
                 <PageHeader title='Bem-vindo de volta!' subtitle='Entre na sua conta para continuar' />
 

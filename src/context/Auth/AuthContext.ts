@@ -6,10 +6,10 @@ export interface AuthContextType {
     usuario: Usuario | null;
     isAuthenticated: boolean;
     /** Autentica pelo e-mail digitado no login (ver mocks/usuarios.mock.ts para os cenários cobertos). */
-    login: (email: string) => Usuario;
+    login: () => Promise<void>;
     logout: () => void;
     /** Atualiza campos do usuário logado (usado pelo modal "Editar Perfil"). */
-    atualizarUsuario: (dados: Partial<Usuario>) => void;
+    atualizarUsuario: (dados: Partial<Usuario>) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);

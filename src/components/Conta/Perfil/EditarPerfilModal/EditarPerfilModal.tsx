@@ -1,16 +1,17 @@
 import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { Controller } from 'react-hook-form';
-import { X, Camera } from 'lucide-react';
+import { X, Camera, MapPin } from 'lucide-react';
 import Avatar from '../../../Shared/Avatar/Avatar';
 import FormInput from '../../../Shared/Inputs/FormInput/FormInput';
 import BtnPrincipal from '../../../Botoes/BtnPrincipal/BtnPrincipal';
 import Alerta from '../../../Auth/RecuperarSenha/Alerta/Alerta';
 import { maskCPF, maskCNPJ, maskPhone, maskCEP, formatPhone } from '../../../../utils/Formatacao/masks';
 import { useEditarPerfilForm } from '../../../../hooks/Conta/Perfil/useEditarPerfilForm';
-import type { PerfilFormData } from '../../../hooks/Conta/Perfil/perfilSchema';
+import type { PerfilFormData } from '../../../../validation/Perfil/perfilSchema';
 import type { Usuario } from '../../../../types/Auth/usuario.types';
 import styles from './EditarPerfilModal.module.css';
+import { uploadFotoPerfil } from '../../../../services/authService';
 
 interface EditarPerfilModalProps {
   usuario: Usuario;
@@ -19,28 +20,47 @@ interface EditarPerfilModalProps {
 }
 
 export default function EditarPerfilModal({ usuario, onClose, onSalvar }: EditarPerfilModalProps) {
-  const [fotoUrl, setFotoUrl] = useState<string | undefined>(usuario.fotoUrl);
-
+  
   const {
     control, isCNPJ, alerta, setAlerta, shakes, clearShake,
-    touchedFields, errors, trigger, buildSubmit
+    touchedFields, errors, trigger, buildSubmit, buscarCep, enderecoResumo // 👈 Pego aqui
   } = useEditarPerfilForm(usuario);
+
+ const [fotoUrl, setFotoUrl] = useState<string | undefined>(usuario.fotoUrl);
+  const [arquivoFoto, setArquivoFoto] = useState<File | null>(null); // 👈 Guarda o arquivo bruto
 
   const handleFotoChange = (e: ChangeEvent<HTMLInputElement>) => {
     const arquivo = e.target.files?.[0];
-    if (arquivo) setFotoUrl(URL.createObjectURL(arquivo));
+    if (arquivo) {
+      setArquivoFoto(arquivo); // Salva o arquivo pra enviar depois
+      setFotoUrl(URL.createObjectURL(arquivo)); // Pré-visualização instantânea na tela
+    }
   };
 
-  const onValidSubmit = (data: PerfilFormData) => {
-    const enderecoCompleto = `${data.logradouro}, ${data.numero} - CEP: ${data.cep}`;
-    onSalvar({
-      nome: data.nome,
-      telefone: data.telefone,
-      documento: data.documento,
-      endereco: enderecoCompleto,
-      fotoUrl,
-    });
-    onClose();
+  const onValidSubmit = async (data: PerfilFormData) => {
+    let urlFinal = fotoUrl;
+
+    try {
+      // Se o usuário escolheu uma foto nova, faz o upload primeiro
+      if (arquivoFoto) {
+        const respostaUpload = await uploadFotoPerfil(usuario.id, arquivoFoto);
+        urlFinal = respostaUpload.urlFoto; // Pega a URL definitiva que veio do backend
+      }
+
+      const enderecoCompleto = `${data.logradouro}, ${data.numero} - CEP: ${data.cep}`;
+      
+      await onSalvar({
+        nome: data.nome,
+        telefone: data.telefone,
+        documento: data.documento,
+        endereco: enderecoCompleto,
+        fotoUrl: urlFinal,
+      });
+
+      onClose();
+    } catch (error) {
+      console.error("Deu ruim ao salvar o perfil com foto:", error);
+    }
   };
 
   return (
@@ -150,7 +170,10 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
                       placeholder="00000-000"
                       required
                       shake={shakes.cep.shake}
-                      onBlur={() => trigger('cep')}
+                      onBlur={() => {
+                        trigger('cep');
+                        buscarCep(value);
+                      }}
                       onChange={(e) => { onChange(maskCEP(e.target.value)); clearShake('cep'); }}
                       status={errors.cep || shakes.cep.active ? 'erro' : touchedFields.cep ? 'sucesso' : ''}
                       error={errors.cep?.message || ''}
@@ -161,13 +184,18 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
               <button
                 type="button"
                 className={styles.btnNaoSeiCep}
-
-                // API do Correio para buscar um cep
                 onClick={() => window.open('https://buscacepinter.correios.com.br/app/endereco/index.php', '_blank')}
               >
                 Não sei meu CEP
               </button>
             </div>
+
+       {/* 📍 Exibe o resumo do endereço com o ícone do Lucide */}
+            {enderecoResumo && (
+              <p className="text-xs text-gray-500 mt-1 mb-2 flex items-center gap-1">
+                <MapPin size={14} /> {enderecoResumo}
+              </p>
+            )}
 
             <div className={styles.linhaRuaNumero}>
               <div className={styles.inputRua}>
@@ -218,6 +246,7 @@ export default function EditarPerfilModal({ usuario, onClose, onSalvar }: Editar
           <BtnPrincipal text="Salvar alterações" type="submit" />
         </form>
       </div>
+      
     </div>
   );
 }
