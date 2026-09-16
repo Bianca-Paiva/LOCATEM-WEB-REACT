@@ -297,6 +297,7 @@
 /* ============================= */
 @media (min-width: 320px) {
     .headerMobile {
+        width: 100%;
         padding: 16px 14px 24px;
         gap: 15px;
     }
@@ -371,6 +372,8 @@
         font-size: clamp(20px, 1.5vw, 26px);
         font-weight: 800;
         justify-self: start;
+        /* Fixa a coluna independente da barra de busca estar renderizada (locador não a exibe) */
+        grid-column: 1;
     }
 
     .logo img {
@@ -441,6 +444,9 @@
         justify-content: center;
         transition: background var(--transition-fast);
         text-decoration: none;
+        justify-self: end;
+        /* Fixa a coluna independente da barra de busca estar renderizada (locador não a exibe) */
+        grid-column: 3;
     }
 
     /* Desktop Nav */

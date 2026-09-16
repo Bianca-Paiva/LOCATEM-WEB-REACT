@@ -1,18 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Drill } from 'lucide-react';
-import type { Route } from '../../router/useRouter';
-import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
-import { useProdutoStore } from '../../hooks/Ferramentas/useProdutoStore';
+
+import type { ProdutoHome } from './HomeLocatario.types';
+import styles from './HomeLocatario.module.css';
+import type { Route } from '../../../router/useRouter';
+
+import type { ProdutoSelecionado } from '../../../context/Ferramentas/Produto/ProdutoContext';
+import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
 import {
   buscarFerramentasDisponiveis,
   type FerramentaDisponivel,
-} from '../../services/ferramentaservice';
-import Header from '../../components/Layout/Header/Header';
-import { Banner } from '../../components/Shared/Banner/Banner';
-import { CategoryFilter } from '../../components/Busca/CategoryFilter/CategoryFilter';
-import { ProductCard } from '../../components/Ferramentas/ProductCard/ProductCard';
-import type { ProdutoHome } from './Home.types';
-import styles from './Home.module.css';
+} from '../../../services/ferramentaservice';
+
+import Header from '../../../components/Layout/Header/Header';
+import { Banner } from '../../../components/Shared/Banner/Banner';
+import { CategoryFilter } from '../../../components/Busca/CategoryFilter/CategoryFilter';
+import { ProductCard } from '../../../components/Ferramentas/ProductCard/ProductCard';
+
 
 interface HomeProps {
   navigate: (route: Route) => void;

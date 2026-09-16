@@ -16,7 +16,7 @@ import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoProvider";
 // -------------------------------
 
 // Navegação Principal e Descoberta
-import Home from "./pages/Home/HomeLocatario";
+import Home from "./pages/Home/HomeLocatario/HomeLocatario";
 import Busca from "./pages/Busca/Busca";
 import ProdutoDetalhe from "./pages/Ferramentas/ProdutoDetalhe/ProdutoDetalhe";
 
@@ -48,6 +48,7 @@ import ProcessandoPagamento from "./pages/Checkout/FluxoPagamento/ProcessandoPag
 import PagamentoAprovado from "./pages/Checkout/FluxoPagamento/PagamentoAprovado/PagamentoAprovado";
 
 // Área do Locador (Quem disponibiliza a ferramenta)
+import HomeLocador from "./pages/Home/HomeLocador/HomeLocador";
 import MinhasFerramentas from "./pages/Ferramentas/MinhasFerramentas/MinhasFerramentas";
 import FerramentaDetalhe from "./pages/Ferramentas/FerramentaDetalhe/FerramentaDetalhe";
 import CadastroFerramenta from "./pages/Ferramentas/CadastroFerramenta/CadastroFerramenta";
@@ -101,6 +102,7 @@ export default function App() {
                   {route === "pagamentoAprovado" && <PagamentoAprovado navigate={navigate} />}
 
                   {/* Área do Locador (Quem disponibiliza a ferramenta) */}
+                  {route === "homeLocador" && <HomeLocador navigate={navigate} />}
                   {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
                   {route === "ferramentaDetalhe" && <FerramentaDetalhe navigate={navigate} />}
                   {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}

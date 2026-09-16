@@ -1,0 +1,55 @@
+.card {
+  background: var(--color-bg-card);
+  border-radius: 14px;
+  border: 1px solid #f3f4f6;
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.iconeWrapper {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.conteudo {
+  min-width: 0;
+}
+
+.label {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.valor {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.15;
+}
+
+.legenda {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.tendencia {
+  margin: 4px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #137333;
+}

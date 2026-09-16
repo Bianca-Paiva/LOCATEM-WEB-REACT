@@ -1,5 +1,5 @@
 import type { Produto } from '../types/Ferramentas/produto.types';
-import type { ProdutoHome } from '../pages/Home/Home.types';
+import type { ProdutoHome } from '../pages/Home/HomeLocatario/HomeLocatario.types';
 import type { ProdutoBusca } from '../pages/Busca/Busca.types';
 import type { ProdutoSemelhante } from '../pages/Ferramentas/ProdutoDetalhe/ProdutoDetalhe.types';
 import type { ProdutoSelecionado } from '../context/Ferramentas/Produto/ProdutoContext';

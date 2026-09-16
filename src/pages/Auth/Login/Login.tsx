@@ -59,8 +59,6 @@ export default function Login({ navigate }: LoginProps) {
         setError('')
 
         try {
-            // await loginUsuario({ email, senha })
-            // authService ainda não está integrado a um backend real (endpoint comentado acima), então resolvemos o usuário autenticado a partir do AuthContext, que por sua vez usa o catálogo mockado em mocks/usuarios.mock.ts.
             await loginUsuario({ email, senha })
             await login()
 

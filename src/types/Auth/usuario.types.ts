@@ -1,9 +1,3 @@
-/**
- * Tipos relacionados ao usuário autenticado (Locatário ou Locador).
- *
- * O projeto ainda não tem uma API real de autenticação (ver services/authService.ts, que possui os endpoints comentados), então esses tipos descrevem o formato que a resposta de login/cadastro deve ter quando essa integração for feita. Por enquanto, o AuthContext preenche esses dados a partir de mocks (ver mocks/usuarios.mock.ts).
- */
-
 /** Mesma nomenclatura já usada em Cadastro (CardOpcaoConta, cadastroSchema). */
 export type TipoUsuario = 'locatario' | 'locador';
 
@@ -25,6 +19,8 @@ export interface Usuario {
     endereco: string
     tipo: TipoUsuario
 
+    /** Vínculo com as ferramentas e locações do locador. */
+    locadorId?: string
     fotoUrl?: string
     emailVerificado?: boolean
     desde?: number

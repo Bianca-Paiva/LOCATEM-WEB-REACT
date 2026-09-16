@@ -1,21 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Usuario } from '../../types/Auth/usuario.types';
-import { atualizarPerfilUsuario, buscarUsuarioLogado } from '../../services/authService';
+import { atualizarPerfilUsuario, buscarUsuarioLogado, type UsuarioDaApi } from '../../services/authService';
 import { AuthContext, type AuthContextType } from './AuthContext';
-
-interface UsuarioDaApi {
-  id: number;
-  nome: string;
-  email: string;
-  telefone: string;
-  documento: string;
-  endereco?: string;
-  tipoUsuario: string;
-  fotoUrl?: string;
-  desde?: number;
-  reputacao?: Usuario['reputacao'];
-}
 
 function mapearUsuario(dados: UsuarioDaApi): Usuario {
   return {
@@ -27,6 +14,8 @@ function mapearUsuario(dados: UsuarioDaApi): Usuario {
     endereco: dados.endereco ?? '',
     tipo: dados.tipoUsuario.toLowerCase() as 'locatario' | 'locador',
     fotoUrl: dados.fotoUrl ?? undefined,
+    locadorId: dados.locadorId,
+    emailVerificado: dados.emailVerificado,
     desde: dados.desde,
     reputacao: dados.reputacao,
   };

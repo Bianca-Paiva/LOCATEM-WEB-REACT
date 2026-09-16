@@ -59,7 +59,8 @@ main {
 .esqueceuSenha {
     display: block;
     margin-left: auto;
-    color: #0a0a0a;
+    color: #000000;
+    text-decoration: underline;
     background-color: transparent;
     border: none;
     margin-bottom: 24px;

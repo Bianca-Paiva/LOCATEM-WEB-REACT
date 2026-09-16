@@ -11,6 +11,9 @@ const validRoutes = [
   "busca",
   "produtoDetalhe",
 
+  // Área do Locador (Quem disponibiliza a ferramenta) — Home exclusiva do locador
+  "homeLocador",
+
   // Autenticação e Acesso
   "login",
   "cadastro",

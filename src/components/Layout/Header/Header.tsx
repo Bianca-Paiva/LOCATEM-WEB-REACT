@@ -38,6 +38,12 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     // Autenticado -> avatar leva para o Perfil; não autenticado -> mantém o comportamento atual (leva para o Login).
     const rotaConta: Route = isAuthenticated ? 'perfil' : 'login'
 
+    // Home exclusiva por perfil: o locador tem seu próprio dashboard (HomeLocador) e nunca deve cair no marketplace do locatário — nem pelo logo, nem pelo item "Início" do menu.
+    const rotaInicio: Route = usuario?.tipo === 'locador' ? 'homeLocador' : 'home'
+
+    // O locador não realiza locações (não usa busca nem carrinho) — mesma regra de negócio já aplicada aos itens "Carrinho"/"Minhas Locações" do menu, aqui estendida à barra de busca e ao atalho de carrinho do header, que não passavam pelo filtro `perfis`.
+    const exibirBuscaECarrinho = usuario?.tipo !== 'locador'
+
     // Mesmo comportamento do botão "Sair da Conta" já existente no Perfil: encerra a sessão e volta pra Home.
     const handleLogout = () => {
         logout()
@@ -77,7 +83,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
     const navItems: NavItem[] = [
         {
             label: "Início",
-            route: "home", // aparece para: locador e locatário
+            route: rotaInicio, // locatário/visitante -> marketplace; locador -> HomeLocador
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:home" : "mdi:home-outline"}
@@ -215,23 +221,25 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         <a
                             href="../../pages/Home/Home.tsx"
                             className={styles.logo}
-                            onClick={e => { e.preventDefault(); navigate('home') }}
+                            onClick={e => { e.preventDefault(); navigate(rotaInicio) }}
                         >
                             <img src={logoIcon} alt="Logo LOCATEM" />
                             LOCATEM
                         </a>
                     </div>
                     <div className={styles.ladoDireito}>
-                        <a
-                            href="#"
-                            className={styles.carrinhoBtn}
-                            onClick={e => { e.preventDefault(); navigate('carrinho') }}
-                        >
-                            <Icon icon="mdi:cart-outline" width={24} height={24} />
-                            {quantidadeCarrinho > 0 && (
-                                <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
-                            )}
-                        </a>
+                        {exibirBuscaECarrinho && (
+                            <a
+                                href="#"
+                                className={styles.carrinhoBtn}
+                                onClick={e => { e.preventDefault(); navigate('carrinho') }}
+                            >
+                                <Icon icon="mdi:cart-outline" width={24} height={24} />
+                                {quantidadeCarrinho > 0 && (
+                                    <span className={styles.quantidadeCarrinho}>{quantidadeCarrinho}</span>
+                                )}
+                            </a>
+                        )}
 
                         <a
                             href="#"
@@ -247,25 +255,27 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                         </a>
                     </div>
                 </div>
-                <form className={styles.barraPesquisaMobile} onSubmit={handleSubmitBusca}>
-                    <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
-                    <input
-                        type="search"
-                        placeholder="Qual ferramenta você precisa hoje?"
-                        value={termoBusca}
-                        onChange={e => setTermoBusca(e.target.value)}
-                    />
-                    {termoBusca && (
-                        <button
-                            type="button"
-                            className={styles.limparBuscaBtn}
-                            aria-label="Limpar busca"
-                            onClick={() => setTermoBusca('')}
-                        >
-                            <X size={18} />
-                        </button>
-                    )}
-                </form>
+                {exibirBuscaECarrinho && (
+                    <form className={styles.barraPesquisaMobile} onSubmit={handleSubmitBusca}>
+                        <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
+                        <input
+                            type="search"
+                            placeholder="Qual ferramenta você precisa hoje?"
+                            value={termoBusca}
+                            onChange={e => setTermoBusca(e.target.value)}
+                        />
+                        {termoBusca && (
+                            <button
+                                type="button"
+                                className={styles.limparBuscaBtn}
+                                aria-label="Limpar busca"
+                                onClick={() => setTermoBusca('')}
+                            >
+                                <X size={18} />
+                            </button>
+                        )}
+                    </form>
+                )}
             </header>
 
             {/* ── DRAWER OVERLAY ── */}
@@ -285,7 +295,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                     <a
                         href="../../pages/Home/Home.tsx"
                         className={styles.menuLateralLogo}
-                        onClick={e => { e.preventDefault(); navigate('home'); setMenuOpen(false) }}
+                        onClick={e => { e.preventDefault(); navigate(rotaInicio); setMenuOpen(false) }}
                     >
                         <img src={logoIcon} alt="Logo LOCATEM" />
                         LOCATEM
@@ -347,32 +357,34 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                     <a
                         href="../../pages/Home/Home.tsx"
                         className={styles.logo}
-                        onClick={e => { e.preventDefault(); navigate('home') }}
+                        onClick={e => { e.preventDefault(); navigate(rotaInicio) }}
                     >
                         <img src={logoIcon} alt="Logo LOCATEM" />
                         LOCATEM
                     </a>
-                    <form className={styles.barraPesquisa} onSubmit={handleSubmitBusca}>
-                        <button type="submit" className={styles.lupaBtn}>
-                            <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
-                        </button>
-                        <input
-                            type="search"
-                            placeholder="Qual ferramenta você precisa hoje?"
-                            value={termoBusca}
-                            onChange={e => setTermoBusca(e.target.value)}
-                        />
-                        {termoBusca && (
-                            <button
-                                type="button"
-                                className={styles.limparBuscaBtn}
-                                aria-label="Limpar busca"
-                                onClick={() => setTermoBusca('')}
-                            >
-                                <X size={18} />
+                    {exibirBuscaECarrinho && (
+                        <form className={styles.barraPesquisa} onSubmit={handleSubmitBusca}>
+                            <button type="submit" className={styles.lupaBtn}>
+                                <Icon icon="mdi:magnify" width={20} height={20} opacity={0.55} />
                             </button>
-                        )}
-                    </form>
+                            <input
+                                type="search"
+                                placeholder="Qual ferramenta você precisa hoje?"
+                                value={termoBusca}
+                                onChange={e => setTermoBusca(e.target.value)}
+                            />
+                            {termoBusca && (
+                                <button
+                                    type="button"
+                                    className={styles.limparBuscaBtn}
+                                    aria-label="Limpar busca"
+                                    onClick={() => setTermoBusca('')}
+                                >
+                                    <X size={18} />
+                                </button>
+                            )}
+                        </form>
+                    )}
                     <a
                         href="#"
                         className={styles.loginBtn}

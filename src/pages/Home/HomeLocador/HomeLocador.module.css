@@ -1,0 +1,184 @@
+.pagina {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Minhas Ferramentas (Home): carrossel horizontal com Swiper ────── */
+
+.cartaoSecaoFerramentas {
+  min-width: 0;   /* impede que o conteúdo do Swiper alargue o cartão pai */
+  overflow: hidden; /* contém qualquer overflow lateral no nível do cartão */
+}
+
+.gradeFerramentasHome {
+  width: 100%;
+  max-width: 100%;
+  padding-bottom: 4px; /* espaço para a barra de rolagem/gesto não cobrir os cards */
+}
+
+.gradeFerramentasHomeSlide {
+  width: 200px;
+  flex-shrink: 0;
+  height: auto;
+}
+
+/* ── Cards de resumo ──────────────────────────────────────────────── */
+
+.gradeResumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  width: 100%;
+}
+
+/* Em telas largas o suficiente para as 5 colunas (5 * 220px + 4 * 16px de gap),
+   força as 5 colunas na mesma linha em vez de deixar "Avaliação média" sozinha
+   numa segunda linha por causa de um resto de espaço menor que 220px. */
+@media (min-width: 1240px) {
+  .gradeResumo {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.estrelasAvaliacao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.legenda {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* ── Seções (Solicitações Recentes / Agenda da Semana / Minhas Ferramentas) ── */
+
+.gradeSecoes {
+  width: 100%;
+  display: grid;
+  /* auto-fit + 1fr: com 2 seções elas dividem 50/50 o espaço disponível e
+     crescem junto com a página (sem ficarem estreitas com área vazia ao lado).
+     minmax(360px, 1fr) só define o mínimo antes de quebrar para 1 coluna. */
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.cartaoSecao {
+  background: var(--color-bg-card);
+  border: 1px solid #f3f4f6;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 0 auto;
+  min-width: 0;
+
+  /* NÃO deixar todos os cards com scroll */
+  overflow: hidden;
+}
+
+/* ── Minhas Ferramentas ───────────────────────── */
+
+.cartaoSecaoFerramentas {
+  width: 100%;
+  min-width: 0;
+}
+
+.gradeFerramentasScroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  cursor: grab;
+  user-select: none;
+
+  /* Firefox */
+  scrollbar-width: none;
+
+  /* Internet Explorer / Edge antigo */
+  -ms-overflow-style: none;
+}
+
+/* Chrome, Edge, Safari */
+.gradeFerramentasScroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Faz a grade crescer horizontalmente em vez de esmagar os cards */
+.gradeFerramentasScroll > div {
+  width: max-content;
+  min-width: 100%;
+}
+
+.cabecalhoSecao {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tituloSecao {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+}
+
+.subtituloSecao {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.linkVerMais,
+.linkVerMaisEstatico {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  white-space: nowrap;
+}
+
+.linkVerMais {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.linkVerMaisEstatico {
+  /* "Ver Mais" da Agenda da Semana: aparece no layout, mas ainda não navega para nenhum lugar (não existe página de agenda). */
+  cursor: default;
+  opacity: 0.8;
+}
+
+.listaSolicitacoes,
+.listaAgenda {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.estadoVazio {
+  margin: 0;
+  padding: 24px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+  .cabecalhoSecao {
+    flex-wrap: wrap;
+  }
+}

@@ -30,6 +30,8 @@ export interface UsuarioDaApi {
   endereco?: string;
   tipoUsuario: string;
   fotoUrl?: string;
+  locadorId?: string;
+  emailVerificado?: boolean;
   desde?: number;
   reputacao?: ReputacaoUsuario;
 }
@@ -51,6 +53,15 @@ export async function criarUsuario(payload: CadastroPayload): Promise<void> {
 }
 
 export async function loginUsuario(payload: LoginPayload): Promise<RespostaLogin> {
+  if (import.meta.env.DEV) {
+    const { autenticarUsuarioMock } = await import('../mocks/usuarios.mock');
+    const token = autenticarUsuarioMock(payload.email, payload.senha);
+    if (token) {
+      localStorage.setItem('token', token);
+      return { token };
+    }
+  }
+
   const response = await fetch(`${API_BASE}/Login/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -72,6 +83,14 @@ export async function loginUsuario(payload: LoginPayload): Promise<RespostaLogin
 
 export async function buscarUsuarioLogado(): Promise<UsuarioDaApi> {
   const token = localStorage.getItem('token');
+  if (import.meta.env.DEV) {
+    const { buscarUsuarioMockPorToken } = await import('../mocks/usuarios.mock');
+    const usuario = buscarUsuarioMockPorToken(token);
+    if (usuario) {
+      return { ...usuario, tipoUsuario: usuario.tipo };
+    }
+  }
+
   const response = await fetch(`${API_BASE}/Usuarios/me`, {
     method: 'GET',
     headers: { Authorization: `Bearer ${token}` },
