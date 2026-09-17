@@ -1,4 +1,4 @@
-import type { Produto } from '../types/Produto/produto.types';
+import type { Produto } from '../types/Ferramentas/produto.types';
 
 /**
  * Catálogo central de produtos (ferramentas) mockados.
@@ -14,7 +14,7 @@ import type { Produto } from '../types/Produto/produto.types';
 export const PRODUTOS_MOCK: Produto[] = [
     {
         id: 1,
-        title: 'Furadeira Parafusadeira Sem Fio A Bateria Tb-12e 12v',
+        title: 'Furadeira Parafusadeira Sem Fio A Bateria The Black Tools',
         marca: 'The Black Tools',
         price: '25,00',
         images: [
@@ -27,11 +27,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.8,
         reviewCount: 124,
         locador: 'MS Ferramentas',
+        locadorId: 'loc-ms',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Parafusadeira/Furadeira',
         estoqueDisponivel: 5,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        status: 'disponivel',
+        cadastradoEm: '03/01/2026',
         voltagem: 'À bateria',
         descricao: 'Furadeira parafusadeira compacta a bateria 12V, ideal para montagem de móveis, fixação de prateleiras e pequenos reparos domésticos. Leve e de fácil manuseio, entrega torque suficiente para madeira e metais finos sem o peso das furadeiras profissionais.',
         especificacoes: [
@@ -51,7 +54,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 2,
-        title: 'Pistola de Pintura Sucção 1000ml 3 Bicos 1.2 1.5 1.8 BTPT1100 Profissional',
+        title: 'Pistola de Pintura Sucção The Black Tools',
         marca: 'The Black Tools',
         price: '35,00',
         images: [
@@ -63,11 +66,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.2,
         reviewCount: 87,
         locador: 'WZ Ferramentas',
+        locadorId: 'loc-wz',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Pintura',
         estoqueDisponivel: 4,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: true,
+        status: 'disponivel',
+        cadastradoEm: '15/01/2026',
         voltagem: 'Pneumática',
         descricao: 'Pistola de pintura por sucção com reservatório de 1000ml, indicada para pintura de portões, muros, móveis e superfícies grandes. Acompanha 3 bicos intercambiáveis para ajustar a viscosidade da tinta. Requer compressor de ar (não incluso).',
         especificacoes: [
@@ -87,7 +93,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 3,
-        title: 'Parafusadeira Furadeira de Impacto Hanabi CY-3003 Brushless 2 Baterias 21v Cor Azul-petróleo Frequência 60hz 45N·m com 25 níveis de ajuste',
+        title: 'Parafusadeira Furadeira de Impacto Hanabi',
         marca: 'Hanabi',
         price: '38,00',
         images: [
@@ -99,11 +105,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.7,
         reviewCount: 201,
         locador: 'JB Ferramentas',
+        locadorId: 'loc-jb',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Parafusadeira/Furadeira',
         estoqueDisponivel: 3,
         paymentMethods: ['Pix'],
         available: true,
+        status: 'disponivel',
+        cadastradoEm: '20/01/2026',
         voltagem: 'À bateria',
         descricao: 'Parafusadeira/furadeira de impacto profissional com motor brushless (sem escovas), 45N·m de torque e 25 níveis de ajuste. Acompanha 2 baterias para uso contínuo. Perfura madeira, metal e alvenaria com função de impacto, ideal para reformas e montagem de móveis planejados.',
         especificacoes: [
@@ -124,7 +133,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 4,
-        title: 'Aparador De Grama Bipartido 1500w Apb1500t Tramontina Jardim',
+        title: 'Aparador De Grama Bipartido Tramontina',
         marca: 'Tramontina',
         price: '40,00',
         images: [
@@ -136,11 +145,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.1,
         reviewCount: 45,
         locador: 'JB Ferramentas',
+        locadorId: 'loc-jb',
         localizacao: 'São Paulo - SP',
         categoria: 'Jardinagem e Paisagismo',
         estoqueDisponivel: 6,
         paymentMethods: ['Cartão de Crédito'],
         available: true,
+        status: 'disponivel',
+        cadastradoEm: '22/01/2026',
         voltagem: '220V',
         descricao: 'Aparador de grama elétrico bipartido, ideal para acabamentos precisos em cantos e áreas de difícil acesso que o cortador tradicional não alcança. Braço bipartido facilita o armazenamento, e o abastecimento automático de fio evita interrupções durante o uso.',
         especificacoes: [
@@ -161,7 +173,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 5,
-        title: 'Cortador De Grama 2500w Ce45m Tramontina Cor Laranja E Preto',
+        title: 'Cortador De Grama Tramontina',
         marca: 'Tramontina',
         price: '70,00',
         images: [
@@ -173,11 +185,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.3,
         reviewCount: 62,
         locador: 'JB Ferramentas',
+        locadorId: 'loc-jb',
         localizacao: 'São Paulo - SP',
         categoria: 'Jardinagem e Paisagismo',
         estoqueDisponivel: 5,
         paymentMethods: ['Pix'],
-        available: true,
+        available: false,
+        status: 'locada',
+        cadastradoEm: '25/01/2026',
         voltagem: '220V',
         descricao: 'Cortador de grama elétrico com chassi metálico e motor de 2500W, indicado para gramados de até 2.500m². Possui 4 alturas de corte reguláveis, rodas revestidas de borracha e lâmina posicionada acima do chassi para maior segurança do operador.',
         especificacoes: [
@@ -198,7 +213,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 6,
-        title: 'Serra Circular Profissional 1800w Motor Cobre Puro 185mm Base De Aço Com Laser E Disco 24 Dentes Corte 220v Desoon',
+        title: 'Serra Circular Profissional 220v Desoon',
         marca: 'Desoon',
         price: '55,00',
         images: [
@@ -210,11 +225,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.6,
         reviewCount: 153,
         locador: 'JB Ferramentas',
+        locadorId: 'loc-jb',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Corte e Desgaste',
         estoqueDisponivel: 2,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
-        available: true,
+        available: false,
+        status: 'manutencao',
+        cadastradoEm: '28/01/2026',
         voltagem: '220V',
         descricao: 'Serra circular profissional com motor de cobre puro 1800W e disco de 185mm com 24 dentes, ideal para cortes retos e angulados em madeira, compensado e MDF. Guia a laser auxilia a precisão do corte e a base de aço garante estabilidade em bancada.',
         especificacoes: [
@@ -235,7 +253,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 7,
-        title: 'Parafusadeira A Bateria Wap Sem Fio 12k3.2 + Maleta E Brocas',
+        title: 'Parafusadeira A Bateria Wap Sem Fio + Maleta E Brocas',
         marca: 'WAP',
         price: '20,00',
         images: [
@@ -247,11 +265,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 3.9,
         reviewCount: 27,
         locador: 'JB Ferramentas',
+        locadorId: 'loc-jb',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Parafusadeira/Furadeira',
         estoqueDisponivel: 5,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
         available: false,
+        status: 'indisponivel',
+        cadastradoEm: '30/01/2026',
         voltagem: 'À bateria',
         descricao: 'Parafusadeira e furadeira compacta a bateria 12V, indicada para pequenas reformas e manutenção doméstica. Vem com maleta organizadora e kit de brocas e bits, com seletor de torque de 18 níveis para parafusar e 1 nível para perfurar.',
         especificacoes: [
@@ -271,7 +292,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 8,
-        title: 'Furadeira Industrial Impacto Rev 450w Gsb 450 Re Bosch + Kit',
+        title: 'Furadeira Industrial Impacto Rev Bosch + Kit',
         marca: 'Bosch',
         price: '45,00',
         images: [
@@ -283,11 +304,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.5,
         reviewCount: 98,
         locador: 'MS Ferramentas',
+        locadorId: 'loc-ms',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Parafusadeira/Furadeira',
         estoqueDisponivel: 4,
         paymentMethods: ['Cartão de Crédito'],
-        available: true,
+        available: false,
+        status: 'locada',
+        cadastradoEm: '02/02/2026',
         voltagem: '220V',
         descricao: 'Furadeira de impacto Bosch GSB 450 RE, compacta e reversível, perfura com e sem impacto em concreto, madeira e metal. Botão comutador permite alternar entre furação e parafusamento, com botão-trava para trabalhos contínuos sem fadiga.',
         especificacoes: [
@@ -308,7 +332,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 9,
-        title: 'Serra Mármore 4.3/8 Pol 1.300w + 2 Discos 4100nh3zx2 Makita',
+        title: 'Serra Mármore Makita',
         marca: 'Makita',
         price: '65,00',
         images: [
@@ -320,11 +344,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.4,
         reviewCount: 76,
         locador: 'MS Ferramentas',
+        locadorId: 'loc-ms',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Corte e Desgaste',
         estoqueDisponivel: 3,
         paymentMethods: ['Cartão de Crédito', 'Pix'],
-        available: true,
+        available: false,
+        status: 'manutencao',
+        cadastradoEm: '05/02/2026',
         voltagem: '220V',
         descricao: 'Serra mármore Makita 4100NH3ZX2, compacta e leve, indicada para corte de mármore, granito, porcelanato, concreto e tijolos. Dupla isolação e estrutura reforçada garantem segurança em trabalhos de marmoraria e construção civil.',
         especificacoes: [
@@ -345,7 +372,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 10,
-        title: 'Lixadeira Orbital 320w 14000 Rpm 5 Pol.',
+        title: 'Lixadeira Orbital Deko',
         marca: 'Deko',
         price: '25,00',
         images: [
@@ -357,11 +384,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 3.8,
         reviewCount: 34,
         locador: 'WZ Ferramentas',
+        locadorId: 'loc-wz',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Corte e Desgaste',
         estoqueDisponivel: 6,
         paymentMethods: ['Pix'],
         available: true,
+        status: 'disponivel',
+        cadastradoEm: '08/02/2026',
         voltagem: '127V',
         descricao: 'Lixadeira roto-orbital Deko DKOS32G125, combina rotação e vibração para um acabamento mais uniforme em madeira, funilaria e pequenos reparos de pintura. Troca de lixas por velcro e coletor de pó para manter o ambiente mais limpo.',
         especificacoes: [
@@ -381,7 +411,7 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 11,
-        title: 'Lixadeira Teto E Parede Telescópica Profissional Com Led E Saco Coletor The Black Tools Btl750 750w',
+        title: 'Lixadeira Teto E Parede Telescópica Profissional Com Led E Saco Coletor The Black Tools',
         marca: 'The Black Tools',
         price: '50,00',
         images: [
@@ -393,11 +423,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.0,
         reviewCount: 51,
         locador: 'WZ Ferramentas',
+        locadorId: 'loc-wz',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Corte e Desgaste',
         estoqueDisponivel: 4,
         paymentMethods: ['Cartão de Crédito'],
         available: false,
+        status: 'indisponivel',
+        cadastradoEm: '10/02/2026',
         voltagem: '127V',
         descricao: 'Lixadeira telescópica para teto e parede, com iluminação LED integrada e saco coletor de pó, indicada para lixamento de massa corrida e gesso antes da pintura. Haste extensível dispensa o uso de escadas em pés-direitos altos.',
         especificacoes: [
@@ -417,8 +450,8 @@ export const PRODUTOS_MOCK: Produto[] = [
     },
     {
         id: 12,
-        title: 'Pistola Pintura Gravidade 600ml + 3 Bicos 1.2 1.5 1.8 Stels',
-        marca: 'Stels',
+        title: 'Pistola Pintura Gravidade 600ml + 3 Bicos The Black Tools',
+        marca: 'The Black Tools',
         price: '30,00',
         images: [
             'src/assets/ProdutosImg/pistolaPintura2.png',
@@ -429,11 +462,14 @@ export const PRODUTOS_MOCK: Produto[] = [
         rating: 4.0,
         reviewCount: 51,
         locador: 'WZ Ferramentas',
+        locadorId: 'loc-wz',
         localizacao: 'São Paulo - SP',
         categoria: 'Ferramentas Elétricas • Pintura',
         estoqueDisponivel: 4,
         paymentMethods: ['Cartão de Crédito'],
         available: false,
+        status: 'locada',
+        cadastradoEm: '12/02/2026',
         voltagem: 'Pneumática',
         descricao: 'Pistola de pintura por gravidade com reservatório de 600ml, indicada para pintura de móveis, portas e peças menores que exigem mais precisão que a pistola de sucção. Acompanha 3 bicos para diferentes viscosidades de tinta. Requer compressor de ar (não incluso).',
         especificacoes: [

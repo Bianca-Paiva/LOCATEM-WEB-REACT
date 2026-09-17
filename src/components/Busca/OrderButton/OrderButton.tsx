@@ -1,4 +1,4 @@
-import FormSelect from '../../Inputs/FormSelect/FormSelect';
+import FormSelect from '../../Shared/Inputs/FormSelect/FormSelect';
 import styles from './OrderButton.module.css';
 
 interface Option {

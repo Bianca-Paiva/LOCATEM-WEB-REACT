@@ -1,0 +1,125 @@
+import { useState } from "react";
+import styles from "./InformeEmail.module.css";
+import AuthHeader from "../../../../components/Layout/Header/AuthHeader/AuthHeader";
+import Etapas from "../../../../components/Auth/RecuperarSenha/Etapas/Etapas";
+import PageHeader from "../../../../components/Auth/RecuperarSenha/PageHeader/PageHeader";
+import FormInput from "../../../../components/Shared/Inputs/FormInput/FormInput";
+import BtnPrincipal from "../../../../components/Botoes/BtnPrincipal/BtnPrincipal";
+import FooterLink from "../../../../components/Auth/RecuperarSenha/FooterLink/FooterLink";
+import type { Route } from "../../../../router/useRouter";
+
+interface RecuperarSenhaProps {
+    navigate: (route: Route) => void;
+}
+
+export default function RecuperarSenha({ navigate }: RecuperarSenhaProps) {
+    const [email, setEmail] = useState("");
+    const [showError, setShowError] = useState(false);
+
+    // Função que valida o formato do e-mail
+    const validateEmail = (email: string) => {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    };
+
+    // Função executada ao clicar no botão Enviar
+    const handleSendEmail = () => {
+        if (!validateEmail(email)) {
+            setShowError(true); // Ativa o erro no input
+            return;
+        }
+
+        // Se passou na validação:
+        setShowError(false);
+
+        // --- LÓGICA DE SIMULAÇÃO DE E-MAIL ---
+        // Gera um código aleatório de 5 dígitos (entre 10000 e 99999)
+        const tokenGerado = Math.floor(10000 + Math.random() * 90000).toString();
+
+        // SALVA O TOKEN NO NAVEGADOR (Adicione esta linha!)
+        localStorage.setItem("codigo_recuperacao", tokenGerado);
+
+        // Exibe no terminal/console do navegador
+        console.log("=====================================");
+        console.log("E-MAIL ENVIADO COM SUCESSO!");
+        console.log(`Destinatário: ${email}`);
+        console.log(`Código de verificação: ${tokenGerado}`);
+        console.log("=====================================");
+
+        // Redireciona o usuário para a tela do token
+        navigate("informeToken");
+    };
+
+    return (
+        <>
+            <AuthHeader navigate={navigate} />
+
+            <main className={styles.main}>
+                <Etapas currentStep={1} />
+
+                <PageHeader
+                    title="Informe seu e-mail"
+                    subtitle="Digite o e-mail associado à sua conta. Enviaremos um token para recuperação da senha."
+                />
+
+                <div className={styles.Input}>
+                    <FormInput
+                        id="email"
+                        label="E-mail"
+                        type="email"
+                        placeholder="seu@email.com"
+                        value={email}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (showError) setShowError(false); // Limpa o erro ao digitar
+                        }}
+                        required
+                        status={showError ? "erro" : ""} // Fica vermelho se houver erro
+                        error={
+                            showError ? "Preencha de forma correta para continuar" : undefined
+                        } // Mostra o texto do erro
+                    />
+
+                    <div className={styles.btnEnviar}>
+                        <BtnPrincipal
+                            text="Enviar e-mail"
+                            onClick={handleSendEmail}
+                            type="button"
+                        />
+                    </div>
+                </div>
+
+                {/* CONTAINER DO RODAPÉ */}
+                <div className={styles.footerLinksContainer}>
+                    <FooterLink
+                        text="Precisa de ajuda?"
+                        linkText="Entre em contato com o suporte."
+                        onClick={() => {
+                            alert("Esta funcionalidade está em desenvolvimento.");
+                        }}
+                    />
+
+                    {/* Linha divisória com o "ou" */}
+                    <div className={styles.divider}>ou</div>
+
+                    {/* Links inferiores lado a lado */}
+                    <div className={styles.bottomLinks}>
+                        <FooterLink
+                            text="Lembrou sua senha?"
+                            linkText="Entrar na minha conta"
+                            onClick={() => navigate("login")}
+                        />
+
+                        <span className={styles.bullet}>•</span>
+
+                        <FooterLink
+                            text="Ainda não tem conta?"
+                            linkText="Criar nova conta"
+                            onClick={() => navigate("cadastro")}
+                        />
+                    </div>
+                </div>
+            </main>
+        </>
+    );
+}

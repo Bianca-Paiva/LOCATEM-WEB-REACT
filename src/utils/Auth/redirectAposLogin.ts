@@ -5,9 +5,7 @@ import type { Route } from '../../router/useRouter';
 
 export const CHAVE_REDIRECT_APOS_LOGIN = 'locatem_redirect_apos_login';
 
-// Pontos de entrada que precisam desse redirecionamento: o Carrinho (botão "Continuar
-// para Pagamento") e a página de detalhe do produto (botão "Continuar" do modal de
-// Detalhes da Locação, ao clicar em "Locar agora"), ambos com o usuário deslogado.
+// Pontos de entrada que precisam desse redirecionamento: o Carrinho (botão "Continuar para Pagamento") e a página de detalhe do produto (botão "Continuar" do modal de Detalhes da Locação, ao clicar em "Locar agora"), ambos com o usuário deslogado.
 const ROTAS_VALIDAS: Route[] = ['carrinho', 'produtoDetalhe'];
 
 /** Marca para onde o usuário deve ser levado de volta assim que concluir o login. */

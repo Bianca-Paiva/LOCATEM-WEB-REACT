@@ -1,25 +1,37 @@
 const API_BASE = 'http://localhost:5033/api';
 
-export async function buscarFerramentasDisponiveis(): Promise<any[]> {
-    const token = localStorage.getItem('token');
-    
-    // Se não tiver token, nem tenta buscar (ou você pode tratar isso se a Home for pública depois)
-    if (!token) {
-        throw new Error('Usuário não autenticado');
-    }
+export interface FerramentaDisponivel {
+  ferramentaId: number;
+  nome: string;
+  marca?: string;
+  diaria?: number;
+  categoriaId?: number;
+  categoria?: {
+    nome?: string;
+  };
+  usuario?: {
+    nome?: string;
+  };
+}
 
-    const response = await fetch(`${API_BASE}/Ferramenta/Disponiveis`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-        }
-    });
+export async function buscarFerramentasDisponiveis(): Promise<FerramentaDisponivel[]> {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('Usuário não autenticado');
+  }
 
-    if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || 'Erro ao buscar ferramentas');
-    }
+  const response = await fetch(`${API_BASE}/Ferramenta/Disponiveis`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  });
 
-    return await response.json();
+  const text = await response.text();
+  if (!response.ok) {
+    throw new Error(text || 'Erro ao buscar ferramentas');
+  }
+
+  return (text ? JSON.parse(text) : []) as FerramentaDisponivel[];
 }

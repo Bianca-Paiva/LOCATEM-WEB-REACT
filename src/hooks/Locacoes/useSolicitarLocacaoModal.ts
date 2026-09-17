@@ -1,21 +1,21 @@
 import { useMemo, useState } from 'react';
-import type { ProdutoSelecionado } from '../../context/Produto/ProdutoContext';
+import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
 import {
     PRAZO_APROVACAO_HORAS,
     PRAZO_PAGAMENTO_HORAS,
-} from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+} from '../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import type {
     LocacaoModalFormState,
     ResumoLocacaoModalCalculado,
     DadosLocacaoModal,
-} from '../../components/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
+} from '../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import {
     adicionarDias,
     adicionarHorasAPartirDeAgora,
     formatarDataBr,
     getHojeIso,
     parseDataIso,
-} from '../../utils/Locacao/dataLocacao';
+} from '../../utils/Locacoes/dataLocacao';
 
 // ── Helpers de moeda/horário (equivalentes aos de useSolicitarLocacao.ts) ──
 

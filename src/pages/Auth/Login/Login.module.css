@@ -1,0 +1,113 @@
+main {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    width: 100%;
+    max-width: 560px;
+    padding: 40px 40px;
+    border-radius: 20px;
+    background-color: var(--color-bg-card);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; 
+}
+
+.errorMsg {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0 0 10px;
+    color: #B42318;
+    line-height: 1.4;
+}
+
+.errorMsg svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: #B42318;
+}
+
+.errorTextos {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+}
+
+.errorTextos strong {
+    color: #B42318;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.errorTextos span {
+    color: #9F3A32;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.esqueceuSenha {
+    display: block;
+    margin-left: auto;
+    color: #000000;
+    text-decoration: underline;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 24px;
+}
+
+.esqueceuSenha:hover{
+    text-decoration: underline;
+}
+
+.btnEntrar {
+    width: 100%;
+    height: 55px;
+    border: none;
+    border-radius: 16px;
+    background-color: #FFCA00;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 4px;
+}
+
+.btnEntrar:hover:not(:disabled) {
+    background-color: #e6b800;
+}
+
+.btnEntrar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.semConta {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333333d7;
+}
+
+.semConta button {
+    border: none;
+    background-color: transparent;
+    color: #0a0a0a;
+    font-weight: 500;
+}
+
+.semConta button:hover {
+    text-decoration: underline;
+}

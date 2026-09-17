@@ -1,0 +1,297 @@
+import { useState } from 'react';
+import { Icon } from '@iconify/react';
+
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
+import SecaoCard from '../../../components/Ferramentas/CadastroFerramenta/SecaoCard/SecaoCard';
+import FotosFerramenta from '../../../components/Ferramentas/CadastroFerramenta/FotosFerramenta/FotosFerramenta';
+import InformacoesBasicas from '../../../components/Ferramentas/CadastroFerramenta/InformacoesBasicas/InformacoesBasicas';
+import DescricaoFerramenta from '../../../components/Ferramentas/CadastroFerramenta/DescricaoFerramenta/DescricaoFerramenta';
+import EspecificacoesTecnicasForm from '../../../components/Ferramentas/CadastroFerramenta/EspecificacoesTecnicasForm/EspecificacoesTecnicasForm';
+import Precificacao from '../../../components/Ferramentas/CadastroFerramenta/Precificacao/Precificacao';
+import AcessoriosInclusos from '../../../components/Ferramentas/CadastroFerramenta/AcessoriosInclusos/AcessoriosInclusos';
+import CalendarioDisponibilidade from '../../../components/Ferramentas/CadastroFerramenta/CalendarioDisponibilidade/CalendarioDisponibilidade';
+import AprovacaoLocacao from '../../../components/Ferramentas/CadastroFerramenta/AprovacaoLocacao/AprovacaoLocacao';
+import EnderecoRetirada from '../../../components/Ferramentas/CadastroFerramenta/EnderecoRetirada/EnderecoRetirada';
+import SuccessModal from '../../../components/Shared/SuccessModal/SucessesModal';
+import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
+import BtnPrincipal from '../../../components/Botoes/BtnPrincipal/BtnPrincipal';
+import BtnNegativo from '../../../components/Botoes/BtnNegativo/BtnNegativo';
+
+import { useCadastroFerramenta } from '../../../hooks/Ferramentas/useCadastroFerramenta';
+import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
+import { useAuth } from '../../../hooks/Auth/useAuth';
+import styles from './CadastroFerramenta.module.css';
+
+import type { Route } from '../../../router/useRouter';
+
+interface CadastroFerramentaProps {
+  navigate: (route: Route) => void;
+}
+
+
+export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps) {
+  const { usuario } = useAuth();
+  const { produtos, adicionarProduto, atualizarProduto, ferramentaSelecionadaId, setFerramentaSelecionadaId } =
+    useCatalogoStore();
+
+  // Modo edição: se há uma ferramenta selecionada (via "Editar" em Minhas Ferramentas ou no Detalhe da Ferramenta) e ela pertence ao locador logado, o formulário abre pré-preenchido e o botão principal passa a salvar as alterações nela.
+  const produtoEmEdicao =
+    ferramentaSelecionadaId !== null
+      ? produtos.find((p) => p.id === ferramentaSelecionadaId && p.locadorId === usuario?.locadorId)
+      : undefined;
+
+  const { form, setCampo, toggleDiaIndisponivel, erros, formularioCompleto, montarProduto } =
+    useCadastroFerramenta(produtoEmEdicao);
+
+  const [tentouPublicar, setTentouPublicar] = useState(false);
+  const [shake, setShake] = useState(false);
+  const [modalAberto, setModalAberto] = useState(false);
+  const [confirmCancelarAberto, setConfirmCancelarAberto] = useState(false);
+
+  const handleAbrirConfirmCancelar = () => setConfirmCancelarAberto(true);
+  const handleFecharConfirmCancelar = () => setConfirmCancelarAberto(false);
+
+  const handleCancelar = () => {
+    setFerramentaSelecionadaId(null);
+    navigate('minhasFerramentas');
+  };
+
+  const handleConfirmarCancelar = () => {
+    setConfirmCancelarAberto(false);
+    handleCancelar();
+  };
+
+  const handlePublicar = () => {
+    if (!formularioCompleto) {
+      setTentouPublicar(true);
+      setShake(true);
+
+      const primeiroIdComErro = Object.keys(erros).find(
+        (chave) => erros[chave as keyof typeof erros] !== undefined,
+      );
+
+      if (primeiroIdComErro) {
+        const elemento = document.getElementById(primeiroIdComErro);
+        elemento?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      setTimeout(() => setShake(false), 400);
+      return;
+    }
+
+    const locadorInfo = {
+      nome: produtoEmEdicao?.locador ?? usuario?.nome ?? 'Você',
+      locadorId: produtoEmEdicao?.locadorId ?? usuario?.locadorId ?? '',
+    };
+
+    if (produtoEmEdicao) {
+      atualizarProduto(produtoEmEdicao.id, montarProduto(locadorInfo));
+    } else {
+      adicionarProduto(montarProduto(locadorInfo));
+    }
+
+    setModalAberto(true);
+  };
+
+  return (
+    <>
+      <Header navigate={navigate} currentRoute="minhasFerramentas" />
+
+      <main className={styles.pagina}>
+        <CabecalhoPagina
+          titulo={produtoEmEdicao ? 'Editar Ferramenta' : 'Cadastrar Ferramenta'}
+          subtitulo={
+            produtoEmEdicao
+              ? 'Atualize as informações da sua ferramenta.'
+              : 'Preencha as informações abaixo para publicar sua ferramenta para aluguel.'
+          }
+        />
+
+        <div className={styles.grid}>
+          {/* ── Coluna esquerda ── */}
+          <div className={styles.coluna}>
+            <SecaoCard
+              icone={<Icon icon="mdi:camera-outline" width={20} height={20} />}
+              titulo="Fotos da Ferramenta"
+              obrigatorio
+              subtitulo="Adicione fotos de qualidade para atrair mais locatários."
+            >
+              <FotosFerramenta
+                fotos={form.fotos}
+                onChange={(fotos) => setCampo('fotos', fotos)}
+                error={tentouPublicar ? erros.fotos : undefined}
+                shake={shake && Boolean(erros.fotos)}
+              />
+            </SecaoCard>
+
+            <SecaoCard
+              icone={<Icon icon="mdi:file-document-outline" width={20} height={20} />}
+              titulo="Informações Básicas"
+              obrigatorio
+              subtitulo="Dados principais da sua ferramenta."
+            >
+              <InformacoesBasicas
+                form={form}
+                onChangeCampo={setCampo}
+                erros={{
+                  nome: tentouPublicar ? erros.nome : undefined,
+                  marca: tentouPublicar ? erros.marca : undefined,
+                  modelo: tentouPublicar ? erros.modelo : undefined,
+                  categoria: tentouPublicar ? erros.categoria : undefined,
+                  estadoConservacao: tentouPublicar ? erros.estadoConservacao : undefined,
+                  fonteAlimentacao: tentouPublicar ? erros.fonteAlimentacao : undefined,
+                }}
+                shake={shake}
+              />
+            </SecaoCard>
+
+            <SecaoCard
+              icone={<Icon icon="mdi:file-document-edit-outline" width={20} height={20} />}
+              titulo="Descrição"
+              obrigatorio
+              subtitulo="Descreva seu equipamento com detalhes para atrair locatários."
+            >
+              <DescricaoFerramenta
+                value={form.descricao}
+                onChange={(valor) => setCampo('descricao', valor)}
+                error={tentouPublicar ? erros.descricao : undefined}
+                shake={shake && Boolean(erros.descricao)}
+              />
+            </SecaoCard>
+
+            <SecaoCard
+              icone={<Icon icon="mdi:tune-variant" width={20} height={20} />}
+              titulo="Especificações Técnicas"
+              obrigatorio
+              subtitulo="Adicione dados técnicos detalhados da ferramenta."
+            >
+              <EspecificacoesTecnicasForm
+                especificacoes={form.especificacoes}
+                onChange={(especificacoes) => setCampo('especificacoes', especificacoes)}
+                erroPublicacao={tentouPublicar ? erros.especificacoes : undefined}
+              />
+            </SecaoCard>
+
+            <SecaoCard
+              icone={<Icon icon="mdi:clipboard-check-outline" width={20} height={20} />}
+              titulo="Aprovação da locação"
+              obrigatorio
+              subtitulo="Defina como as solicitações de locação serão aprovadas."
+            >
+              <AprovacaoLocacao
+                tipoAprovacao={form.tipoAprovacao}
+                onChange={(valor) => setCampo('tipoAprovacao', valor)}
+                error={tentouPublicar ? erros.tipoAprovacao : undefined}
+                shake={shake && Boolean(erros.tipoAprovacao)}
+              />
+            </SecaoCard>
+
+          </div>
+
+          {/* ── Coluna direita ── */}
+          <div className={styles.coluna}>
+            <SecaoCard
+              icone={<Icon icon="mdi:currency-usd" width={20} height={20} />}
+              titulo="Precificação"
+              obrigatorio
+              subtitulo="Defina os valores de locação e caução."
+            >
+              <Precificacao
+                valorDiaria={form.valorDiaria}
+                caucao={form.caucao}
+                onChangeValorDiaria={(valor) => setCampo('valorDiaria', valor)}
+                onChangeCaucao={(valor) => setCampo('caucao', valor)}
+                error={tentouPublicar ? erros.valorDiaria : undefined}
+                shake={shake}
+              />
+            </SecaoCard>
+
+            <SecaoCard
+              icone={<Icon icon="mdi:toolbox-outline" width={20} height={20} />}
+              titulo="Acessórios Inclusos"
+              subtitulo="Informe os itens que acompanham a ferramenta."
+            >
+              <AcessoriosInclusos
+                acessorios={form.acessorios}
+                onChange={(acessorios) => setCampo('acessorios', acessorios)}
+              />
+            </SecaoCard>
+
+            <SecaoCard
+              icone={<Icon icon="mdi:calendar-month-outline" width={20} height={20} />}
+              titulo="Disponibilidade"
+              obrigatorio
+              subtitulo="Marque os dias em que a ferramenta não estará disponível."
+            >
+              <CalendarioDisponibilidade
+                diasIndisponiveis={form.diasIndisponiveis}
+                onToggleDia={toggleDiaIndisponivel}
+              />
+            </SecaoCard>
+
+            <SecaoCard
+              icone={<Icon icon="mdi:map-marker-outline" width={20} height={20} />}
+              titulo="Endereço de Retirada e Devolução"
+              obrigatorio
+              subtitulo="Local onde o locatário poderá retirar a ferramenta."
+            >
+              <EnderecoRetirada
+                form={form}
+                onChangeCampo={setCampo}
+                erros={{
+                  cep: tentouPublicar ? erros.cep : undefined,
+                  ruaAvenida: tentouPublicar ? erros.ruaAvenida : undefined,
+                  numero: tentouPublicar ? erros.numero : undefined,
+                }}
+                shake={shake}
+              />
+            </SecaoCard>
+          </div>
+        </div>
+
+        <div className={styles.acoes}>
+          <BtnNegativo type="button" onClick={handleAbrirConfirmCancelar}>
+            Cancelar
+          </BtnNegativo>
+          <BtnPrincipal
+            type="button"
+            onClick={handlePublicar}
+            text={produtoEmEdicao ? 'Salvar Alterações' : 'Publicar Ferramenta'}
+          />
+        </div>
+      </main>
+
+      <ConfirmModal
+        open={confirmCancelarAberto}
+        title="Cancelar cadastro"
+        message={
+          produtoEmEdicao
+            ? 'Tem certeza que deseja cancelar? As alterações feitas nesta ferramenta serão perdidas.'
+            : 'Tem certeza que deseja cancelar? As informações preenchidas serão perdidas.'
+        }
+        confirmLabel="Sim, cancelar"
+        cancelLabel="Continuar editando"
+        onConfirm={handleConfirmarCancelar}
+        onCancel={handleFecharConfirmCancelar}
+      />
+
+      <SuccessModal
+        open={modalAberto}
+        title={produtoEmEdicao ? 'Ferramenta atualizada!' : 'Ferramenta publicada!'}
+        message={
+          produtoEmEdicao
+            ? 'As alterações foram salvas com sucesso.'
+            : 'Sua ferramenta já está disponível para locação.'
+        }
+        buttonText="Ver minhas ferramentas"
+        onConfirm={() => {
+          setFerramentaSelecionadaId(null);
+          navigate('minhasFerramentas');
+        }}
+      />
+    </>
+  );
+}

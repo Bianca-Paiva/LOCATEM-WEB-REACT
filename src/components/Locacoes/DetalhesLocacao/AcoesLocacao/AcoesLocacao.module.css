@@ -1,0 +1,27 @@
+.grupoBotoes {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 12px;
+  width: 100%;
+}
+
+.botaoPerigo {
+  width: 100%;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform 0.1s ease;
+  box-sizing: border-box;
+}
+
+.botaoPerigo:active {
+  transform: scale(0.99);
+}
+
+@media (min-width: 640px) {
+  .grupoBotoes {
+    flex-direction: row;
+  }
+}

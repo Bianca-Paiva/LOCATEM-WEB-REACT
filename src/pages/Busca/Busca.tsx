@@ -1,9 +1,9 @@
 import { SlidersHorizontal } from 'lucide-react';
 
-import Header from '../../components/Header/Header';
-import { ProductCard } from '../../components/ProductCard/ProductCard';
-import { useProdutoStore } from '../../hooks/Produto/useProdutoStore';
-import { useCatalogoStore } from '../../hooks/Catalago/useCatalogoStore';
+import Header from '../../components/Layout/Header/Header';
+import { ProductCard } from '../../components/Ferramentas/ProductCard/ProductCard';
+import { useProdutoStore } from '../../hooks/Ferramentas/useProdutoStore';
+import { useCatalogoStore } from '../../hooks/Ferramentas/useCatalogoStore';
 import { useBuscaStore } from '../../hooks/Busca/useBuscaStore';
 import type { Route } from '../../router/useRouter';
 import { useMemo, useState } from 'react';
@@ -159,7 +159,7 @@ export default function Busca({ navigate }: BuscaProps) {
                 className={styles.mobileFilterTriggerBtn}
                 onClick={() => setIsFilterMobileOpen(true)}
               >
-                <SlidersHorizontal size={18} /> 
+                <SlidersHorizontal size={18} />
                 <span>Filtrar</span>
               </button>
             </div>

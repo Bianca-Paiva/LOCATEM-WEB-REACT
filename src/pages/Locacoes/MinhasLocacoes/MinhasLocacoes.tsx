@@ -1,14 +1,13 @@
-import Header from '../../../components/Header/Header';
-import CabecalhoPagina from '../../../components/CabecalhoPagina/CabecalhoPagina';
-import LocacaoAbas from '../../../components/MinhasLocacoes/LocacaoAbas/LocacaoAbas';
-import LocacaoCard from '../../../components/MinhasLocacoes/LocacaoCard/LocacaoCard';
-import EstadoVazio from '../../../components/MinhasLocacoes/EstadoVazio/EstadoVazio';
+import Header from '../../../components/Layout/Header/Header';
+import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
+import LocacaoAbas from '../../../components/Locacoes/MinhasLocacoes/LocacaoAbas/LocacaoAbas';
+import LocacaoCard from '../../../components/Locacoes/MinhasLocacoes/LocacaoCard/LocacaoCard';
+import EstadoVazio from '../../../components/Locacoes/MinhasLocacoes/EstadoVazio/EstadoVazio';
 import { useMinhasLocacoes } from '../../../hooks/Locacoes/useMinhasLocacoes';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import styles from './MinhasLocacoes.module.css';
 
 import type { Route } from '../../../router/useRouter';
-// Certifique--se de importar LocacaoData aqui:
 import type { FiltroLocacao, LocacaoData } from './MinhasLocacoes.types';
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -71,8 +70,8 @@ const ESTADO_VAZIO_TEXTO: Record<FiltroLocacao, { titulo: string; descricao: str
 export default function MinhasLocacoes({ navigate }: MinhasLocacoesProps) {
   const { locacoesFiltradas, filtro, setFiltro, contagem } = useMinhasLocacoes();
 
-  const { setLocacaoSelecionada } = useLocacaoStore() as { 
-    setLocacaoSelecionada: Dispatch<SetStateAction<LocacaoData | null>> 
+  const { setLocacaoSelecionada } = useLocacaoStore() as {
+    setLocacaoSelecionada: Dispatch<SetStateAction<LocacaoData | null>>
   };
 
   const handleVerDetalhes = (id: string) => {

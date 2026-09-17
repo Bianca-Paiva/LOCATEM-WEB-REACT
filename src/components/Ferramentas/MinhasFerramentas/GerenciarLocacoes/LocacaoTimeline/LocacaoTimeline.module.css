@@ -1,0 +1,133 @@
+.wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.linha {
+  list-style: none;
+  margin: 0;
+  padding: 4px 2px 2px;
+  display: flex;
+  align-items: flex-start;
+  min-width: 560px;
+}
+
+.etapa {
+  flex: 1 1 0;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0 6px;
+}
+
+.marcador {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.circulo {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 2px solid #d7dbdf;
+  box-sizing: border-box;
+  z-index: 1;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.iconeCheck {
+  width: 13px;
+  height: 13px;
+  color: #fff;
+}
+
+.conector {
+  flex: 1 1 auto;
+  height: 2px;
+  margin: 0 2px;
+  background: #d7dbdf;
+}
+
+.conector[data-preenchido='true'] {
+  background: #005d75;
+}
+
+.etapa:last-child .marcador {
+  justify-content: center;
+}
+
+.textos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.titulo {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+}
+
+.subtitulo {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+/* Etapa concluída: círculo preenchido e marcado, texto na cor padrão do app */
+.etapa[data-estado='concluida'] .circulo {
+  background: #005d75;
+  border-color: #005d75;
+}
+
+.etapa[data-estado='concluida'] .titulo {
+  color: var(--color-text-dark);
+}
+
+/* Etapa atual: destacada — círculo preenchido maior e título na cor de destaque */
+.etapa[data-estado='atual'] .circulo {
+  background: #005d75;
+  border-color: #005d75;
+  width: 30px;
+  height: 30px;
+  box-shadow: 0 0 0 4px #eaf6ff;
+}
+
+.etapa[data-estado='atual'] .titulo {
+  color: #005d75;
+}
+
+.etapa[data-estado='atual'] .subtitulo {
+  color: #005d75;
+  opacity: 1;
+}
+
+/* Etapa futura: círculo neutro, textos discretos (estado padrão já cobre este caso) */
+
+@media (min-width: 640px) {
+  .linha {
+    min-width: 0;
+  }
+
+  .titulo {
+    font-size: 13px;
+  }
+
+  .subtitulo {
+    font-size: 12px;
+  }
+}

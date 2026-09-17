@@ -2,6 +2,8 @@ import logoLojaMS from '../assets/LogosLojas/logoLojaMS.png';
 import logoLojaJB from '../assets/LogosLojas/logoLojaJB.png';
 
 export interface Locador {
+    /** Identificador único do locador — usado para ligar produtos/locações ao locador autenticado (ver types/usuario.types.ts `locadorId`). */
+    id: string;
     nome: string;
     logoUrl?: string;
     rating: number;
@@ -22,6 +24,7 @@ export interface Locador {
  */
 export const LOCADORES_MOCK: Locador[] = [
     {
+        id: 'loc-ms',
         nome: 'MS Ferramentas',
         logoUrl: logoLojaMS,
         rating: 4.0,
@@ -30,6 +33,7 @@ export const LOCADORES_MOCK: Locador[] = [
         verificado: true,
     },
     {
+        id: 'loc-wz',
         nome: 'WZ Ferramentas',
         rating: 4.3,
         reviewCount: 96,
@@ -37,6 +41,7 @@ export const LOCADORES_MOCK: Locador[] = [
         verificado: true,
     },
     {
+        id: 'loc-jb',
         nome: 'JB Ferramentas',
         logoUrl: logoLojaJB,
         rating: 4.9,
@@ -52,6 +57,7 @@ export const getLocadorByNome = (nome: string): Locador => {
     if (encontrado) return encontrado;
 
     return {
+        id: '',
         nome,
         rating: 0,
         reviewCount: 0,
@@ -59,3 +65,7 @@ export const getLocadorByNome = (nome: string): Locador => {
         verificado: false,
     };
 };
+
+/** Busca um locador pelo identificador único — fonte usada para ligar o locador autenticado (Usuario.locadorId) às suas ferramentas e locações (Produto.locadorId). */
+export const getLocadorById = (id: string): Locador | undefined =>
+    LOCADORES_MOCK.find((l) => l.id === id);

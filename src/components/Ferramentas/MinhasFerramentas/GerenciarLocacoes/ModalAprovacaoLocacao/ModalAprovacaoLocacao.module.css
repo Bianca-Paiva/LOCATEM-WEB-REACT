@@ -1,0 +1,231 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  z-index: 9999;
+  padding: 20px;
+  box-sizing: border-box;
+
+  animation: fade .2s ease;
+}
+
+.modal {
+  position: relative;
+  width: 480px;
+  max-width: 100%;
+
+  background: white;
+  border-radius: 20px;
+  padding: 22px;
+  box-sizing: border-box;
+
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .18);
+
+  animation: pop .2s ease;
+}
+
+.botaoFechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #F3F4F6;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color .15s ease;
+}
+
+.botaoFechar:hover {
+  background: #E5E7EB;
+}
+
+/* ── Cabeçalho: imagem + badge + título + texto auxiliar ──────────────── */
+
+.cabecalho {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-right: 26px;
+  margin-bottom: 18px;
+}
+
+.miniatura {
+  flex-shrink: 0;
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #F7F8F9;
+  border: 1px solid #EEEEEE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.miniatura img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cabecalhoTexto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.badgePendente {
+  display: inline-flex;
+  align-items: center;
+  background: #FFF6D9;
+  color: #A16B00;
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-text-dark);
+  line-height: 1.3;
+}
+
+.subtitulo {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+/* ── Linhas de informação ──────────────────────────────────────────────── */
+
+.linhas {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 22px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.linha:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.labelIcone {
+  width: 15px;
+  height: 15px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.valor {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  text-align: right;
+}
+
+.valorDestaque {
+  font-size: 15px;
+  font-weight: 800;
+  color: #15803D;
+  text-align: right;
+}
+
+/* ── Ações ─────────────────────────────────────────────────────────────── */
+
+.acoes {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+}
+
+/* BtnPrincipal mantém sua altura e estilo padrão (55px) — o wrapper só cuida do
+   dimensionamento no layout flex, sem sobrescrever a aparência do componente. */
+.botaoAprovarWrapper {
+  width: 100%;
+}
+
+.botaoRecusar {
+  margin-top: 0;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 480px) {
+  .acoes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .botaoRecusar {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .botaoAprovarWrapper {
+    min-width: 0;
+    width: 100%;
+  }
+}
