@@ -49,6 +49,7 @@
 .estrelasAvaliacao {
   display: flex;
   align-items: center;
+  flex-wrap: wrap; /* Permite que o texto caia para a linha de baixo se não couber */
   gap: 6px;
   margin-top: 4px;
 }
@@ -63,9 +64,7 @@
 .gradeSecoes {
   width: 100%;
   display: grid;
-  /* auto-fit + 1fr: com 2 seções elas dividem 50/50 o espaço disponível e
-     crescem junto com a página (sem ficarem estreitas com área vazia ao lado).
-     minmax(360px, 1fr) só define o mínimo antes de quebrar para 1 coluna. */
+  /* auto-fit + 1fr: com 2 seções elas dividem 50/50 o espaço disponível e crescem junto com a página (sem ficarem estreitas com área vazia ao lado). minmax(360px, 1fr) só define o mínimo antes de quebrar para 1 coluna. */
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   gap: 20px;
   align-items: start;
@@ -76,7 +75,7 @@
   border: 1px solid #f3f4f6;
   border-radius: 14px;
   padding: 20px;
-  margin: 0 auto;
+  width: 100%; /* força o cartão a preencher todo o espaço da coluna */
   min-width: 0;
 
   /* NÃO deixar todos os cards com scroll */
@@ -126,14 +125,14 @@
 
 .tituloSecao {
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--color-text-dark);
 }
 
 .subtituloSecao {
   margin: 2px 0 0;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--color-text-muted);
 }
 

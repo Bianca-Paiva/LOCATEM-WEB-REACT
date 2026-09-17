@@ -69,10 +69,10 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
   const percentualFaturamento =
     resumo.faturamentoMesAnterior > 0
       ? Math.round(
-          ((resumo.faturamentoMesAtual - resumo.faturamentoMesAnterior) /
-            resumo.faturamentoMesAnterior) *
-            100
-        )
+        ((resumo.faturamentoMesAtual - resumo.faturamentoMesAnterior) /
+          resumo.faturamentoMesAnterior) *
+        100
+      )
       : null;
 
   const iniciarArraste = (e: PointerEvent<HTMLDivElement>) => {
@@ -249,7 +249,9 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
             onPointerCancel={finalizarArraste}
           >
             <div className={stylesFerramentas.grade}>
-              {minhasFerramentas.map((produtoCompleto) => {
+
+              {/* define a quantidade de produtos que vai aparecer */}
+              {minhasFerramentas.slice(0, 4).map((produtoCompleto) => {
                 const produto = toProdutoHome(produtoCompleto);
 
                 return (

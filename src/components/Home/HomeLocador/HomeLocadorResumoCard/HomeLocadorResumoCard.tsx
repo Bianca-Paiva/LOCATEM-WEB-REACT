@@ -17,9 +17,7 @@ interface HomeLocadorResumoCardProps {
 }
 
 /**
- * Card de resumo (KPI) do topo da Home do Locador: "Ferramentas Ativas",
- * "Locações em andamento", "Solicitações pendentes", "Faturamento do mês" e
- * "Avaliação Média" são todos a mesma peça visual, só variando ícone/cor/dado.
+ * Card de resumo (KPI) do topo da Home do Locador: "Ferramentas Ativas", "Locações em andamento", "Solicitações pendentes", "Faturamento do mês" e "Avaliação Média" são todos a mesma peça visual, só variando ícone/cor/dado.
  */
 export default function HomeLocadorResumoCard({
   icone,
