@@ -17,6 +17,8 @@ import SuccessModal from '../../../components/Shared/SuccessModal/SucessesModal'
 import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
 import BtnPrincipal from '../../../components/Botoes/BtnPrincipal/BtnPrincipal';
 import BtnNegativo from '../../../components/Botoes/BtnNegativo/BtnNegativo';
+import {
+  cadastrarFerramenta,uploadFotosFerramenta,} from '../../../services/ferramentaservice';
 
 import { useCadastroFerramenta } from '../../../hooks/Ferramentas/useCadastroFerramenta';
 import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
@@ -24,6 +26,17 @@ import { useAuth } from '../../../hooks/Auth/useAuth';
 import styles from './CadastroFerramenta.module.css';
 
 import type { Route } from '../../../router/useRouter';
+
+const CATEGORIA_IDS: Record<string, number> = {
+  'Ferramentas Elétricas • Parafusadeira/Furadeira': 1,
+  'Ferramentas Elétricas • Corte e Desgaste': 2,
+  'Ferramentas Elétricas • Pintura': 3,
+  'Ferramentas Manuais': 4,
+  'Jardinagem e Paisagismo': 5,
+  'Construção e Alvenaria': 6,
+  'Elevação e Transporte': 7,
+  'Limpeza e Lavagem': 8,
+};
 
 interface CadastroFerramentaProps {
   navigate: (route: Route) => void;
@@ -61,40 +74,82 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
     setConfirmCancelarAberto(false);
     handleCancelar();
   };
+const handlePublicar = async () => {
+  if (!formularioCompleto) {
+    setTentouPublicar(true);
+    setShake(true);
 
-  const handlePublicar = () => {
-    if (!formularioCompleto) {
-      setTentouPublicar(true);
-      setShake(true);
+    const primeiroIdComErro = Object.keys(erros).find(
+      (chave) => erros[chave as keyof typeof erros] !== undefined,
+    );
 
-      const primeiroIdComErro = Object.keys(erros).find(
-        (chave) => erros[chave as keyof typeof erros] !== undefined,
-      );
-
-      if (primeiroIdComErro) {
-        const elemento = document.getElementById(primeiroIdComErro);
-        elemento?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-
-      setTimeout(() => setShake(false), 400);
-      return;
-    }
-
-    const locadorInfo = {
-      nome: produtoEmEdicao?.locador ?? usuario?.nome ?? 'Você',
-      locadorId: produtoEmEdicao?.locadorId ?? usuario?.locadorId ?? '',
-    };
-
-    if (produtoEmEdicao) {
-      atualizarProduto(produtoEmEdicao.id, montarProduto(locadorInfo));
+    if (primeiroIdComErro) {
+      const elemento = document.getElementById(primeiroIdComErro);
+      elemento?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
-      adicionarProduto(montarProduto(locadorInfo));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    setTimeout(() => setShake(false), 400);
+    return;
+  }
+
+  const locadorInfo = {
+    nome: produtoEmEdicao?.locador ?? usuario?.nome ?? 'Você',
+    locadorId: produtoEmEdicao?.locadorId ?? usuario?.locadorId ?? '',
+  };
+
+  // Edição continua no fluxo local por enquanto
+  if (produtoEmEdicao) {
+    atualizarProduto(
+      produtoEmEdicao.id,
+      montarProduto(locadorInfo)
+    );
 
     setModalAberto(true);
-  };
+    return;
+  }
+
+  try {
+    const categoriaId = CATEGORIA_IDS[form.categoria];
+
+    if (!categoriaId) {
+      throw new Error('Categoria selecionada inválida.');
+    }
+
+   const ferramentaCriada = await cadastrarFerramenta({
+  nome: form.nome,
+  marca: form.marca,
+  modelo: form.modelo,
+  descricao: form.descricao,
+  acessorios: form.acessorios,
+  diaria: Number(form.valorDiaria.replace(',', '.')),
+  caucao: Number(form.caucao.replace(',', '.')),
+  categoriaId: categoriaId,
+});
+
+
+if (form.fotos.length > 0) {
+  await uploadFotosFerramenta(
+    ferramentaCriada.ferramentaId,
+    form.fotos
+  );
+}
+
+    // Mantém o card local
+    adicionarProduto(montarProduto(locadorInfo));
+
+    setModalAberto(true);
+  } catch (erro) {
+    console.error('Erro ao cadastrar ferramenta:', erro);
+
+    alert(
+      erro instanceof Error
+        ? erro.message
+        : 'Erro ao cadastrar ferramenta.'
+    );
+  }
+};
 
   return (
     <>
