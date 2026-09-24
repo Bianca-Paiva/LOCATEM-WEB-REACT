@@ -54,19 +54,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         )
       )}
       <div className={styles.productImageContainer}>
-        {/* Swiper no lugar da imagem estática */}
-        <Swiper
-          spaceBetween={0}
-          slidesPerView={1}
-          className={styles.productInnerSwiper}
-          onClick={() => onNavigate && onNavigate()}
-        >
-          {images.map((img, index) => (
-            <SwiperSlide key={index}>
-              <img src={img} alt={`${title} - Foto ${index + 1}`} className={styles.productCardImg} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {images.length > 0 ? (
+          <Swiper
+            spaceBetween={0}
+            slidesPerView={1}
+            className={styles.productInnerSwiper}
+            onClick={() => onNavigate && onNavigate()}
+          >
+            {images.map((img, index) => (
+              <SwiperSlide key={index}>
+                <img src={img} alt={`${title} - Foto ${index + 1}`} className={styles.productCardImg} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <div className={styles.productSemImagem}>Imagem não cadastrada</div>
+        )}
       </div>
 
       <div className={styles.productInfo}>

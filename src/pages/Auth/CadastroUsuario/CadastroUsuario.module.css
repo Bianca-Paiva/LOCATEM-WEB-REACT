@@ -87,6 +87,25 @@ main {
     width: 100%;
 }
 
+.linhaLocalizacao {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) 110px;
+    gap: 16px;
+    width: 100%;
+}
+
+.inputBairro,
+.inputCidade,
+.inputEstado {
+    min-width: 0;
+}
+
+.statusCep {
+    margin-top: -8px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
 .inputRua {
     flex: 3; /* Faz o input da Rua ocupar a maior parte do espaço (75%) */
 }
@@ -128,4 +147,26 @@ main {
 
 .contaExistente a:hover {
     text-decoration: underline;
+}
+@media (max-width: 700px) {
+    .linhaCep,
+    .linhaRuaNumero,
+    .linhaLocalizacao {
+        flex-direction: column;
+        display: flex;
+    }
+
+    .inputRua,
+    .inputNumero,
+    .inputBairro,
+    .inputCidade,
+    .inputEstado {
+        width: 100%;
+        flex: none;
+    }
+
+    .btnNaoSeiCep {
+        margin-top: 0;
+        align-self: flex-start;
+    }
 }

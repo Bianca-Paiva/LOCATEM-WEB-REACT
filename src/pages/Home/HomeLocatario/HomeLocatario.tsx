@@ -11,6 +11,10 @@ import {
   buscarFerramentasDisponiveis,
   type FerramentaDisponivel,
 } from '../../../services/ferramentaservice';
+import {
+  ferramentaParaProdutoHome,
+  ferramentaParaProdutoSelecionado,
+} from '../../../services/ferramentaAdapters';
 
 import Header from '../../../components/Layout/Header/Header';
 import { Banner } from '../../../components/Shared/Banner/Banner';
@@ -23,22 +27,7 @@ interface HomeProps {
 }
 
 function categoriaDaFerramenta(ferramenta: FerramentaDisponivel): string {
-  return ferramenta.categoria?.nome ?? `Categoria ${ferramenta.categoriaId ?? 1}`;
-}
-
-function paraProdutoHome(ferramenta: FerramentaDisponivel): ProdutoHome {
-  return {
-    id: ferramenta.ferramentaId,
-    title: ferramenta.nome,
-    marca: ferramenta.marca ?? 'Sem marca',
-    locador: ferramenta.usuario?.nome ?? 'Locador parceiro',
-    price: (ferramenta.diaria ?? 0).toFixed(2).replace('.', ','),
-    images: ['/caminho-padrao-ou-foto-real.jpg'],
-    imageVerificado: '/icon-verified.png',
-    imageNota: '/icon-star.png',
-    rating: 5,
-    reviewCount: 0,
-  };
+  return ferramenta.categoriaNome || `Categoria ${ferramenta.categoriaId}`;
 }
 
 export default function Home({ navigate }: HomeProps) {
@@ -77,7 +66,7 @@ export default function Home({ navigate }: HomeProps) {
           (ferramenta) =>
             !categoriaSelecionada || categoriaDaFerramenta(ferramenta) === categoriaSelecionada,
         )
-        .map(paraProdutoHome),
+        .map(ferramentaParaProdutoHome),
     [ferramentas, categoriaSelecionada],
   );
 
@@ -85,21 +74,7 @@ export default function Home({ navigate }: HomeProps) {
     const ferramenta = ferramentas.find((item) => item.ferramentaId === produto.id);
     if (!ferramenta) return;
 
-    const produtoSelecionado: ProdutoSelecionado = {
-      id: ferramenta.ferramentaId,
-      title: produto.title,
-      marca: produto.marca,
-      price: produto.price,
-      images: produto.images,
-      imageVerificado: produto.imageVerificado,
-      imageNota: produto.imageNota,
-      rating: produto.rating,
-      reviewCount: produto.reviewCount,
-      locador: produto.locador,
-      localizacao: '',
-      categoria: categoriaDaFerramenta(ferramenta),
-      estoqueDisponivel: 0,
-    };
+    const produtoSelecionado: ProdutoSelecionado = ferramentaParaProdutoSelecionado(ferramenta);
 
     setProdutoSelecionado(produtoSelecionado);
     navigate('produtoDetalhe');

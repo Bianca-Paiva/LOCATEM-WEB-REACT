@@ -9,7 +9,7 @@ import type {
   AgendaSemanaLocadorItem,
   ResumoHomeLocador,
   SolicitacaoRecenteLocador,
-} from '../../pages/Home/HomeLocador.types';
+} from '../../pages/Home/HomeLocador/HomeLocador.types';
 
 /** Quantas ferramentas/solicitações/eventos a Home mostra em cada seção antes do "Ver Mais". */
 const LIMITE_MINHAS_FERRAMENTAS = 5;

@@ -115,3 +115,6 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
     </CarrinhoContext.Provider>
   );
 }
+
+// Reexporta o tipo para manter compatibilidade com os consumidores existentes.
+export type { ItemCarrinho } from './CarrinhoContext';

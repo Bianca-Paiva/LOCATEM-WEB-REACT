@@ -19,6 +19,7 @@ import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoProvider";
 import Home from "./pages/Home/HomeLocatario/HomeLocatario";
 import Busca from "./pages/Busca/Busca";
 import ProdutoDetalhe from "./pages/Ferramentas/ProdutoDetalhe/ProdutoDetalhe";
+import PerfilLoja from "./pages/Conta/PerfilLoja/PerfilLoja";
 
 // Autenticação e Acesso
 import Login from "./pages/Auth/Login/Login";
@@ -73,6 +74,7 @@ export default function App() {
                   {route === "home" && <Home navigate={navigate} />}
                   {route === "busca" && <Busca navigate={navigate} />}
                   {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
+                  {route === "perfilLoja" && <PerfilLoja navigate={navigate} />}
 
                   {/* Autenticação e Acesso */}
                   {route === "login" && <Login navigate={navigate} />}

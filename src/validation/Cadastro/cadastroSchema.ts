@@ -33,6 +33,14 @@ export const cadastroSchema = z.object({
 
     numero: z.string().min(1, 'O número é obrigatório'),
 
+    complemento: z.string().optional(),
+
+    bairro: z.string().min(1, 'O bairro é obrigatório'),
+
+    cidade: z.string().min(1, 'A cidade é obrigatória'),
+
+    estado: z.string().min(2, 'O estado é obrigatório'),
+
     senha: z.string()
         .min(1, 'A senha é obrigatória')
         .refine(val => {

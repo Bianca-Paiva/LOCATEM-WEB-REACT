@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 
 import Header from '../../../components/Layout/Header/Header';
@@ -18,7 +18,14 @@ import ConfirmModal from '../../../components/Shared/ConfirmModal/ConfirmModal';
 import BtnPrincipal from '../../../components/Botoes/BtnPrincipal/BtnPrincipal';
 import BtnNegativo from '../../../components/Botoes/BtnNegativo/BtnNegativo';
 import {
-  cadastrarFerramenta,uploadFotosFerramenta,} from '../../../services/ferramentaservice';
+  cadastrarFerramenta,
+  deletarFotoFerramenta,
+  editarFerramenta,
+  normalizarUrlImagem,
+  uploadFotosFerramenta,
+  buscarFerramentaPorId,
+  type FerramentaDisponivel,
+} from '../../../services/ferramentaservice';
 
 import { useCadastroFerramenta } from '../../../hooks/Ferramentas/useCadastroFerramenta';
 import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
@@ -45,17 +52,60 @@ interface CadastroFerramentaProps {
 
 export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps) {
   const { usuario } = useAuth();
-  const { produtos, adicionarProduto, atualizarProduto, ferramentaSelecionadaId, setFerramentaSelecionadaId } =
-    useCatalogoStore();
+  const { setFerramentaSelecionadaId, ferramentaSelecionadaId } = useCatalogoStore();
 
-  // Modo edição: se há uma ferramenta selecionada (via "Editar" em Minhas Ferramentas ou no Detalhe da Ferramenta) e ela pertence ao locador logado, o formulário abre pré-preenchido e o botão principal passa a salvar as alterações nela.
-  const produtoEmEdicao =
-    ferramentaSelecionadaId !== null
-      ? produtos.find((p) => p.id === ferramentaSelecionadaId && p.locadorId === usuario?.locadorId)
-      : undefined;
+  const [ferramentaEmEdicao, setFerramentaEmEdicao] = useState<FerramentaDisponivel | undefined>();
+  const [fotosOriginais, setFotosOriginais] = useState<FerramentaDisponivel['fotos']>([]);
+  const [carregandoEdicao, setCarregandoEdicao] = useState(ferramentaSelecionadaId !== null);
+  const [erroEdicao, setErroEdicao] = useState('');
 
-  const { form, setCampo, toggleDiaIndisponivel, erros, formularioCompleto, montarProduto } =
-    useCadastroFerramenta(produtoEmEdicao);
+  useEffect(() => {
+    let ativo = true;
+
+    async function carregarFerramentaParaEdicao() {
+      if (ferramentaSelecionadaId === null) {
+        setFerramentaEmEdicao(undefined);
+        setFotosOriginais([]);
+        setCarregandoEdicao(false);
+        setErroEdicao('');
+        return;
+      }
+
+      setCarregandoEdicao(true);
+      setErroEdicao('');
+
+      try {
+        const ferramenta = await buscarFerramentaPorId(ferramentaSelecionadaId);
+
+        if (!ativo) return;
+
+        if (usuario?.id && ferramenta.usuarioId !== Number(usuario.id)) {
+          throw new Error('Você não tem permissão para editar esta ferramenta.');
+        }
+
+        setFerramentaEmEdicao(ferramenta);
+        setFotosOriginais(ferramenta.fotos);
+      } catch (error) {
+        if (!ativo) return;
+        setFerramentaEmEdicao(undefined);
+        setFotosOriginais([]);
+        setErroEdicao(error instanceof Error ? error.message : 'Não foi possível carregar a ferramenta.');
+      } finally {
+        if (ativo) setCarregandoEdicao(false);
+      }
+    }
+
+    void carregarFerramentaParaEdicao();
+
+    return () => {
+      ativo = false;
+    };
+  }, [ferramentaSelecionadaId, usuario?.id]);
+
+  const { form, setCampo, toggleDiaIndisponivel, erros, formularioCompleto } =
+    useCadastroFerramenta(ferramentaEmEdicao);
+
+  const produtoEmEdicao = ferramentaEmEdicao;
 
   const [tentouPublicar, setTentouPublicar] = useState(false);
   const [shake, setShake] = useState(false);
@@ -75,87 +125,128 @@ export default function CadastroFerramenta({ navigate }: CadastroFerramentaProps
     handleCancelar();
   };
 const handlePublicar = async () => {
-  if (!formularioCompleto) {
-    setTentouPublicar(true);
-    setShake(true);
+    if (!formularioCompleto) {
+      setTentouPublicar(true);
+      setShake(true);
 
-    const primeiroIdComErro = Object.keys(erros).find(
-      (chave) => erros[chave as keyof typeof erros] !== undefined,
-    );
+      const primeiroIdComErro = Object.keys(erros).find(
+        (chave) => erros[chave as keyof typeof erros] !== undefined,
+      );
 
-    if (primeiroIdComErro) {
-      const elemento = document.getElementById(primeiroIdComErro);
-      elemento?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (primeiroIdComErro) {
+        const elemento = document.getElementById(primeiroIdComErro);
+        elemento?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      setTimeout(() => setShake(false), 400);
+      return;
     }
 
-    setTimeout(() => setShake(false), 400);
-    return;
-  }
+    try {
+      const categoriaId = CATEGORIA_IDS[form.categoria];
 
-  const locadorInfo = {
-    nome: produtoEmEdicao?.locador ?? usuario?.nome ?? 'Você',
-    locadorId: produtoEmEdicao?.locadorId ?? usuario?.locadorId ?? '',
+      if (!categoriaId) {
+        throw new Error('Categoria selecionada inválida.');
+      }
+
+      const payload = {
+        nome: form.nome.trim(),
+        marca: form.marca.trim(),
+        modelo: form.modelo.trim(),
+        descricao: form.descricao.trim(),
+        acessorios: form.acessorios,
+        diaria: Number(form.valorDiaria.replace('.', '').replace(',', '.')),
+        caucao: Number(form.caucao.replace('.', '').replace(',', '.')) || 0,
+        categoriaId,
+        quantidadeDisponivel: form.quantidadeDisponivel,
+        estadoConservacao: form.estadoConservacao,
+        fonteAlimentacao: form.fonteAlimentacao,
+        especificacoesTecnicas: form.especificacoes
+          .filter((esp) => esp.label.trim() && esp.valor.trim())
+          .map((esp) => ({
+            label: esp.label.trim(),
+            valor: esp.valor.trim(),
+          })),
+        diasIndisponiveis: form.diasIndisponiveis,
+        tipoAprovacao: form.tipoAprovacao as 'manual' | 'automatica',
+        enderecoRetirada: {
+          logradouro: form.ruaAvenida.trim(),
+          numero: form.numero.trim(),
+          complemento: form.complemento.trim(),
+          bairro: form.bairro.trim(),
+          cidade: form.cidade.trim(),
+          estado: form.estado.trim(),
+          cep: form.cep,
+          tipoEndereco: 1,
+          ehPrioritario: false,
+        },
+      };
+
+      if (produtoEmEdicao) {
+        const ferramentaId = produtoEmEdicao.ferramentaId;
+
+        await editarFerramenta(ferramentaId, payload);
+
+        const fotosMantidas = new Set(
+          form.fotos.filter((foto) => /^https?:\/\//i.test(foto)),
+        );
+
+        const fotosRemovidas = fotosOriginais.filter(
+          (foto) => !fotosMantidas.has(normalizarUrlImagem(foto.urlImagem)),
+        );
+
+        await Promise.all(
+          fotosRemovidas.map((foto) => deletarFotoFerramenta(foto.id)),
+        );
+
+        const novasFotos = form.fotos.filter((foto) => foto.startsWith('data:image/'));
+
+        if (novasFotos.length > 0) {
+          await uploadFotosFerramenta(ferramentaId, novasFotos);
+        }
+
+        setModalAberto(true);
+        return;
+      }
+
+      const ferramentaCriada = await cadastrarFerramenta(payload);
+
+      if (form.fotos.length > 0) {
+        await uploadFotosFerramenta(ferramentaCriada.ferramentaId, form.fotos);
+      }
+
+      setModalAberto(true);
+    } catch (erro) {
+      console.error('Erro ao salvar ferramenta:', erro);
+      alert(
+        erro instanceof Error
+          ? erro.message
+          : produtoEmEdicao
+            ? 'Erro ao atualizar ferramenta.'
+            : 'Erro ao cadastrar ferramenta.',
+      );
+    }
   };
-
-  // Edição continua no fluxo local por enquanto
-  if (produtoEmEdicao) {
-    atualizarProduto(
-      produtoEmEdicao.id,
-      montarProduto(locadorInfo)
-    );
-
-    setModalAberto(true);
-    return;
-  }
-
-  try {
-    const categoriaId = CATEGORIA_IDS[form.categoria];
-
-    if (!categoriaId) {
-      throw new Error('Categoria selecionada inválida.');
-    }
-
-   const ferramentaCriada = await cadastrarFerramenta({
-  nome: form.nome,
-  marca: form.marca,
-  modelo: form.modelo,
-  descricao: form.descricao,
-  acessorios: form.acessorios,
-  diaria: Number(form.valorDiaria.replace(',', '.')),
-  caucao: Number(form.caucao.replace(',', '.')),
-  categoriaId: categoriaId,
-});
-
-
-if (form.fotos.length > 0) {
-  await uploadFotosFerramenta(
-    ferramentaCriada.ferramentaId,
-    form.fotos
-  );
-}
-
-    // Mantém o card local
-    adicionarProduto(montarProduto(locadorInfo));
-
-    setModalAberto(true);
-  } catch (erro) {
-    console.error('Erro ao cadastrar ferramenta:', erro);
-
-    alert(
-      erro instanceof Error
-        ? erro.message
-        : 'Erro ao cadastrar ferramenta.'
-    );
-  }
-};
 
   return (
     <>
       <Header navigate={navigate} currentRoute="minhasFerramentas" />
 
       <main className={styles.pagina}>
+        {carregandoEdicao ? (
+          <div className={styles.estadoCarregando}>Carregando os dados da ferramenta...</div>
+        ) : erroEdicao ? (
+          <div className={styles.estadoErro}>
+            <strong>Não foi possível carregar a ferramenta.</strong>
+            <span>{erroEdicao}</span>
+            <BtnNegativo type="button" onClick={() => { setFerramentaSelecionadaId(null); navigate('minhasFerramentas'); }}>
+              Voltar para Minhas Ferramentas
+            </BtnNegativo>
+          </div>
+        ) : (
+          <>
         <CabecalhoPagina
           titulo={produtoEmEdicao ? 'Editar Ferramenta' : 'Cadastrar Ferramenta'}
           subtitulo={
@@ -300,6 +391,9 @@ if (form.fotos.length > 0) {
                   cep: tentouPublicar ? erros.cep : undefined,
                   ruaAvenida: tentouPublicar ? erros.ruaAvenida : undefined,
                   numero: tentouPublicar ? erros.numero : undefined,
+                  bairro: tentouPublicar ? erros.bairro : undefined,
+                  cidade: tentouPublicar ? erros.cidade : undefined,
+                  estado: tentouPublicar ? erros.estado : undefined,
                 }}
                 shake={shake}
               />
@@ -317,6 +411,8 @@ if (form.fotos.length > 0) {
             text={produtoEmEdicao ? 'Salvar Alterações' : 'Publicar Ferramenta'}
           />
         </div>
+          </>
+        )}
       </main>
 
       <ConfirmModal

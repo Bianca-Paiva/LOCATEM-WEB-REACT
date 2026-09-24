@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { Eye, Pencil } from 'lucide-react';
 
@@ -12,8 +12,10 @@ import StatusFerramentaBadge from '../../../components/Ferramentas/MinhasFerrame
 import { STATUS_FERRAMENTA_CONFIG } from '../../../components/Ferramentas/MinhasFerramentas/StatusFerramentaBadge/statusFerramentaConfig';
 
 import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
+import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
 import { useAuth } from '../../../hooks/Auth/useAuth';
-import { toProdutoHome } from '../../../mocks/produtos.adapters';
+import { buscarMinhasFerramentas, type FerramentaDisponivel } from '../../../services/ferramentaservice';
+import { ferramentaParaProdutoHome, ferramentaParaProdutoSelecionado } from '../../../services/ferramentaAdapters';
 import styles from './MinhasFerramentas.module.css';
 
 import type { Route } from '../../../router/useRouter';
@@ -50,15 +52,59 @@ const ESTADO_VAZIO_TEXTO: Record<FiltroFerramenta, { titulo: string; descricao: 
 };
 
 export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) {
-  const { produtos, setFerramentaSelecionadaId } = useCatalogoStore();
+  const { setFerramentaSelecionadaId } = useCatalogoStore();
+  const { setProdutoSelecionado } = useProdutoStore();
   const { usuario } = useAuth();
   const [filtro, setFiltro] = useState<FiltroFerramenta>('todas');
+  const [minhasFerramentasCompletas, setMinhasFerramentasCompletas] = useState<FerramentaDisponivel[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState('');
 
-  // Só as ferramentas do locador atualmente logado — nunca pelo texto exibido na tela, sempre pelo identificador único do locador (Usuario.locadorId <-> Produto.locadorId).
-  const minhasFerramentasCompletas = useMemo(
-    () => produtos.filter((p) => p.locadorId && p.locadorId === usuario?.locadorId),
-    [produtos, usuario],
-  );
+  useEffect(() => {
+    let ativo = true;
+
+    async function carregarMinhasFerramentas() {
+      if (!usuario?.id || usuario.tipo !== 'locador') {
+        if (ativo) {
+          setMinhasFerramentasCompletas([]);
+          setCarregando(false);
+        }
+        return;
+      }
+
+      setCarregando(true);
+      setErro('');
+
+      try {
+        const ferramentas = await buscarMinhasFerramentas();
+        if (ativo) {
+          setMinhasFerramentasCompletas(ferramentas);
+        }
+      } catch (error) {
+        if (ativo) {
+          setMinhasFerramentasCompletas([]);
+          setErro(error instanceof Error ? error.message : 'Não foi possível carregar suas ferramentas.');
+        }
+      } finally {
+        if (ativo) {
+          setCarregando(false);
+        }
+      }
+    }
+
+    void carregarMinhasFerramentas();
+
+    return () => {
+      ativo = false;
+    };
+  }, [usuario?.id, usuario?.tipo]);
+
+  const obterStatus = (ferramenta: FerramentaDisponivel): StatusFerramenta => {
+    if (ferramenta.disponibilidade === 4) return 'manutencao';
+    if (ferramenta.disponibilidade === 2) return 'locada';
+    if (ferramenta.status !== 1 || ferramenta.disponibilidade === 3) return 'indisponivel';
+    return 'disponivel';
+  };
 
   const contagem = useMemo(() => {
     const base: Record<FiltroFerramenta, number> = {
@@ -69,8 +115,8 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
       manutencao: 0,
     };
 
-    minhasFerramentasCompletas.forEach((produto) => {
-      base[produto.status] += 1;
+    minhasFerramentasCompletas.forEach((ferramenta) => {
+      base[obterStatus(ferramenta)] += 1;
     });
 
     return base;
@@ -80,9 +126,13 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
     const lista =
       filtro === 'todas'
         ? minhasFerramentasCompletas
-        : minhasFerramentasCompletas.filter((p) => p.status === filtro);
+        : minhasFerramentasCompletas.filter((ferramenta) => obterStatus(ferramenta) === filtro);
 
-    return lista.map(toProdutoHome);
+    return lista.map((ferramenta) => ({
+      raw: ferramenta,
+      produto: ferramentaParaProdutoHome(ferramenta),
+      status: obterStatus(ferramenta),
+    }));
   }, [minhasFerramentasCompletas, filtro]);
 
   const abas: AbaItem<FiltroFerramenta>[] = [
@@ -94,8 +144,13 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
   ];
 
   const handleVer = (produtoId: number) => {
-    setFerramentaSelecionadaId(produtoId);
-    navigate('ferramentaDetalhe');
+    const ferramenta = minhasFerramentasCompletas.find((item) => item.ferramentaId === produtoId);
+
+    if (!ferramenta) return;
+
+    setProdutoSelecionado(ferramentaParaProdutoSelecionado(ferramenta));
+    setFerramentaSelecionadaId(null);
+    navigate('produtoDetalhe');
   };
 
   const handleEditar = (produtoId: number) => {
@@ -132,49 +187,54 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
 
         <Abas abas={abas} ativo={filtro} onChange={setFiltro} contagem={contagem} />
 
-        {ferramentasFiltradas.length === 0 ? (
+        {carregando ? (
+          <EstadoVazio
+            titulo="Carregando suas ferramentas..."
+            descricao="Buscando no backend os anúncios cadastrados pela sua conta."
+          />
+        ) : erro ? (
+          <EstadoVazio
+            titulo="Não foi possível carregar suas ferramentas"
+            descricao={erro}
+          />
+        ) : ferramentasFiltradas.length === 0 ? (
           <EstadoVazio titulo={estadoVazio.titulo} descricao={estadoVazio.descricao} />
         ) : (
           <div className={styles.grade}>
-            {ferramentasFiltradas.map((produto) => {
-              const produtoCompleto = minhasFerramentasCompletas.find((p) => p.id === produto.id);
-              if (!produtoCompleto) return null;
-
-              return (
-                <ProductCard
-                  key={produto.id}
-                  title={produto.title}
-                  brand={produto.locador}
-                  price={produto.price}
-                  images={produto.images}
-                  imageVerificado={produto.imageVerificado}
-                  imageNota={produto.imageNota}
-                  rating={produto.rating}
-                  reviewCount={produto.reviewCount}
-                  statusBadge={<StatusFerramentaBadge status={produtoCompleto.status} compacto />}
-                  footerExtra={
-                    <div className={styles.acoesCard}>
-                      <button
-                        type="button"
-                        className={styles.botaoAcao}
-                        onClick={() => handleVer(produtoCompleto.id)}
-                      >
-                        <Eye size={14} strokeWidth={2} />
-                        Ver
-                      </button>
-                      <button
-                        type="button"
-                        className={styles.botaoAcao}
-                        onClick={() => handleEditar(produtoCompleto.id)}
-                      >
-                        <Pencil size={14} strokeWidth={2} />
-                        Editar
-                      </button>
-                    </div>
-                  }
-                />
-              );
-            })}
+            {ferramentasFiltradas.map(({ raw, produto, status }) => (
+              <ProductCard
+                key={raw.ferramentaId}
+                title={produto.title}
+                brand={produto.locador}
+                price={produto.price}
+                images={produto.images}
+                imageVerificado={produto.imageVerificado}
+                imageNota={produto.imageNota}
+                rating={produto.rating}
+                reviewCount={produto.reviewCount}
+                statusBadge={<StatusFerramentaBadge status={status} compacto />}
+                footerExtra={
+                  <div className={styles.acoesCard}>
+                    <button
+                      type="button"
+                      className={styles.botaoAcao}
+                      onClick={() => handleVer(raw.ferramentaId)}
+                    >
+                      <Eye size={14} strokeWidth={2} />
+                      Ver
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.botaoAcao}
+                      onClick={() => handleEditar(raw.ferramentaId)}
+                    >
+                      <Pencil size={14} strokeWidth={2} />
+                      Editar
+                    </button>
+                  </div>
+                }
+              />
+            ))}
           </div>
         )}
       </main>
