@@ -15,6 +15,7 @@ import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import { useNotificacaoStore } from '../../../hooks/Conta/Notificacoes/useNotificationStore';
 import { useCarrinhoStore } from '../../../hooks/Checkout/Carrinho/useCarrinhoStore';
+import { useFavoritos } from '../../../hooks/Conta/Favoritos/useFavoritos';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../../utils/Locacoes/montarLocacaoData';
 import {
@@ -39,6 +40,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const { adicionarNotificacao } = useNotificacaoStore();
   const { adicionarItem } = useCarrinhoStore();
   const { usuario } = useAuth();
+  const { isFavoritado, isProcessando, toggleFavorito } = useFavoritos();
 
   const [ferramentasDisponiveis, setFerramentasDisponiveis] = useState<FerramentaDisponivel[]>([]);
   const [produtoCarregado, setProdutoCarregado] = useState<ProdutoSelecionado | null>(null);
@@ -79,6 +81,22 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   }, [produtoSelecionado?.id]);
 
   const produto: ProdutoSelecionado | null = produtoCarregado ?? produtoSelecionado;
+
+  const handleToggleFavorito = async () => {
+    if (!produto?.id) return;
+
+    if (!usuario) {
+      navigate('login');
+      return;
+    }
+
+    try {
+      await toggleFavorito(produto.id);
+    } catch (error) {
+      console.error('Erro ao atualizar favorito:', error);
+    }
+  };
+
 
   const produtosSemelhantes = useMemo(
     () => {
@@ -305,6 +323,9 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     imageNota={produto.imageNota}
                     estoqueDisponivel={produto.estoqueDisponivel}
                     voltagem={produto.voltagem}
+                    favoritado={produto.id ? isFavoritado(produto.id) : false}
+                    favoritoCarregando={produto.id ? isProcessando(produto.id) : false}
+                    onToggleFavorito={usuario?.tipo === 'locatario' ? handleToggleFavorito : undefined}
                     onAlugar={handleAlugar}                          // <-- abre o modal em modo "locar"
                     onLocar={handleAlugar}                        // <-- mantido por compatibilidade; use handleAlugar
                     onAddCarrinho={handleAdicionarCarrinho}          // <-- abre o modal em modo "carrinho"

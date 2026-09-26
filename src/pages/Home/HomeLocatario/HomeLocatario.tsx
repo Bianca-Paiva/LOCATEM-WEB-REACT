@@ -120,6 +120,8 @@ export default function Home({ navigate }: HomeProps) {
                 imageNota={produto.imageNota}
                 rating={produto.rating}
                 reviewCount={produto.reviewCount}
+                productId={produto.id}
+                showFavorite
                 onNavigate={() => handleCardClick(produto)}
               />
             ))}

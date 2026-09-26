@@ -4,6 +4,42 @@
   gap: 14px;
 }
 
+
+.tituloLinha {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.botaoFavorito {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.botaoFavorito:hover {
+  transform: scale(1.04);
+  background: #fff8f8;
+}
+
+.botaoFavorito:disabled {
+  opacity: .65;
+  cursor: wait;
+}
+
+.botaoFavoritoAtivo {
+  border-color: #ffd4da;
+  background: #fff4f5;
+}
+
 .titulo {
   font-size: 19px;
   font-weight: 700;

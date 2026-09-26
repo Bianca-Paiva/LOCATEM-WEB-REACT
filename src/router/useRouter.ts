@@ -26,6 +26,7 @@ const validRoutes = [
   "perfil",
   "notificacoes",
   "avaliacao",
+  "favoritos",
 
   // Área do Cliente/Locatário (Quem está alugando)
   "carrinho",

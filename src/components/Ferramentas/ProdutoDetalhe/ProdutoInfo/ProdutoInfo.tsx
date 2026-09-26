@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Star } from 'lucide-react';
+import { Heart, Star } from 'lucide-react';
 import PeriodoLocacaoDropdown from '../PeriodoLocacaoDropdown/PeriodoLocacaoDropdown';
 import SeletorQuantidade from '../../../Shared/Inputs/SeletorQuantidade/SeletorQuantidade';
 import BtnPrincipal from '../../../Botoes/BtnPrincipal/BtnPrincipal';
@@ -20,6 +20,9 @@ interface ProdutoInfoProps {
   onAlugar?: () => void;
   onLocar?: () => void;
   onAddCarrinho?: () => void;
+  favoritado?: boolean;
+  favoritoCarregando?: boolean;
+  onToggleFavorito?: () => void;
 
   /**
    * Eleva quantidade, período (em diárias) e tensão selecionados aqui para a página de detalhe, que os repassa como valores iniciais do modal de Solicitação de Locação — assim o usuário não precisa escolher de novo.
@@ -44,6 +47,9 @@ export function ProdutoInfo({
   onAlugar,
   onAddCarrinho,
   onSelecaoChange,
+  favoritado = false,
+  favoritoCarregando = false,
+  onToggleFavorito,
 }: ProdutoInfoProps) {
 
   // Inicializa com a voltagem real desta ferramenta (mesmo padrão de inicialização já usado para quantidade/periodoLocacao neste componente, sem reset via efeito).
@@ -69,7 +75,27 @@ export function ProdutoInfo({
 
   return (
     <div className={styles.produtoInfoWrapper}>
-      <h1 className={styles.titulo}>{title}</h1>
+      <div className={styles.tituloLinha}>
+        <h1 className={styles.titulo}>{title}</h1>
+
+        {onToggleFavorito && (
+          <button
+            type="button"
+            className={`${styles.botaoFavorito} ${favoritado ? styles.botaoFavoritoAtivo : ''}`}
+            aria-label={favoritado ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+            aria-pressed={favoritado}
+            disabled={favoritoCarregando}
+            onClick={onToggleFavorito}
+          >
+            <Heart
+              size={23}
+              strokeWidth={2}
+              color={favoritado ? '#ff4655' : '#1f2937'}
+              fill={favoritado ? '#ff4655' : 'none'}
+            />
+          </button>
+        )}
+      </div>
 
       <div className={styles.ratingRow}>
         <Star className={styles.starIcon} size={14} fill="#FFCA00" color="#FFCA00" strokeWidth={0} />

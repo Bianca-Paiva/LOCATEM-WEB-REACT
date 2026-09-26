@@ -53,6 +53,8 @@ export function ProdutosSemelhantes({ produtos, onCardClick }: ProdutosSemelhant
                 imageNota={p.imageNota}
                 rating={p.rating}
                 reviewCount={p.reviewCount}
+                productId={p.id}
+                showFavorite={p.id !== undefined}
                 onNavigate={onCardClick ? () => onCardClick(p) : undefined}
               />
             </div>

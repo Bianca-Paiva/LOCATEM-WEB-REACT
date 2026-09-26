@@ -32,7 +32,7 @@ interface OpcaoPainel {
 const OPCOES_BASE: OpcaoPainel[] = [
   { icone: <Wrench size={20} />, titulo: 'Aluguéis Ativos', descricao: 'Visualize seus equipamentos alugados atualmente.', route: 'minhasLocacoes' },
   { icone: <Clock size={20} />, titulo: 'Histórico de Locações', descricao: 'Consulte todas as suas locações anteriores.' },
-  { icone: <Heart size={20} />, titulo: 'Favoritos', descricao: 'Ferramentas e equipamentos salvos.' },
+  { icone: <Heart size={20} />, titulo: 'Favoritos', descricao: 'Ferramentas e equipamentos salvos.', route: 'favoritos' },
   { icone: <Wallet size={20} />, titulo: 'Pagamentos', descricao: 'Visualize pagamentos, cauções e reembolsos.' },
   { icone: <FileText size={20} />, titulo: 'Contratos', descricao: 'Acesse todos os contratos digitais.' },
   { icone: <MapPin size={20} />, titulo: 'Endereços', descricao: 'Gerencie seus endereços cadastrados.' },
@@ -42,15 +42,20 @@ const OPCOES_BASE: OpcaoPainel[] = [
 ];
 
 /**
- * Painel de Controle. As opções são as mesmas nos dois protótipos (Locatário e Locador), então mantemos uma única lista em vez de duas implementações paralelas — só o parâmetro `tipo` fica disponível para o dia em que Locador precisar de uma opção exclusiva (ex: "Meus Anúncios").
+ * Painel de Controle compartilhado entre os perfis. Favoritos é exibido apenas
+ * para locatários, mantendo a mesma lista base sem duplicar a implementação.
  */
-export default function PainelControle({ navigate }: PainelControleProps) {
+export default function PainelControle({ tipo, navigate }: PainelControleProps) {
+  const opcoesVisiveis = OPCOES_BASE.filter(
+    (opcao) => opcao.titulo !== 'Favoritos' || tipo === 'locatario',
+  );
+
   return (
     <section className={styles.card}>
       <h2 className={styles.titulo}>Painel de Controle</h2>
 
       <div className={styles.grade}>
-        {OPCOES_BASE.map((opcao) => (
+        {opcoesVisiveis.map((opcao) => (
           <button
             key={opcao.titulo}
             type="button"

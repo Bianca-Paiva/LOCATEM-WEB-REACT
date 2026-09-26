@@ -9,6 +9,7 @@ import { CarrinhoProvider } from "./context/Checkout/Carrinho/CarrinhoProvider";
 import { CatalogoProvider } from "./context/Ferramentas/Catalago/CatalogoProvider";
 import { LocacaoProvider } from "./context/Locacoes/LocacaoProvider";
 import { NotificacaoProvider } from "./context/Conta/Notificacao/NotificacaoProvider";
+import { FavoritosProvider } from "./context/Conta/Favoritos/FavoritosProvider";
 import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoProvider";
 
 // -------------------------------
@@ -32,6 +33,7 @@ import InformeNovaSenha from "./pages/Auth/RecuperarSenha/InformeNovaSenha/Infor
 import Perfil from "./pages/Conta/Perfil/Perfil";
 import Notificacoes from "./pages/Conta/Notificacoes/Notificacoes";
 import Avaliacao from "./pages/Avaliacao/Avaliacao";
+import Favoritos from "./pages/Favoritos/Favoritos";
 
 // Área do Cliente/Locatário (Quem está alugando)
 import Carrinho from "./pages/Checkout/Carrinho/Carrinho";
@@ -67,8 +69,9 @@ export default function App() {
         <ProdutoProvider>
           <LocacaoProvider>
             <NotificacaoProvider>
-              <CarrinhoProvider>
-                <BuscaProvider>
+              <FavoritosProvider>
+                <CarrinhoProvider>
+                  <BuscaProvider>
 
                   {/* Navegação Principal e Descoberta */}
                   {route === "home" && <Home navigate={navigate} />}
@@ -87,6 +90,7 @@ export default function App() {
                   {route === "perfil" && <Perfil navigate={navigate} />}
                   {route === "notificacoes" && <Notificacoes navigate={navigate} />}
                   {route === "avaliacao" && <Avaliacao navigate={navigate} />}
+                  {route === "favoritos" && <Favoritos navigate={navigate} />}
 
                   {/* Área do Cliente/Locatário (Quem está alugando) */}
                   {route === "carrinho" && <Carrinho navigate={navigate} />}
@@ -110,8 +114,9 @@ export default function App() {
                   {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
                   {route === "gerenciarLocacoes" && <GerenciarLocacoes navigate={navigate} />}
 
-                </BuscaProvider>
-              </CarrinhoProvider>
+                  </BuscaProvider>
+                </CarrinhoProvider>
+              </FavoritosProvider>
             </NotificacaoProvider>
           </LocacaoProvider>
         </ProdutoProvider>

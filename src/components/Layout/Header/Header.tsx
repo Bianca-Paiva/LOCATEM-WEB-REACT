@@ -117,6 +117,18 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             ),
         },
         {
+            label: "Favoritos",
+            route: "favoritos",
+            perfis: ['locatario'],
+            renderIcon: (active) => (
+                <Icon
+                    icon={active ? "mdi:heart" : "mdi:heart-outline"}
+                    width={22}
+                    height={22}
+                />
+            ),
+        },
+        {
             label: "Minhas Ferramentas",
             route: "minhasFerramentas", // aparece para: locador
             perfis: ['locador'],
@@ -199,11 +211,17 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
 
     // Monta a navegação de fato exibida a partir do tipo do usuário autenticado (mesma fonte
     // usada em todo o app via useAuth) — desktop e mobile usam esta mesma lista filtrada,
-    // então nunca ficam com regras diferentes entre si. Sem sessão, mantém o comportamento
-    // atual (todos os itens visíveis).
-    const navItemsVisiveis = navItems.filter(
-        (item) => !item.perfis || !usuario || item.perfis.includes(usuario.tipo),
-    );
+    // então nunca ficam com regras diferentes entre si. Favoritos é a exceção: só
+    // aparece para usuários autenticados como locatários.
+    const navItemsVisiveis = navItems.filter((item) => {
+        // Favoritos é uma área exclusiva do locatário: não aparece para
+        // visitante e também não aparece para o locador.
+        if (item.route === 'favoritos') {
+            return usuario?.tipo === 'locatario';
+        }
+
+        return !item.perfis || !usuario || item.perfis.includes(usuario.tipo);
+    });
 
     return (
         <>
@@ -321,7 +339,13 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                                     className={active ? styles.ativo : ""}
                                     onClick={e => {
                                         e.preventDefault();
-                                        if (item.route) navigate(item.route);
+
+                                        if (item.route === 'favoritos' && !isAuthenticated) {
+                                            navigate('login');
+                                        } else if (item.route) {
+                                            navigate(item.route);
+                                        }
+
                                         setMenuOpen(false);
                                     }}
                                 >
@@ -414,7 +438,12 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
                                 className={active ? styles.ativo : ""}
                                 onClick={e => {
                                     e.preventDefault();
-                                    if (item.route) navigate(item.route);
+
+                                    if (item.route === 'favoritos' && !isAuthenticated) {
+                                        navigate('login');
+                                    } else if (item.route) {
+                                        navigate(item.route);
+                                    }
                                 }}
                             >
                                 {item.renderIcon(active)}

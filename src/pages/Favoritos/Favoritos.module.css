@@ -1,0 +1,123 @@
+.pagina {
+  width: 100%;
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.grade {
+  max-width: 2000px;
+  margin: 24px auto 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 20px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.ordenacao {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text-dark);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ordenacao select {
+  height: 40px;
+  min-width: 180px;
+  padding: 0 34px 0 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-card);
+  color: var(--color-text-dark);
+  font: inherit;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+
+.estadoLista {
+  min-height: 220px;
+  margin-top: 24px;
+  padding: 36px 24px;
+  border: 1px solid #eeeeee;
+  border-radius: 16px;
+  background: var(--color-bg-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--color-text-muted);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.estadoLista h2 {
+  margin: 8px 0 0;
+  color: var(--color-text-dark);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.estadoLista p {
+  margin: 0;
+  max-width: 560px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.estadoLista button {
+  margin-top: 12px;
+  height: 38px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #0a0a0a;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (min-width: 640px) {
+  .pagina {
+    padding: 28px 24px 56px;
+  }
+}
+
+@media (max-width: 760px) {
+  .ordenacao {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .ordenacao select {
+    min-width: 170px;
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .grade {
+    grid-template-columns: 1fr;
+  }
+
+  .ordenacao {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ordenacao select {
+    width: 100%;
+    max-width: none;
+  }
+}

@@ -16,6 +16,7 @@ import { ferramentaParaProdutoSelecionado } from '../../../services/ferramentaAd
 import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
 import { extrairCategoriaTopo } from '../../../utils/Ferramentas/Catalago/categorias';
 import styles from './PerfilLoja.module.css';
+import { Icon } from '@iconify/react';
 
 interface PerfilLojaProps {
   navigate: (route: Route) => void;
@@ -161,12 +162,17 @@ export default function PerfilLoja({ navigate }: PerfilLojaProps) {
             <Avatar nome={perfil.nome} fotoUrl={fotoPerfil} size={116} />
 
             <div className={styles.infoLoja}>
-              <div className={styles.nomeLinha}>
-                <h1>{perfil.nome}</h1>
-                <span className={styles.verificado} aria-label="Locador cadastrado">
-                  <Star size={15} fill="currentColor" />
-                </span>
-              </div>
+             <div className={styles.nomeLinha}>
+              <h1>{perfil.nome}</h1>
+
+              <Icon
+                icon="codicon:verified-filled"
+                width={18}
+                height={18}
+                className={styles.logoVerificado}
+                aria-label="Locador verificado"
+              />
+            </div>
 
               <p className={styles.desde}>Locador desde {perfil.desde}</p>
 
@@ -259,7 +265,17 @@ export default function PerfilLoja({ navigate }: PerfilLojaProps) {
                   images={ferramenta.fotos.map((foto) => normalizarUrlImagem(foto.urlImagem)).filter(Boolean)}
                   rating={Number(ferramenta.avaliacaoMedia ?? 0)}
                   reviewCount={ferramenta.totalAvaliacoes ?? 0}
-                  tipoAprovacao={ferramenta.tipoAprovacao}
+                  statusBadge={
+                    <span className={`${styles.statusBadge} ${
+                      (ferramenta.quantidadeDisponivel ?? 0) <= 1 ? styles.statusUltimaUnidade : styles.statusDisponivel
+                    }`}>
+                      {(ferramenta.quantidadeDisponivel ?? 0) <= 1 ? 'Última unidade' : 'Disponível'}
+                    </span>
+                  }
+                  productId={ferramenta.ferramentaId}
+                  showFavorite
+                  showDetailsButton
+                  className={styles.cardLoja}
                   onNavigate={() => handleVerDetalhes(ferramenta)}
                 />
               ))}
