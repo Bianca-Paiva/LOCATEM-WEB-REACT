@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAuth } from '../../../hooks/Auth/useAuth';
+import { useFavoritos } from '../../../hooks/Conta/Favoritos/useFavoritos';
 import styles from './ProductCard.module.css';
 
 import { Icon } from "@iconify/react";
-import { Star } from 'lucide-react';
+import { Heart, Star } from 'lucide-react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -25,6 +27,16 @@ interface ProductCardProps {
   statusBadge?: React.ReactNode;
   /** Conteúdo extra renderizado abaixo das informações do produto (ex: botões "Ver"/"Editar" em Minhas Ferramentas). */
   footerExtra?: React.ReactNode;
+  /** Classe visual opcional para customizações específicas de uma página. */
+  className?: string;
+  /** Exibe o coração decorativo usado nos cards da vitrine. */
+  showFavorite?: boolean;
+  /** Exibe o botão visual de detalhes no rodapé do card. */
+  showDetailsButton?: boolean;
+  /** Identificador real da ferramenta usado para persistir favoritos no backend. */
+  productId?: number;
+  /** Variação visual usada na tela de Favoritos. */
+  variant?: 'default' | 'favorito';
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -38,7 +50,51 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   tipoAprovacao,
   statusBadge,
   footerExtra,
+  className,
+  showFavorite = false,
+  productId,
+  variant = 'default',
 }) => {
+  const [favoritadoLocal, setFavoritadoLocal] = useState(false);
+  const { usuario } = useAuth();
+  const { isFavoritado, isProcessando, toggleFavorito } = useFavoritos();
+
+  const podeFavoritar = usuario?.tipo === 'locatario';
+
+  const favoritado = productId !== undefined
+    ? isFavoritado(productId)
+    : favoritadoLocal;
+
+  const favoritoProcessando = productId !== undefined
+    ? isProcessando(productId)
+    : false;
+
+  const handleFavorito = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.stopPropagation();
+
+    if (favoritoProcessando) return;
+
+    if (productId === undefined) {
+      setFavoritadoLocal((estadoAtual) => !estadoAtual);
+      return;
+    }
+
+    if (!usuario) {
+      window.location.hash = 'login';
+      return;
+    }
+
+
+    
+    try {
+      await toggleFavorito(productId);
+    } catch (error) {
+      console.error('Erro ao atualizar favorito:', error);
+    }
+  };
+
   const content = (
     <>
       {statusBadge ? (
@@ -53,20 +109,43 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </span>
         )
       )}
+     {showFavorite && podeFavoritar && (
+  <button
+    type="button"
+    className={`${styles.favoriteButton} ${
+      favoritado ? styles.favoriteButtonActive : ''
+    }`}
+    aria-label={favoritado ? `Remover ${title} dos favoritos` : `Favoritar ${title}`}
+    aria-pressed={favoritado}
+    onClick={handleFavorito}
+    disabled={favoritoProcessando}
+  >
+ <Heart
+  size={22}
+  strokeWidth={1.8}
+  color={favoritado ? '#ff4655' : '#222'}
+  fill={favoritado ? '#ff4655' : 'none'}
+/>
+    
+  </button>
+)}
       <div className={styles.productImageContainer}>
-        {/* Swiper no lugar da imagem estática */}
-        <Swiper
-          spaceBetween={0}
-          slidesPerView={1}
-          className={styles.productInnerSwiper}
-          onClick={() => onNavigate && onNavigate()}
-        >
-          {images.map((img, index) => (
-            <SwiperSlide key={index}>
-              <img src={img} alt={`${title} - Foto ${index + 1}`} className={styles.productCardImg} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {images.length > 0 ? (
+          <Swiper
+            spaceBetween={0}
+            slidesPerView={1}
+            className={styles.productInnerSwiper}
+            onClick={() => onNavigate && onNavigate()}
+          >
+            {images.map((img, index) => (
+              <SwiperSlide key={index}>
+                <img src={img} alt={`${title} - Foto ${index + 1}`} className={styles.productCardImg} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <div className={styles.productSemImagem}>Imagem não cadastrada</div>
+        )}
       </div>
 
       <div className={styles.productInfo}>
@@ -105,15 +184,27 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {footerExtra}
+
+       
+        
       </div>
     </>
   );
 
   // Usamos uma <div> com role="button" para evitar bugs de HTML com o Swiper embutido
+  const classes = [
+    styles.productCard,
+    className ?? '',
+    onNavigate ? styles.productCardClickable : '',
+    variant === 'favorito' ? styles.productCardFavorito : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   if (onNavigate) {
     return (
       <div
-        className={`${styles.productCard} ${styles.productCardClickable}`}
+        className={classes}
         onClick={onNavigate}
         role="button"
         tabIndex={0}
@@ -124,5 +215,5 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     );
   }
 
-  return <div className={styles.productCard}>{content}</div>;
+  return <div className={classes}>{content}</div>;
 };

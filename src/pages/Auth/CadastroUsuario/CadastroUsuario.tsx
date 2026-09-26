@@ -26,7 +26,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
     const {
         control, tipo, senha, confirmarSenha, isCNPJ, strengthResult,
         alerta, setAlerta, successModalOpen, setSuccessModalOpen, shakes, clearShake,
-        touchedFields, errors, trigger, handleTipoChange, onSubmit
+        touchedFields, errors, trigger, handleTipoChange, onSubmit, buscandoCep, erroCepBusca
     } = useCadastroForm()
 
     return (
@@ -204,7 +204,7 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                         <Controller
                                             control={control} name="cep"
                                             render={({ field: { onChange, value } }) => (
-                                                <FormInput
+                                                        <FormInput
                                                     key={`cep-shake-${JSON.stringify(shakes.cep)}`}
                                                     id="cep"
                                                     label="CEP"
@@ -216,12 +216,13 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                                     shake={shakes.cep.shake}
                                                     onBlur={() => trigger('cep')}
                                                     onChange={(e) => { onChange(maskCEP(e.target.value)); clearShake('cep'); }}
-                                                    status={errors.cep || shakes.cep.active ? 'erro' : touchedFields.cep ? 'sucesso' : ''}
-                                                    error={errors.cep?.message || ''}
+                                                    status={errors.cep || shakes.cep.active || erroCepBusca ? 'erro' : touchedFields.cep ? 'sucesso' : ''}
+                                                    error={erroCepBusca || errors.cep?.message || ''}
                                                 />
                                             )}
                                         />
                                     </div>
+                                    {buscandoCep && <small className={styles.statusCep}>Buscando endereço...</small>}
                                     <button
                                         type="button"
                                         className={styles.btnNaoSeiCep}
@@ -277,6 +278,89 @@ export default function Cadastro({ navigate }: CadastroProps) {
                                         />
                                     </div>
                                 </div>
+
+                                <div className={styles.linhaLocalizacao}>
+                                    <div className={styles.inputBairro}>
+                                        <Controller
+                                            control={control} name="bairro"
+                                            render={({ field: { onChange, value } }) => (
+                                                <FormInput
+                                                    key={`bairro-shake-${JSON.stringify(shakes.bairro)}`}
+                                                    id="bairro"
+                                                    label="Bairro"
+                                                    type="text"
+                                                    value={value}
+                                                    placeholder="Ex: Bela Vista"
+                                                    required
+                                                    shake={shakes.bairro.shake}
+                                                    onBlur={() => trigger('bairro')}
+                                                    onChange={(e) => { onChange(e.target.value); clearShake('bairro'); }}
+                                                    status={errors.bairro || shakes.bairro.active ? 'erro' : touchedFields.bairro ? 'sucesso' : ''}
+                                                    error={errors.bairro?.message || ''}
+                                                />
+                                            )}
+                                        />
+                                    </div>
+
+                                    <div className={styles.inputCidade}>
+                                        <Controller
+                                            control={control} name="cidade"
+                                            render={({ field: { onChange, value } }) => (
+                                                <FormInput
+                                                    key={`cidade-shake-${JSON.stringify(shakes.cidade)}`}
+                                                    id="cidade"
+                                                    label="Cidade"
+                                                    type="text"
+                                                    value={value}
+                                                    placeholder="Ex: São Paulo"
+                                                    required
+                                                    shake={shakes.cidade.shake}
+                                                    onBlur={() => trigger('cidade')}
+                                                    onChange={(e) => { onChange(e.target.value); clearShake('cidade'); }}
+                                                    status={errors.cidade || shakes.cidade.active ? 'erro' : touchedFields.cidade ? 'sucesso' : ''}
+                                                    error={errors.cidade?.message || ''}
+                                                />
+                                            )}
+                                        />
+                                    </div>
+
+                                    <div className={styles.inputEstado}>
+                                        <Controller
+                                            control={control} name="estado"
+                                            render={({ field: { onChange, value } }) => (
+                                                <FormInput
+                                                    key={`estado-shake-${JSON.stringify(shakes.estado)}`}
+                                                    id="estado"
+                                                    label="Estado"
+                                                    type="text"
+                                                    value={value}
+                                                    placeholder="UF"
+                                                    maxLength={2}
+                                                    required
+                                                    shake={shakes.estado.shake}
+                                                    onBlur={() => trigger('estado')}
+                                                    onChange={(e) => { onChange(e.target.value.toUpperCase()); clearShake('estado'); }}
+                                                    status={errors.estado || shakes.estado.active ? 'erro' : touchedFields.estado ? 'sucesso' : ''}
+                                                    error={errors.estado?.message || ''}
+                                                />
+                                            )}
+                                        />
+                                    </div>
+                                </div>
+
+                                <Controller
+                                    control={control} name="complemento"
+                                    render={({ field: { onChange, value } }) => (
+                                        <FormInput
+                                            id="complemento"
+                                            label="Complemento (opcional)"
+                                            type="text"
+                                            value={value}
+                                            placeholder="Ex: Apto 12, bloco B"
+                                            onChange={(e) => onChange(e.target.value)}
+                                        />
+                                    )}
+                                />
                             </div>
 
                         </div>

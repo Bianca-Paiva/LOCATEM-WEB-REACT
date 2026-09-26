@@ -66,7 +66,16 @@ export default function Perfil({ navigate }: PerfilProps) {
 
         <div className={styles.colunas}>
           <InformacoesPessoais usuario={usuario} onEditar={() => setEditando(true)} />
-          <ReputacaoCard reputacao={usuario.reputacao} tipo={usuario.tipo} />
+          <ReputacaoCard
+            reputacao={
+              usuario.reputacao ?? {
+                rating: 0,
+                totalAvaliacoes: 0,
+                locacoesConcluidas: 0,
+              }
+            }
+            tipo={usuario.tipo}
+          />
         </div>
 
         <PainelControle tipo={usuario.tipo} navigate={navigate} />

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Header from '../../../components/Layout/Header/Header';
 import { ImagemCarrossel } from '../../../components/Ferramentas/ProdutoDetalhe/ImagemCarrossel/ImagemCarrossel';
 import { ProdutoInfo } from '../../../components/Ferramentas/ProdutoDetalhe/ProdutoInfo/ProdutoInfo';
@@ -12,13 +12,11 @@ import { BannerLateral } from '../../../components/Ferramentas/ProdutoDetalhe/Ba
 import SolicitarLocacaoModal from '../../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal';
 import SuccessModal from '../../../components/Shared/SuccessModal/SucessesModal';
 import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
-import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import { useNotificacaoStore } from '../../../hooks/Conta/Notificacoes/useNotificationStore';
 import { useCarrinhoStore } from '../../../hooks/Checkout/Carrinho/useCarrinhoStore';
+import { useFavoritos } from '../../../hooks/Conta/Favoritos/useFavoritos';
 import { useAuth } from '../../../hooks/Auth/useAuth';
-import { getLocadorByNome } from '../../../mocks/locadores.mock';
-import { toProdutoSemelhante, toProdutoSelecionado } from '../../../mocks/produtos.adapters';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../../utils/Locacoes/montarLocacaoData';
 import {
   salvarValorPagamento,
@@ -28,42 +26,172 @@ import {
 import type { ProdutoSelecionado } from '../../../context/Ferramentas/Produto/ProdutoContext';
 import type { Route } from '../../../router/useRouter';
 import type { DadosLocacaoModal, ModoAberturaModal } from '../../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
-import { FALLBACK_PRODUTO } from './ProdutoDetalhe.mock';
+import { buscarFerramentaPorId, buscarFerramentasDisponiveis, type FerramentaDisponivel } from '../../../services/ferramentaservice';
+import { ferramentaParaProdutoSelecionado, obterImagensFerramenta, formatarMoeda } from '../../../services/ferramentaAdapters';
 import styles from './ProdutoDetalhe.module.css';
 
 interface ProdutoDetalheProps {
-  navigate: (route: Route) => void;
+  navigate: (route: Route, query?: Record<string, string | number | null | undefined>) => void;
 }
 
 export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const { produtoSelecionado, setProdutoSelecionado } = useProdutoStore();
-  const { produtos } = useCatalogoStore();
   const { adicionarLocacao } = useLocacaoStore();
   const { adicionarNotificacao } = useNotificacaoStore();
   const { adicionarItem } = useCarrinhoStore();
   const { usuario } = useAuth();
+  const { isFavoritado, isProcessando, toggleFavorito } = useFavoritos();
 
-  // Usa os dados do produto clicado; caso acesse direto via hash, usa fallback
-  const produto: ProdutoSelecionado = produtoSelecionado ?? FALLBACK_PRODUTO;
+  const [ferramentasDisponiveis, setFerramentasDisponiveis] = useState<FerramentaDisponivel[]>([]);
+  const [produtoCarregado, setProdutoCarregado] = useState<ProdutoSelecionado | null>(null);
+  const [carregandoProduto, setCarregandoProduto] = useState(true);
+  const [erroProduto, setErroProduto] = useState<string | null>(null);
 
-  // Ferramentas semelhantes: calculadas dinamicamente a partir da categoria do produto atual (ex: furadeira → outras furadeiras/parafusadeiras), sempre sobre o catálogo completo — nunca uma lista fixa por produto.
+  useEffect(() => {
+    const id = produtoSelecionado?.id;
+
+    if (!id) {
+      setCarregandoProduto(false);
+      setErroProduto('Nenhuma ferramenta foi selecionada.');
+      return;
+    }
+
+    let ativo = true;
+    setCarregandoProduto(true);
+    setErroProduto(null);
+
+    Promise.all([buscarFerramentaPorId(id), buscarFerramentasDisponiveis()])
+      .then(([ferramenta, disponiveis]) => {
+        if (!ativo) return;
+
+        setProdutoCarregado(ferramentaParaProdutoSelecionado(ferramenta));
+        setFerramentasDisponiveis(disponiveis);
+      })
+      .catch((error) => {
+        if (!ativo) return;
+        setErroProduto(error instanceof Error ? error.message : 'Erro ao carregar a ferramenta.');
+      })
+      .finally(() => {
+        if (ativo) setCarregandoProduto(false);
+      });
+
+    return () => {
+      ativo = false;
+    };
+  }, [produtoSelecionado?.id]);
+
+  const produto: ProdutoSelecionado | null = produtoCarregado ?? produtoSelecionado;
+
+  const handleToggleFavorito = async () => {
+    if (!produto?.id) return;
+
+    if (!usuario) {
+      navigate('login');
+      return;
+    }
+
+    try {
+      await toggleFavorito(produto.id);
+    } catch (error) {
+      console.error('Erro ao atualizar favorito:', error);
+    }
+  };
+
+
   const produtosSemelhantes = useMemo(
-    () =>
-      produtos
-        .filter((p) => p.categoria === produto.categoria && p.id !== produto.id)
-        .map(toProdutoSemelhante),
-    [produtos, produto.categoria, produto.id],
+    () => {
+      if (!produto) return [];
+
+      return ferramentasDisponiveis
+        .filter(
+          (ferramenta) =>
+            ferramenta.categoriaId === produto.categoriaId &&
+            ferramenta.ferramentaId !== produto.id,
+        )
+        .map((ferramenta) => ({
+          id: ferramenta.ferramentaId,
+          title: ferramenta.nome,
+          marca: ferramenta.marca || 'Sem marca',
+          locador: ferramenta.usuarioNome || 'Locador não informado',
+          price: formatarMoeda(ferramenta.diaria),
+          images: obterImagensFerramenta(ferramenta),
+          imageVerificado: '/icon-verified.png',
+          imageNota: '/icon-star.png',
+          rating: Number(ferramenta.avaliacaoMedia ?? 0),
+          reviewCount: ferramenta.totalAvaliacoes ?? 0,
+        }));
+    },
+    [ferramentasDisponiveis, produto],
   );
 
-  // Ao clicar num card semelhante: o card só carrega um recorte do produto (ProdutoSemelhante), então buscamos o produto completo no catálogo pra levar adiante os dados reais da ferramenta (descrição, especificações, acessórios, avaliações etc.), salvamos no store e forçamos re-render no topo.
   const handleSemelhante = (p: ProdutoSelecionado) => {
-    const produtoCompleto = produtos.find((item) => item.id === p.id);
-    setProdutoSelecionado(produtoCompleto ? toProdutoSelecionado(produtoCompleto) : p);
+    if (!p.id) return;
+
+    const ferramenta = ferramentasDisponiveis.find((item) => item.ferramentaId === p.id);
+    if (ferramenta) {
+      setProdutoSelecionado(ferramentaParaProdutoSelecionado(ferramenta));
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Dados do locador vêm sempre do catálogo, buscados pelo nome salvo no produto.
-  const locador = getLocadorByNome(produto.locador);
+  const locador = produto
+    ? {
+        nome: produto.locador,
+        logoUrl: produto.locadorFotoUrl,
+        rating: 0,
+        reviewCount: 0,
+        locacoes: 0,
+        verificado: false,
+      }
+    : null;
+
+  const informacoesFerramenta = produto
+    ? [
+        ...(produto.modelo ? [{ label: 'Modelo', valor: produto.modelo }] : []),
+        ...(produto.estadoConservacao
+          ? [{ label: 'Estado de conservação', valor: produto.estadoConservacao }]
+          : []),
+        ...(produto.voltagem
+          ? [{ label: 'Fonte de alimentação', valor: produto.voltagem }]
+          : []),
+        {
+          label: 'Quantidade disponível',
+          valor: `${produto.estoqueDisponivel} unidade(s)`,
+        },
+        ...(produto.tipoAprovacao
+          ? [{
+              label: 'Aprovação da locação',
+              valor: produto.tipoAprovacao === 'automatica' ? 'Automática' : 'Manual',
+            }]
+          : []),
+        ...(produto.caucao
+          ? [{ label: 'Caução', valor: `R$ ${produto.caucao}` }]
+          : []),
+        ...(produto.localizacao
+          ? [{ label: 'Localização', valor: produto.localizacao }]
+          : []),
+        ...(produto.enderecoRetirada
+          ? [{
+              label: 'Endereço de retirada',
+              valor: [
+                `${produto.enderecoRetirada.logradouro}, ${produto.enderecoRetirada.numero}`,
+                produto.enderecoRetirada.complemento,
+                `${produto.enderecoRetirada.bairro} - ${produto.enderecoRetirada.cidade}/${produto.enderecoRetirada.estado}`,
+                produto.enderecoRetirada.cep,
+              ]
+                .filter(Boolean)
+                .join(' • '),
+            }]
+          : []),
+        {
+          label: 'Dias indisponíveis',
+          valor: produto.diasIndisponiveis?.length
+            ? produto.diasIndisponiveis.join(', ')
+            : 'Nenhum',
+        },
+      ]
+    : [];
 
   // ── Modal de Solicitação de Locação ──────────────────────────────────────
   // Aberto tanto por "Locar" quanto por "Adicionar ao carrinho"; o `modo` controla o rótulo/ação do botão de confirmação dentro do modal.
@@ -93,6 +221,8 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   const handleFecharModal = () => setModalAberto(false);
 
   const handleContinuar = (dados: DadosLocacaoModal) => {
+    if (!produto) return;
+
     setProdutoSelecionado(produto);
     setModalAberto(false);
 
@@ -133,9 +263,32 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
 
   const handleAdicionarAoCarrinhoConfirmado = (dados: DadosLocacaoModal) => {
     // Apenas adiciona a ferramenta ao carrinho (datas, horários e quantidade) — não cria solicitação, notificação nem dispara fluxo de aprovação/pagamento algum.
+    if (!produto) return;
     adicionarItem(produto, dados);
     setModalAberto(false);
   };
+
+  if (!produto || carregandoProduto) {
+    return (
+      <div className={styles.produtoDetalheContainer}>
+        <Header navigate={navigate} currentRoute="home" />
+        <main className={styles.produtoDetalheMain}>
+          <p style={{ textAlign: 'center', marginTop: '3rem' }}>Carregando ferramenta...</p>
+        </main>
+      </div>
+    );
+  }
+
+  if (erroProduto) {
+    return (
+      <div className={styles.produtoDetalheContainer}>
+        <Header navigate={navigate} currentRoute="home" />
+        <main className={styles.produtoDetalheMain}>
+          <p style={{ textAlign: 'center', marginTop: '3rem' }}>{erroProduto}</p>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.produtoDetalheContainer}>
@@ -170,6 +323,9 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     imageNota={produto.imageNota}
                     estoqueDisponivel={produto.estoqueDisponivel}
                     voltagem={produto.voltagem}
+                    favoritado={produto.id ? isFavoritado(produto.id) : false}
+                    favoritoCarregando={produto.id ? isProcessando(produto.id) : false}
+                    onToggleFavorito={usuario?.tipo === 'locatario' ? handleToggleFavorito : undefined}
                     onAlugar={handleAlugar}                          // <-- abre o modal em modo "locar"
                     onLocar={handleAlugar}                        // <-- mantido por compatibilidade; use handleAlugar
                     onAddCarrinho={handleAdicionarCarrinho}          // <-- abre o modal em modo "carrinho"
@@ -200,16 +356,24 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                 {/* Oculto no Mobile/Tablet, Visível no Desktop */}
                 <div className={`${styles.produtoVendedorCol} ${styles.vendedorDesktop}`}>
                   <InfoVendedor
-                    nome={locador.nome}
-                    logoUrl={locador.logoUrl}
-                    rating={locador.rating}
-                    reviewCount={locador.reviewCount}
-                    locacoes={locador.locacoes}
-                    verificado={locador.verificado}
+                    nome={locador?.nome ?? 'Locador não informado'}
+                    logoUrl={locador?.logoUrl}
+                    rating={locador?.rating ?? 0}
+                    reviewCount={locador?.reviewCount ?? 0}
+                    locacoes={locador?.locacoes ?? 0}
+                    verificado={locador?.verificado ?? false}
                     imageNota={produto.imageNota}
+                    onVerPerfil={produto.locadorId ? () => navigate('perfilLoja', { usuarioId: produto.locadorId }) : undefined}
                   />
                 </div>
               </div>
+
+              {informacoesFerramenta.length > 0 && (
+                <EspecificacoesTecnicas
+                  titulo="Informações da ferramenta"
+                  especificacoes={informacoesFerramenta}
+                />
+              )}
 
               {produto.especificacoes && produto.especificacoes.length > 0 && (
                 <EspecificacoesTecnicas especificacoes={produto.especificacoes} />
@@ -222,13 +386,14 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
               {/* Visível no Mobile/Tablet (depois de Acessórios), Oculto no Desktop */}
               <div className={styles.vendedorMobile}>
                 <InfoVendedor
-                  nome={locador.nome}
-                  logoUrl={locador.logoUrl}
-                  rating={locador.rating}
-                  reviewCount={locador.reviewCount}
-                  locacoes={locador.locacoes}
-                  verificado={locador.verificado}
+                  nome={locador?.nome ?? 'Locador não informado'}
+                  logoUrl={locador?.logoUrl}
+                  rating={locador?.rating ?? 0}
+                  reviewCount={locador?.reviewCount ?? 0}
+                  locacoes={locador?.locacoes ?? 0}
+                  verificado={locador?.verificado ?? false}
                   imageNota={produto.imageNota}
+                  onVerPerfil={produto.locadorId ? () => navigate('perfilLoja', { usuarioId: produto.locadorId }) : undefined}
                 />
               </div>
 

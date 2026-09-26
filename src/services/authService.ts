@@ -10,6 +10,13 @@ export interface CadastroPayload {
   telefone: string;
   documento: string;
   tipoUsuario: 1 | 2;
+  cep: string;
+  logradouro: string;
+  numero: string;
+  complemento: string;
+  bairro: string;
+  cidade: string;
+  estado: string;
 }
 
 export interface LoginPayload {

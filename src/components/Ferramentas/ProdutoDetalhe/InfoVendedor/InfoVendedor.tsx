@@ -11,6 +11,7 @@ interface InfoVendedorProps {
   locacoes: number;
   verificado: boolean;
   imageNota?: string;
+  onVerPerfil?: () => void;
 }
 
 export function InfoVendedor({
@@ -20,6 +21,7 @@ export function InfoVendedor({
   reviewCount,
   locacoes,
   verificado,
+  onVerPerfil,
 }: InfoVendedorProps) {
   // Usa o mesmo utilitário de iniciais do resto do projeto (Avatar, AvaliacaoSection), em vez da lógica local que existia aqui antes (slice das 2 primeiras letras).
   const initials = getIniciais(nome);
@@ -59,7 +61,7 @@ export function InfoVendedor({
         </div>
       </div>
 
-      <button className={styles.btnVerPerfil}>
+      <button type="button" className={styles.btnVerPerfil} onClick={onVerPerfil}>
         Ver perfil da loja
       </button>
     </div>

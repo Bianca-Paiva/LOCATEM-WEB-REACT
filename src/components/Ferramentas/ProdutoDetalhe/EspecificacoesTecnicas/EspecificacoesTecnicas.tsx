@@ -7,12 +7,13 @@ interface Especificacao {
 
 interface EspecificacoesTecnicasProps {
   especificacoes: Especificacao[];
+  titulo?: string;
 }
 
-export function EspecificacoesTecnicas({ especificacoes }: EspecificacoesTecnicasProps) {
+export function EspecificacoesTecnicas({ especificacoes, titulo = 'Especificações Técnicas' }: EspecificacoesTecnicasProps) {
   return (
     <section className={styles.wrapper}>
-      <h2 className={styles.titulo}>Especificações Técnicas</h2>
+      <h2 className={styles.titulo}>{titulo}</h2>
       <div className={styles.tabela}>
         {especificacoes.map((esp, i) => (
           <div key={i} className={`${styles.linha} ${i % 2 === 0 ? styles.linhaClara : styles.linhaEscura}`}>

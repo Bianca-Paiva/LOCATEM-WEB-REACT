@@ -137,3 +137,15 @@
     height: 68px;
   }
 }
+
+.semImagem {
+  width: 100%;
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  color: #6b7280;
+  background: #f3f4f6;
+  border-radius: 12px;
+}

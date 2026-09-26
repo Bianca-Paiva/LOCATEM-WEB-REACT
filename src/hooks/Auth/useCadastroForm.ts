@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { cadastroSchema, type CadastroFormData } from '../../validation/Cadastro/cadastroSchema'
@@ -6,6 +6,7 @@ import { CADASTRO_MESSAGES } from '../../validation/Cadastro/cadastroMessages'
 import { PASSWORD_MESSAGES } from '../../validation/Password/passwordMessages'
 import { checkPasswordStrength } from '../../validation/Password/passwordStrength'
 import { criarUsuario } from '../../services/authService'
+import { buscarEnderecoPorCEP } from '../../services/cepService'
 
 interface ErrorState { active: boolean; shake: boolean }
 const INITIAL_ERROR = { active: false, shake: false }
@@ -17,6 +18,7 @@ export function useCadastroForm() {
     const [shakes, setShakes] = useState<Record<string, ErrorState>>({
         nome: INITIAL_ERROR, email: INITIAL_ERROR, telefone: INITIAL_ERROR,
         documento: INITIAL_ERROR, cep: INITIAL_ERROR, logradouro: INITIAL_ERROR, numero: INITIAL_ERROR,
+        bairro: INITIAL_ERROR, cidade: INITIAL_ERROR, estado: INITIAL_ERROR,
         senha: INITIAL_ERROR, confirmarSenha: INITIAL_ERROR
     })
 
@@ -24,7 +26,7 @@ export function useCadastroForm() {
         resolver: zodResolver(cadastroSchema),
         defaultValues: {
             tipo: 'locatario', nome: '', email: '', telefone: '', documento: '',
-            cep: '', logradouro: '', numero: '',
+            cep: '', logradouro: '', numero: '', complemento: '', bairro: '', cidade: '', estado: '',
             senha: '', confirmarSenha: ''
         }
     })
@@ -32,9 +34,48 @@ export function useCadastroForm() {
     const tipo = useWatch({ control, name: 'tipo' })
     const senha = useWatch({ control, name: 'senha' })
     const confirmarSenha = useWatch({ control, name: 'confirmarSenha' })
+    const cep = useWatch({ control, name: 'cep' })
+
+    const [buscandoCep, setBuscandoCep] = useState(false)
+    const [erroCepBusca, setErroCepBusca] = useState<string | undefined>()
 
     const isCNPJ = tipo === 'locador'
     const strengthResult = checkPasswordStrength(senha || '')
+
+    useEffect(() => {
+        const cepLimpo = (cep || '').replace(/\D/g, '')
+
+        if (cepLimpo.length !== 8) {
+            setBuscandoCep(false)
+            setErroCepBusca(undefined)
+            return
+        }
+
+        let cancelado = false
+        setBuscandoCep(true)
+        setErroCepBusca(undefined)
+
+        buscarEnderecoPorCEP(cepLimpo)
+            .then((endereco) => {
+                if (cancelado) return
+
+                setValue('logradouro', endereco.logradouro ?? '', { shouldValidate: true })
+                setValue('bairro', endereco.bairro ?? '', { shouldValidate: true })
+                setValue('cidade', endereco.localidade ?? '', { shouldValidate: true })
+                setValue('estado', endereco.uf ?? '', { shouldValidate: true })
+            })
+            .catch((error) => {
+                if (cancelado) return
+                setErroCepBusca(error instanceof Error ? error.message : 'Não foi possível consultar o CEP.')
+            })
+            .finally(() => {
+                if (!cancelado) setBuscandoCep(false)
+            })
+
+        return () => {
+            cancelado = true
+        }
+    }, [cep, setValue])
 
     const triggerShake = (field: string) => {
         setShakes(prev => ({ ...prev, [field]: { ...prev[field], shake: false } }))
@@ -70,6 +111,13 @@ export function useCadastroForm() {
                 telefone: data.telefone,
                 documento: data.documento.replace(/\D/g, ''),
                 tipoUsuario: data.tipo === 'locador' ? 2 : 1,
+                cep: data.cep,
+                logradouro: data.logradouro,
+                numero: data.numero,
+                complemento: data.complemento ?? '',
+                bairro: data.bairro,
+                cidade: data.cidade,
+                estado: data.estado,
             })
             setSuccessModalOpen(true)
         } catch {
@@ -80,7 +128,7 @@ export function useCadastroForm() {
     const onInvalidSubmit = (formErrors: typeof errors) => {
         let hasEmptyFields = false
 
-        const fields = ['nome', 'email', 'telefone', 'documento', 'cep', 'logradouro', 'numero', 'senha', 'confirmarSenha'] as const
+        const fields = ['nome', 'email', 'telefone', 'documento', 'cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado', 'senha', 'confirmarSenha'] as const
         fields.forEach(field => {
             const val = getValues(field)
 
@@ -120,7 +168,7 @@ export function useCadastroForm() {
     return {
         control, tipo, senha: senha || '', confirmarSenha: confirmarSenha || '', isCNPJ, strengthResult,
         alerta, setAlerta, successModalOpen, setSuccessModalOpen, shakes, clearShake,
-        touchedFields, errors, trigger, handleTipoChange,
+        touchedFields, errors, trigger, handleTipoChange, buscandoCep, erroCepBusca,
         onSubmit: handleSubmit(onValidSubmit, onInvalidSubmit)
     }
 }

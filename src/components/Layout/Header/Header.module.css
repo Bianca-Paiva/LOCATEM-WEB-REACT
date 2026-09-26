@@ -361,10 +361,10 @@
 
     .linhaTopo {
         display: grid;
-        grid-template-columns: 1fr minmax(300px, 900px) 1fr;
+        grid-template-columns: 1fr minmax(480px, 916px) 1fr;
         align-items: center;
         width: 100%;
-        padding: 0 32px;
+        padding: 0 34px;
         gap: 35px;
     }
 
@@ -383,12 +383,12 @@
     /* CLASSE UNIFICADA (Sem repetições) */
     .barraPesquisa {
         width: 100%;
-        height: 45px;
+        height: 52px;
         display: flex;
         align-items: center;
         gap: 10px;
         background: var(--color-bg-card);
-        border-radius: var(--radius-pill);
+        border-radius: 28px;
         padding: 0 16px;
         box-shadow: var(--shadow-search);
         transition: box-shadow var(--transition-fast);
@@ -434,8 +434,8 @@
     }
 
     .loginBtn {
-        width: clamp(38px, 3vw, 46px);
-        height: clamp(38px, 3vw, 46px);
+        width: clamp(46px, 3.2vw, 52px);
+        height: clamp(46px, 3.2vw, 52px);
         border-radius: 50%;
         border: none;
         background: none;
@@ -455,8 +455,8 @@
         flex-wrap: nowrap;
         justify-content: center;
         align-items: center;
-        gap: clamp(15px, 3vw, 45px);
-        padding: 30px var(--spacing-xl) 40px;
+        gap: clamp(32px, 5vw, 78px);
+        padding: 32px var(--spacing-xl) 44px;
         width: 100%;
         max-width: 4000px;
         margin: 0 auto;

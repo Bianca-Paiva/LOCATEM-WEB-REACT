@@ -177,6 +177,8 @@ export default function Busca({ navigate }: BuscaProps) {
                     imageNota={product.imageNota}
                     rating={product.rating}
                     reviewCount={product.reviewCount}
+                    productId={product.id}
+                    showFavorite
                     onNavigate={() => handleCardClick(product)}
                   />
                 ))

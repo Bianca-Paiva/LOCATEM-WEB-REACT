@@ -10,6 +10,7 @@ const validRoutes = [
   "home",
   "busca",
   "produtoDetalhe",
+  "perfilLoja",
 
   // Área do Locador (Quem disponibiliza a ferramenta) — Home exclusiva do locador
   "homeLocador",
@@ -25,6 +26,7 @@ const validRoutes = [
   "perfil",
   "notificacoes",
   "avaliacao",
+  "favoritos",
 
   // Área do Cliente/Locatário (Quem está alugando)
   "carrinho",
@@ -79,6 +81,12 @@ function getRouteFromHash(): Route {
  * Essa é a ferramenta que mais vai ser usada nas telas.
  * Ela diz em qual tela você está e te dá uma função para mudar de tela.
  */
+export function getRouteQueryParam(param: string): string | null {
+  const hash = window.location.hash.replace(/^#/, '');
+  const query = hash.includes('?') ? hash.slice(hash.indexOf('?') + 1) : '';
+  return new URLSearchParams(query).get(param);
+}
+
 export function useRouter() {
   // Guarda a tela atual. Assim que o app abre, ele já olha a URL para saber onde começar.
   const [route, setRoute] = useState<Route>(getRouteFromHash);
@@ -103,8 +111,17 @@ export function useRouter() {
    * Função para levar o usuário para outra tela.
    * Exemplo de uso num botão: onClick={() => navigate("login")}
    */
-  const navigate = (to: Route) => {
-    window.location.hash = to;
+  const navigate = (to: Route, query?: Record<string, string | number | null | undefined>) => {
+    const params = new URLSearchParams();
+
+    Object.entries(query ?? {}).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && String(value) !== '') {
+        params.set(key, String(value));
+      }
+    });
+
+    const queryString = params.toString();
+    window.location.hash = queryString ? `${to}?${queryString}` : to;
   };
 
   // Entrega para o componente a tela atual e a função de viajar entre telas.
