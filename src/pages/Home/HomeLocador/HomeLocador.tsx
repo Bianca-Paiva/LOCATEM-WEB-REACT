@@ -25,6 +25,8 @@ import { ferramentaParaProdutoHome, ferramentaParaProdutoSelecionado } from '../
 import { formatarValorMonetario } from '../../../utils/Formatacao/valorMonetario';
 
 import type { Route } from '../../../router/useRouter';
+import type { StatusFerramenta } from '../../../types/Ferramentas/produto.types';
+import type { FerramentaDisponivel } from '../../../services/ferramentaservice';
 
 // Reaproveita a mesma grade/estilos de card e botões "Ver"/"Editar" já usados em "Minhas Ferramentas" (nenhum CSS novo para esse padrão).
 import stylesFerramentas from '../../Ferramentas/MinhasFerramentas/MinhasFerramentas.module.css';
@@ -36,6 +38,13 @@ interface HomeLocadorProps {
 
 /** Cor de destaque (amarelo/dourado da marca) usada nas estrelas — mesma sobrescrita já aplicada no card "Reputação" do Perfil. */
 const ESTRELA_COR_MARCA = { '--star-active': '#F9C01A' } as CSSProperties;
+
+function obterStatusFerramenta(ferramenta: FerramentaDisponivel): StatusFerramenta {
+  if (ferramenta.disponibilidade === 4) return 'manutencao';
+  if (ferramenta.disponibilidade === 2) return 'locada';
+  if (ferramenta.status !== 1 || ferramenta.disponibilidade === 3) return 'indisponivel';
+  return 'disponivel';
+}
 
 export default function HomeLocador({ navigate }: HomeLocadorProps) {
   const acessoPermitido = useExigirPerfil(navigate, 'locador', 'home');
@@ -87,6 +96,13 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
       : null;
 
   const iniciarArraste = (e: PointerEvent<HTMLDivElement>) => {
+    const alvo = e.target as HTMLElement;
+
+    // Não captura o ponteiro quando o usuário está clicando nos botões
+    // internos dos cards. Sem essa proteção o scroll horizontal podia
+    // impedir o click de Ver, Editar e Cadastrar nova ferramenta.
+    if (alvo.closest('button, a, input, select, textarea')) return;
+
     if (!scrollRef.current) return;
 
     setArrastando(true);
@@ -262,12 +278,12 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
             <div className={stylesFerramentas.grade}>
 
               {/* define a quantidade de produtos que vai aparecer */}
-              {minhasFerramentas.slice(0, 4).map((ferramenta) => {
-                const produto = ferramentaParaProdutoHome(ferramenta);
+              {minhasFerramentas.slice(0, 4).map((produtoCompleto) => {
+                const produto = ferramentaParaProdutoHome(produtoCompleto);
 
                 return (
                   <ProductCard
-                    key={ferramenta.ferramentaId}
+                    key={produto.id}
                     title={produto.title}
                     brand={produto.locador}
                     price={produto.price}
@@ -276,13 +292,13 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
                     imageNota={produto.imageNota}
                     rating={produto.rating}
                     reviewCount={produto.reviewCount}
-                    statusBadge={<StatusFerramentaBadge status={ferramenta.statusVisual} compacto />}
+                    statusBadge={<StatusFerramentaBadge status={obterStatusFerramenta(produtoCompleto)} compacto />}
                     footerExtra={
                       <div className={stylesFerramentas.acoesCard}>
                         <button
                           type="button"
                           className={stylesFerramentas.botaoAcao}
-                          onClick={() => handleVerFerramenta(ferramenta.ferramentaId)}
+                          onClick={() => handleVerFerramenta(produtoCompleto.ferramentaId)}
                         >
                           <Eye size={14} strokeWidth={2} />
                           Ver
@@ -290,7 +306,7 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
                         <button
                           type="button"
                           className={stylesFerramentas.botaoAcao}
-                          onClick={() => handleEditarFerramenta(ferramenta.ferramentaId)}
+                          onClick={() => handleEditarFerramenta(produtoCompleto.ferramentaId)}
                         >
                           <Pencil size={14} strokeWidth={2} />
                           Editar

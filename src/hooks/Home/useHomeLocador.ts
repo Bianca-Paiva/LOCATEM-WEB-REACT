@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../Auth/useAuth';
-import { buscarMinhasFerramentas, type FerramentaDisponivel } from '../../services/ferramentaservice';
-import type { StatusFerramenta } from '../../types/Ferramentas/produto.types';
 import { useLocacaoStore } from '../Locacoes/useLocacaoStore';
 import { paraDataBr } from '../../utils/Formatacao/formatoDataBr';
 import { paraNumero } from '../../utils/Formatacao/valorMonetario';
@@ -11,6 +9,7 @@ import type {
   ResumoHomeLocador,
   SolicitacaoRecenteLocador,
 } from '../../pages/Home/HomeLocador/HomeLocador.types';
+import { buscarMinhasFerramentas, type FerramentaDisponivel } from '../../services/ferramentaservice';
 
 /** Quantas ferramentas/solicitações/eventos a Home mostra em cada seção antes do "Ver Mais". */
 const LIMITE_MINHAS_FERRAMENTAS = 5;
@@ -55,40 +54,23 @@ function estaNoMes(dataBr: string | undefined, mes: number, ano: number): boolea
 export function useHomeLocador() {
   const { usuario } = useAuth();
   const { locacoes } = useLocacaoStore();
-
-  // Mesmo filtro usado em MinhasFerramentas/GerenciarLocacoes: sempre pelo identificador único do locador, nunca pelo nome exibido em tela.
-  const [minhasFerramentas, setMinhasFerramentas] = useState<Array<FerramentaDisponivel & { statusVisual: StatusFerramenta }>>([]);
+  const [minhasFerramentasCompletas, setMinhasFerramentasCompletas] = useState<FerramentaDisponivel[]>([]);
 
   useEffect(() => {
     let ativo = true;
 
     async function carregarMinhasFerramentas() {
-      if (!usuario?.id || usuario.tipo !== 'locador') {
-        if (ativo) setMinhasFerramentas([]);
+      if (!usuario?.id || (usuario.tipo !== 'locador' && usuario.tipo !== 'administrador')) {
+        if (ativo) setMinhasFerramentasCompletas([]);
         return;
       }
 
       try {
         const ferramentas = await buscarMinhasFerramentas();
-        if (!ativo) return;
-
-        setMinhasFerramentas(
-          ferramentas.map((ferramenta) => {
-            let statusVisual: StatusFerramenta = 'disponivel';
-
-            if (ferramenta.disponibilidade === 4) {
-              statusVisual = 'manutencao';
-            } else if (ferramenta.disponibilidade === 2) {
-              statusVisual = 'locada';
-            } else if (ferramenta.status !== 1 || ferramenta.disponibilidade === 3) {
-              statusVisual = 'indisponivel';
-            }
-
-            return { ...ferramenta, statusVisual };
-          }),
-        );
-      } catch {
-        if (ativo) setMinhasFerramentas([]);
+        if (ativo) setMinhasFerramentasCompletas(ferramentas);
+      } catch (error) {
+        console.error('Erro ao carregar ferramentas do locador na Home:', error);
+        if (ativo) setMinhasFerramentasCompletas([]);
       }
     }
 
@@ -98,6 +80,11 @@ export function useHomeLocador() {
       ativo = false;
     };
   }, [usuario?.id, usuario?.tipo]);
+
+  const minhasFerramentas = useMemo(
+    () => minhasFerramentasCompletas,
+    [minhasFerramentasCompletas],
+  );
 
   const minhasLocacoes = useMemo(
     () => locacoes.filter((l) => l.locadorId === usuario?.locadorId),
@@ -118,11 +105,24 @@ export function useHomeLocador() {
         .filter((l) => l.status === 'finalizada' && estaNoMes(l.dataInicio, mes, ano))
         .reduce((total, l) => total + valorLocacaoParaNumero(l.valor), 0);
 
+    const statusOperacional = (ferramenta: FerramentaDisponivel) => {
+      if (ferramenta.disponibilidade === 4) return 'manutencao';
+      if (ferramenta.disponibilidade === 2) return 'locada';
+      if (ferramenta.status !== 1 || ferramenta.disponibilidade === 3) return 'indisponivel';
+      return 'disponivel';
+    };
+
+    const dataFerramenta = (valor: string) => {
+      const data = new Date(valor);
+      return Number.isNaN(data.getTime()) ? undefined : data;
+    };
+
     return {
-      ferramentasAtivas: minhasFerramentas.filter((p) => p.statusVisual !== 'indisponivel').length,
-      ferramentasCadastradasEsteMes: minhasFerramentas.filter((p) =>
-        estaNoMes(p.dataCadastro, mesAtual, anoAtual),
-      ).length,
+      ferramentasAtivas: minhasFerramentas.filter((p) => statusOperacional(p) !== 'indisponivel').length,
+      ferramentasCadastradasEsteMes: minhasFerramentas.filter((p) => {
+        const data = dataFerramenta(p.dataCadastro);
+        return !!data && data.getMonth() === mesAtual && data.getFullYear() === anoAtual;
+      }).length,
       locacoesEmAndamento: minhasLocacoes.filter((l) => l.status === 'emAndamento').length,
       solicitacoesPendentes: minhasLocacoes.filter((l) => l.status === 'pendente').length,
       faturamentoMesAtual: faturamentoDoMes(mesAtual, anoAtual),
