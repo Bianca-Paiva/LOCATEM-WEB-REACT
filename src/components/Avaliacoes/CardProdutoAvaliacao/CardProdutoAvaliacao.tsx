@@ -22,7 +22,7 @@ export function CardProdutoAvaliacao({
 }: CardProdutoAvaliacaoProps) {
     return (
         <div className={styles.grupo}>
-            <BadgeLoja loja={produto.loja} />
+            <BadgeLoja loja={produto.loja} locatario={produto.perspectiva === 'locador'} />
 
             <article
                 className={styles.card}

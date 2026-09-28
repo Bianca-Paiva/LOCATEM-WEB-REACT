@@ -12,12 +12,12 @@ export type PerspectivaAvaliacao = 'locatario' | 'locador';
 export type ChaveSubAvaliacaoLocatario = 'locador' | 'entrega' | 'produto' | 'plataforma';
 
 /** Aspectos avaliados pelo locador, depois que ele recebe a ferramenta de volta. */
-export type ChaveSubAvaliacaoLocador = 'locatario' | 'entrega' | 'plataforma';
+export type ChaveSubAvaliacaoLocador = 'locatario' | 'entrega' | 'devolucao' | 'plataforma';
 
 export type ChaveSubAvaliacao = ChaveSubAvaliacaoLocatario | ChaveSubAvaliacaoLocador;
 
 /**
- * Notas por aspecto. Parcial porque o conjunto de chaves preenchidas depende da perspectiva de quem avaliou (locatário avalia 4 aspectos, locador avalia 3).
+ * Notas por aspecto. Parcial porque o conjunto de chaves preenchidas depende da perspectiva de quem avaliou (locatário avalia 4 aspectos, locador avalia 4).
  */
 export type SubAvaliacoes = Partial<Record<ChaveSubAvaliacao, number>>;
 
@@ -57,6 +57,7 @@ export const LABEL_SUB_AVALIACAO: Record<ChaveSubAvaliacao, string> = {
     locador: 'Avaliação Locador',
     locatario: 'Avaliação Locatário',
     entrega: 'Avaliação Entrega',
+    devolucao: 'Avaliação Devolução',
     produto: 'Avaliação Produto',
     plataforma: 'Avaliação Plataforma',
 };
@@ -66,5 +67,5 @@ export const LABEL_SUB_AVALIACAO: Record<ChaveSubAvaliacao, string> = {
  */
 export const CHAVES_SUB_AVALIACAO: Record<PerspectivaAvaliacao, ChaveSubAvaliacao[]> = {
     locatario: ['locador', 'entrega', 'produto', 'plataforma'],
-    locador: ['locatario', 'entrega', 'plataforma'],
+    locador: ['locatario', 'entrega', 'devolucao', 'plataforma'],
 };

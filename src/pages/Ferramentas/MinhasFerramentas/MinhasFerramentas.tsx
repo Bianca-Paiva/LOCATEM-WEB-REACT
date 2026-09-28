@@ -84,10 +84,10 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
         if (ativo) {
           setMinhasFerramentasCompletas(ferramentas);
         }
-      } catch (error) {
+      } catch {
         if (ativo) {
           setMinhasFerramentasCompletas([]);
-          setErro(error instanceof Error ? error.message : 'Não foi possível carregar suas ferramentas.');
+          setErro('Tente novamente em alguns instantes.');
         }
       } finally {
         if (ativo) {
@@ -194,7 +194,7 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
         {carregando ? (
           <EstadoVazio
             titulo="Carregando suas ferramentas..."
-            descricao="Buscando no backend os anúncios cadastrados pela sua conta."
+            descricao="Aguarde enquanto carregamos suas ferramentas."
           />
         ) : erro ? (
           <EstadoVazio

@@ -1,10 +1,11 @@
-import { ImageOff, Truck, ChevronLeft, ChevronDown, MonitorSmartphone } from 'lucide-react';
+import { ImageOff, Truck, PackageCheck, ChevronLeft, ChevronDown, MonitorSmartphone } from 'lucide-react';
+import Avatar from '../../Shared/Avatar/Avatar';
 import { useEffect, useState } from 'react';
 import type {
   ChaveSubAvaliacao,
   ProdutoAvaliacao,
 } from '../../../pages/Avaliacao/Avaliacao.types';
-import { LABEL_SUB_AVALIACAO } from '../../../pages/Avaliacao/Avaliacao.types';
+import { CHAVES_SUB_AVALIACAO, LABEL_SUB_AVALIACAO } from '../../../pages/Avaliacao/Avaliacao.types';
 import { EstrelasAvaliacao } from '../EstrelaAvaliacao/EstrelaAvaliacao';
 import { CarrosselAvaliacoesPendentes } from '../CarroselAvaliacoesPendentes/CarroselAvaliacoesPendentes';
 import styles from './ModalAvaliacao.module.css';
@@ -23,7 +24,7 @@ interface ModalAvaliacaoProps {
 }
 
 /**
- * Modal completo de avaliação: produto + sub-notas obrigatórias (a quantidade e os aspectos variam por perspectiva — locatário avalia 4, locador avalia 3; ver CHAVES_SUB_AVALIACAO) + o useState local do painel de observações (obsExpandida abaixo).
+ * Modal completo de avaliação: produto + sub-notas obrigatórias (a quantidade e os aspectos variam por perspectiva — locatário avalia 4, locador avalia 4; ver CHAVES_SUB_AVALIACAO) + o useState local do painel de observações (obsExpandida abaixo).
  */
 export function ModalAvaliacao({
   produto,
@@ -68,12 +69,14 @@ export function ModalAvaliacao({
     locador: produto.loja.logo,
     locatario: null, // sem foto de perfil do locatário no modelo atual — cai no ícone de fallback
     entrega: null,
+    devolucao: null,
     produto: produto.imagem,
     plataforma: null,
   };
 
-  // Mensagem de erro monta a lista de aspectos de acordo com os que essa avaliação realmente exige (varia por perspectiva — locatário avalia 4 aspectos, locador avalia 3).
-  const aspectosObrigatorios = (Object.keys(produto.subAvaliacoes) as ChaveSubAvaliacao[]).map(
+  // Mensagem de erro monta a lista de aspectos de acordo com os que essa avaliação realmente exige (varia por perspectiva — locatário avalia 4 aspectos, locador avalia 4).
+  const aspectos = CHAVES_SUB_AVALIACAO[produto.perspectiva];
+  const aspectosObrigatorios = aspectos.map(
     (chave) => LABEL_SUB_AVALIACAO[chave].replace('Avaliação ', ''),
   );
   const mensagemErro =
@@ -86,7 +89,7 @@ export function ModalAvaliacao({
       className={`${styles.overlay} ${aberto ? styles.open : ''}`}
       role="dialog"
       aria-modal="true"
-      aria-label="Avaliar produto"
+      aria-label={produto.perspectiva === 'locador' ? 'Avaliar locação' : 'Avaliar produto'}
       onClick={(evento) => {
         if (evento.target === evento.currentTarget) aoFechar();
       }}
@@ -105,12 +108,15 @@ export function ModalAvaliacao({
             <div className={styles.produtoInfo}>
               <p className={styles.produtoNome}>{produto.nome}</p>
               <p className={styles.produtoData}>{produto.dataLocacao}</p>
+              {produto.perspectiva === 'locador' && (
+                <p className={styles.produtoData}>Locatário: {produto.loja.nome}</p>
+              )}
             </div>
           </div>
 
           <div className={styles.avaliacoes}>
             <div className={styles.subRatings}>
-              {(Object.keys(produto.subAvaliacoes) as ChaveSubAvaliacao[]).map((chave) => (
+              {aspectos.map((chave) => (
                 <div
                   key={chave}
                   className={`${styles.subRating} ${camposComErro.includes(chave) ? styles.subRatingErro : ''
@@ -120,8 +126,12 @@ export function ModalAvaliacao({
 
                   <div className={styles.subRatingIcone}>
                     {/* Lógica de renderização adaptada para o Lucide */}
-                    {chave === 'entrega' ? (
+                    {chave === 'locatario' ? (
+                      <Avatar nome={produto.loja.nome} size={28} />
+                    ) : chave === 'entrega' ? (
                       <Truck size={20} aria-label="Ícone de entrega" />
+                    ) : chave === 'devolucao' ? (
+                      <PackageCheck size={20} aria-label="Ícone de devolução da ferramenta" />
                     ) : chave === 'plataforma' ? (
                       <MonitorSmartphone size={20} aria-label="Ícone da plataforma" />
                     ) : imagensPorSub[chave] ? (
@@ -166,7 +176,9 @@ export function ModalAvaliacao({
           {obsExpandida && (
             <textarea
               className={styles.obsTextarea}
-              placeholder="Compartilhe sua experiência com este produto..."
+              placeholder={produto.perspectiva === 'locador'
+                ? 'Compartilhe sua experiência com esta locação...'
+                : 'Compartilhe sua experiência com este produto...'}
               value={observacao}
               onChange={(evento) => aoMudarObservacao(evento.target.value)}
             />

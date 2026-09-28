@@ -33,9 +33,11 @@ function criarProdutoAvaliacao(locacao: LocacaoData, perspectiva: PerspectivaAva
         imagem: locacao.imagem,
         status: registro ? 'realizada' : 'pendente',
         notaGlobal: registro?.notaGlobal ?? 0,
-        subAvaliacoes: registro?.subAvaliacoes ?? criarSubAvaliacoesVazias(perspectiva),
+        subAvaliacoes: { ...criarSubAvaliacoesVazias(perspectiva), ...registro?.subAvaliacoes },
         observacao: registro?.observacao ?? '',
-        loja: { nome: locacao.locador, logo: obterLogoLocador(locacao.locador) },
+        loja: perspectiva === 'locador'
+            ? { nome: locacao.locatario, logo: null }
+            : { nome: locacao.locador, logo: obterLogoLocador(locacao.locador) },
         locacaoId: locacao.id,
         perspectiva,
     };
@@ -44,7 +46,7 @@ function criarProdutoAvaliacao(locacao: LocacaoData, perspectiva: PerspectivaAva
 /**
  * Hook que concentra todo o estado e as regras do fluxo de avaliação:
  * - lista de locações avaliáveis (pendentes / realizadas), derivada das locações reais — nunca de uma lista de avaliações mockada e desconectada;
- * - qual aspecto avaliar depende de quem está avaliando (locatário avalia locador + entrega + produto + plataforma; locador avalia locatário + entrega + plataforma — ver Avaliacao.types.ts);
+ * - qual aspecto avaliar depende de quem está avaliando (locatário avalia locador + entrega + produto + plataforma; locador avalia locatário + entrega + devolução + plataforma — ver Avaliacao.types.ts);
  * - avaliação só fica disponível quando a locação chega a status "finalizada" (mesmo pipeline de status já usado em Minhas Locações); 
  * - envio grava o registro na própria locação, o que também impede reavaliação duplicada.
  *
@@ -56,7 +58,7 @@ export function useAvaliacoes() {
     const { usuario } = useAuth();
     const { adicionarAvaliacaoProduto } = useCatalogoStore();
 
-    // Locador avalia locações das ferramentas que ele mesmo anuncia — mesma correspondência por nome já usada para ligar usuário e loja (ver mocks/locadores.mock.ts / getLocadorByNome).
+    // O identificador vincula o usuário à loja, cujo nome pode ser diferente do nome pessoal.
     const perspectiva: PerspectivaAvaliacao = usuario?.tipo === 'locador' ? 'locador' : 'locatario';
 
     const locacoesAvaliaveis = useMemo(() => {
@@ -64,9 +66,11 @@ export function useAvaliacoes() {
         const finalizadas = locacoes.filter((locacao) => locacao.status === 'finalizada');
 
         return perspectiva === 'locador'
-            ? finalizadas.filter((locacao) => locacao.locador === usuario?.nome)
+            ? finalizadas.filter((locacao) => usuario?.locadorId
+                ? locacao.locadorId === usuario.locadorId
+                : locacao.locador === usuario?.nome)
             : finalizadas;
-    }, [locacoes, perspectiva, usuario?.nome]);
+    }, [locacoes, perspectiva, usuario]);
 
     const produtosBase = useMemo(
         () => locacoesAvaliaveis.map((locacao) => criarProdutoAvaliacao(locacao, perspectiva)),

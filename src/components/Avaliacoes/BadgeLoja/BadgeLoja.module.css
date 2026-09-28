@@ -36,6 +36,12 @@
     font-weight: 600;
 }
 
+.nomeLocatario {
+    color: #000;
+    font-weight: 700;
+    padding: 0 4px 0 6px;
+}
+
 .link {
     color: var(--accent, #1554f0);
     text-decoration: none;

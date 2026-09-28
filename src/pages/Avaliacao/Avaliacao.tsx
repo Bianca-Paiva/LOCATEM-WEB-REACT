@@ -10,6 +10,7 @@ import Header from '../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 
 import { useAvaliacoes } from '../../hooks/Avaliacoes/useAvaliacoes';
+import { useAuth } from '../../hooks/Auth/useAuth';
 import { useLocacaoStore } from '../../hooks/Locacoes/useLocacaoStore';
 import type { LocacaoData } from '../Locacoes/MinhasLocacoes/MinhasLocacoes.types';
 import type { AbaAvaliacao } from './Avaliacao.types';
@@ -24,6 +25,7 @@ interface AvaliacaoProps {
  * Header, menu lateral e nav de navegação ficam fora daqui — este componente cobre só o fluxo de avaliação em si.
  */
 export default function Avaliacao({ navigate }: AvaliacaoProps) {
+    const { usuario } = useAuth();
     const [abaAtiva, setAbaAtiva] = useState<AbaAvaliacao>('pendentes');
     const { locacaoSelecionada } = useLocacaoStore() as { locacaoSelecionada: LocacaoData | null };
 
@@ -66,7 +68,9 @@ export default function Avaliacao({ navigate }: AvaliacaoProps) {
             <div className={styles.contentArea}>
                 <CabecalhoPagina
                     titulo="Minhas Avaliações"
-                    subtitulo="Avalie os produtos que você locou e ajude outros locatários."
+                    subtitulo={usuario?.tipo === 'locador'
+                        ? 'Sua avaliação ajuda a tornar cada locação mais segura e eficiente.'
+                        : 'Avalie os produtos que você locou e ajude outros locatários.'}
                 />
 
                 <nav className={styles.tabs} role="tablist" aria-label="Filtro de avaliações">
