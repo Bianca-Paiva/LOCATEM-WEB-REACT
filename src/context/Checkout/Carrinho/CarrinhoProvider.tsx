@@ -55,7 +55,7 @@ export function CarrinhoProvider({ children }: { children: ReactNode }) {
 
   // Só adiciona a ferramenta ao carrinho (com datas/horários/quantidade já escolhidos no modal) — não cria solicitação, notificação nem dispara fluxo de aprovação/pagamento algum, conforme o fluxo "Adicionar ao carrinho".
   const adicionarItem = (produto: ProdutoSelecionado, dados: DadosLocacaoModal) => {
-    if (ehLocador) return;
+    if (!auth?.usuario || ehLocador) return;
 
     const novoItem: ItemCarrinho = { id: `c-${Date.now()}`, produto, dados, selecionado: true };
     setItens((atuais) => [novoItem, ...atuais]);

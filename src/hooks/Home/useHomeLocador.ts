@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../Auth/useAuth';
-import { useCatalogoStore } from '../Ferramentas/useCatalogoStore';
+import { buscarMinhasFerramentas, type FerramentaDisponivel } from '../../services/ferramentaservice';
+import type { StatusFerramenta } from '../../types/Ferramentas/produto.types';
 import { useLocacaoStore } from '../Locacoes/useLocacaoStore';
 import { paraDataBr } from '../../utils/Formatacao/formatoDataBr';
 import { paraNumero } from '../../utils/Formatacao/valorMonetario';
@@ -53,14 +54,50 @@ function estaNoMes(dataBr: string | undefined, mes: number, ano: number): boolea
  */
 export function useHomeLocador() {
   const { usuario } = useAuth();
-  const { produtos } = useCatalogoStore();
   const { locacoes } = useLocacaoStore();
 
   // Mesmo filtro usado em MinhasFerramentas/GerenciarLocacoes: sempre pelo identificador único do locador, nunca pelo nome exibido em tela.
-  const minhasFerramentas = useMemo(
-    () => produtos.filter((p) => p.locadorId && p.locadorId === usuario?.locadorId),
-    [produtos, usuario],
-  );
+  const [minhasFerramentas, setMinhasFerramentas] = useState<Array<FerramentaDisponivel & { statusVisual: StatusFerramenta }>>([]);
+
+  useEffect(() => {
+    let ativo = true;
+
+    async function carregarMinhasFerramentas() {
+      if (!usuario?.id || usuario.tipo !== 'locador') {
+        if (ativo) setMinhasFerramentas([]);
+        return;
+      }
+
+      try {
+        const ferramentas = await buscarMinhasFerramentas();
+        if (!ativo) return;
+
+        setMinhasFerramentas(
+          ferramentas.map((ferramenta) => {
+            let statusVisual: StatusFerramenta = 'disponivel';
+
+            if (ferramenta.disponibilidade === 4) {
+              statusVisual = 'manutencao';
+            } else if (ferramenta.disponibilidade === 2) {
+              statusVisual = 'locada';
+            } else if (ferramenta.status !== 1 || ferramenta.disponibilidade === 3) {
+              statusVisual = 'indisponivel';
+            }
+
+            return { ...ferramenta, statusVisual };
+          }),
+        );
+      } catch {
+        if (ativo) setMinhasFerramentas([]);
+      }
+    }
+
+    void carregarMinhasFerramentas();
+
+    return () => {
+      ativo = false;
+    };
+  }, [usuario?.id, usuario?.tipo]);
 
   const minhasLocacoes = useMemo(
     () => locacoes.filter((l) => l.locadorId === usuario?.locadorId),
@@ -82,9 +119,9 @@ export function useHomeLocador() {
         .reduce((total, l) => total + valorLocacaoParaNumero(l.valor), 0);
 
     return {
-      ferramentasAtivas: minhasFerramentas.filter((p) => p.status !== 'indisponivel').length,
+      ferramentasAtivas: minhasFerramentas.filter((p) => p.statusVisual !== 'indisponivel').length,
       ferramentasCadastradasEsteMes: minhasFerramentas.filter((p) =>
-        estaNoMes(p.cadastradoEm, mesAtual, anoAtual),
+        estaNoMes(p.dataCadastro, mesAtual, anoAtual),
       ).length,
       locacoesEmAndamento: minhasLocacoes.filter((l) => l.status === 'emAndamento').length,
       solicitacoesPendentes: minhasLocacoes.filter((l) => l.status === 'pendente').length,

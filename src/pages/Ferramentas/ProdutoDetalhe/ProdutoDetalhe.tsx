@@ -22,6 +22,7 @@ import { useCarrinhoStore } from '../../../hooks/Checkout/Carrinho/useCarrinhoSt
 import { useFavoritos } from '../../../hooks/Conta/Favoritos/useFavoritos';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { montarLocacaoPendente, montarNotificacaoSolicitacaoEnviada } from '../../../utils/Locacoes/montarLocacaoData';
+import { salvarRedirectAposLogin } from '../../../utils/Auth/redirectAposLogin';
 import {
   salvarValorPagamento,
   salvarItemPagamentoAvulso,
@@ -85,7 +86,6 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
 
   const produto: ProdutoSelecionado | null =
     produtoCarregado?.id === idProdutoSelecionado ? produtoCarregado : produtoSelecionado;
-  // Se a API falhar, preserva o produto ja selecionado para manter a jornada de detalhe/carrinho.
   const erroProduto = !idProdutoSelecionado
     ? 'Nenhuma ferramenta foi selecionada.'
     : !produto && erroCarregamentoProduto?.id === idProdutoSelecionado
@@ -97,6 +97,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
     if (!produto?.id) return;
 
     if (!usuario) {
+      salvarRedirectAposLogin('produtoDetalhe');
       navigate('login');
       return;
     }
@@ -225,6 +226,16 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
   };
 
   const handleAdicionarCarrinho = () => {
+    if (!usuario) {
+      salvarRedirectAposLogin('produtoDetalhe');
+      navigate('login');
+      return;
+    }
+
+    if (usuario.tipo === 'locador') {
+      return;
+    }
+
     setModoModal('carrinho');
     setModalAberto(true);
   };

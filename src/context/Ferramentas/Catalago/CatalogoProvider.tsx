@@ -1,17 +1,33 @@
 /**
- * Catálogo em memória usado pelas telas que ainda operam sobre mocks.
- * Centraliza criação, edição, remoção e avaliação de produtos mockados.
+ * Catálogo em memória abastecido exclusivamente pela API real de ferramentas.
+ * Mantém apenas o estado auxiliar usado por fluxos que ainda precisam de seleção local.
  */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Produto } from '../../../types/Ferramentas/produto.types';
-import { PRODUTOS_MOCK } from '../../../mocks/produtos.mock';
+import { buscarFerramentasDisponiveis } from '../../../services/ferramentaservice';
+import { ferramentaParaProduto } from '../../../services/ferramentaAdapters';
 import { CatalogoContext, type CatalogoContextType } from './CatalogoContext';
 
 export function CatalogoProvider({ children }: { children: ReactNode }) {
-  // Copia o catálogo mockado pra dentro do state — a partir daqui, o catálogo central (produtos.mock.ts) continua sendo a fonte inicial, mas quem manda no que é exibido nas telas passa a ser este state (reativo).
-  const [produtos, setProdutos] = useState<Produto[]>(PRODUTOS_MOCK);
+  const [produtos, setProdutos] = useState<Produto[]>([]);
   const [ferramentaSelecionadaId, setFerramentaSelecionadaId] = useState<number | null>(null);
+
+  useEffect(() => {
+    let ativo = true;
+
+    void buscarFerramentasDisponiveis()
+      .then((ferramentas) => {
+        if (ativo) setProdutos(ferramentas.map(ferramentaParaProduto));
+      })
+      .catch(() => {
+        if (ativo) setProdutos([]);
+      });
+
+    return () => {
+      ativo = false;
+    };
+  }, []);
 
   const adicionarProduto: CatalogoContextType['adicionarProduto'] = (dados) => {
     const novoProduto: Produto = {
@@ -21,7 +37,6 @@ export function CatalogoProvider({ children }: { children: ReactNode }) {
     };
 
     setProdutos((atuais) => [novoProduto, ...atuais]);
-
     return novoProduto;
   };
 

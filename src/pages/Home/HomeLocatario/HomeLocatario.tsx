@@ -1,6 +1,6 @@
 /**
- * Home do locatário.
- * Exibe a vitrine de ferramentas disponíveis da API e usa mocks como fallback de desenvolvimento.
+ * Home pública do LOCATEM.
+ * Exibe somente ferramentas reais retornadas pelo backend.
  */
 import { useEffect, useMemo, useState } from 'react';
 import { Drill } from 'lucide-react';
@@ -8,11 +8,9 @@ import { Drill } from 'lucide-react';
 import type { ProdutoHome } from './HomeLocatario.types';
 import styles from './HomeLocatario.module.css';
 import type { Route } from '../../../router/useRouter';
-
+import { Banner } from '../../../components/Shared/Banner/Banner';
 import type { ProdutoSelecionado } from '../../../context/Ferramentas/Produto/ProdutoContext';
 import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
-import { PRODUTOS_MOCK } from '../../../mocks/produtos.mock';
-import { toProdutoHome, toProdutoSelecionado } from '../../../mocks/produtos.adapters';
 import {
   buscarFerramentasDisponiveis,
   type FerramentaDisponivel,
@@ -21,14 +19,9 @@ import {
   ferramentaParaProdutoHome,
   ferramentaParaProdutoSelecionado,
 } from '../../../services/ferramentaAdapters';
-import {
-  CATEGORIA_TODOS,
-  filtrarProdutosPorCategoria,
-  produtoEstaDisponivel,
-} from '../../../utils/Ferramentas/catalogoRules';
+import { CATEGORIA_TODOS } from '../../../utils/Ferramentas/catalogoRules';
 
 import Header from '../../../components/Layout/Header/Header';
-import { Banner } from '../../../components/Shared/Banner/Banner';
 import { CategoryFilter } from '../../../components/Busca/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../../components/Ferramentas/ProductCard/ProductCard';
 
@@ -44,73 +37,55 @@ export default function Home({ navigate }: HomeProps) {
   const { setProdutoSelecionado } = useProdutoStore();
   const [ferramentas, setFerramentas] = useState<FerramentaDisponivel[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState('');
   const [categoriaAtiva, setCategoriaAtiva] = useState(CATEGORIA_TODOS);
 
-  const produtosMockDisponiveis = useMemo(
-    () => PRODUTOS_MOCK.filter(produtoEstaDisponivel),
-    [],
-  );
-
-  const usandoFallbackMock = !carregando && ferramentas.length === 0;
-
   useEffect(() => {
-    // Em desenvolvimento/testes, falhas da API nao quebram a vitrine: os mocks entram como fallback.
-    const carregarVitrine = async () => {
-      try {
-        setFerramentas(await buscarFerramentasDisponiveis());
-      } catch (error) {
-        console.error('Erro ao carregar ferramentas da vitrine:', error);
-      } finally {
-        setCarregando(false);
-      }
-    };
+    let ativo = true;
 
-    carregarVitrine();
+    void buscarFerramentasDisponiveis()
+      .then((dados) => {
+        if (!ativo) return;
+        setFerramentas(dados);
+        setErro('');
+      })
+      .catch((error) => {
+        if (!ativo) return;
+        setFerramentas([]);
+        setErro(error instanceof Error ? error.message : 'Não foi possível carregar as ferramentas.');
+      })
+      .finally(() => {
+        if (ativo) setCarregando(false);
+      });
+
+    return () => {
+      ativo = false;
+    };
   }, []);
 
-  const categorias = useMemo(() => {
-    const categoriasFonte = usandoFallbackMock
-      ? produtosMockDisponiveis.map((produto) => produto.categoria)
-      : ferramentas.map(categoriaDaFerramenta);
-
-    return [
-      CATEGORIA_TODOS,
-      ...Array.from(new Set(categoriasFonte)),
-    ];
-  }, [ferramentas, produtosMockDisponiveis, usandoFallbackMock]);
+  const categorias = useMemo(() => [
+    CATEGORIA_TODOS,
+    ...Array.from(new Set(ferramentas.map(categoriaDaFerramenta))),
+  ], [ferramentas]);
 
   const categoriaSelecionada = categorias.includes(categoriaAtiva)
     ? categoriaAtiva
-    : (categorias[0] ?? '');
+    : CATEGORIA_TODOS;
 
-  const produtosHome = useMemo(() => {
-    if (usandoFallbackMock) {
-      return filtrarProdutosPorCategoria(produtosMockDisponiveis, categoriaSelecionada)
-        .map(toProdutoHome);
-    }
-
+  const produtosHome: ProdutoHome[] = useMemo(() => {
     return ferramentas
-      .filter(
-        (ferramenta) =>
-          categoriaSelecionada === CATEGORIA_TODOS ||
-          categoriaDaFerramenta(ferramenta) === categoriaSelecionada,
+      .filter((ferramenta) =>
+        categoriaSelecionada === CATEGORIA_TODOS ||
+        categoriaDaFerramenta(ferramenta) === categoriaSelecionada,
       )
       .map(ferramentaParaProdutoHome);
-  }, [ferramentas, produtosMockDisponiveis, categoriaSelecionada, usandoFallbackMock]);
+  }, [ferramentas, categoriaSelecionada]);
 
   const handleCardClick = (produto: ProdutoHome) => {
-    let produtoSelecionado: ProdutoSelecionado | null = null;
+    const ferramenta = ferramentas.find((item) => item.ferramentaId === produto.id);
+    if (!ferramenta) return;
 
-    if (usandoFallbackMock) {
-      const produtoMock = produtosMockDisponiveis.find((item) => item.id === produto.id);
-      produtoSelecionado = produtoMock ? toProdutoSelecionado(produtoMock) : null;
-    } else {
-      const ferramenta = ferramentas.find((item) => item.ferramentaId === produto.id);
-      produtoSelecionado = ferramenta ? ferramentaParaProdutoSelecionado(ferramenta) : null;
-    }
-
-    if (!produtoSelecionado) return;
-
+    const produtoSelecionado: ProdutoSelecionado = ferramentaParaProdutoSelecionado(ferramenta);
     setProdutoSelecionado(produtoSelecionado);
     navigate('produtoDetalhe');
   };
@@ -121,8 +96,7 @@ export default function Home({ navigate }: HomeProps) {
 
       <main className={styles.homeMain}>
         <Banner />
-
-        {categorias.length > 0 && (
+        {categorias.length > 1 && (
           <CategoryFilter
             categorias={categorias}
             categoriaSelecionada={categoriaSelecionada}
@@ -131,7 +105,14 @@ export default function Home({ navigate }: HomeProps) {
         )}
 
         {carregando ? (
-          <p style={{ textAlign: 'center', marginTop: '2rem' }}>Carregando vitrine...</p>
+          <p style={{ textAlign: 'center', marginTop: '2rem' }}>Carregando ferramentas...</p>
+        ) : erro ? (
+          <div style={{ textAlign: 'center', padding: '4rem 1rem', color: '#6b7280' }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#374151' }}>
+              Não foi possível carregar a vitrine
+            </h3>
+            <p style={{ marginTop: '0.5rem' }}>{erro}</p>
+          </div>
         ) : produtosHome.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '4rem 1rem', color: '#6b7280' }}>
             <Drill size={64} style={{ margin: '0 auto', marginBottom: '1rem', opacity: 0.5 }} />

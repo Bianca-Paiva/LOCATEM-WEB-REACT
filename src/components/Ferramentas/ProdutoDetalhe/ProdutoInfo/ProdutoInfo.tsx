@@ -15,7 +15,7 @@ interface ProdutoInfoProps {
   imageNota?: string;
   brand: string;
   estoqueDisponivel: number;
-  /** Voltagem/fonte de alimentação da ferramenta atual, vinda de `Produto.voltagem` (produtos.mock.ts). Ausente = ferramenta sem essa informação cadastrada. */
+  /** Fonte de alimentação da ferramenta atual, vinda do anúncio real. */
   voltagem?: string;
   onAlugar?: () => void;
   onLocar?: () => void;
@@ -109,7 +109,7 @@ export function ProdutoInfo({
         <span className={styles.precoDia}>/dia</span>
       </div>
 
-      {/* Tensão — exibe somente a fonte de alimentação real desta ferramenta (produtos.mock.ts), nunca uma lista fixa: cada ferramenta tem um único valor de voltagem. */}
+      {/* Exibe somente a fonte de alimentação real desta ferramenta. */}
       {voltagem && (
         <div className={styles.opcaoGrupo}>
           <p className={styles.opcaoLabel}>Tensão</p>

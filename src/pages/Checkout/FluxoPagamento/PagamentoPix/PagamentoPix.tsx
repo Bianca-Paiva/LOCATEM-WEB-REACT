@@ -27,12 +27,39 @@ export default function PagamentoPix({ navigate }: PagamentoPixProps) {
     tempoRestanteSegundos,
     gerarNovoCodigo,
     confirmarPagamento,
+    codigoPix,
   } = usePagamentoPix(navigate);
 
-  // Variável de mock estática para testar a leitura do QR Code
-  const payloadPixMock = "00020101021126530014br.gov.bcb.pix0114+55119956921560213Teste LOCATEM52040000530398654040.015802BR5914BIANCA S PAIVA6009SAO PAULO62070503***63048BF9";
+
 
   if (!metodoValido) return null;
+
+  if (!codigoPix) {
+    return (
+      <>
+        <Header navigate={navigate} currentRoute="carrinho" />
+        <main className={styles.pagina}>
+          <CabecalhoPagina
+            titulo="Pagamento com Pix"
+            subtitulo="A integração de pagamento via Pix ainda não está disponível."
+          />
+          <CheckoutLayout
+            aside={
+              <ResumoPedido
+                variant="pagamento"
+                total={total}
+                prazoPagamento={prazoPagamento}
+                tempoRestanteSegundos={tempoRestanteSegundos}
+                mostrarSeguro
+              />
+            }
+          >
+            <p style={{ padding: '2rem', textAlign: 'center' }}>Pagamento via Pix indisponível: o LOCATEM não usa mais dados simulados nesta etapa.</p>
+          </CheckoutLayout>
+        </main>
+      </>
+    );
+  }
 
   return (
     <>
@@ -59,16 +86,11 @@ export default function PagamentoPix({ navigate }: PagamentoPixProps) {
           }
         >
           <PagamentoPixCard
-            codigoPix={payloadPixMock} // Substituímos a variável do hook pelo mock
+            codigoPix={codigoPix}
             copiado={copiado}
             expirado={prazoPagamento.expirado}
             onGerarNovoQrCode={gerarNovoCodigo}
-            onCopiarCodigo={() => {
-              // Forçamos a cópia do mock para a área de transferência
-              navigator.clipboard.writeText(payloadPixMock);
-              // Chamamos a função do hook apenas para acionar o efeito visual de "Copiado!" (verde)
-              copiarCodigo();
-            }}
+            onCopiarCodigo={copiarCodigo}
           />
         </CheckoutLayout>
       </main>

@@ -1,6 +1,6 @@
 /**
  * Estado e validação do formulário de cadastro/edição de ferramenta.
- * Converte dados da API para o formulário e monta o produto usado pelas telas mockadas.
+ * Converte dados da API para o formulário de cadastro/edição.
  */
 import { useCallback, useState } from 'react';
 import type { Produto } from '../../types/Ferramentas/produto.types';

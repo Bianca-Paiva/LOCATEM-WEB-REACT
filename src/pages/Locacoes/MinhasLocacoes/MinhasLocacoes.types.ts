@@ -33,7 +33,7 @@ export interface EnderecoLocacao {
 
 export interface LocacaoData {
   id: string;
-  produtoId: number; /** Liga a locação à ferramenta de origem (PRODUTOS_MOCK) — usado no desempenho da ferramenta e em telas do locador. */
+  produtoId: number; /** Liga a locação à ferramenta de origem — usado no desempenho da ferramenta e em telas do locador. */
   produto: string;
   imagem: string;
   periodo: string; /** Período já formatado para exibição, ex: "15 Jul – 18 Jul 2026" */

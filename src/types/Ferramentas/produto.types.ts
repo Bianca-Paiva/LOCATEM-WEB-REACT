@@ -28,7 +28,7 @@ export interface Produto {
     rating: number;
     reviewCount: number;
     locador: string; /** Nome do locador/anunciante do produto */
-    locadorId: string; /** Identificador único do locador dono do anúncio (ver mocks/locadores.mock.ts) — usado para filtrar "Minhas Ferramentas"/"Gerenciar Locações" pelo locador autenticado. */
+    locadorId: string; /** Identificador único do locador dono do anúncio — usado para filtrar as ferramentas pelo locador autenticado. */
     localizacao: string; /** Localização do locador, ex: "São Paulo - SP" */
     categoria: string; /** Categoria da ferramenta, ex: "Elétrica • Parafusadeira/Furadeira" */
     estoqueDisponivel: number; /** Quantidade máxima disponível para reserva */

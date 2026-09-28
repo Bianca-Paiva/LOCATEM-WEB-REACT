@@ -1,11 +1,10 @@
 /**
  * Estado global das locações exibidas no projeto.
- * Ainda usa mocks como fonte inicial e aplica regras de atualização/cancelamento no frontend.
+ * As locações entram no estado quando o fluxo real as cria; não há dados locais de exemplo.
  */
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
-import { mockLocacoes } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.mock';
 import { LocacaoContext } from './LocacaoContext';
 
 // Mensagem exibida (na listagem e nos detalhes) quando o prazo de pagamento expira sem o pagamento ser efetuado
@@ -16,8 +15,8 @@ const MENSAGEM_CANCELAMENTO_AUTOMATICO =
 const INTERVALO_VERIFICACAO_MS = 60 * 1000; // 1 minuto
 
 export function LocacaoProvider({ children }: { children: ReactNode }) {
-  // Fonte única de verdade de todas as locacoes (futuramente virá da API)
-  const [locacoes, setLocacoes] = useState<LocacaoData[]>(mockLocacoes);
+  // Sem dados locais de exemplo: as locações só entram aqui quando o fluxo real as cria.
+  const [locacoes, setLocacoes] = useState<LocacaoData[]>([]);
   const [locacaoSelecionada, setLocacaoSelecionada] = useState<LocacaoData | null>(null);
 
   // Atualiza uma locacao na lista e, se for a mesma, também na locacao selecionada

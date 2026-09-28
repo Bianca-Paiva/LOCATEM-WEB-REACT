@@ -30,6 +30,8 @@ interface ResumoPedidoProps {
   /** Segundos restantes até a expiração — fonte única de verdade, calculada pelo hook de pagamento. */
   tempoRestanteSegundos?: number;
   mostrarSeguro?: boolean;
+  mostrarFrete?: boolean;
+  mostrarCupom?: boolean;
 }
 
 const formatarPreco = (valor: number) =>
@@ -62,6 +64,8 @@ export function ResumoPedido({
   prazoPagamento,
   tempoRestanteSegundos = 0,
   mostrarSeguro = variant === 'pagamento' || variant === 'metodoPagamento',
+  mostrarFrete = false,
+  mostrarCupom = false,
 }: ResumoPedidoProps) {
   const [cepInput, setCepInput] = useState('');
   const [cupomInput, setCupomInput] = useState('');
@@ -101,7 +105,7 @@ export function ResumoPedido({
             </strong>
           </div>
 
-          <div className={styles.freteBloco}>
+          {mostrarFrete && <div className={styles.freteBloco}>
             <div className={styles.linha}>
               <span className={styles.linhaLabel}>
                 Frete{' '}
@@ -162,9 +166,9 @@ export function ResumoPedido({
             </div>
 
             {freteErro && <small className={styles.freteErroMsg}>{freteErro}</small>}
-          </div>
+          </div>}
 
-          <div className={styles.cupomBloco}>
+          {mostrarCupom && <div className={styles.cupomBloco}>
             <div className={styles.inputComIcone}>
               <Tag
                 size={18}
@@ -206,7 +210,7 @@ export function ResumoPedido({
             )}
 
 
-          </div>
+          </div>}
 
           <div className={styles.linhaTotal}>
             <span>Total</span>

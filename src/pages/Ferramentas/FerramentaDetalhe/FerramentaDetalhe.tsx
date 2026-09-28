@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Pencil, Pause, Play, Trash2, Star } from 'lucide-react';
 
 import Header from '../../../components/Layout/Header/Header';
@@ -14,6 +14,8 @@ import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
 import { useLocacaoStore } from '../../../hooks/Locacoes/useLocacaoStore';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { paraNumero, formatarValorMonetario } from '../../../utils/Formatacao/valorMonetario';
+import { buscarFerramentaPorId } from '../../../services/ferramentaservice';
+import { ferramentaParaProduto } from '../../../services/ferramentaAdapters';
 import styles from './FerramentaDetalhe.module.css';
 
 import type { Route } from '../../../router/useRouter';
@@ -29,14 +31,35 @@ export default function FerramentaDetalhe({ navigate }: FerramentaDetalheProps) 
   const { locacoes } = useLocacaoStore();
 
   const [modalRemoverAberto, setModalRemoverAberto] = useState(false);
+  const [produtoApi, setProdutoApi] = useState<ReturnType<typeof ferramentaParaProduto> | null>(null);
 
-  const produto = useMemo(
-    () =>
-      ferramentaSelecionadaId !== null
-        ? produtos.find((p) => p.id === ferramentaSelecionadaId && p.locadorId === usuario?.locadorId)
-        : undefined,
-    [produtos, ferramentaSelecionadaId, usuario],
-  );
+  useEffect(() => {
+    if (ferramentaSelecionadaId === null) {
+      setProdutoApi(null);
+      return;
+    }
+
+    let ativo = true;
+    void buscarFerramentaPorId(ferramentaSelecionadaId)
+      .then((ferramenta) => {
+        if (!ativo) return;
+        if (usuario?.id && ferramenta.usuarioId !== Number(usuario.id)) {
+          throw new Error('Ferramenta não pertence ao usuário autenticado.');
+        }
+        setProdutoApi(ferramentaParaProduto(ferramenta));
+      })
+      .catch(() => {
+        if (ativo) setProdutoApi(null);
+      });
+
+    return () => {
+      ativo = false;
+    };
+  }, [ferramentaSelecionadaId, usuario?.id]);
+
+  const produto = produtoApi ?? (ferramentaSelecionadaId !== null
+    ? produtos.find((p) => p.id === ferramentaSelecionadaId && (p.locadorId === usuario?.locadorId || p.locadorId === String(usuario?.id)))
+    : undefined);
 
   // Sem ferramenta selecionada (ex: acesso direto à rota) ou fora do catálogo do locador logado, volta pra listagem.
   useEffect(() => {

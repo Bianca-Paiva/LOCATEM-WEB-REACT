@@ -1,6 +1,6 @@
 /**
  * Regra de estado do modal de solicitação de locação.
- * Calcula período, horários, quantidade, frete mockado e totais antes de criar carrinho/locação.
+ * Calcula período, horários, quantidade e totais antes de criar carrinho/locação.
  */
 import { useMemo, useState } from 'react';
 import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
@@ -35,8 +35,7 @@ function formatarIntervaloHorario(horario: string): string {
     return `${horario} às ${horaFim}:00`;
 }
 
-// Valor fixo de frete (mock), igual ao usado em useSolicitarLocacao.ts
-const FRETE_PADRAO = 10;
+// O frontend não possui integração de cálculo de frete; o total considera apenas a diária até existir um serviço real.
 
 interface UseSolicitarLocacaoModalParams {
     produto: ProdutoSelecionado;
@@ -179,7 +178,7 @@ export function useSolicitarLocacaoModal({
         const periodoValido = Boolean(inicio && fim && diasBrutos > 0);
         const diarias = periodoValido ? diasBrutos : 0;
 
-        const frete = FRETE_PADRAO;
+        const frete = 0;
         const aluguel = diarias * precoDiaria * form.quantidade;
         const valor = aluguel + frete;
 

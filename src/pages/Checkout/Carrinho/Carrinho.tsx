@@ -130,29 +130,9 @@ export function Carrinho({
 
   const lojas = useMemo(() => agruparPorLoja(itens), [itens]);
 
-  const [freteValor, setFreteValor] =
-    useState<number | null>(null);
-
-  // Erro/shake do campo de frete ao clicar em "Continuar para Pagamento" sem
-  // preenchê-lo — mesmo padrão (active/shake) já usado em Login.tsx e
-  // useEditarPerfilForm.ts para acionar o efeito do componente FormInput.
-  const [freteErro, setFreteErro] =
-    useState<{ active: boolean; shake: boolean }>({ active: false, shake: false });
-
   const [modalLoginAberto, setModalLoginAberto] =
     useState(false);
 
-  const [cupomAplicado, setCupomAplicado] =
-    useState<string | null>(null);
-
-  const [cupomAviso, setCupomAviso] =
-    useState<string | null>(null);
-
-  const [percentualDesconto, setPercentualDesconto] =
-    useState(0);
-
-  // Controla o modal de confirmação de remoção de item do carrinho — guarda o id do
-  // item pendente de confirmação (null = modal fechado).
   const [itemParaRemover, setItemParaRemover] =
     useState<string | null>(null);
 
@@ -193,18 +173,8 @@ export function Carrinho({
     [lojas],
   );
 
-  const desconto = useMemo(
-    () => subtotal * percentualDesconto,
-    [subtotal, percentualDesconto],
-  );
-
-  const freteComCupom =
-    cupomAplicado === 'FRETEGRATIS' ? 0 : freteValor;
-
-  const total = useMemo(
-    () => subtotal - desconto + (freteComCupom ?? 0),
-    [subtotal, desconto, freteComCupom],
-  );
+  const desconto = 0;
+  const total = subtotal;
 
   function handleQuantidadeChange(
     id: string,
@@ -250,81 +220,15 @@ export function Carrinho({
     selecionarItens(ids, selecionado);
   }
 
-  function handleCalcularFrete(cep: string) {
-    const cepNormalizado = cep.replace(
-      /\D/g,
-      '',
-    );
-
-    if (cepNormalizado.length !== 8) {
-      return;
-    }
-
-    /*
-     * Frete gratuito temporário.
-     * Depois, este trecho deve chamar a API de frete.
-     */
-    setFreteValor(10);
-    setFreteErro({ active: false, shake: false });
-  }
-
   // Mesmo padrão de "chacoalhar" usado em Login.tsx: zera o shake, reativa no próximo
   // tick (força o React a reiniciar a animação) e desliga só o shake depois, mantendo
   // a mensagem de erro visível.
-  function triggerFreteShake() {
-    setFreteErro((atual) => ({ ...atual, shake: false }));
-
-    setTimeout(() => {
-      setFreteErro({ active: true, shake: true });
-    }, 10);
-
-    setTimeout(() => {
-      setFreteErro((atual) => ({ ...atual, shake: false }));
-    }, 410);
-  }
-
-  function handleAplicarCupom(
-    codigo: string,
-  ) {
-    const codigoNormalizado = codigo
-      .trim()
-      .toUpperCase();
-
-    if (codigoNormalizado === 'LOCATEM10') {
-      setCupomAplicado(codigoNormalizado);
-      setCupomAviso(codigoNormalizado);
-      setPercentualDesconto(0.1);
-      return;
-    }
-
-    if (codigoNormalizado === 'FRETEGRATIS') {
-      setCupomAplicado(codigoNormalizado);
-      setCupomAviso(codigoNormalizado);
-      setPercentualDesconto(0);
-      return;
-    }
-
-    setCupomAplicado(null);
-    setCupomAviso(null);
-    setPercentualDesconto(0);
-  }
-
-  function handleOcultarCupomAviso() {
-    setCupomAviso(null);
-  }
-
   // Persiste o valor total (lido por todas as telas seguintes do fluxo, que não recalculam o carrinho — apenas exibem o que já foi calculado aqui) antes de seguir para o próximo passo do checkout.
   function handleContinuarParaPagamento() {
     // 1. Usuário deslogado: impede o avanço e exibe o modal pedindo login —
     // o carrinho continua intacto, sem persistir nada ainda.
     if (!isAuthenticated) {
       setModalLoginAberto(true);
-      return;
-    }
-
-    // 2. Locatário autenticado: o frete é obrigatório para seguir ao pagamento.
-    if (freteValor == null) {
-      triggerFreteShake();
       return;
     }
 
@@ -393,17 +297,6 @@ export function Carrinho({
                 subtotal={subtotal}
                 desconto={desconto}
                 total={total}
-                freteValor={freteComCupom}
-                freteErro={freteErro.active ? 'O frete é obrigatório.' : ''}
-                freteShake={freteErro.shake}
-                onCalcularFrete={
-                  handleCalcularFrete
-                }
-                onAplicarCupom={
-                  handleAplicarCupom
-                }
-                cupomAviso={cupomAviso}
-                onOcultarCupomAviso={handleOcultarCupomAviso}
                 ctaLabel="Continuar para Pagamento"
                 onCtaClick={
                   handleContinuarParaPagamento

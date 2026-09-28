@@ -104,15 +104,23 @@ async function obterToken(): Promise<string> {
   return token;
 }
 
+function headersPublicos(): HeadersInit {
+  return { 'Content-Type': 'application/json' };
+}
+
+function headersAutenticados(token: string): HeadersInit {
+  return {
+    ...headersPublicos(),
+    Authorization: `Bearer ${token}`,
+  };
+}
+
 export async function buscarFerramentasDisponiveis(): Promise<FerramentaDisponivel[]> {
-  const token = await obterToken();
+  const token = localStorage.getItem('token');
 
   const response = await fetch(`${API_BASE}/Ferramenta/Disponiveis`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
+    headers: token ? headersAutenticados(token) : headersPublicos(),
   });
 
   const text = await response.text();
@@ -143,14 +151,11 @@ export async function buscarMinhasFerramentas(): Promise<FerramentaDisponivel[]>
 }
 
 export async function buscarFerramentaPorId(id: number): Promise<FerramentaDisponivel> {
-  const token = await obterToken();
+  const token = localStorage.getItem('token');
 
   const response = await fetch(`${API_BASE}/Ferramenta/${id}`, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
+    headers: token ? headersAutenticados(token) : headersPublicos(),
   });
 
   const text = await response.text();

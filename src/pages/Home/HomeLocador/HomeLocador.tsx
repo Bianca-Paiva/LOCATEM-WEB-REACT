@@ -20,7 +20,8 @@ import HomeLocadorCardNovaFerramenta from '../../../components/Home/HomeLocador/
 import { useExigirPerfil } from '../../../hooks/Auth/useProtegerRotaPorPerfil';
 import { useHomeLocador } from '../../../hooks/Home/useHomeLocador';
 import { useCatalogoStore } from '../../../hooks/Ferramentas/useCatalogoStore';
-import { toProdutoHome } from '../../../mocks/produtos.adapters';
+import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
+import { ferramentaParaProdutoHome, ferramentaParaProdutoSelecionado } from '../../../services/ferramentaAdapters';
 import { formatarValorMonetario } from '../../../utils/Formatacao/valorMonetario';
 
 import type { Route } from '../../../router/useRouter';
@@ -41,6 +42,7 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
   const { usuario, resumo, solicitacoesRecentes, agendaSemana, minhasFerramentas } =
     useHomeLocador();
   const { setFerramentaSelecionadaId } = useCatalogoStore();
+  const { setProdutoSelecionado } = useProdutoStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -53,8 +55,13 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
   }
 
   const handleVerFerramenta = (produtoId: number) => {
-    setFerramentaSelecionadaId(produtoId);
-    navigate('ferramentaDetalhe');
+    const ferramenta = minhasFerramentas.find((item) => item.ferramentaId === produtoId);
+
+    if (!ferramenta) return;
+
+    setProdutoSelecionado(ferramentaParaProdutoSelecionado(ferramenta));
+    setFerramentaSelecionadaId(null);
+    navigate('produtoDetalhe');
   };
 
   const handleEditarFerramenta = (produtoId: number) => {
@@ -255,12 +262,12 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
             <div className={stylesFerramentas.grade}>
 
               {/* define a quantidade de produtos que vai aparecer */}
-              {minhasFerramentas.slice(0, 4).map((produtoCompleto) => {
-                const produto = toProdutoHome(produtoCompleto);
+              {minhasFerramentas.slice(0, 4).map((ferramenta) => {
+                const produto = ferramentaParaProdutoHome(ferramenta);
 
                 return (
                   <ProductCard
-                    key={produto.id}
+                    key={ferramenta.ferramentaId}
                     title={produto.title}
                     brand={produto.locador}
                     price={produto.price}
@@ -269,13 +276,13 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
                     imageNota={produto.imageNota}
                     rating={produto.rating}
                     reviewCount={produto.reviewCount}
-                    statusBadge={<StatusFerramentaBadge status={produtoCompleto.status} compacto />}
+                    statusBadge={<StatusFerramentaBadge status={ferramenta.statusVisual} compacto />}
                     footerExtra={
                       <div className={stylesFerramentas.acoesCard}>
                         <button
                           type="button"
                           className={stylesFerramentas.botaoAcao}
-                          onClick={() => handleVerFerramenta(produtoCompleto.id)}
+                          onClick={() => handleVerFerramenta(ferramenta.ferramentaId)}
                         >
                           <Eye size={14} strokeWidth={2} />
                           Ver
@@ -283,7 +290,7 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
                         <button
                           type="button"
                           className={stylesFerramentas.botaoAcao}
-                          onClick={() => handleEditarFerramenta(produtoCompleto.id)}
+                          onClick={() => handleEditarFerramenta(ferramenta.ferramentaId)}
                         >
                           <Pencil size={14} strokeWidth={2} />
                           Editar

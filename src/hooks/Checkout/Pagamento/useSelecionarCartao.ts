@@ -3,36 +3,18 @@ import type { Cartao, MetodoPagamento } from '../../../types/Checkout/Pagamento/
 import type { Route } from '../../../router/useRouter';
 import { lerMetodoPagamento, salvarCartaoPagamento } from '../../../utils/Checkout/Pagamento/pagamentoStorage';
 
-// ============================================================
-//  DADOS PADRÃO
-//  Simulam os cartões cadastrados pelo usuário.
-//  Utilizados como fallback enquanto não existe cadastro real.
-//  Substituir futuramente por chamada à API.
-// ============================================================
-const cartoesPadrao: Cartao[] = [
-  { id: 1, metodoPagamento: 'credito', bandeira: 'Visa', final: '1234', titular: 'JOÃO SILVA' },
-  { id: 2, metodoPagamento: 'credito', bandeira: 'Mastercard', final: '5678', titular: 'JOÃO SILVA' },
-  { id: 3, metodoPagamento: 'debito', bandeira: 'Visa', final: '9012', titular: 'JOÃO SILVA' },
-  { id: 4, metodoPagamento: 'debito', bandeira: 'Elo', final: '3456', titular: 'JOÃO SILVA' },
-];
-
-// Lê (ou semeia) a lista de cartões salvos no localStorage.
-// Obs.: 'cartoes' é a carteira de cartões salvos do usuário (funcionalidade
-// independente do fluxo de checkout) — não faz parte das 3 chaves
-// 'locatem_pagamento_*' do fluxo de pagamento em si.
 function lerCartoesSalvos(): Cartao[] {
   const brutos = localStorage.getItem('cartoes');
 
-  if (brutos) {
-    try {
-      return JSON.parse(brutos) as Cartao[];
-    } catch {
-      // JSON corrompido: recai para os cartões padrão.
-    }
-  }
+  if (!brutos) return [];
 
-  localStorage.setItem('cartoes', JSON.stringify(cartoesPadrao));
-  return cartoesPadrao;
+  try {
+    const cartoes = JSON.parse(brutos) as unknown;
+    return Array.isArray(cartoes) ? (cartoes as Cartao[]) : [];
+  } catch {
+    localStorage.removeItem('cartoes');
+    return [];
+  }
 }
 
 interface UseSelecionarCartaoReturn {

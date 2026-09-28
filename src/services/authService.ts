@@ -1,6 +1,6 @@
 /**
  * Cliente HTTP de autenticação e perfil.
- * Faz login/cadastro contra a API e, em desenvolvimento, permite sessão com usuários mockados.
+ * Faz login e cadastro exclusivamente contra a API real.
  */
 import type { ReputacaoUsuario } from '../types/Auth/usuario.types';
 
@@ -64,16 +64,6 @@ export async function criarUsuario(payload: CadastroPayload): Promise<void> {
 }
 
 export async function loginUsuario(payload: LoginPayload): Promise<RespostaLogin> {
-  // Em desenvolvimento, tenta autenticar pelas contas mockadas antes de chamar a API real.
-  if (import.meta.env.DEV) {
-    const { autenticarUsuarioMock } = await import('../mocks/usuarios.mock');
-    const token = autenticarUsuarioMock(payload.email, payload.senha);
-    if (token) {
-      localStorage.setItem('token', token);
-      return { token };
-    }
-  }
-
   const response = await fetch(`${API_BASE}/Login/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -95,13 +85,9 @@ export async function loginUsuario(payload: LoginPayload): Promise<RespostaLogin
 
 export async function buscarUsuarioLogado(): Promise<UsuarioDaApi> {
   const token = localStorage.getItem('token');
-  // Tokens de desenvolvimento são resolvidos localmente para manter o app navegável sem backend.
-  if (import.meta.env.DEV) {
-    const { buscarUsuarioMockPorToken } = await import('../mocks/usuarios.mock');
-    const usuario = buscarUsuarioMockPorToken(token);
-    if (usuario) {
-      return { ...usuario, tipoUsuario: usuario.tipo };
-    }
+
+  if (!token) {
+    throw new Error('Usuário não autenticado.');
   }
 
   const response = await fetch(`${API_BASE}/Usuarios/me`, {

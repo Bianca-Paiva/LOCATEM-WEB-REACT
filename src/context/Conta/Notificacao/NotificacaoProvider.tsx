@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import type { NotificacaoData } from '../../../pages/Conta/Notificacoes/Notificacoes.types';
-import { mockNotificacoes } from '../../../pages/Conta/Notificacoes/Notificacao.mock';
 import { NotificacaoContext } from './NotificacaoContext';
 
 export function NotificacaoProvider({ children }: { children: ReactNode }) {
-  // Fonte única de verdade de todas as notificações (futuramente virá da API).
-  // Começa com o mock para as telas continuarem exibindo conteúdo de exemplo.
-  const [notificacao, setNotifications] = useState<NotificacaoData[]>(mockNotificacoes);
+  const [notificacao, setNotifications] = useState<NotificacaoData[]>([]);
 
-  const adicionarNotificacao = (notificacao: Omit<NotificacaoData, 'id'>): NotificacaoData => {
-    const nova: NotificacaoData = { ...notificacao, id: `n-${Date.now()}` };
+  const adicionarNotificacao = (dados: Omit<NotificacaoData, 'id'>): NotificacaoData => {
+    const nova: NotificacaoData = { ...dados, id: `n-${Date.now()}` };
     setNotifications((atuais) => [nova, ...atuais]);
     return nova;
   };

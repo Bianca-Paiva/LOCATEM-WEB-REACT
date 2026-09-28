@@ -5,7 +5,7 @@ export interface AuthContextType {
     /** Usuário autenticado, ou null quando não há sessão (mesmo comportamento atual do Header). */
     usuario: Usuario | null;
     isAuthenticated: boolean;
-    /** Autentica pelo e-mail digitado no login (ver mocks/usuarios.mock.ts para os cenários cobertos). */
+    /** Autentica usando a API real. */
     login: () => Promise<Usuario>;
     logout: () => void;
     /** Atualiza campos do usuário logado (usado pelo modal "Editar Perfil"). */

@@ -14,7 +14,7 @@ import { useMemo, useState } from 'react';
 import { ButtonOrder } from '../../components/Busca/OrderButton/OrderButton';
 import { SideBarBusca } from '../../components/Busca/SideBarBusca/SideBarBusca';
 import Paginacao from '../../components/Busca/Paginacao/Paginacao';
-import { toProdutoBusca, toProdutoSelecionado } from '../../mocks/produtos.adapters';
+import { produtoParaProdutoBusca } from '../../services/ferramentaAdapters';
 import type { ProdutoBusca, FilterState } from './Busca.types';
 import styles from './Busca.module.css';
 
@@ -29,8 +29,8 @@ export default function Busca({ navigate }: BuscaProps) {
   const { termoBusca } = useBuscaStore();
 
   // Catálogo de busca: todo o catálogo real (mesma fonte usada pela Home), não um recorte fixo de ids — um recorte fixo ficaria dessincronizado assim que o catálogo mudasse e faria a busca nunca encontrar nada.
-  const produtosBuscaMock = useMemo(
-    () => produtos.map(toProdutoBusca),
+  const produtosBusca = useMemo(
+    () => produtos.map(produtoParaProdutoBusca),
     [produtos],
   );
 
@@ -71,15 +71,36 @@ export default function Busca({ navigate }: BuscaProps) {
     // O card da Busca só carrega um recorte do produto (ProdutoBusca).
     // Buscamos o produto completo no catálogo central para levar pra frente os dados reais da ferramenta (descrição, especificações, acessórios, avaliações etc.), assim como já é feito na Home.
     const produtoCompleto = produtos.find((p) => p.id === product.id);
-
     if (!produtoCompleto) return;
 
-    setProdutoSelecionado(toProdutoSelecionado(produtoCompleto));
+    setProdutoSelecionado({
+      id: produtoCompleto.id,
+      title: produtoCompleto.title,
+      marca: produtoCompleto.marca,
+      price: produtoCompleto.price,
+      images: produtoCompleto.images,
+      imageVerificado: produtoCompleto.imageVerificado,
+      imageNota: produtoCompleto.imageNota,
+      rating: produtoCompleto.rating,
+      reviewCount: produtoCompleto.reviewCount,
+      locador: produtoCompleto.locador,
+      locadorId: produtoCompleto.locadorId,
+      localizacao: produtoCompleto.localizacao,
+      categoria: produtoCompleto.categoria,
+      estoqueDisponivel: produtoCompleto.estoqueDisponivel,
+      diasIndisponiveis: produtoCompleto.diasIndisponiveis,
+      tipoAprovacao: produtoCompleto.tipoAprovacao,
+      voltagem: produtoCompleto.voltagem,
+      descricao: produtoCompleto.descricao,
+      especificacoes: produtoCompleto.especificacoes,
+      acessorios: produtoCompleto.acessorios,
+      caucao: produtoCompleto.caucao,
+    });
 
     navigate('produtoDetalhe');
   };
 
-  const filteredProducts = produtosBuscaMock.filter((product) => {
+  const filteredProducts = produtosBusca.filter((product) => {
     const productPrice = parseFloat(product.price.replace(',', '.'));
 
     if (activeFilters.categories.length > 0 && !activeFilters.categories.includes(product.category)) return false;
