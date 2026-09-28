@@ -1,0 +1,98 @@
+import type { FerramentaDisponivel } from '../../src/services/ferramentaservice';
+import type { UsuarioDaApi } from '../../src/services/authService';
+
+/*
+ * Fixtures que representam respostas da API.
+ * Os dados sao pequenos, mas preservam campos reais consumidos por adapters,
+ * favoritos, header e vitrine de ferramentas.
+ */
+export const apiFerramentas: FerramentaDisponivel[] = [
+  {
+    ferramentaId: 901,
+    nome: 'Furadeira API Profissional',
+    marca: 'Bosch',
+    modelo: 'GSB API',
+    descricao: 'Furadeira retornada pela API para testes de integracao.',
+    acessorios: ['Maleta', 'Brocas'],
+    diaria: 42,
+    caucao: 120,
+    dataCadastro: '2026-09-01',
+    categoriaId: 1,
+    categoriaNome: 'Ferramentas Eletricas',
+    usuarioId: 10,
+    usuarioNome: 'Loja API',
+    usuarioFotoUrl: null,
+    status: 1,
+    disponibilidade: 1,
+    quantidadeDisponivel: 3,
+    estadoConservacao: 'Novo',
+    fonteAlimentacao: '220V',
+    especificacoesTecnicas: [{ label: 'Potencia', valor: '750W' }],
+    diasIndisponiveis: [],
+    tipoAprovacao: 'automatica',
+    enderecoId: 1,
+    enderecoRetirada: null,
+    localizacao: 'Sao Paulo - SP',
+    fotos: [{ id: 1, urlImagem: 'uploads/furadeira-api.png' }],
+    avaliacaoMedia: 4.9,
+    totalAvaliacoes: 18,
+  },
+  {
+    ferramentaId: 902,
+    nome: 'Aparador API Jardim',
+    marca: 'Tramontina',
+    modelo: 'TR API',
+    descricao: 'Aparador retornado pela API para testes de filtros.',
+    acessorios: [],
+    diaria: 55,
+    caucao: 150,
+    dataCadastro: '2026-09-02',
+    categoriaId: 2,
+    categoriaNome: 'Jardinagem',
+    usuarioId: 11,
+    usuarioNome: 'Jardins API',
+    usuarioFotoUrl: null,
+    status: 1,
+    disponibilidade: 1,
+    quantidadeDisponivel: 2,
+    estadoConservacao: 'Bom',
+    fonteAlimentacao: '127V',
+    especificacoesTecnicas: [],
+    diasIndisponiveis: [],
+    tipoAprovacao: 'manual',
+    enderecoId: 2,
+    enderecoRetirada: null,
+    localizacao: 'Sao Paulo - SP',
+    fotos: [{ id: 2, urlImagem: 'uploads/aparador-api.png' }],
+    avaliacaoMedia: 4.4,
+    totalAvaliacoes: 7,
+  },
+];
+
+export const apiLogin = { token: 'token-api-locatario' };
+
+export const apiUsuarioLogado: Record<'locatario' | 'locador', UsuarioDaApi> = {
+  locatario: {
+    id: 20,
+    nome: 'Locatario API',
+    email: 'api@locatem.test',
+    telefone: '(11) 90000-0000',
+    documento: '12345678909',
+    endereco: 'Rua dos Testes, 1',
+    tipoUsuario: 'locatario',
+    emailVerificado: true,
+    desde: 2026,
+  },
+  locador: {
+    id: 21,
+    nome: 'Locador API',
+    email: 'locador@locatem.test',
+    telefone: '(11) 91111-1111',
+    documento: '12345678000195',
+    endereco: 'Rua dos Testes, 2',
+    tipoUsuario: 'locador',
+    locadorId: 'loc-api',
+    emailVerificado: true,
+    desde: 2026,
+  },
+};

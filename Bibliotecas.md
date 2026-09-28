@@ -52,6 +52,16 @@ Este documento resume as bibliotecas declaradas em `package.json` e como elas ap
 - **`eslint-plugin-react-refresh@0.5.2`**: regras relacionadas ao Fast Refresh do Vite.
 - **`globals@17.4.0`**: lista de variáveis globais usada pela configuração do ESLint.
 
+### Testes automatizados
+- **`vitest@5.0.2`**: runner dos testes unitarios e de integracao. E necessario para executar as suites em `tests/unit` e `tests/integration`, reaproveitando a configuracao do Vite em `vitest.config.ts`.
+- **`@vitest/coverage-v8@5.0.2`**: provedor de cobertura do Vitest baseado no motor V8. E usado por `npm run test:coverage` para gerar resumo no terminal e relatorio HTML em `coverage`.
+- **`jsdom@29.1.1`**: ambiente DOM em memoria para testes React. Permite renderizar telas, providers e componentes no Vitest sem abrir um navegador real.
+- **`@testing-library/react@16.3.3`**: biblioteca de renderizacao e consulta de componentes React. E usada nos testes de componentes e integracao para validar o que o usuario ve na tela.
+- **`@testing-library/jest-dom@7.0.1`**: matchers extras para assercoes de DOM, como `toBeInTheDocument` e `toHaveTextContent`. E carregada globalmente por `tests/setupTests.tsx`.
+- **`@testing-library/user-event@14.6.7`**: simulacao de interacoes reais de usuario, como clique, digitacao e selecao. E usada nos fluxos de login, busca, carrinho e filtros.
+- **`msw@2.15.0`**: mock de requisicoes HTTP em nivel de rede. Os handlers em `tests/mocks/handlers.ts` deixam a UI chamar os services reais sem depender do backend local.
+- **`@playwright/test@1.63.0`**: framework dos testes E2E no navegador. Executa os fluxos completos em `tests/e2e`, com Vite iniciado pelo runner `tests/e2e/run-playwright.mjs`.
+
 ## Observações de uso
 
 - A busca por imports confirmou uso direto de `dnd-kit`, `react-hook-form`, `zod`, `cpf-cnpj-validator`, `libphonenumber-js`, `Iconify`, `lucide-react`, `react-qr-code` e `swiper`.

@@ -13,7 +13,6 @@ import type { ProdutoSelecionado } from '../../../context/Ferramentas/Produto/Pr
 import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
 import { PRODUTOS_MOCK } from '../../../mocks/produtos.mock';
 import { toProdutoHome, toProdutoSelecionado } from '../../../mocks/produtos.adapters';
-import type { Produto } from '../../../types/Ferramentas/produto.types';
 import {
   buscarFerramentasDisponiveis,
   type FerramentaDisponivel,
@@ -22,13 +21,16 @@ import {
   ferramentaParaProdutoHome,
   ferramentaParaProdutoSelecionado,
 } from '../../../services/ferramentaAdapters';
+import {
+  CATEGORIA_TODOS,
+  filtrarProdutosPorCategoria,
+  produtoEstaDisponivel,
+} from '../../../utils/Ferramentas/catalogoRules';
 
 import Header from '../../../components/Layout/Header/Header';
 import { Banner } from '../../../components/Shared/Banner/Banner';
 import { CategoryFilter } from '../../../components/Busca/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../../components/Ferramentas/ProductCard/ProductCard';
-
-const CATEGORIA_TODOS = 'Todos';
 
 interface HomeProps {
   navigate: (route: Route) => void;
@@ -38,10 +40,6 @@ function categoriaDaFerramenta(ferramenta: FerramentaDisponivel): string {
   return ferramenta.categoriaNome || `Categoria ${ferramenta.categoriaId}`;
 }
 
-function produtoMockDisponivel(produto: Produto): boolean {
-  return produto.available && produto.status === 'disponivel' && produto.estoqueDisponivel > 0;
-}
-
 export default function Home({ navigate }: HomeProps) {
   const { setProdutoSelecionado } = useProdutoStore();
   const [ferramentas, setFerramentas] = useState<FerramentaDisponivel[]>([]);
@@ -49,13 +47,14 @@ export default function Home({ navigate }: HomeProps) {
   const [categoriaAtiva, setCategoriaAtiva] = useState(CATEGORIA_TODOS);
 
   const produtosMockDisponiveis = useMemo(
-    () => PRODUTOS_MOCK.filter(produtoMockDisponivel),
+    () => PRODUTOS_MOCK.filter(produtoEstaDisponivel),
     [],
   );
 
   const usandoFallbackMock = !carregando && ferramentas.length === 0;
 
   useEffect(() => {
+    // Em desenvolvimento/testes, falhas da API nao quebram a vitrine: os mocks entram como fallback.
     const carregarVitrine = async () => {
       try {
         setFerramentas(await buscarFerramentasDisponiveis());
@@ -86,11 +85,7 @@ export default function Home({ navigate }: HomeProps) {
 
   const produtosHome = useMemo(() => {
     if (usandoFallbackMock) {
-      return produtosMockDisponiveis
-        .filter(
-          (produto) =>
-            categoriaSelecionada === CATEGORIA_TODOS || produto.categoria === categoriaSelecionada,
-        )
+      return filtrarProdutosPorCategoria(produtosMockDisponiveis, categoriaSelecionada)
         .map(toProdutoHome);
     }
 

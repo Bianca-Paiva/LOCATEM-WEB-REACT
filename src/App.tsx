@@ -6,6 +6,7 @@
 // CONFIGURAÇÕES E CONTEXTOS
 // -------------------------------
 import { useRouter } from "./router/useRouter";
+import { useEffect } from "react";
 
 import { AuthProvider } from "./context/Auth/AuthProvider";
 import { BuscaProvider } from "./context/Busca/BuscaProvider";
@@ -15,6 +16,8 @@ import { LocacaoProvider } from "./context/Locacoes/LocacaoProvider";
 import { NotificacaoProvider } from "./context/Conta/Notificacao/NotificacaoProvider";
 import { FavoritosProvider } from "./context/Conta/Favoritos/FavoritosProvider";
 import { ProdutoProvider } from "./context/Ferramentas/Produto/ProdutoProvider";
+import { useAuth } from "./hooks/Auth/useAuth";
+import type { Route } from "./router/useRouter";
 
 // -------------------------------
 // IMPORTAÇÃO DAS TELAS (PAGES)
@@ -61,6 +64,85 @@ import FerramentaDetalhe from "./pages/Ferramentas/FerramentaDetalhe/FerramentaD
 import CadastroFerramenta from "./pages/Ferramentas/CadastroFerramenta/CadastroFerramenta";
 import GerenciarLocacoes from "./pages/Locacoes/GerenciarLocacoes/GerenciarLocacoes";
 
+// Regra de perfil validada nos testes: locador gerencia ferramentas e nao deve entrar em rotas de compra.
+const rotasBloqueadasParaLocador: Route[] = [
+  "busca",
+  "carrinho",
+  "metodoPagamento",
+  "selecionarCartao",
+  "adicionarCartaoCredito",
+  "adicionarCartaoDebito",
+  "pagamentoPix",
+  "processandoPagamento",
+  "pagamentoAprovado",
+];
+
+function AppRoutes({
+  route,
+  navigate,
+}: {
+  route: Route;
+  navigate: (route: Route, query?: Record<string, string | number | null | undefined>) => void;
+}) {
+  const { usuario } = useAuth();
+  const locadorEmRotaBloqueada =
+    usuario?.tipo === "locador" && rotasBloqueadasParaLocador.includes(route);
+
+  // Redireciona tambem quando a rota e acessada diretamente pelo hash da URL.
+  useEffect(() => {
+    if (locadorEmRotaBloqueada) {
+      navigate("homeLocador");
+    }
+  }, [locadorEmRotaBloqueada, navigate]);
+
+  if (locadorEmRotaBloqueada) return null;
+
+  return (
+    <>
+      {/* Navegação Principal e Descoberta */}
+      {route === "home" && <Home navigate={navigate} />}
+      {route === "busca" && <Busca navigate={navigate} />}
+      {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
+      {route === "perfilLoja" && <PerfilLoja navigate={navigate} />}
+
+      {/* Autenticação e Acesso */}
+      {route === "login" && <Login navigate={navigate} />}
+      {route === "cadastro" && <Cadastro navigate={navigate} />}
+      {route === "recuperarSenha" && <RecuperarSenha navigate={navigate} />}
+      {route === "informeToken" && <InformeToken navigate={navigate} />}
+      {route === "informeNovaSenha" && <InformeNovaSenha navigate={navigate} />}
+
+      {/* Perfil e Interações */}
+      {route === "perfil" && <Perfil navigate={navigate} />}
+      {route === "notificacoes" && <Notificacoes navigate={navigate} />}
+      {route === "avaliacao" && <Avaliacao navigate={navigate} />}
+      {route === "favoritos" && <Favoritos navigate={navigate} />}
+
+      {/* Área do Cliente/Locatário (Quem está alugando) */}
+      {route === "carrinho" && <Carrinho navigate={navigate} />}
+      {route === "minhasLocacoes" && <MinhasLocacoes navigate={navigate} />}
+      {route === "detalhesLocacao" && <DetalhesLocacao navigate={navigate} />}
+      {route === "historicoLocacoes" && <HistoricoLocacoes navigate={navigate} />}
+
+      {/* Pagamento e Checkout */}
+      {route === "metodoPagamento" && <MetodoPagamento navigate={navigate} />}
+      {route === "selecionarCartao" && <SelecionarCartao navigate={navigate} />}
+      {route === "adicionarCartaoCredito" && <AdicionarCartaoCredito navigate={navigate} />}
+      {route === "adicionarCartaoDebito" && <AdicionarCartaoDebito navigate={navigate} />}
+      {route === "pagamentoPix" && <PagamentoPix navigate={navigate} />}
+      {route === "processandoPagamento" && <ProcessandoPagamento navigate={navigate} />}
+      {route === "pagamentoAprovado" && <PagamentoAprovado navigate={navigate} />}
+
+      {/* Área do Locador (Quem disponibiliza a ferramenta) */}
+      {route === "homeLocador" && <HomeLocador navigate={navigate} />}
+      {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
+      {route === "ferramentaDetalhe" && <FerramentaDetalhe navigate={navigate} />}
+      {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
+      {route === "gerenciarLocacoes" && <GerenciarLocacoes navigate={navigate} />}
+    </>
+  );
+}
+
 export default function App() {
   const { route, navigate } = useRouter();
 
@@ -77,46 +159,7 @@ export default function App() {
                 <CarrinhoProvider>
                   <BuscaProvider>
 
-                  {/* Navegação Principal e Descoberta */}
-                  {route === "home" && <Home navigate={navigate} />}
-                  {route === "busca" && <Busca navigate={navigate} />}
-                  {route === "produtoDetalhe" && <ProdutoDetalhe navigate={navigate} />}
-                  {route === "perfilLoja" && <PerfilLoja navigate={navigate} />}
-
-                  {/* Autenticação e Acesso */}
-                  {route === "login" && <Login navigate={navigate} />}
-                  {route === "cadastro" && <Cadastro navigate={navigate} />}
-                  {route === "recuperarSenha" && <RecuperarSenha navigate={navigate} />}
-                  {route === "informeToken" && <InformeToken navigate={navigate} />}
-                  {route === "informeNovaSenha" && <InformeNovaSenha navigate={navigate} />}
-
-                  {/* Perfil e Interações */}
-                  {route === "perfil" && <Perfil navigate={navigate} />}
-                  {route === "notificacoes" && <Notificacoes navigate={navigate} />}
-                  {route === "avaliacao" && <Avaliacao navigate={navigate} />}
-                  {route === "favoritos" && <Favoritos navigate={navigate} />}
-
-                  {/* Área do Cliente/Locatário (Quem está alugando) */}
-                  {route === "carrinho" && <Carrinho navigate={navigate} />}
-                  {route === "minhasLocacoes" && <MinhasLocacoes navigate={navigate} />}
-                  {route === "detalhesLocacao" && <DetalhesLocacao navigate={navigate} />}
-                  {route === "historicoLocacoes" && <HistoricoLocacoes navigate={navigate} />}
-
-                  {/* Pagamento e Checkout */}
-                  {route === "metodoPagamento" && <MetodoPagamento navigate={navigate} />}
-                  {route === "selecionarCartao" && <SelecionarCartao navigate={navigate} />}
-                  {route === "adicionarCartaoCredito" && <AdicionarCartaoCredito navigate={navigate} />}
-                  {route === "adicionarCartaoDebito" && <AdicionarCartaoDebito navigate={navigate} />}
-                  {route === "pagamentoPix" && <PagamentoPix navigate={navigate} />}
-                  {route === "processandoPagamento" && <ProcessandoPagamento navigate={navigate} />}
-                  {route === "pagamentoAprovado" && <PagamentoAprovado navigate={navigate} />}
-
-                  {/* Área do Locador (Quem disponibiliza a ferramenta) */}
-                  {route === "homeLocador" && <HomeLocador navigate={navigate} />}
-                  {route === "minhasFerramentas" && <MinhasFerramentas navigate={navigate} />}
-                  {route === "ferramentaDetalhe" && <FerramentaDetalhe navigate={navigate} />}
-                  {route === "cadastroFerramenta" && <CadastroFerramenta navigate={navigate} />}
-                  {route === "gerenciarLocacoes" && <GerenciarLocacoes navigate={navigate} />}
+                  <AppRoutes route={route} navigate={navigate} />
 
                   </BuscaProvider>
                 </CarrinhoProvider>

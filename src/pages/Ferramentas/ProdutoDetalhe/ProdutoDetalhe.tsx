@@ -85,9 +85,10 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
 
   const produto: ProdutoSelecionado | null =
     produtoCarregado?.id === idProdutoSelecionado ? produtoCarregado : produtoSelecionado;
+  // Se a API falhar, preserva o produto ja selecionado para manter a jornada de detalhe/carrinho.
   const erroProduto = !idProdutoSelecionado
     ? 'Nenhuma ferramenta foi selecionada.'
-    : erroCarregamentoProduto?.id === idProdutoSelecionado
+    : !produto && erroCarregamentoProduto?.id === idProdutoSelecionado
       ? erroCarregamentoProduto.mensagem
       : null;
   const carregandoProduto = Boolean(idProdutoSelecionado && !produto && !erroProduto);
