@@ -1,3 +1,7 @@
+/**
+ * Montadores de locação e notificação.
+ * Traduzem produto + dados do modal para os modelos usados em Minhas Locações e Notificações.
+ */
 import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
 import type { DadosLocacaoModal } from '../../components/Locacoes/SolicitarLocacao/SolicitarLocacaoModal/SolicitarLocacaoModal.types';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';

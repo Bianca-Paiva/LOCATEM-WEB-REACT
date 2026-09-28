@@ -1,3 +1,7 @@
+/**
+ * Página do locador para gerenciar solicitações recebidas.
+ * Centraliza aprovação, recusa e acompanhamento do ciclo das locações.
+ */
 import { useEffect, useState } from 'react';
 
 import Header from '../../../components/Layout/Header/Header';

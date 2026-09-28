@@ -1,3 +1,7 @@
+/**
+ * Mantém a sessão do usuário autenticado.
+ * Lê o token salvo, busca o perfil atual e expõe login, logout e atualização de dados.
+ */
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Usuario } from '../../types/Auth/usuario.types';
@@ -5,6 +9,7 @@ import { atualizarPerfilUsuario, buscarUsuarioLogado, type UsuarioDaApi } from '
 import { AuthContext, type AuthContextType } from './AuthContext';
 
 function mapearUsuario(dados: UsuarioDaApi): Usuario {
+  // A API envia o tipo em formato próprio; o app trabalha com os perfis normalizados.
   return {
     id: dados.id,
     nome: dados.nome,

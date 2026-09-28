@@ -1,3 +1,7 @@
+/**
+ * Página de detalhe da ferramenta selecionada.
+ * Carrega dados atualizados da API quando possível e oferece favoritos, carrinho e locação direta.
+ */
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../../../components/Layout/Header/Header';
 import { ImagemCarrossel } from '../../../components/Ferramentas/ProdutoDetalhe/ImagemCarrossel/ImagemCarrossel';
@@ -44,43 +48,49 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
 
   const [ferramentasDisponiveis, setFerramentasDisponiveis] = useState<FerramentaDisponivel[]>([]);
   const [produtoCarregado, setProdutoCarregado] = useState<ProdutoSelecionado | null>(null);
-  const [carregandoProduto, setCarregandoProduto] = useState(true);
-  const [erroProduto, setErroProduto] = useState<string | null>(null);
+  const [erroCarregamentoProduto, setErroCarregamentoProduto] = useState<{
+    id: ProdutoSelecionado['id'];
+    mensagem: string;
+  } | null>(null);
+
+  const idProdutoSelecionado = produtoSelecionado?.id;
 
   useEffect(() => {
-    const id = produtoSelecionado?.id;
-
-    if (!id) {
-      setCarregandoProduto(false);
-      setErroProduto('Nenhuma ferramenta foi selecionada.');
+    if (!idProdutoSelecionado) {
       return;
     }
 
     let ativo = true;
-    setCarregandoProduto(true);
-    setErroProduto(null);
 
-    Promise.all([buscarFerramentaPorId(id), buscarFerramentasDisponiveis()])
+    Promise.all([buscarFerramentaPorId(idProdutoSelecionado), buscarFerramentasDisponiveis()])
       .then(([ferramenta, disponiveis]) => {
         if (!ativo) return;
 
         setProdutoCarregado(ferramentaParaProdutoSelecionado(ferramenta));
         setFerramentasDisponiveis(disponiveis);
+        setErroCarregamentoProduto(null);
       })
       .catch((error) => {
         if (!ativo) return;
-        setErroProduto(error instanceof Error ? error.message : 'Erro ao carregar a ferramenta.');
-      })
-      .finally(() => {
-        if (ativo) setCarregandoProduto(false);
+        setErroCarregamentoProduto({
+          id: idProdutoSelecionado,
+          mensagem: error instanceof Error ? error.message : 'Erro ao carregar a ferramenta.',
+        });
       });
 
     return () => {
       ativo = false;
     };
-  }, [produtoSelecionado?.id]);
+  }, [idProdutoSelecionado]);
 
-  const produto: ProdutoSelecionado | null = produtoCarregado ?? produtoSelecionado;
+  const produto: ProdutoSelecionado | null =
+    produtoCarregado?.id === idProdutoSelecionado ? produtoCarregado : produtoSelecionado;
+  const erroProduto = !idProdutoSelecionado
+    ? 'Nenhuma ferramenta foi selecionada.'
+    : erroCarregamentoProduto?.id === idProdutoSelecionado
+      ? erroCarregamentoProduto.mensagem
+      : null;
+  const carregandoProduto = Boolean(idProdutoSelecionado && !produto && !erroProduto);
 
   const handleToggleFavorito = async () => {
     if (!produto?.id) return;

@@ -1,3 +1,6 @@
+/**
+ * Acesso ao estado global do carrinho.
+ */
 import { useContext } from 'react';
 import { CarrinhoContext } from '../../../context/Checkout/Carrinho/CarrinhoContext';
 

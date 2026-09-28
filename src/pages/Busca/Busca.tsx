@@ -1,3 +1,7 @@
+/**
+ * Página de busca e listagem de ferramentas.
+ * Aplica termo global, filtros laterais, ordenação e paginação sobre o catálogo disponível.
+ */
 import { SlidersHorizontal } from 'lucide-react';
 
 import Header from '../../components/Layout/Header/Header';

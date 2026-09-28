@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react';
+/**
+ * Tela de cadastro e edição de ferramenta do locador.
+ * Orquestra o formulário em etapas e persiste a ferramenta na API quando possível.
+ */
 import { Icon } from '@iconify/react';
 
 import Header from '../../../components/Layout/Header/Header';

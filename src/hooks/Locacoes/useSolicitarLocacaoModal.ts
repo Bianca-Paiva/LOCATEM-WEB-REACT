@@ -1,3 +1,7 @@
+/**
+ * Regra de estado do modal de solicitação de locação.
+ * Calcula período, horários, quantidade, frete mockado e totais antes de criar carrinho/locação.
+ */
 import { useMemo, useState } from 'react';
 import type { ProdutoSelecionado } from '../../context/Ferramentas/Produto/ProdutoContext';
 import {

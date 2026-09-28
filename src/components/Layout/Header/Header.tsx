@@ -1,3 +1,7 @@
+/**
+ * Cabeçalho principal do app.
+ * Centraliza busca global, menu responsivo, navegação por perfil, carrinho e logout.
+ */
 import { useState, useEffect } from 'react'
 import type { ReactNode, FormEvent } from "react";
 import type { Route } from '../../../router/useRouter'
@@ -23,8 +27,12 @@ interface NavItem {
     route?: Route;
     href?: string;
     renderIcon: (active: boolean) => ReactNode;
-    /** Restringe o item a este(s) tipo(s) de usuário. Ausente = visível para locador, locatário e visitante não autenticado. */
+
+    /** Perfis autenticados que podem visualizar o item */
     perfis?: TipoUsuario[];
+
+    /** Permite exibir o item para visitante não autenticado */
+    visitante?: boolean;
 }
 
 export default function Header({ navigate, currentRoute }: HeaderProps) {
@@ -60,8 +68,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         handleLogout()
     }
 
-    // Submit da barra de busca (desktop e mobile): o termo já fica salvo no BuscaContext a
-    // cada digitação (onChange), então aqui só falta navegar pra página de Busca lê-lo.
+    // Submit da barra de busca (desktop e mobile): o termo já fica salvo no BuscaContext a cada digitação (onChange), então aqui só falta navegar pra página de Busca lê-lo.
     const handleSubmitBusca = (e: FormEvent) => {
         e.preventDefault()
         navigate('busca')
@@ -96,6 +103,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             label: "Carrinho",
             route: "carrinho", // aparece para: locatário
             perfis: ['locatario'],
+            visitante: true,
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:cart" : "mdi:cart-outline"}
@@ -166,7 +174,8 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
         {
             label: "Avaliações",
-            route: "avaliacao", // aparece para: locador (avalia locatário, processo de entrega/despache e receber devolta, plataforma) e locatário (avalia locador, entrega e devolução, produto, plataforma)
+            route: "avaliacao",
+            perfis: ['locador', 'locatario'],
             renderIcon: (active) => (
                 <Icon
                     icon={active ? "mdi:star" : "mdi:star-outline"}
@@ -191,7 +200,9 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         //     route: "login",
         //     renderIcon: (active) => (
         //         <Icon
-        //             icon={active ? "mdi:account-circle" : "mdi:account-circle-outline"}
+        //             icon={active ?   
+        //                  "mdi:account-circle" : 
+        //                  "mdi:account-circle-outline"}
         //             width={22}
         //             height={22}
         //         />
@@ -209,19 +220,30 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
         },
     ];
 
-    // Monta a navegação de fato exibida a partir do tipo do usuário autenticado (mesma fonte
-    // usada em todo o app via useAuth) — desktop e mobile usam esta mesma lista filtrada,
-    // então nunca ficam com regras diferentes entre si. Favoritos é a exceção: só
-    // aparece para usuários autenticados como locatários.
+    // Monta a navegação de fato exibida a partir do tipo do usuário autenticado (mesma fonte usada em todo o app via useAuth) — desktop e mobile usam esta mesma lista filtrada, então nunca ficam com regras diferentes entre si. Favoritos é a exceção: só aparece para usuários autenticados como locatários.
     const navItemsVisiveis = navItems.filter((item) => {
-        // Favoritos é uma área exclusiva do locatário: não aparece para
-        // visitante e também não aparece para o locador.
-        if (item.route === 'favoritos') {
-            return usuario?.tipo === 'locatario';
+        // Usuário não autenticado
+        if (!usuario) {
+            // Item restrito só aparece se tiver autorização explícita
+            if (item.perfis) {
+                return item.visitante === true;
+            }
+
+            // Itens públicos: Início, Suporte etc.
+            return true;
         }
 
-        return !item.perfis || !usuario || item.perfis.includes(usuario.tipo);
+        // Usuário autenticado
+        if (!item.perfis) {
+            return true;
+        }
+
+        return item.perfis.includes(usuario.tipo);
     });
+
+    const navItemsMenuLateral = navItemsVisiveis.filter(
+        (item) => item.route !== 'carrinho',
+    );
 
     return (
         <>
@@ -329,7 +351,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
 
                 <div className={styles.menuLateralConteudo}>
                     <nav className={styles.menuLateralNav}>
-                        {navItemsVisiveis.map(item => {
+                        {navItemsMenuLateral.map(item => {
                             const active = item.route === currentRoute;
 
                             return (

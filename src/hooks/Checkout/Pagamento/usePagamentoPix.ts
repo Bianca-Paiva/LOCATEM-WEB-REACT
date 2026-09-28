@@ -69,8 +69,7 @@ export function usePagamentoPix(navigate: (route: Route) => void): UsePagamentoP
     if (!metodoValido) {
       navigate('carrinho');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [metodoValido]);
+  }, [metodoValido, navigate]);
 
   // Valor total calculado e persistido pelo Carrinho — nunca recalculado aqui.
   const total = useMemo(() => lerValorPagamento(), []);

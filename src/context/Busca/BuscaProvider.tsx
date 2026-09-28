@@ -1,3 +1,7 @@
+/**
+ * Guarda o termo digitado na busca global.
+ * A barra do Header escreve aqui e a página de Busca lê esse valor ao montar.
+ */
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import { BuscaContext } from './BuscaContext';

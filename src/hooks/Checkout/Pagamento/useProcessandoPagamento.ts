@@ -20,8 +20,7 @@ export function useProcessandoPagamento(navigate: (route: Route) => void): UsePr
     if (!metodoValido) {
       navigate('carrinho');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [metodoValido]);
+  }, [metodoValido, navigate]);
 
   // Agenda o redirecionamento para "Pagamento Aprovado" após o tempo de processamento.
   //
@@ -35,8 +34,7 @@ export function useProcessandoPagamento(navigate: (route: Route) => void): UsePr
     }, TEMPO_PROCESSAMENTO_MS);
 
     return () => window.clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [metodoValido]);
+  }, [metodoValido, navigate]);
 
   return { metodoValido };
 }

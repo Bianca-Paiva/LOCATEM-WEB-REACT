@@ -1,3 +1,7 @@
+/**
+ * Catálogo em memória usado pelas telas que ainda operam sobre mocks.
+ * Centraliza criação, edição, remoção e avaliação de produtos mockados.
+ */
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import type { Produto } from '../../../types/Ferramentas/produto.types';

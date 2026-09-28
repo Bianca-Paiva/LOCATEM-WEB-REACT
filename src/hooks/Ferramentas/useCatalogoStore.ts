@@ -1,3 +1,6 @@
+/**
+ * Acesso ao catálogo em memória usado pelas telas mockadas.
+ */
 import { useContext } from 'react';
 import { CatalogoContext } from '../../context/Ferramentas/Catalago/CatalogoContext';
 

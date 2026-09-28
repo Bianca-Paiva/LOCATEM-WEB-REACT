@@ -1,3 +1,7 @@
+/**
+ * Modal de detalhes da locação.
+ * Coleta datas, horários e quantidade antes de adicionar ao carrinho ou seguir para locação direta.
+ */
 import { useEffect, useState } from 'react';
 import type { ProdutoSelecionado } from '../../../../context/Ferramentas/Produto/ProdutoContext';
 import ProdutoResumoCard from '../ProdutoResumoCardSolicitacao/ProdutoResumoCardProdutoResumoCardSolicitacao';

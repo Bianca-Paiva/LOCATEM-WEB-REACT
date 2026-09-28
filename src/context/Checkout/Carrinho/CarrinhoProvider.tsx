@@ -1,3 +1,7 @@
+/**
+ * Estado global do carrinho de locações.
+ * Centraliza inclusão, remoção, seleção e recálculo dos itens antes do checkout.
+ */
 import { useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { ProdutoSelecionado } from '../../Ferramentas/Produto/ProdutoContext';

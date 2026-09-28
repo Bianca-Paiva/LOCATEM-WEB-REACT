@@ -1,3 +1,7 @@
+/**
+ * Cliente HTTP das ferramentas.
+ * Concentra consultas, cadastro, edição, exclusão de fotos e upload de imagens na API.
+ */
 const API_BASE = 'http://localhost:5033/api';
 
 export interface EspecificacaoTecnicaDTO {
@@ -83,6 +87,7 @@ export interface CadastrarFerramentaDTO {
 }
 
 export function normalizarUrlImagem(url: string): string {
+  // O backend pode retornar caminho relativo; a UI sempre trabalha com URL pronta para <img>.
   if (/^https?:\/\//i.test(url)) return url;
 
   const origem = API_BASE.replace(/\/api\/?$/, '');

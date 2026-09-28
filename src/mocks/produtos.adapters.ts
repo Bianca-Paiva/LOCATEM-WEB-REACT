@@ -1,3 +1,7 @@
+/**
+ * Converte o produto mockado central para os formatos específicos de cada tela.
+ * Mantém uma única fonte de dados para Home, Busca, Detalhe e Locações.
+ */
 import type { Produto } from '../types/Ferramentas/produto.types';
 import type { ProdutoHome } from '../pages/Home/HomeLocatario/HomeLocatario.types';
 import type { ProdutoBusca } from '../pages/Busca/Busca.types';

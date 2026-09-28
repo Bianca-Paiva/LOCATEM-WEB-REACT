@@ -1,3 +1,7 @@
+/**
+ * Home do locador.
+ * Resume indicadores, solicitações e próximos eventos relacionados às ferramentas anunciadas.
+ */
 import { useRef, useState } from 'react';
 import type { CSSProperties, PointerEvent } from 'react';
 import { Icon } from '@iconify/react';
@@ -157,15 +161,15 @@ export default function HomeLocador({ navigate }: HomeLocadorProps) {
             corIcone="#F9C01A"
             fundoIcone="#FFF4DD"
             label="Avaliação média"
-            valor={usuario.reputacao.rating.toFixed(1)}
+            valor={(usuario.reputacao?.rating ?? 0).toFixed(1)}
             extra={
               <div className={styles.estrelasAvaliacao} style={ESTRELA_COR_MARCA}>
                 <EstrelasAvaliacao
-                  notaAtual={usuario.reputacao.rating}
+                  notaAtual={usuario.reputacao?.rating ?? 0}
                   variante="lista"
                   descricaoContexto="reputação do locador"
                 />
-                <span className={styles.legenda}>({usuario.reputacao.totalAvaliacoes} avaliações)</span>
+                <span className={styles.legenda}>({usuario.reputacao?.totalAvaliacoes ?? 0} avaliações)</span>
               </div>
             }
           />

@@ -1,3 +1,7 @@
+/**
+ * Roteador simples baseado no hash da URL.
+ * Centraliza as rotas aceitas e expõe `navigate` para as páginas sem depender do react-router-dom.
+ */
 import { useState, useEffect } from "react";
 
 /**

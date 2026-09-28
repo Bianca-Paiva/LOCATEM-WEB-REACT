@@ -1,3 +1,7 @@
+/**
+ * Página do locatário para acompanhar suas locações.
+ * Organiza locações por abas de status e permite abrir os detalhes de cada solicitação.
+ */
 import Header from '../../../components/Layout/Header/Header';
 import CabecalhoPagina from '../../../components/Layout/CabecalhoPagina/CabecalhoPagina';
 import LocacaoAbas from '../../../components/Locacoes/MinhasLocacoes/LocacaoAbas/LocacaoAbas';

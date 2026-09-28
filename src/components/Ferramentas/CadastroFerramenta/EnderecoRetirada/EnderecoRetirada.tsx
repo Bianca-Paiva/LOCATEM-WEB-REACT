@@ -33,17 +33,12 @@ interface EnderecoRetiradaProps {
 
 export default function EnderecoRetirada({ form, onChangeCampo, erros, shake }: EnderecoRetiradaProps) {
   const { cep, ruaAvenida, numero, complemento, bairro, cidade, estado } = form;
+  const cepLimpo = cep.replace(/\D/g, '');
   const [buscandoCep, setBuscandoCep] = useState(false);
   const [erroCepBusca, setErroCepBusca] = useState<string>();
 
   useEffect(() => {
-    const cepLimpo = cep.replace(/\D/g, '');
-
-    if (cepLimpo.length !== 8) {
-      setErroCepBusca(undefined);
-      setBuscandoCep(false);
-      return;
-    }
+    if (cepLimpo.length !== 8) return;
 
     let cancelado = false;
 
@@ -73,7 +68,10 @@ export default function EnderecoRetirada({ form, onChangeCampo, erros, shake }: 
     return () => {
       cancelado = true;
     };
-  }, [cep, onChangeCampo]);
+  }, [cepLimpo, onChangeCampo]);
+
+  const erroCepVisivel = cepLimpo.length === 8 ? erroCepBusca : undefined;
+  const buscandoCepVisivel = cepLimpo.length === 8 && buscandoCep;
 
   return (
     <div className={styles.wrapper}>
@@ -86,12 +84,12 @@ export default function EnderecoRetirada({ form, onChangeCampo, erros, shake }: 
             inputMode="numeric"
             value={cep}
             required
-            error={erroCepBusca ?? erros.cep}
-            status={erroCepBusca || erros.cep ? 'erro' : ''}
+            error={erroCepVisivel ?? erros.cep}
+            status={erroCepVisivel || erros.cep ? 'erro' : ''}
             shake={shake && Boolean(erros.cep)}
             onChange={(e) => onChangeCampo('cep', maskCEP(e.target.value))}
           />
-          {buscandoCep && <small className={styles.statusCep}>Buscando endereço...</small>}
+          {buscandoCepVisivel && <small className={styles.statusCep}>Buscando endereço...</small>}
         </div>
 
         <button

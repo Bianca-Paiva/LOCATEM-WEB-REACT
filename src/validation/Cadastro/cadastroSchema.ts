@@ -1,3 +1,7 @@
+/**
+ * Schema de cadastro de usuário.
+ * Aplica as regras de perfil, documento, telefone, endereço e senha antes de enviar à API.
+ */
 // src/hooks/formValidations.ts
 import { z } from 'zod'
 import { cpf, cnpj } from 'cpf-cnpj-validator'

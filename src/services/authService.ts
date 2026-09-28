@@ -1,3 +1,7 @@
+/**
+ * Cliente HTTP de autenticação e perfil.
+ * Faz login/cadastro contra a API e, em desenvolvimento, permite sessão com usuários mockados.
+ */
 import type { ReputacaoUsuario } from '../types/Auth/usuario.types';
 
 const API_BASE = 'http://localhost:5033/api';
@@ -60,6 +64,7 @@ export async function criarUsuario(payload: CadastroPayload): Promise<void> {
 }
 
 export async function loginUsuario(payload: LoginPayload): Promise<RespostaLogin> {
+  // Em desenvolvimento, tenta autenticar pelas contas mockadas antes de chamar a API real.
   if (import.meta.env.DEV) {
     const { autenticarUsuarioMock } = await import('../mocks/usuarios.mock');
     const token = autenticarUsuarioMock(payload.email, payload.senha);
@@ -90,6 +95,7 @@ export async function loginUsuario(payload: LoginPayload): Promise<RespostaLogin
 
 export async function buscarUsuarioLogado(): Promise<UsuarioDaApi> {
   const token = localStorage.getItem('token');
+  // Tokens de desenvolvimento são resolvidos localmente para manter o app navegável sem backend.
   if (import.meta.env.DEV) {
     const { buscarUsuarioMockPorToken } = await import('../mocks/usuarios.mock');
     const usuario = buscarUsuarioMockPorToken(token);

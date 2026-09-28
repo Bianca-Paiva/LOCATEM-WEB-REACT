@@ -1,3 +1,7 @@
+/**
+ * Consolida os dados exibidos na tela de pagamento aprovado.
+ * Valida se o pagamento passou pelo processamento e registra locações confirmadas.
+ */
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { CarrinhoContext } from '../../../context/Checkout/Carrinho/CarrinhoContext';
 import { useAuth } from '../../Auth/useAuth';
@@ -87,8 +91,7 @@ export function usePagamentoAprovado(navigate: (route: Route) => void): UsePagam
     if (!acessoValido) {
       navigate('carrinho');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [acessoValido]);
+  }, [acessoValido, navigate]);
 
   // Dados do pagamento já concluído — lidos uma única vez, antes da limpeza abaixo.
   const total = useMemo(() => lerValorPagamento(), []);
@@ -185,8 +188,7 @@ export function usePagamentoAprovado(navigate: (route: Route) => void): UsePagam
     carrinho.itens
       .filter((item) => item.selecionado)
       .forEach((item) => carrinho.removerItem(item.id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [acessoValido]);
+  }, [acessoValido, adicionarLocacao, carrinho, usuario?.nome]);
 
   function verDetalhesDoAluguel() {
     navigate('minhasLocacoes');

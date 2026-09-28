@@ -1,3 +1,7 @@
+/**
+ * Página do carrinho de locações.
+ * Agrupa itens por locador, calcula subtotal/descontos/frete e controla o avanço para pagamento.
+ */
 import { useEffect, useMemo, useState } from 'react';
 
 import Header from '../../../components/Layout/Header/Header';

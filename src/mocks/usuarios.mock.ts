@@ -1,3 +1,7 @@
+/**
+ * Usuários de desenvolvimento usados quando a API não está disponível.
+ * Permitem testar fluxos de locador e locatário sem backend.
+ */
 import type { Usuario } from '../types/Auth/usuario.types';
 
 /** Contas de desenvolvimento. Senha de ambas: Teste@123. */

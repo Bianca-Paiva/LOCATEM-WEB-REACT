@@ -1,3 +1,7 @@
+/**
+ * Composição principal da aplicação.
+ * Registra os providers globais e renderiza a página correspondente à rota atual.
+ */
 // -------------------------------
 // CONFIGURAÇÕES E CONTEXTOS
 // -------------------------------

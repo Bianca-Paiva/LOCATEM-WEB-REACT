@@ -1,3 +1,7 @@
+/**
+ * Área do locador para acompanhar ferramentas cadastradas.
+ * Lista anúncios, filtra por status e abre fluxos de detalhe/edição/remoção.
+ */
 import { useEffect, useMemo, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { Eye, Pencil } from 'lucide-react';

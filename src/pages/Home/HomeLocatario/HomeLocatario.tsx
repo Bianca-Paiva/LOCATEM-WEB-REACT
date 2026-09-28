@@ -1,3 +1,7 @@
+/**
+ * Home do locatário.
+ * Exibe a vitrine de ferramentas disponíveis da API e usa mocks como fallback de desenvolvimento.
+ */
 import { useEffect, useMemo, useState } from 'react';
 import { Drill } from 'lucide-react';
 
@@ -7,6 +11,9 @@ import type { Route } from '../../../router/useRouter';
 
 import type { ProdutoSelecionado } from '../../../context/Ferramentas/Produto/ProdutoContext';
 import { useProdutoStore } from '../../../hooks/Ferramentas/useProdutoStore';
+import { PRODUTOS_MOCK } from '../../../mocks/produtos.mock';
+import { toProdutoHome, toProdutoSelecionado } from '../../../mocks/produtos.adapters';
+import type { Produto } from '../../../types/Ferramentas/produto.types';
 import {
   buscarFerramentasDisponiveis,
   type FerramentaDisponivel,
@@ -21,6 +28,7 @@ import { Banner } from '../../../components/Shared/Banner/Banner';
 import { CategoryFilter } from '../../../components/Busca/CategoryFilter/CategoryFilter';
 import { ProductCard } from '../../../components/Ferramentas/ProductCard/ProductCard';
 
+const CATEGORIA_TODOS = 'Todos';
 
 interface HomeProps {
   navigate: (route: Route) => void;
@@ -30,11 +38,22 @@ function categoriaDaFerramenta(ferramenta: FerramentaDisponivel): string {
   return ferramenta.categoriaNome || `Categoria ${ferramenta.categoriaId}`;
 }
 
+function produtoMockDisponivel(produto: Produto): boolean {
+  return produto.available && produto.status === 'disponivel' && produto.estoqueDisponivel > 0;
+}
+
 export default function Home({ navigate }: HomeProps) {
   const { setProdutoSelecionado } = useProdutoStore();
   const [ferramentas, setFerramentas] = useState<FerramentaDisponivel[]>([]);
   const [carregando, setCarregando] = useState(true);
-  const [categoriaAtiva, setCategoriaAtiva] = useState('');
+  const [categoriaAtiva, setCategoriaAtiva] = useState(CATEGORIA_TODOS);
+
+  const produtosMockDisponiveis = useMemo(
+    () => PRODUTOS_MOCK.filter(produtoMockDisponivel),
+    [],
+  );
+
+  const usandoFallbackMock = !carregando && ferramentas.length === 0;
 
   useEffect(() => {
     const carregarVitrine = async () => {
@@ -50,31 +69,52 @@ export default function Home({ navigate }: HomeProps) {
     carregarVitrine();
   }, []);
 
-  const categorias = useMemo(
-    () => Array.from(new Set(ferramentas.map(categoriaDaFerramenta))),
-    [ferramentas],
-  );
+  const categorias = useMemo(() => {
+    const categoriasFonte = usandoFallbackMock
+      ? produtosMockDisponiveis.map((produto) => produto.categoria)
+      : ferramentas.map(categoriaDaFerramenta);
+
+    return [
+      CATEGORIA_TODOS,
+      ...Array.from(new Set(categoriasFonte)),
+    ];
+  }, [ferramentas, produtosMockDisponiveis, usandoFallbackMock]);
 
   const categoriaSelecionada = categorias.includes(categoriaAtiva)
     ? categoriaAtiva
     : (categorias[0] ?? '');
 
-  const produtosHome = useMemo(
-    () =>
-      ferramentas
+  const produtosHome = useMemo(() => {
+    if (usandoFallbackMock) {
+      return produtosMockDisponiveis
         .filter(
-          (ferramenta) =>
-            !categoriaSelecionada || categoriaDaFerramenta(ferramenta) === categoriaSelecionada,
+          (produto) =>
+            categoriaSelecionada === CATEGORIA_TODOS || produto.categoria === categoriaSelecionada,
         )
-        .map(ferramentaParaProdutoHome),
-    [ferramentas, categoriaSelecionada],
-  );
+        .map(toProdutoHome);
+    }
+
+    return ferramentas
+      .filter(
+        (ferramenta) =>
+          categoriaSelecionada === CATEGORIA_TODOS ||
+          categoriaDaFerramenta(ferramenta) === categoriaSelecionada,
+      )
+      .map(ferramentaParaProdutoHome);
+  }, [ferramentas, produtosMockDisponiveis, categoriaSelecionada, usandoFallbackMock]);
 
   const handleCardClick = (produto: ProdutoHome) => {
-    const ferramenta = ferramentas.find((item) => item.ferramentaId === produto.id);
-    if (!ferramenta) return;
+    let produtoSelecionado: ProdutoSelecionado | null = null;
 
-    const produtoSelecionado: ProdutoSelecionado = ferramentaParaProdutoSelecionado(ferramenta);
+    if (usandoFallbackMock) {
+      const produtoMock = produtosMockDisponiveis.find((item) => item.id === produto.id);
+      produtoSelecionado = produtoMock ? toProdutoSelecionado(produtoMock) : null;
+    } else {
+      const ferramenta = ferramentas.find((item) => item.ferramentaId === produto.id);
+      produtoSelecionado = ferramenta ? ferramentaParaProdutoSelecionado(ferramenta) : null;
+    }
+
+    if (!produtoSelecionado) return;
 
     setProdutoSelecionado(produtoSelecionado);
     navigate('produtoDetalhe');

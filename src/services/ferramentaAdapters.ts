@@ -1,3 +1,7 @@
+/**
+ * Adapters entre DTOs da API de ferramentas e modelos consumidos pela interface.
+ * Mantêm as telas independentes do formato exato retornado pelo backend.
+ */
 import type { ProdutoSelecionado } from '../context/Ferramentas/Produto/ProdutoContext';
 import type { ProdutoHome } from '../pages/Home/HomeLocatario/HomeLocatario.types';
 import { normalizarUrlImagem, type FerramentaDisponivel } from './ferramentaservice';

@@ -1,3 +1,7 @@
+/**
+ * Schema de edição de perfil.
+ * Reaproveita validações de nome, telefone, CEP e documento conforme o tipo de usuário.
+ */
 import { z } from 'zod'
 import { cpf, cnpj } from 'cpf-cnpj-validator'
 import { validateFullName, validatePhone, validateCEP } from '../../utils/Formatacao/masks'

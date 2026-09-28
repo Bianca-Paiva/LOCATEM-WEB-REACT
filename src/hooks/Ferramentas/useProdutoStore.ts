@@ -1,3 +1,6 @@
+/**
+ * Acesso ao produto selecionado no fluxo de catálogo/detalhe.
+ */
 import { useContext } from 'react';
 import { ProdutoContext } from '../../context/Ferramentas/Produto/ProdutoContext';
 

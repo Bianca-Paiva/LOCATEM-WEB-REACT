@@ -1,3 +1,7 @@
+/**
+ * Card reutilizável de ferramenta.
+ * Exibe imagem/carrossel, preço, avaliação, favorito e ações opcionais conforme a tela.
+ */
 import React, { useState } from 'react';
 import { useAuth } from '../../../hooks/Auth/useAuth';
 import { useFavoritos } from '../../../hooks/Conta/Favoritos/useFavoritos';

@@ -35,6 +35,7 @@ export function useCadastroForm() {
     const senha = useWatch({ control, name: 'senha' })
     const confirmarSenha = useWatch({ control, name: 'confirmarSenha' })
     const cep = useWatch({ control, name: 'cep' })
+    const cepLimpo = (cep || '').replace(/\D/g, '')
 
     const [buscandoCep, setBuscandoCep] = useState(false)
     const [erroCepBusca, setErroCepBusca] = useState<string | undefined>()
@@ -43,17 +44,15 @@ export function useCadastroForm() {
     const strengthResult = checkPasswordStrength(senha || '')
 
     useEffect(() => {
-        const cepLimpo = (cep || '').replace(/\D/g, '')
-
-        if (cepLimpo.length !== 8) {
-            setBuscandoCep(false)
-            setErroCepBusca(undefined)
-            return
-        }
+        if (cepLimpo.length !== 8) return
 
         let cancelado = false
-        setBuscandoCep(true)
-        setErroCepBusca(undefined)
+
+        queueMicrotask(() => {
+            if (cancelado) return
+            setBuscandoCep(true)
+            setErroCepBusca(undefined)
+        })
 
         buscarEnderecoPorCEP(cepLimpo)
             .then((endereco) => {
@@ -75,7 +74,10 @@ export function useCadastroForm() {
         return () => {
             cancelado = true
         }
-    }, [cep, setValue])
+    }, [cepLimpo, setValue])
+
+    const buscandoCepVisivel = cepLimpo.length === 8 && buscandoCep
+    const erroCepBuscaVisivel = cepLimpo.length === 8 ? erroCepBusca : undefined
 
     const triggerShake = (field: string) => {
         setShakes(prev => ({ ...prev, [field]: { ...prev[field], shake: false } }))
@@ -168,7 +170,7 @@ export function useCadastroForm() {
     return {
         control, tipo, senha: senha || '', confirmarSenha: confirmarSenha || '', isCNPJ, strengthResult,
         alerta, setAlerta, successModalOpen, setSuccessModalOpen, shakes, clearShake,
-        touchedFields, errors, trigger, handleTipoChange, buscandoCep, erroCepBusca,
+        touchedFields, errors, trigger, handleTipoChange, buscandoCep: buscandoCepVisivel, erroCepBusca: erroCepBuscaVisivel,
         onSubmit: handleSubmit(onValidSubmit, onInvalidSubmit)
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * Consulta endereço pelo ViaCEP.
+ * Usado para preencher automaticamente campos de endereço a partir de um CEP válido.
+ */
 export interface EnderecoViaCep {
   cep: string;
   logradouro: string;

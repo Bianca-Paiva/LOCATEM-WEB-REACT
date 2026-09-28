@@ -64,8 +64,7 @@ export function ProdutoInfo({
       diarias: extrairDiarias(periodoLocacao),
       tensao: tensaoSelecionada,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quantidade, periodoLocacao, tensaoSelecionada]);
+  }, [quantidade, periodoLocacao, tensaoSelecionada, onSelecaoChange]);
 
   // limite mínimo é 1 unidades
   const decrement = () => setQuantidade(prev => Math.max(1, prev - 1));

@@ -1,4 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+/**
+ * Estado e validação do formulário de cadastro/edição de ferramenta.
+ * Converte dados da API para o formulário e monta o produto usado pelas telas mockadas.
+ */
+import { useCallback, useState } from 'react';
 import type { Produto } from '../../types/Ferramentas/produto.types';
 import type { CadastroFerramentaFormState } from '../../pages/Ferramentas/CadastroFerramenta/CadastroFerramenta.types';
 import { validateCEP } from '../../utils/Formatacao/masks';
@@ -98,18 +102,23 @@ function possuiEspecificacaoIncompleta(
 }
 
 export function useCadastroFerramenta(ferramentaEmEdicao?: FerramentaDisponivel) {
+  const formularioInicial = ferramentaEmEdicao
+    ? ferramentaParaFormulario(ferramentaEmEdicao)
+    : ESTADO_INICIAL;
   const [form, setForm] = useState<CadastroFerramentaFormState>(
-    ferramentaEmEdicao ? ferramentaParaFormulario(ferramentaEmEdicao) : ESTADO_INICIAL,
+    formularioInicial,
+  );
+  const [ferramentaSincronizadaId, setFerramentaSincronizadaId] = useState(
+    ferramentaEmEdicao?.ferramentaId ?? null,
   );
 
-  // O cadastro abre vazio; a edição recebe os dados do backend de forma assíncrona.
-  useEffect(() => {
-    setForm(
-      ferramentaEmEdicao
-        ? ferramentaParaFormulario(ferramentaEmEdicao)
-        : ESTADO_INICIAL,
-    );
-  }, [ferramentaEmEdicao?.ferramentaId]);
+  // A edição recebe a ferramenta da API depois que a tela já abriu. Quando o id muda,
+  // sincroniza o formulário durante a renderização, sem criar uma renderização extra via efeito.
+  const ferramentaAtualId = ferramentaEmEdicao?.ferramentaId ?? null;
+  if (ferramentaAtualId !== ferramentaSincronizadaId) {
+    setFerramentaSincronizadaId(ferramentaAtualId);
+    setForm(formularioInicial);
+  }
 
   const setCampo = useCallback(<K extends keyof CadastroFerramentaFormState>(
     campo: K,

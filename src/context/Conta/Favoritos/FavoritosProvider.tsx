@@ -61,8 +61,60 @@ export function FavoritosProvider({ children }: { children: ReactNode }) {
   }, [usuario]);
 
   useEffect(() => {
-    void recarregarFavoritos();
-  }, [recarregarFavoritos]);
+    let cancelado = false;
+
+    const carregarFavoritosDoUsuario = async () => {
+      if (!usuario) {
+        if (cancelado) return;
+        setFavoritos([]);
+        setErro('');
+        setCarregando(false);
+        return;
+      }
+
+      setCarregando(true);
+      setErro('');
+
+      try {
+        const referencias = await buscarFavoritos();
+
+        const resultados = await Promise.all(
+          referencias.map(async (referencia): Promise<FavoritoCompleto | null> => {
+            try {
+              const ferramenta = await buscarFerramentaPorId(referencia.ferramentaId);
+
+              return {
+                ...referencia,
+                ferramenta,
+              };
+            } catch {
+              return null;
+            }
+          }),
+        );
+
+        if (cancelado) return;
+
+        setFavoritos(
+          resultados.filter(
+            (item): item is FavoritoCompleto => item !== null,
+          ),
+        );
+      } catch (error) {
+        if (cancelado) return;
+        setFavoritos([]);
+        setErro(error instanceof Error ? error.message : 'NÃ£o foi possÃ­vel carregar os favoritos.');
+      } finally {
+        if (!cancelado) setCarregando(false);
+      }
+    };
+
+    void carregarFavoritosDoUsuario();
+
+    return () => {
+      cancelado = true;
+    };
+  }, [usuario]);
 
   const marcarProcessando = (ferramentaId: number, ativo: boolean) => {
     setProcessando((anterior) => {

@@ -71,8 +71,7 @@ export function useSelecionarCartao(navigate: (route: Route) => void): UseSeleci
     if (!metodoValido) {
       navigate('carrinho');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [metodoValido]);
+  }, [metodoValido, navigate]);
 
   const cartoesFiltrados = useMemo(
     () => (metodoPagamento ? cartoesSalvos.filter((cartao) => cartao.metodoPagamento === metodoPagamento) : []),

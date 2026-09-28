@@ -39,6 +39,11 @@ function montarLocalizacao(perfil: PerfilPublicoLocador) {
   return perfil.localizacao || 'Localização não informada';
 }
 
+function obterLocadorIdDaRota(): number | null {
+  const valor = Number(getRouteQueryParam('usuarioId'));
+  return Number.isInteger(valor) && valor > 0 ? valor : null;
+}
+
 export default function PerfilLoja({ navigate }: PerfilLojaProps) {
   const { setProdutoSelecionado } = useProdutoStore();
   const [perfil, setPerfil] = useState<PerfilPublicoLocador | null>(null);
@@ -47,29 +52,26 @@ export default function PerfilLoja({ navigate }: PerfilLojaProps) {
   const [ordenacao, setOrdenacao] = useState<Ordenacao>('relevantes');
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState('');
-  const [locadorId, setLocadorId] = useState<number | null>(null);
+  const [locadorId, setLocadorId] = useState<number | null>(() => obterLocadorIdDaRota());
 
   useEffect(() => {
     const atualizarId = () => {
-      const valor = Number(getRouteQueryParam('usuarioId'));
-      setLocadorId(Number.isInteger(valor) && valor > 0 ? valor : null);
+      setLocadorId(obterLocadorIdDaRota());
     };
 
-    atualizarId();
     window.addEventListener('hashchange', atualizarId);
     return () => window.removeEventListener('hashchange', atualizarId);
   }, []);
 
   useEffect(() => {
-    if (!locadorId) {
-      setCarregando(false);
-      setErro('Não foi possível identificar o locador desta loja.');
-      return;
-    }
-
+    if (!locadorId) return;
     let ativo = true;
-    setCarregando(true);
-    setErro('');
+
+    queueMicrotask(() => {
+      if (!ativo) return;
+      setCarregando(true);
+      setErro('');
+    });
 
     Promise.all([
       buscarPerfilPublicoLocador(locadorId),
@@ -93,6 +95,10 @@ export default function PerfilLoja({ navigate }: PerfilLojaProps) {
       ativo = false;
     };
   }, [locadorId]);
+
+  const erroLocadorAusente = !locadorId ? 'Não foi possível identificar o locador desta loja.' : '';
+  const erroVisivel = erroLocadorAusente || erro;
+  const carregandoTela = Boolean(locadorId && carregando);
 
   const categorias = useMemo(() => {
     const unicas = Array.from(
@@ -128,7 +134,7 @@ export default function PerfilLoja({ navigate }: PerfilLojaProps) {
 
   const fotoPerfil = perfil?.urlFoto ? normalizarUrlImagem(perfil.urlFoto) : undefined;
 
-  if (carregando) {
+  if (carregandoTela) {
     return (
       <>
         <Header navigate={navigate} currentRoute="perfilLoja" />
@@ -137,14 +143,14 @@ export default function PerfilLoja({ navigate }: PerfilLojaProps) {
     );
   }
 
-  if (erro || !perfil) {
+  if (erroVisivel || !perfil) {
     return (
       <>
         <Header navigate={navigate} currentRoute="perfilLoja" />
         <main className={styles.pagina}>
           <div className={styles.estado}>
             <h1>Não foi possível carregar a loja</h1>
-            <p>{erro || 'Locador não encontrado.'}</p>
+            <p>{erroVisivel || 'Locador não encontrado.'}</p>
             <button type="button" onClick={() => navigate('home')} className={styles.botaoVoltar}>Voltar para início</button>
           </div>
         </main>

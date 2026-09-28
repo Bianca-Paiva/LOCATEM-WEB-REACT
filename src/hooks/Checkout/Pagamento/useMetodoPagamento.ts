@@ -1,3 +1,7 @@
+/**
+ * Estado da escolha de forma de pagamento.
+ * Lê o total calculado no carrinho e decide a próxima etapa do checkout.
+ */
 import { useMemo, useState } from 'react';
 import type { Route } from '../../../router/useRouter';
 import type { FormaPagamento } from '../../../types/Checkout/Pagamento/cartao.types';

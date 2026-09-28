@@ -1,3 +1,7 @@
+/**
+ * Estado global das locações exibidas no projeto.
+ * Ainda usa mocks como fonte inicial e aplica regras de atualização/cancelamento no frontend.
+ */
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { LocacaoData } from '../../pages/Locacoes/MinhasLocacoes/MinhasLocacoes.types';
