@@ -51,6 +51,10 @@ export default function PainelControle({ tipo, navigate }: PainelControleProps) 
       tipo === 'administrador' ||
       (opcao.titulo !== 'Favoritos' || tipo === 'locatario') &&
       (opcao.titulo !== 'Histórico de Locações' || tipo === 'locador'),
+  ).map((opcao): OpcaoPainel =>
+    tipo === 'locador' && opcao.route === 'minhasLocacoes'
+      ? { ...opcao, route: 'minhasFerramentas' }
+      : opcao,
   );
 
   return (
