@@ -455,11 +455,8 @@
         flex-wrap: nowrap;
         justify-content: center;
         align-items: center;
-
         gap: clamp(16px, 3vw, 48px);
-
         padding: 32px var(--spacing-xl) 44px;
-
         width: 100%;
         max-width: 4000px;
         margin: 0 auto;

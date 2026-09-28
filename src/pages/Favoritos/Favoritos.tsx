@@ -16,6 +16,7 @@ import { normalizarUrlImagem } from '../../services/ferramentaservice';
 import type { Route } from '../../router/useRouter';
 import styles from './Favoritos.module.css';
 import type { StatusFerramenta } from '../../types/Ferramentas/produto.types';
+import FormSelect from '../../components/Shared/Inputs/FormSelect/FormSelect';
 
 type FiltroFavorito = 'todas' | 'disponiveis' | 'indisponiveis';
 type Ordenacao = 'recentes' | 'menorPreco' | 'maiorPreco' | 'melhorAvaliacao';
@@ -108,20 +109,21 @@ export default function Favoritos({ navigate }: FavoritosProps) {
   };
 
   const ordenacaoControl = (
-    <label className={styles.ordenacao}>
+    <div className={styles.ordenacao}>
       <span>Ordenar por</span>
-      <select
+      <FormSelect
+        className={styles.selectOrdenacao}
         value={ordenacao}
-        onChange={(event) => setOrdenacao(event.target.value as Ordenacao)}
-      >
-        <option value="recentes">Mais recentes</option>
-        <option value="menorPreco">Menor preço</option>
-        <option value="maiorPreco">Maior preço</option>
-        <option value="melhorAvaliacao">Melhor avaliação</option>
-      </select>
-    </label>
+        onChange={(value) => setOrdenacao(value as Ordenacao)}
+        options={[
+          { value: 'recentes', label: 'Mais recentes' },
+          { value: 'menorPreco', label: 'Menor preço' },
+          { value: 'maiorPreco', label: 'Maior preço' },
+          { value: 'melhorAvaliacao', label: 'Melhor avaliação' },
+        ]}
+      />
+    </div>
   );
-
   if (!usuario) {
     return (
       <>
