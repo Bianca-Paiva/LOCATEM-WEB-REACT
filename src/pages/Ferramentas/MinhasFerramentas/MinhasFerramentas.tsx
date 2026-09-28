@@ -68,7 +68,7 @@ export default function MinhasFerramentas({ navigate }: MinhasFerramentasProps) 
     let ativo = true;
 
     async function carregarMinhasFerramentas() {
-      if (!usuario?.id || usuario.tipo !== 'locador') {
+      if (!usuario?.id || (usuario.tipo !== 'locador' && usuario.tipo !== 'administrador')) {
         if (ativo) {
           setMinhasFerramentasCompletas([]);
           setCarregando(false);

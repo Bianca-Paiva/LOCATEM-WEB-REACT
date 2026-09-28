@@ -36,12 +36,12 @@ export default function GerenciarLocacoes({ navigate }: GerenciarLocacoesProps) 
   const [locacaoParaRecusar, setLocacaoParaRecusar] = useState<LocacaoData | null>(null);
 
   useEffect(() => {
-    if (!usuario || usuario.tipo !== 'locador') {
+    if (!usuario || (usuario.tipo !== 'locador' && usuario.tipo !== 'administrador')) {
       navigate('home');
     }
   }, [usuario, navigate]);
 
-  if (!usuario || usuario.tipo !== 'locador') {
+  if (!usuario || (usuario.tipo !== 'locador' && usuario.tipo !== 'administrador')) {
     return null;
   }
 

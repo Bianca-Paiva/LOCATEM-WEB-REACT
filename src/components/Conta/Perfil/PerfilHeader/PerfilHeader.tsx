@@ -11,7 +11,7 @@ interface PerfilHeaderProps {
 
 /** Cabeçalho da tela de Perfil: avatar (foto ou iniciais), nome e badge "Locador/Locatário desde {ano}". */
 export default function PerfilHeader({ usuario, onEditar }: PerfilHeaderProps) {
-  const rotuloTipo = usuario.tipo === 'locador' ? 'Locador' : 'Locatário';
+  const rotuloTipo = usuario.tipo === 'administrador' ? 'Administrador' : usuario.tipo === 'locador' ? 'Locador' : 'Locatário';
 
   return (
     <section className={styles.card}>

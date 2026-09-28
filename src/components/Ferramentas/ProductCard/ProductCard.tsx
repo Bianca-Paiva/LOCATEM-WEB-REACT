@@ -63,7 +63,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const { usuario } = useAuth();
   const { isFavoritado, isProcessando, toggleFavorito } = useFavoritos();
 
-  const podeFavoritar = usuario?.tipo === 'locatario';
+  const podeFavoritar = (usuario?.tipo === 'locatario' || usuario?.tipo === 'administrador');
 
   const favoritado = productId !== undefined
     ? isFavoritado(productId)

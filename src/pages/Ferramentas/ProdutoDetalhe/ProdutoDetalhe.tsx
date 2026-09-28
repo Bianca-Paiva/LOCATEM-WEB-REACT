@@ -336,7 +336,7 @@ export default function ProdutoDetalhe({ navigate }: ProdutoDetalheProps) {
                     voltagem={produto.voltagem}
                     favoritado={produto.id ? isFavoritado(produto.id) : false}
                     favoritoCarregando={produto.id ? isProcessando(produto.id) : false}
-                    onToggleFavorito={usuario?.tipo === 'locatario' ? handleToggleFavorito : undefined}
+                    onToggleFavorito={(usuario?.tipo === 'locatario' || usuario?.tipo === 'administrador') ? handleToggleFavorito : undefined}
                     onAlugar={handleAlugar}                          // <-- abre o modal em modo "locar"
                     onLocar={handleAlugar}                        // <-- mantido por compatibilidade; use handleAlugar
                     onAddCarrinho={handleAdicionarCarrinho}          // <-- abre o modal em modo "carrinho"

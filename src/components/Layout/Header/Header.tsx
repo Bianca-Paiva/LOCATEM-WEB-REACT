@@ -89,6 +89,12 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
 
     const navItems: NavItem[] = [
         {
+            label: 'Painel do Locador',
+            route: 'homeLocador',
+            perfis: ['administrador'],
+            renderIcon: () => <Icon icon="mdi:view-dashboard-outline" width={22} height={22} />,
+        },
+        {
             label: "Início",
             route: rotaInicio, // locatário/visitante -> marketplace; locador -> HomeLocador
             renderIcon: (active) => (
@@ -238,7 +244,7 @@ export default function Header({ navigate, currentRoute }: HeaderProps) {
             return true;
         }
 
-        return item.perfis.includes(usuario.tipo);
+        return usuario.tipo === 'administrador' || item.perfis.includes(usuario.tipo);
     });
 
     const navItemsMenuLateral = navItemsVisiveis.filter(

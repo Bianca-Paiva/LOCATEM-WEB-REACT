@@ -1,5 +1,5 @@
 /** Mesma nomenclatura já usada em Cadastro (CardOpcaoConta, cadastroSchema). */
-export type TipoUsuario = 'locatario' | 'locador';
+export type TipoUsuario = 'locatario' | 'locador' | 'administrador';
 
 /** Indicadores de reputação exibidos no card "Reputação" da tela de Perfil. */
 export interface ReputacaoUsuario {

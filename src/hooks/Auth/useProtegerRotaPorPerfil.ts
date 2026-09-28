@@ -25,7 +25,7 @@ export function useExigirPerfil(
   rotaFallback: Route,
 ): boolean {
   const { usuario } = useAuth();
-  const acessoPermitido = !!usuario && usuario.tipo === tipoExigido;
+  const acessoPermitido = !!usuario && (usuario.tipo === 'administrador' || usuario.tipo === tipoExigido);
 
   useEffect(() => {
     if (!acessoPermitido) {

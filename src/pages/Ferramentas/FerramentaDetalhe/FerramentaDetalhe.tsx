@@ -40,12 +40,12 @@ export default function FerramentaDetalhe({ navigate }: FerramentaDetalheProps) 
 
   // Sem ferramenta selecionada (ex: acesso direto à rota) ou fora do catálogo do locador logado, volta pra listagem.
   useEffect(() => {
-    if (!usuario || usuario.tipo !== 'locador' || !produto) {
+    if (!usuario || (usuario.tipo !== 'locador' && usuario.tipo !== 'administrador') || !produto) {
       navigate('minhasFerramentas');
     }
   }, [usuario, produto, navigate]);
 
-  if (!usuario || usuario.tipo !== 'locador' || !produto) {
+  if (!usuario || (usuario.tipo !== 'locador' && usuario.tipo !== 'administrador') || !produto) {
     return null;
   }
 

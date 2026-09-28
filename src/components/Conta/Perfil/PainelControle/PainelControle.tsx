@@ -48,6 +48,7 @@ const OPCOES_BASE: OpcaoPainel[] = [
 export default function PainelControle({ tipo, navigate }: PainelControleProps) {
   const opcoesVisiveis = OPCOES_BASE.filter(
     (opcao) =>
+      tipo === 'administrador' ||
       (opcao.titulo !== 'Favoritos' || tipo === 'locatario') &&
       (opcao.titulo !== 'Histórico de Locações' || tipo === 'locador'),
   );

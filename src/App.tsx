@@ -66,6 +66,7 @@ import GerenciarLocacoes from "./pages/Locacoes/GerenciarLocacoes/GerenciarLocac
 
 // Regra de perfil validada nos testes: locador gerencia ferramentas e nao deve entrar em rotas de compra.
 const rotasBloqueadasParaLocador: Route[] = [
+  "home",
   "busca",
   "carrinho",
   "metodoPagamento",

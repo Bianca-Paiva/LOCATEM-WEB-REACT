@@ -1,11 +1,23 @@
 /**
  * Usuários de desenvolvimento usados quando a API não está disponível.
- * Permitem testar fluxos de locador e locatário sem backend.
+ * Permitem testar fluxos de locador, locatário e administrador sem backend.
  */
 import type { Usuario } from '../types/Auth/usuario.types';
 
-/** Contas de desenvolvimento. Senha de ambas: Teste@123. */
+/** Contas de desenvolvimento. Senha de todas: Teste@123. */
 export const USUARIOS_MOCK: Usuario[] = [
+  {
+    id: -3,
+    nome: 'Administrador Locatem',
+    email: 'admin@exemplo.com',
+    telefone: '(11) 99999-0000',
+    documento: '529.982.247-25',
+    endereco: 'Av. Paulista, 1000, São Paulo, SP · 01310-100',
+    tipo: 'administrador',
+    locadorId: 'loc-jb',
+    emailVerificado: true,
+    desde: 2026,
+  },
   {
     id: -1,
     nome: 'João da Silva',
@@ -48,7 +60,7 @@ export const USUARIOS_MOCK: Usuario[] = [
 const SENHA_TESTE = 'Teste@123';
 const PREFIXO_TOKEN = 'locatem-dev:';
 
-/** Somente as duas contas deste catálogo podem iniciar uma sessão offline. */
+/** Somente as contas deste catálogo podem iniciar uma sessão offline. */
 export function autenticarUsuarioMock(email: string, senha: string): string | undefined {
   const usuario = USUARIOS_MOCK.find(
     (item) => item.email.toLowerCase() === email.trim().toLowerCase(),

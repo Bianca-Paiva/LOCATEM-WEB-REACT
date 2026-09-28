@@ -26,7 +26,7 @@ export default function HistoricoLocacoes({ navigate }: HistoricoLocacoesProps) 
   const [expandidos, setExpandidos] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    if (!usuario || usuario.tipo !== 'locador') {
+    if (!usuario || (usuario.tipo !== 'locador' && usuario.tipo !== 'administrador')) {
       navigate('home');
     }
   }, [usuario, navigate]);
@@ -61,7 +61,7 @@ export default function HistoricoLocacoes({ navigate }: HistoricoLocacoesProps) 
     [historicoCompleto, filtro],
   );
 
-  if (!usuario || usuario.tipo !== 'locador') {
+  if (!usuario || (usuario.tipo !== 'locador' && usuario.tipo !== 'administrador')) {
     return null;
   }
 

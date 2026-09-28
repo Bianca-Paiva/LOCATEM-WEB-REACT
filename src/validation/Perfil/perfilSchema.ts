@@ -7,7 +7,7 @@ import { cpf, cnpj } from 'cpf-cnpj-validator'
 import { validateFullName, validatePhone, validateCEP } from '../../utils/Formatacao/masks'
 
 export const perfilSchema = z.object({
-    tipo: z.enum(['locatario', 'locador']),
+    tipo: z.enum(['locatario', 'locador', 'administrador']),
 
     nome: z.string()
         .min(1, 'O nome é obrigatório')

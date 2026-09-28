@@ -17,7 +17,7 @@ function mapearUsuario(dados: UsuarioDaApi): Usuario {
     telefone: dados.telefone,
     documento: dados.documento,
     endereco: dados.endereco ?? '',
-    tipo: dados.tipoUsuario.toLowerCase() as 'locatario' | 'locador',
+    tipo: dados.tipoUsuario.toLowerCase() as Usuario['tipo'],
     fotoUrl: dados.fotoUrl ?? undefined,
     locadorId: dados.locadorId,
     emailVerificado: dados.emailVerificado,
@@ -46,7 +46,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login: AuthContextType['login'] = async () => {
-    setUsuario(mapearUsuario(await buscarUsuarioLogado()));
+    const usuarioLogado = mapearUsuario(await buscarUsuarioLogado());
+    setUsuario(usuarioLogado);
+    return usuarioLogado;
   };
 
   const logout = () => {

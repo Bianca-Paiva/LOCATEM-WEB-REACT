@@ -60,16 +60,12 @@ export default function Login({ navigate }: LoginProps) {
 
         try {
             await loginUsuario({ email, senha })
-            await login()
+            const usuarioLogado = await login()
 
             const rotaRedirect = lerRedirectAposLogin()
 
-            if (rotaRedirect) {
-                limparRedirectAposLogin()
-                navigate(rotaRedirect)
-            } else {
-                navigate('home')
-            }
+            limparRedirectAposLogin()
+            navigate(usuarioLogado.tipo === 'locador' ? 'homeLocador' : rotaRedirect ?? 'home')
         } catch {
             setError('E-mail ou senha inválidos.')
         } finally {
