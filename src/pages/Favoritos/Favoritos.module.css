@@ -29,18 +29,15 @@
   white-space: nowrap;
 }
 
-.ordenacao select {
-  height: 40px;
+.selectOrdenacao {
+  width: auto;
   min-width: 180px;
-  padding: 0 34px 0 14px;
-  border: 1px solid #e5e7eb;
+}
+
+.selectOrdenacao button {
+  height: 40px;
+  padding: 0 18px 0 14px;
   border-radius: var(--radius-pill);
-  background: var(--color-bg-card);
-  color: var(--color-text-dark);
-  font: inherit;
-  font-weight: 600;
-  outline: none;
-  cursor: pointer;
 }
 
 .estadoLista {
@@ -99,12 +96,11 @@
     justify-content: space-between;
   }
 
-  .ordenacao select {
+  .selectOrdenacao {
     min-width: 170px;
     max-width: 240px;
   }
 }
-
 @media (max-width: 480px) {
   .grade {
     grid-template-columns: 1fr;
@@ -116,7 +112,7 @@
     gap: 6px;
   }
 
-  .ordenacao select {
+  .selectOrdenacao {
     width: 100%;
     max-width: none;
   }

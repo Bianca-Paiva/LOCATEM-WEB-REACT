@@ -31,15 +31,10 @@ interface ProductCardProps {
   statusBadge?: React.ReactNode;
   /** Conteúdo extra renderizado abaixo das informações do produto (ex: botões "Ver"/"Editar" em Minhas Ferramentas). */
   footerExtra?: React.ReactNode;
-  /** Classe visual opcional para customizações específicas de uma página. */
   className?: string;
-  /** Exibe o coração decorativo usado nos cards da vitrine. */
   showFavorite?: boolean;
-  /** Exibe o botão visual de detalhes no rodapé do card. */
   showDetailsButton?: boolean;
-  /** Identificador real da ferramenta usado para persistir favoritos no backend. */
   productId?: number;
-  /** Variação visual usada na tela de Favoritos. */
   variant?: 'default' | 'favorito';
 }
 
@@ -90,8 +85,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       return;
     }
 
-
-    
     try {
       await toggleFavorito(productId);
     } catch (error) {
@@ -113,26 +106,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </span>
         )
       )}
-     {showFavorite && podeFavoritar && (
-  <button
-    type="button"
-    className={`${styles.favoriteButton} ${
-      favoritado ? styles.favoriteButtonActive : ''
-    }`}
-    aria-label={favoritado ? `Remover ${title} dos favoritos` : `Favoritar ${title}`}
-    aria-pressed={favoritado}
-    onClick={handleFavorito}
-    disabled={favoritoProcessando}
-  >
- <Heart
-  size={22}
-  strokeWidth={1.8}
-  color={favoritado ? '#ff4655' : '#222'}
-  fill={favoritado ? '#ff4655' : 'none'}
-/>
-    
-  </button>
-)}
+      {showFavorite && podeFavoritar && (
+        <button
+          type="button"
+          className={`${styles.favoriteButton} ${favoritado ? styles.favoriteButtonActive : ''
+            }`}
+          aria-label={favoritado ? `Remover ${title} dos favoritos` : `Favoritar ${title}`}
+          aria-pressed={favoritado}
+          onClick={handleFavorito}
+          disabled={favoritoProcessando}
+        >
+          <Heart
+            size={22}
+            strokeWidth={1.8}
+            color={favoritado ? '#ff4655' : '#222'}
+            fill={favoritado ? '#ff4655' : 'none'}
+          />
+
+        </button>
+      )}
       <div className={styles.productImageContainer}>
         {images.length > 0 ? (
           <Swiper
@@ -189,13 +181,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {footerExtra}
 
-       
-        
+
+
+
+
+
       </div>
     </>
   );
 
-  // Usamos uma <div> com role="button" para evitar bugs de HTML com o Swiper embutido
   const classes = [
     styles.productCard,
     className ?? '',
@@ -204,7 +198,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   ]
     .filter(Boolean)
     .join(' ');
-
+  // Usamos uma <div> com role="button" para evitar bugs de HTML com o Swiper embutido
   if (onNavigate) {
     return (
       <div

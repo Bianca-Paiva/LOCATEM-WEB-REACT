@@ -15,8 +15,13 @@
   background: var(--color-bg-card);
   border-radius: 10px;
   padding: 11px 14px 13px;
+  border-radius: 10px;
+  padding: 11px 14px 13px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.035);
+  border: 1px solid #ececec;
   gap: 8px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.035);
   border: 1px solid #ececec;
@@ -53,6 +58,31 @@
   color: #ff4655;
 }
 
+.favoriteButton {
+  position: absolute;
+  z-index: 4;
+  top: 11px;
+  right: 11px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: rgba(255,255,255,0.9);
+  color: #222;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.favoriteButton:hover {
+  background: #fff;
+}
+
+.favoriteButtonActive {
+  color: #ff4655;
+}
+
 .productCardClickable {
   cursor: pointer;
 }
@@ -60,14 +90,18 @@
 .productCardClickable:hover {
   transform: translateY(-2px);
   box-shadow: 0 7px 18px rgba(0,0,0,0.07);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 18px rgba(0,0,0,0.07);
 }
 
 .productCardClickable:active {
+  transform: translateY(0);
   transform: translateY(0);
 }
 
 .productImageContainer {
   width: 100%;
+  height: 181px;
   height: 181px;
   display: flex;
   align-items: center;
@@ -91,8 +125,21 @@
 .productCardImg {
   width: 100%;
   height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   pointer-events: none;
+}
+
+.productSemImagem {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #888;
+  background: #fafafa;
+  font-size: 12px;
+  text-align: center;
 }
 
 .productSemImagem {
@@ -112,8 +159,13 @@
   z-index: 3;
   padding: 4px 10px;
   border-radius: 999px;
+  position: relative;
+  z-index: 3;
+  padding: 4px 10px;
+  border-radius: 999px;
   font-size: 10.5px;
   font-weight: 700;
+  line-height: 1.45;
   line-height: 1.45;
   pointer-events: none;
 }
@@ -140,6 +192,12 @@
   line-height: 1.22;
   min-height: 37px;
   height: 37px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #171717;
+  line-height: 1.22;
+  min-height: 37px;
+  height: 37px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -154,6 +212,8 @@
   align-items: center;
   gap: 3px;
   min-height: 17px;
+  gap: 3px;
+  min-height: 17px;
 }
 
 .productBrand {
@@ -163,13 +223,20 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #171717;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .logoVerificado {
   color: #1685e5;
+  color: #1685e5;
   object-fit: contain;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   flex-shrink: 0;
 }
 
@@ -179,16 +246,21 @@
   align-items: center;
   margin-top: 1px;
   gap: 6px;
+  margin-top: 1px;
+  gap: 6px;
 }
 
 .productPriceRow {
   display: flex;
   align-items: baseline;
   white-space: nowrap;
+  white-space: nowrap;
 }
 
 .pricePrefix {
   font-size: 17px;
+  font-weight: 800;
+  color: #171717;
   font-weight: 800;
   color: #171717;
 }
@@ -197,9 +269,13 @@
   font-size: 18px;
   font-weight: 800;
   color: #171717;
+  color: #171717;
 }
 
 .priceSuffix {
+  font-size: 11px;
+  color: #666;
+  margin-left: 1px;
   font-size: 11px;
   color: #666;
   margin-left: 1px;
@@ -210,9 +286,12 @@
   align-items: center;
   gap: 3px;
   white-space: nowrap;
+  gap: 3px;
+  white-space: nowrap;
 }
 
 .estrelaAvaliacao {
+  width: 14px;
   width: 14px;
   object-fit: contain;
   vertical-align: middle;
@@ -220,12 +299,15 @@
 
 .ratingValue {
   font-size: 12px;
+  font-size: 12px;
   font-weight: 700;
+  color: #222;
   color: #222;
 }
 
 .ratingCount {
   font-size: 10px;
+  color: #777;
   color: #777;
 }
 
