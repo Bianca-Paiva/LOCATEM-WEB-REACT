@@ -31,7 +31,7 @@ interface OpcaoPainel {
 // Opções comuns às duas variantes do protótipo (Locatário e Locador).
 const OPCOES_BASE: OpcaoPainel[] = [
   { icone: <Wrench size={20} />, titulo: 'Aluguéis Ativos', descricao: 'Visualize seus equipamentos alugados atualmente.', route: 'minhasLocacoes' },
-  { icone: <Clock size={20} />, titulo: 'Histórico de Locações', descricao: 'Consulte todas as suas locações anteriores.' },
+  { icone: <Clock size={20} />, titulo: 'Histórico de Locações', descricao: 'Consulte todas as suas locações anteriores.', route: 'historicoLocacoes' },
   { icone: <Heart size={20} />, titulo: 'Favoritos', descricao: 'Ferramentas e equipamentos salvos.', route: 'favoritos' },
   { icone: <Wallet size={20} />, titulo: 'Pagamentos', descricao: 'Visualize pagamentos, cauções e reembolsos.' },
   { icone: <FileText size={20} />, titulo: 'Contratos', descricao: 'Acesse todos os contratos digitais.' },
@@ -43,11 +43,13 @@ const OPCOES_BASE: OpcaoPainel[] = [
 
 /**
  * Painel de Controle compartilhado entre os perfis. Favoritos é exibido apenas
- * para locatários, mantendo a mesma lista base sem duplicar a implementação.
+ * para locatários, e Histórico de Locações apenas para locadores.
  */
 export default function PainelControle({ tipo, navigate }: PainelControleProps) {
   const opcoesVisiveis = OPCOES_BASE.filter(
-    (opcao) => opcao.titulo !== 'Favoritos' || tipo === 'locatario',
+    (opcao) =>
+      (opcao.titulo !== 'Favoritos' || tipo === 'locatario') &&
+      (opcao.titulo !== 'Histórico de Locações' || tipo === 'locador'),
   );
 
   return (
