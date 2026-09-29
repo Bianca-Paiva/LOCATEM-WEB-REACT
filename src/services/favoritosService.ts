@@ -3,8 +3,7 @@
  * Mantém a tela de Favoritos sincronizada com a API protegida por token.
  */
 import type { FerramentaDisponivel } from './ferramentaservice';
-
-const API_BASE = 'http://localhost:5033/api';
+import { API_BASE } from '../config/api';
 
 export interface FavoritoReferencia {
   id: number;

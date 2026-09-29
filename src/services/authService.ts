@@ -3,8 +3,7 @@
  * Faz login e cadastro exclusivamente contra a API real.
  */
 import type { ReputacaoUsuario } from '../types/Auth/usuario.types';
-
-const API_BASE = 'http://localhost:5033/api';
+import { API_BASE } from '../config/api';
 
 export interface CadastroPayload {
   nome: string;

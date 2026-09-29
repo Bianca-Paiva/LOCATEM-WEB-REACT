@@ -2,7 +2,7 @@
  * Cliente HTTP das ferramentas.
  * Concentra consultas, cadastro, edição, exclusão de fotos e upload de imagens na API.
  */
-const API_BASE = 'http://localhost:5033/api';
+import { API_BASE } from '../config/api';
 
 export interface EspecificacaoTecnicaDTO {
   label: string;
